@@ -1,0 +1,137 @@
+﻿$PBExportHeader$d_hgm302i_1.srd
+$PBExportComments$비품수리접수_등록용
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=12 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=800 color="536870912" )
+table(column=(type=char(20) update=yes updatewhereclause=yes key=yes name=id_no dbname="hst030h.id_no" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=item_class dbname="hst030h.item_class" )
+ column=(type=char(8) update=yes updatewhereclause=yes key=yes name=apply_date dbname="hst030h.apply_date" )
+ column=(type=number update=yes updatewhereclause=yes key=yes name=apply_no dbname="hst030h.apply_no" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=rep_date dbname="hst030h.rep_date" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=rep_gwa dbname="hst030h.rep_gwa" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=rep_member_no dbname="hst030h.rep_member_no" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=accept_gwa dbname="hst030h.accept_gwa" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=apply_amt dbname="hst030h.apply_amt" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=rep_need dbname="hst030h.rep_need" )
+ column=(type=char(7) update=yes updatewhereclause=yes name=acct_code dbname="hst030h.acct_code" )
+ column=(type=char(1024) update=yes updatewhereclause=yes name=rep_remark dbname="hst030h.rep_remark" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=rep_amt dbname="hst030h.rep_amt" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=rep_fdate dbname="hst030h.rep_fdate" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=rep_tdate dbname="hst030h.rep_tdate" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=audit_date dbname="hst030h.audit_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=audit_member_no dbname="hst030h.audit_member_no" )
+ column=(type=char(60) update=yes updatewhereclause=yes name=audit_position dbname="hst030h.audit_position" )
+ column=(type=char(200) update=yes updatewhereclause=yes name=rep_source dbname="hst030h.rep_source" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=sign_yn dbname="hst030h.sign_yn" values="전결	1/미결	0/" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=repair_yn dbname="hst030h.repair_yn" values="有	1/無	0/" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=stat_class dbname="hst030h.stat_class" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=worker dbname="hst030h.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hst030h.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hst030h.work_date" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=job_uid dbname="hst030h.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hst030h.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hst030h.job_date" )
+ column=(type=char(20) updatewhereclause=yes name=com_rep_name dbname="hst030h.com_rep_name" )
+ column=(type=char(20) updatewhereclause=yes name=com_audit_name dbname="hst030h.com_audit_name" )
+ retrieve="SELECT	A.ID_NO,
+			A.ITEM_CLASS,
+			A.APPLY_DATE,
+			A.APPLY_NO,
+			A.REP_DATE,
+			A.REP_GWA,
+			A.REP_MEMBER_NO,
+			A.ACCEPT_GWA,
+			A.APPLY_AMT,
+			A.REP_NEED,
+			A.ACCT_CODE,
+			A.REP_REMARK,
+			A.REP_AMT,
+			A.REP_FDATE,
+			A.REP_TDATE,
+			A.AUDIT_DATE,
+			A.AUDIT_MEMBER_NO,
+			A.AUDIT_POSITION,
+			A.REP_SOURCE,
+			A.SIGN_YN,
+			A.REPAIR_YN,
+			A.STAT_CLASS,
+			A.WORKER,
+			A.IPADDR,
+			A.WORK_DATE,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE,
+			B.NAME		COM_REP_NAME,
+			C.NAME		COM_AUDIT_NAME
+FROM		STDB.HST030H	A,
+			INDB.HIN001M	B,
+			INDB.HIN001M	C
+WHERE		A.REP_MEMBER_NO   = B.MEMBER_NO(+)
+AND		A.AUDIT_MEMBER_NO = C.MEMBER_NO(+)
+AND		A.ID_NO         = :as_IDNO
+AND		A.ITEM_CLASS    = :ai_ItemClass
+AND		A.APPLY_DATE    = :as_ApplyDate
+AND		A.APPLY_NO      = :ai_ApplyNO
+AND		A.STAT_CLASS  IN ( 1, 2 )" update="STDB.HST030H" updatewhere=1 updatekeyinplace=yes arguments=(("as_IDNO", string),("ai_ItemClass", number),("as_ApplyDate", string),("ai_ApplyNo", number)) )
+text(band=detail alignment="1" text="신청번호" border="0" color="0" x="3063" y="44" height="56" width="288" html.valueishtml="0"  name=apply_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="신청일자" border="0" color="0" x="2395" y="44" height="56" width="288" html.valueishtml="0"  name=apply_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="품목구분" border="0" color="0" x="1417" y="44" height="56" width="293" html.valueishtml="0"  name=item_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+button(band=detail text="?" filename="" enabled=yes action="0" border="0" color="0" x="3122" y="120" height="76" width="87" vtextalign="0" htextalign="0"  name=btn_rep_member visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+text(band=detail alignment="1" text="등재번호" border="0" color="0" x="151" y="44" height="56" width="581" html.valueishtml="0"  name=id_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="5" color="0" x="750" y="128" height="60" width="334" format="@@@@/@@/@@" html.valueishtml="0"  name=rep_date visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="80269524" )
+text(band=detail alignment="1" text="요구부서" border="0" color="0" x="1417" y="128" height="56" width="293" html.valueishtml="0"  name=rep_gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="요구자" border="0" color="0" x="2395" y="128" height="56" width="288" html.valueishtml="0"  name=rep_member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="계정과목" border="0" color="0" x="2395" y="208" height="56" width="288" html.valueishtml="0"  name=acct_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="수리일자검수정정일" border="0" color="0" x="114" y="128" height="56" width="617" html.valueishtml="0"  name=rep_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="예상금액" border="0" color="0" x="1417" y="208" height="56" width="293" html.valueishtml="0"  name=apply_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="기간" border="0" color="0" x="1417" y="448" height="56" width="293" html.valueishtml="0"  name=rep_fdate_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="∼" border="0" color="0" x="2075" y="448" height="56" width="69" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+button(band=detail text="?" filename="" enabled=yes action="0" border="0" color="0" x="2144" y="520" height="76" width="87" vtextalign="0" htextalign="0"  name=btn_audit_member visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="5" color="0" x="3218" y="128" height="60" width="320" format="[general]" html.valueishtml="0"  name=rep_member_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="접수부서" border="0" color="0" x="151" y="208" height="56" width="581" html.valueishtml="0"  name=accept_gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="수리의필요성" border="0" color="0" x="151" y="288" height="56" width="581" html.valueishtml="0"  name=rep_need_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="수리내역" border="0" color="0" x="151" y="368" height="56" width="581" html.valueishtml="0"  name=rep_remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="수리금액" border="0" color="0" x="151" y="448" height="56" width="581" html.valueishtml="0"  name=rep_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="발생원인" border="0" color="0" x="151" y="688" height="56" width="581" html.valueishtml="0"  name=rep_source_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="검수일자" border="0" color="0" x="151" y="528" height="56" width="581" html.valueishtml="0"  name=audit_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="검수자직위" border="0" color="0" x="151" y="608" height="56" width="581" html.valueishtml="0"  name=audit_position_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="5" color="0" x="750" y="44" height="60" width="640" format="[general]" html.valueishtml="0"  name=id_no visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.nilisnull=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="5" color="0" x="1728" y="44" height="60" width="640" format="[general]" html.valueishtml="0"  name=item_class visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=200 dddw.lines=10 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.nilisnull=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="5" color="0" x="2702" y="44" height="60" width="334" format="@@@@/@@/@@" html.valueishtml="0"  name=apply_date visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.nilisnull=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="5" color="0" x="3369" y="44" height="60" width="169" format="[general]" html.valueishtml="0"  name=apply_no visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.nilisnull=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=22 alignment="1" tabsequence=20 border="5" color="0" x="2999" y="608" height="60" width="539" format="[general]" html.valueishtml="0"  name=stat_class pointer="HyperLink!" visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=200 dddw.lines=10 dddw.limit=0 dddw.allowedit=no dddw.useasborder=yes dddw.case=any dddw.nilisnull=yes dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=detail alignment="1" text="상태구분" border="0" color="0" x="2702" y="608" height="56" width="283" html.valueishtml="0"  name=stat_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="결재구분" border="0" color="0" x="2702" y="448" height="56" width="283" html.valueishtml="0"  name=sign_yn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="검수자" border="0" color="0" x="1417" y="528" height="56" width="293" html.valueishtml="0"  name=audit_member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="수리여부" border="0" color="0" x="2702" y="528" height="56" width="283" html.valueishtml="0"  name=repair_yn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=21 alignment="1" tabsequence=10 border="0" color="0" x="2999" y="528" height="60" width="443" format="[general]" html.valueishtml="0"  name=repair_yn visible="1" radiobuttons.columns=2 radiobuttons.scale=no radiobuttons.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="5" color="0" x="2245" y="532" height="60" width="320" format="[general]" html.valueishtml="0"  name=audit_member_no visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="5" color="0" x="1728" y="128" height="60" width="622" format="[general]" html.valueishtml="0"  name=rep_gwa visible="1" dddw.name=dddw_sosok501 dddw.displaycolumn=dept_name dddw.datacolumn=dept_code dddw.percentwidth=200 dddw.lines=10 dddw.limit=0 dddw.allowedit=no dddw.useasborder=yes dddw.case=any dddw.nilisnull=yes dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=29 alignment="0" tabsequence=32766 border="5" color="0" x="2702" y="128" height="60" width="407" format="[general]" html.valueishtml="0"  name=com_rep_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.nilisnull=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="5" color="0" x="2702" y="208" height="60" width="841" format="[general]" html.valueishtml="0"  name=acct_code visible="1" dddw.name=dddw_acct_code_all dddw.displaycolumn=acct_name dddw.datacolumn=acct_code dddw.percentwidth=200 dddw.lines=10 dddw.limit=0 dddw.allowedit=no dddw.useasborder=yes dddw.case=any dddw.nilisnull=yes dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="5" color="0" x="1728" y="208" height="60" width="544" format="#,###" html.valueishtml="0"  name=apply_amt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.nilisnull=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="5" color="0" x="750" y="208" height="60" width="622" format="[general]" html.valueishtml="0"  name=accept_gwa visible="1" dddw.name=dddw_sosok501 dddw.displaycolumn=dept_name dddw.datacolumn=dept_code dddw.percentwidth=200 dddw.lines=10 dddw.limit=0 dddw.allowedit=no dddw.useasborder=yes dddw.case=any dddw.nilisnull=yes dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="5" color="0" x="750" y="288" height="60" width="2793" format="[general]" html.valueishtml="0"  name=rep_need visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="5" color="0" x="750" y="368" height="60" width="2793" format="[general]" html.valueishtml="0"  name=rep_remark visible="1" edit.limit=1024 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="1" tabsequence=32766 border="5" color="0" x="750" y="448" height="60" width="544" format="#,###" html.valueishtml="0"  name=rep_amt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="5" color="0" x="750" y="528" height="60" width="334" format="@@@@/@@/@@" html.valueishtml="0"  name=audit_date visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="5" color="0" x="750" y="608" height="60" width="1673" format="[general]" html.valueishtml="0"  name=audit_position visible="1" edit.limit=60 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=19 alignment="0" tabsequence=32766 border="5" color="0" x="750" y="688" height="60" width="2793" format="[general]" html.valueishtml="0"  name=rep_source visible="1" edit.limit=200 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=30 alignment="0" tabsequence=32766 border="5" color="0" x="1728" y="528" height="60" width="402" format="[general]" html.valueishtml="0"  name=com_audit_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="5" color="0" x="1728" y="448" height="60" width="334" format="@@@@/@@/@@" html.valueishtml="0"  name=rep_fdate visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="5" color="0" x="2149" y="448" height="60" width="334" format="@@@@/@@/@@" html.valueishtml="0"  name=rep_tdate visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=20 alignment="0" tabsequence=32766 border="5" color="0" x="2999" y="448" height="60" width="251" format="[general]" html.valueishtml="0"  name=sign_yn visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any ddlb.nilisnull=yes ddlb.useasborder=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

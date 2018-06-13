@@ -1,0 +1,80 @@
+﻿$PBExportHeader$d_hin502a_1.srd
+$PBExportComments$외래강사경력사항입력용
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=88 color="1073741824" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=char(5) update=yes updatewhereclause=yes key=yes name=member_no dbname="hin040h.member_no" )
+ column=(type=number update=yes updatewhereclause=yes key=yes name=career_seq dbname="hin040h.career_seq" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=from_date dbname="hin040h.from_date" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=to_date dbname="hin040h.to_date" )
+ column=(type=char(80) update=yes updatewhereclause=yes name=gwamok_name dbname="hin040h.gwamok_name" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=gwa_name dbname="hin040h.gwa_name" )
+ column=(type=number update=yes updatewhereclause=yes name=time_per_week dbname="hin040h.time_per_week" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hin040h.worker" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hin040h.work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hin040h.ipaddr" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hin040h.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hin040h.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hin040h.job_date" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=year dbname="hin040h.year" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=hakgi dbname="hin040h.hakgi" )
+ column=(type=char(7) update=yes updatewhereclause=yes name=gwamok_id dbname="hin040h.gwamok_id" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=gwa dbname="hin040h.gwa" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=career_gb dbname="hin040h.career_gb" values="학부	1/대학원	2/" )
+ retrieve="  SELECT A.MEMBER_NO,   
+         A.CAREER_SEQ,   
+         A.FROM_DATE,   
+         A.TO_DATE,   
+         A.GWAMOK_NAME,   
+         A.GWA_NAME,   
+         A.TIME_PER_WEEK,   
+         A.WORKER,   
+         A.WORK_DATE,   
+         A.IPADDR,   
+         A.JOB_UID,   
+         A.JOB_ADD,   
+         A.JOB_DATE,
+		A.YEAR,
+		A.HAKGI,  
+         A.GWAMOK_ID,   
+         A.GWA,
+         A.CAREER_GB
+    FROM INDB.HIN040H  A
+   WHERE A.MEMBER_NO = :as_MemberNo
+        AND A.CAREER_GB LIKE :AS_CAREER_GB || '%'
+	ORDER BY A.YEAR, A.HAKGI
+
+            
+" update="INDB.HIN040H" updatewhere=1 updatekeyinplace=no arguments=(("as_MemberNo", string),("AS_CAREER_GB", string)) )
+text(band=header alignment="2" text="순번" border="0" color="0" x="9" y="4" height="80" width="210" html.valueishtml="0"  name=career_seq_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="년도" border="0" color="0" x="229" y="4" height="80" width="247" html.valueishtml="0"  name=year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="학기" border="0" color="0" x="485" y="4" height="80" width="247" html.valueishtml="0"  name=hakgi_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="구분" border="0" color="0" x="741" y="4" height="80" width="238" html.valueishtml="0"  name=career_gb_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="시작일" border="0" color="0" x="987" y="4" height="80" width="366" html.valueishtml="0"  name=from_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="종료일" border="0" color="0" x="1362" y="4" height="80" width="370" html.valueishtml="0"  name=to_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="주당시수" border="0" color="0" x="1742" y="4" height="80" width="293" html.valueishtml="0"  name=time_per_week_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="학과명" border="0" color="0" x="2043" y="4" height="80" width="1125" html.valueishtml="0"  name=gwa_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="과목명" border="0" color="0" x="3177" y="4" height="80" width="1239" html.valueishtml="0"  name=gwamok_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="76" width="210" format="[general]" html.valueishtml="0"  name=career_seq visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="2" tabsequence=32766 border="0" color="0" x="229" y="4" height="76" width="247" format="[general]" html.valueishtml="0"  name=year visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="2" tabsequence=32766 border="0" color="0" x="485" y="4" height="76" width="247" format="[general]" html.valueishtml="0"  name=hakgi visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=18 alignment="2" tabsequence=32766 border="0" color="0" x="741" y="4" height="76" width="238" format="[general]" html.valueishtml="0"  name=career_gb visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="3177" y="4" height="76" width="1239" format="[general]" html.valueishtml="0"  name=gwamok_name visible="1" edit.limit=80 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="2043" y="4" height="76" width="1125" format="[general]" html.valueishtml="0"  name=gwa_name visible="1" edit.limit=40 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=30 border="0" color="0" x="1742" y="4" height="76" width="293" format="[general]" html.valueishtml="0"  name=time_per_week visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=10 border="0" color="0" x="987" y="4" height="76" width="366" format="@@@@/@@/@@" html.valueishtml="0"  name=from_date visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=20 border="0" color="0" x="1362" y="4" height="76" width="370" format="@@@@/@@/@@~tif(isnumber(  to_date  ),'@@@@/@@/@@','')" html.valueishtml="0"  name=to_date visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

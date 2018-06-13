@@ -1,0 +1,46 @@
+﻿$PBExportHeader$f_chk_magam.srf
+$PBExportComments$회계년도에 해당하는 결산마감 확인
+global type f_chk_magam from function_object
+end type
+
+forward prototypes
+global function integer f_chk_magam (integer ai_acct_class, string as_bdgt_year)
+end prototypes
+
+global function integer f_chk_magam (integer ai_acct_class, string as_bdgt_year);// ==========================================================================================
+// Function Name	:	f_getacctamt
+// Function 설명	:	회계년도에 해당하는 결산마감의 확정 여부를 Check 한다.
+// Argument			:	as_base_year		:	결산마감 회계년도
+// Return			:	Integer
+// ==========================================================================================
+
+long	ll_cnt
+
+choose case len(as_bdgt_year)
+	case 4
+		SELECT	COUNT(*)	INTO	:LL_CNT	FROM	FNDB.HFN011M
+		WHERE		ACCT_CLASS	=	:AI_ACCT_CLASS
+		AND		BDGT_YEAR	=	:AS_BDGT_YEAR
+		AND		CLOSE_YN		=	'Y'	;
+
+		if ll_cnt > 0 then
+			messagebox('확인', as_bdgt_year + ' 년도는 결산마감이 확정된 회계년도 입니다.~r~r' + &
+	   		                '자료의 처리를 실행할 수 없습니다.')
+		end if
+	case 6
+		SELECT	COUNT(*)	INTO	:LL_CNT	FROM	FNDB.HFN012M
+		WHERE		ACCT_CLASS	=	:AI_ACCT_CLASS
+		AND		ACCT_YYMM	=	:AS_BDGT_YEAR
+		AND		CLOSE_YN		=	'Y'	;
+
+		if ll_cnt > 0 then
+			messagebox('확인', string(as_bdgt_year, '@@@@/@@') + ' 년월은 월마감이 확정되었습니다.~r~r' + &
+	   		                '자료의 처리를 실행할 수 없습니다.')
+		end if
+end choose
+
+
+return ll_cnt
+
+end function
+

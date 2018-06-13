@@ -1,0 +1,95 @@
+﻿$PBExportHeader$d_hpa104a_1.srd
+$PBExportComments$급여계산 기준코드 관리(관리자용) - 모두 수정 가능
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(2) update=yes updatewhereclause=yes key=yes name=code dbname="hpa003d.code" dbalias=".code" )
+ column=(type=char(3) update=yes updatewhereclause=yes key=yes name=calc_code dbname="hpa003d.calc_code" dbalias=".calc_code" )
+ column=(type=char(30) update=yes updatewhereclause=yes name=calc_name dbname="hpa003d.calc_name" dbalias=".calc_name" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=jikjong_code dbname="hpa003d.jikjong_code" dbalias=".jikjong_code" initial="0" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=calc_gbn dbname="hpa003d.calc_gbn" dbalias=".calc_gbn" values="무조건	0/직급	duty_code/직위	jikwi_code/직무	jikmu_code/보직	bojik_code/근무년수	work_year/" )
+ column=(type=char(3) update=yes updatewhereclause=yes name=duty_code dbname="hpa003d.duty_code" dbalias=".duty_code" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=jikwi_code dbname="hpa003d.jikwi_code" dbalias=".jikwi_code" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=jikmu_code dbname="hpa003d.jikmu_code" dbalias=".jikmu_code" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=bojik_code dbname="hpa003d.bojik_code" dbalias=".bojik_code" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=year_f dbname="hpa003d.year_f" dbalias=".year_f" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=year_t dbname="hpa003d.year_t" dbalias=".year_t" initial="0" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=gubun_chk dbname="hpa003d.gubun_chk" dbalias=".gubun_chk" initial="1" values="금액	1/비율	2/" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=amt dbname="hpa003d.amt" dbalias=".amt" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=rate dbname="hpa003d.rate" dbalias=".rate" initial="0" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=use_yn dbname="hpa003d.use_yn" dbalias=".use_yn" initial="9" values="Y	9/	0/" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hpa003d.worker" dbalias=".worker" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hpa003d.work_date" dbalias=".work_date" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=pay_opt dbname="hpa003d.pay_opt" dbalias=".pay_opt" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hpa003d.ipaddr" dbalias=".ipaddr" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=job_uid dbname="hpa003d.job_uid" dbalias=".job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hpa003d.job_add" dbalias=".job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hpa003d.job_date" dbalias=".job_date" )
+ retrieve="  SELECT PADB.HPA003D.CODE,   
+         PADB.HPA003D.CALC_CODE,   
+         PADB.HPA003D.CALC_NAME,   
+         PADB.HPA003D.JIKJONG_CODE,   
+         PADB.HPA003D.CALC_GBN,   
+         PADB.HPA003D.DUTY_CODE,   
+         PADB.HPA003D.JIKWI_CODE,   
+         PADB.HPA003D.JIKMU_CODE,   
+         PADB.HPA003D.BOJIK_CODE,   
+         PADB.HPA003D.YEAR_F,   
+         PADB.HPA003D.YEAR_T,   
+         PADB.HPA003D.GUBUN_CHK,   
+         PADB.HPA003D.AMT,
+         PADB.HPA003D.RATE,   
+         PADB.HPA003D.USE_YN,   
+         PADB.HPA003D.WORKER,   
+         PADB.HPA003D.WORK_DATE,   
+         PADB.HPA003D.PAY_OPT,   
+         PADB.HPA003D.IPADDR,   
+         PADB.HPA003D.JOB_UID,   
+         PADB.HPA003D.JOB_ADD,   
+         PADB.HPA003D.JOB_DATE  
+    FROM PADB.HPA003D  
+   WHERE ( CODE = :as_code )   
+ORDER BY PADB.HPA003D.CALC_CODE ASC   
+" update="PADB.HPA003D" updatewhere=1 updatekeyinplace=no arguments=(("as_code", string)) )
+text(band=header alignment="2" text="코드" border="0" color="0" x="9" y="12" height="56" width="160" html.valueishtml="0"  name=calc_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="급여항목명" border="0" color="0" x="178" y="12" height="56" width="841" html.valueishtml="0"  name=calc_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="해당직종" border="0" color="0" x="1029" y="12" height="56" width="347" html.valueishtml="0"  name=jikjong_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계산구분" border="0" color="0" x="1385" y="12" height="56" width="302" html.valueishtml="0"  name=calc_gbn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직급코드" border="0" color="0" x="1696" y="12" height="56" width="370" html.valueishtml="0"  name=duty_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직위코드" border="0" color="0" x="2075" y="12" height="56" width="384" html.valueishtml="0"  name=jikwi_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직무코드" border="0" color="0" x="2469" y="12" height="56" width="407" html.valueishtml="0"  name=jikmu_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="보직코드" border="0" color="0" x="2885" y="12" height="56" width="402" html.valueishtml="0"  name=bojik_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="근무년수(F)" border="0" color="0" x="3296" y="12" height="56" width="402" html.valueishtml="0"  name=year_f_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="근무년수(T)" border="0" color="0" x="3707" y="12" height="56" width="411" html.valueishtml="0"  name=year_t_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="구분" border="0" color="0" x="4128" y="12" height="56" width="187" html.valueishtml="0"  name=gubun_chk_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="금  액" border="0" color="0" x="4325" y="12" height="56" width="384" html.valueishtml="0"  name=amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="비율" border="0" color="0" x="4718" y="12" height="56" width="215" html.valueishtml="0"  name=rate_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="사용" border="0" color="0" x="4942" y="12" height="56" width="192" html.valueishtml="0"  name=use_yn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=10 border="0" color="0" x="9" y="4" height="72" width="160" format="[general]" html.valueishtml="0"  name=calc_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=20 border="0" color="0" x="178" y="4" height="72" width="841" format="[general]" html.valueishtml="0"  name=calc_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=12 alignment="2" tabsequence=110 border="0" color="0" x="4128" y="4" height="72" width="187" format="[general]" html.valueishtml="0"  name=gubun_chk visible="1" ddlb.limit=1 ddlb.allowedit=yes ddlb.case=any ddlb.required=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=13 alignment="1" tabsequence=120 border="0" color="0" x="4325" y="4" height="72" width="384" format="#,##0" html.valueishtml="0" protect="0~tif ( gubun_chk = '1', 0, 1)"  name=amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow() and gubun_chk = '1', rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=14 alignment="2" tabsequence=130 border="0" color="0" x="4718" y="4" height="72" width="215" format="##0" html.valueishtml="0" protect="0~tif ( gubun_chk = '2', 0, 1)"  name=rate visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow() and gubun_chk = '2', rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=15 alignment="2" tabsequence=140 border="0" color="0" x="4942" y="4" height="72" width="192" format="[general]" html.valueishtml="0"  name=use_yn visible="1" ddlb.limit=1 ddlb.allowedit=yes ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=10 alignment="2" tabsequence=90 border="0" color="0" x="3296" y="4" height="72" width="402" format="[General]" html.valueishtml="0" protect="0~tif ( calc_gbn = 'work_year', 0, 1)"  name=year_f visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow() and calc_gbn = 'work_year', rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=11 alignment="2" tabsequence=100 border="0" color="0" x="3707" y="4" height="72" width="411" format="[General]" html.valueishtml="0" protect="0~tif ( calc_gbn = 'work_year', 0, 1)"  name=year_t visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow() and calc_gbn = 'work_year', rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=5 alignment="2" tabsequence=40 border="0" color="0" x="1385" y="4" height="72" width="302" format="[general]" html.valueishtml="0"  name=calc_gbn pointer="..\bmp\HAND.CUR" visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=4 alignment="2" tabsequence=30 border="0" color="0" x="1029" y="4" height="72" width="347" format="[General]" html.valueishtml="0"  name=jikjong_code pointer="..\bmp\HAND.CUR" visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=300 dddw.lines=10 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.autohscroll=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=8 alignment="2" tabsequence=70 border="0" color="0" x="2469" y="4" height="72" width="407" format="[General]" html.valueishtml="0" protect="0~tif ( calc_gbn = 'jikmu_code', 0, 1)"  name=jikmu_code visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=300 dddw.lines=10 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.autohscroll=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow() and calc_gbn = 'jikmu_code', rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=9 alignment="0" tabsequence=80 border="0" color="0" x="2885" y="4" height="72" width="402" format="[general]" html.valueishtml="0" protect="0~tif ( calc_gbn = 'bojik_code', 0, 1)"  name=bojik_code visible="1" dddw.name=dddw_bojik_code dddw.displaycolumn=appoint_name dddw.datacolumn=appoint_code dddw.percentwidth=300 dddw.lines=10 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.autohscroll=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow() and calc_gbn = 'bojik_code', rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=6 alignment="2" tabsequence=50 border="0" color="0" x="1696" y="4" height="72" width="370" format="[general]" html.valueishtml="0" protect="0~tif ( calc_gbn = 'duty_code', 0, 1)"  name=duty_code pointer="..\bmp\HAND.CUR" visible="1" dddw.name=dddw_jikgub_code dddw.displaycolumn=duty_name dddw.datacolumn=duty_code dddw.percentwidth=300 dddw.lines=10 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.autohscroll=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow() and calc_gbn = 'duty_code', rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=7 alignment="2" tabsequence=60 border="0" color="0" x="2075" y="4" height="72" width="384" format="[General]" html.valueishtml="0" protect="0~tif ( calc_gbn = 'jikwi_code', 0, 1)"  name=jikwi_code pointer="..\bmp\HAND.CUR" visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=300 dddw.lines=10 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.autohscroll=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow() and calc_gbn = 'jikwi_code', rgb ( 255, 255, 255 ), 78682240)" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

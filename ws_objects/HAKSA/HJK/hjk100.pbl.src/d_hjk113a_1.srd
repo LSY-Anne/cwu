@@ -1,0 +1,92 @@
+﻿$PBExportHeader$d_hjk113a_1.srd
+$PBExportComments$어학연수(실습학기제) 관리
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=96 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=char(20) update=yes updatewhereclause=yes key=yes name=silsub_gb dbname="silsub_gb" )
+ column=(type=char(4) update=yes updatewhereclause=yes key=yes name=year dbname="year" )
+ column=(type=char(1) update=yes updatewhereclause=yes key=yes name=hakgi dbname="hakgi" )
+ column=(type=char(9) update=yes updatewhereclause=yes key=yes name=hakbun dbname="hakbun" )
+ column=(type=char(20) updatewhereclause=yes name=kname dbname="kname" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=seq dbname="seq" )
+ column=(type=char(3) update=yes updatewhereclause=yes name=nation_cd dbname="nation_cd" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=association_nm dbname="association_nm" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=train_memo dbname="train_memo" )
+ column=(type=char(7) update=yes updatewhereclause=yes name=gwamok_id dbname="gwamok_id" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=acc_hakjum dbname="acc_hakjum" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=accept_yn dbname="accept_yn" initial="N" values="	Y/	N" )
+ column=(type=char(1) updatewhereclause=yes name=acc_yn dbname="acc_yn" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=close_yn dbname="close_yn" initial="N" values="	Y/	N" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="job_date" )
+ retrieve="SELECT  A.SILSUB_GB
+       ,A.YEAR
+       ,A.HAKGI
+       ,A.HAKBUN
+       ,B.hname AS KNAME
+       ,A.SEQ
+       ,A.NATION_CD
+       ,A.ASSOCIATION_NM
+       ,A.TRAIN_MEMO
+       ,A.GWAMOK_ID
+       ,A.ACC_HAKJUM
+       ,A.ACCEPT_YN
+	  ,A.ACCEPT_YN AS ACC_YN
+       ,A.CLOSE_YN
+       ,A.WORKER
+       ,A.IPADDR
+       ,A.WORK_DATE
+       ,A.JOB_UID
+       ,A.JOB_ADD
+       ,A.JOB_DATE
+FROM    HAKSA.JAEHAK_SILSUB A,
+        HAKSA.JAEHAK_HAKJUK B
+WHERE   A.SILSUB_GB = :as_silsub_gb
+AND     (:as_hakbun = '%' or A.HAKBUN = :as_hakbun)
+AND     A.HAKBUN = B.HAKBUN" update="HAKSA.JAEHAK_SILSUB" updatewhere=0 updatekeyinplace=no arguments=(("as_silsub_gb", string),("as_hakbun", string))  sort="silsub_gb A hakbun A year A hakgi A " )
+group(level=1 header.height=0 trailer.height=0 by=("silsub_gb" , "hakbun" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text="학기" border="0" color="33554432" x="599" y="8" height="80" width="201" html.valueishtml="0"  name=hakgi_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="년도" border="0" color="33554432" x="361" y="8" height="80" width="229" html.valueishtml="0"  name=year_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="구분" border="0" color="33554432" x="9" y="8" height="80" width="343" html.valueishtml="0"  name=silsub_gb_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="인정과목" border="0" color="33554432" x="3109" y="8" height="80" width="549" html.valueishtml="0"  name=gwamok_id_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="인정학점" border="0" color="33554432" x="3666" y="8" height="80" width="242" html.valueishtml="0"  name=acc_hakjum_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성적인정여부" border="0" color="33554432" x="3918" y="8" height="80" width="366" html.valueishtml="0"  name=accept_yn_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="완료여부" border="0" color="33554432" x="4293" y="8" height="80" width="247" html.valueishtml="0"  name=close_yn_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="국가코드" border="0" color="33554432" x="1472" y="8" height="80" width="343" html.valueishtml="0"  name=nation_cd_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="성명" border="0" color="33554432" x="1207" y="8" height="80" width="256" html.valueishtml="0"  name=kname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="관련기관명" border="0" color="33554432" x="1824" y="8" height="80" width="599" html.valueishtml="0"  name=association_nm_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="어학(실습)내역" border="0" color="33554432" x="2432" y="8" height="80" width="667" html.valueishtml="0"  name=train_memo_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학번" border="0" color="33554432" x="809" y="8" height="80" width="297" html.valueishtml="0"  name=hakbun_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="" border="0" color="0" x="1115" y="8" height="80" width="82" html.valueishtml="0"  name=s_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=10 border="0" color="33554432" x="9" y="8" height="76" width="343" format="[general]" html.valueishtml="0" protect="0~tIF ( acc_yn <> '',1,0)"  name=silsub_gb  tag="" visible="1" dddw.name=d_dddw_code dddw.displaycolumn=cd_nm dddw.datacolumn=cd dddw.percentwidth=200 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=20 border="0" color="33554432" x="366" y="8" height="76" width="224" format="[general]" html.valueishtml="0" protect="0~tIF ( acc_yn <> '',1,0)"  name=year  tag="NOTNULL(년도);YYYY" visible="1" editmask.mask="####" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=30 border="0" color="33554432" x="599" y="8" height="76" width="201" format="[general]" html.valueishtml="0" protect="0~tIF ( acc_yn <> '',1,0)"  name=hakgi  tag="NOTNULL(학기)" visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=40 border="0" color="33554432" x="814" y="8" height="76" width="293" format="[general]" html.valueishtml="0" protect="0~tIF ( acc_yn <> '',1,IF(ISROWNEW(),0,1))"  name=hakbun  tag="NOTNULL(학번)" visible="1" editmask.mask="#########" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="2" tabsequence=110 border="0" color="33554432" x="3918" y="8" height="76" width="366" format="[general]" html.valueishtml="0" protect="0~tIF ( acc_yn <> '',1,0)"  name=accept_yn visible="1" checkbox.text="" checkbox.on="Y" checkbox.off="N" checkbox.scale=yes checkbox.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="2" tabsequence=120 border="0" color="33554432" x="4293" y="8" height="76" width="247" format="[general]" html.valueishtml="0" protect="0~tIF ( acc_yn <> '',1,0)"  name=close_yn visible="1" checkbox.text="" checkbox.on="Y" checkbox.off="N" checkbox.scale=yes checkbox.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="2" tabsequence=100 border="0" color="33554432" x="3666" y="8" height="76" width="242" format="[general]" html.valueishtml="0" protect="0~tIF ( acc_yn <> '',1,0)"  name=acc_hakjum visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=50 border="0" color="33554432" x="1207" y="8" height="76" width="256" format="[general]" html.valueishtml="0" protect="0~tIF ( acc_yn <> '',1,IF(ISROWNEW(),0,1))"  name=kname  tag="KOR" visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+bitmap(band=detail filename="..\img\icon\ib_search.gif" x="1111" y="4" height="72" width="82" border="0"  name=p_search visible="1~tIF ( acc_yn <> '',0,IF(ISROWNEW(),1,0))" )
+compute(band=detail alignment="0" expression=" seq "border="0" color="0" x="1115" y="132" height="76" width="82" format="[GENERAL]" html.valueishtml="0"  name=s visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="0" tabsequence=60 border="0" color="33554432" x="1472" y="8" height="76" width="343" format="[general]" html.valueishtml="0" protect="0~tIF ( acc_yn <> '',1,0)"  name=nation_cd  tag="KOR" visible="1" dddw.name=d_dddw_gukgacode dddw.displaycolumn=gukga_name dddw.datacolumn=gukga_id dddw.percentwidth=300 dddw.lines=10 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=70 border="0" color="33554432" x="1824" y="8" height="76" width="599" format="[general]" html.valueishtml="0" protect="0~tIF ( acc_yn <> '',1,0)"  name=association_nm  tag="kor" visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=80 border="0" color="33554432" x="2432" y="8" height="76" width="667" format="[general]" html.valueishtml="0" protect="0~tIF ( acc_yn <> '',1,0)"  name=train_memo  tag="kor" visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=90 border="0" color="33554432" x="3109" y="8" height="76" width="549" format="[general]" html.valueishtml="0" protect="0~tIF ( acc_yn <> '',1,0)"  name=gwamok_id  tag="NOTNULL(인정과목);kor" visible="1" dddw.name=d_dddw_gwamokcode dddw.displaycolumn=gwamok_gubun dddw.datacolumn=gwamok_id dddw.percentwidth=200 dddw.lines=10 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

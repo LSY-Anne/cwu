@@ -1,0 +1,105 @@
+﻿$PBExportHeader$d_hfn203a_1.srd
+$PBExportComments$결의서송부취소
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=decimal(0) updatewhereclause=yes key=yes name=acct_class dbname="acct_class" )
+ column=(type=char(8) updatewhereclause=yes key=yes name=resol_date dbname="resol_date" )
+ column=(type=number updatewhereclause=yes key=yes name=resol_no dbname="resol_no" )
+ column=(type=char(4) updatewhereclause=yes name=resol_gwa dbname="resol_gwa" )
+ column=(type=decimal(0) updatewhereclause=yes name=slip_class dbname="slip_class" )
+ column=(type=char(100) updatewhereclause=yes name=remark dbname="remark" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=step_opt dbname="step_opt" )
+ column=(type=decimal(0) updatewhereclause=yes name=genesis_gb dbname="genesis_gb" )
+ column=(type=char(14) update=yes updatewhereclause=yes name=pass_dt dbname="pass_dt" )
+ column=(type=char(8) updatewhereclause=yes name=slip_date dbname="slip_date" )
+ column=(type=number updatewhereclause=yes name=slip_no dbname="slip_no" )
+ column=(type=char(10) updatewhereclause=yes name=jumun_no dbname="jumun_no" )
+ column=(type=char(10) updatewhereclause=yes name=ibgo_no dbname="ibgo_no" )
+ column=(type=char(4) updatewhereclause=yes name=bdgt_year dbname="bdgt_year" )
+ column=(type=char(5) updatewhereclause=yes name=worker dbname="worker" )
+ column=(type=char(20) updatewhereclause=yes name=ipaddr dbname="ipaddr" )
+ column=(type=datetime updatewhereclause=yes name=work_date dbname="work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="job_date" )
+ column=(type=char(4000) updatewhereclause=yes name=com_step_opt_nm dbname="com_step_opt_nm" )
+ column=(type=number updatewhereclause=yes name=com_resol_amt dbname="com_resol_amt" )
+ column=(type=char(4000) updatewhereclause=yes name=com_genesis_nm dbname="com_genesis_nm" )
+ column=(type=number updatewhereclause=yes name=com_chk dbname="com_chk" values="	1/	0" )
+ column=(type=char(4000) updatewhereclause=yes name=com_slip_class_nm dbname="com_slip_class_nm" )
+ retrieve="SELECT	A.ACCT_CLASS,
+			A.RESOL_DATE,
+			A.RESOL_NO,
+			A.RESOL_GWA,
+			A.SLIP_CLASS,
+			A.REMARK,
+			A.STEP_OPT,
+			A.GENESIS_GB,
+			A.PASS_DT,
+			A.SLIP_DATE,
+			A.SLIP_NO,
+			A.JUMUN_NO,
+			A.IBGO_NO,
+			A.BDGT_YEAR,
+			A.WORKER,
+			A.IPADDR,
+			A.WORK_DATE,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE,
+			FU_CODE_NM('HAENG','STEP_OPT',A.STEP_OPT,'K')		COM_STEP_OPT_NM,
+			NVL(B.COM_RESOL_AMT,0)										COM_RESOL_AMT,
+			FU_CODE_NM('HAENG','GENESIS_GB',A.GENESIS_GB,'K')	COM_GENESIS_NM,
+			0																	COM_CHK,
+			FU_CODE_NM('HAENG','SLIP_CLASS',A.SLIP_CLASS,'K')	COM_SLIP_CLASS_NM
+FROM		FNDB.HFN101M A,
+			(	SELECT	B.ACCT_CLASS,
+							B.RESOL_DATE,
+							B.RESOL_NO,
+							NVL(SUM(B.RESOL_AMT),0)					COM_RESOL_AMT
+				FROM		FNDB.HFN102M B
+				WHERE		B.ACCT_CLASS = :AI_ACCT_CLASS
+				AND		B.RESOL_DATE BETWEEN :AS_FROM_DATE AND :AS_TO_DATE
+				GROUP	BY	B.ACCT_CLASS,
+							B.RESOL_DATE,
+							B.RESOL_NO	) B
+WHERE		A.ACCT_CLASS  = B.ACCT_CLASS
+AND		A.RESOL_DATE  = B.RESOL_DATE
+AND		A.RESOL_NO    = B.RESOL_NO
+AND		A.ACCT_CLASS  = :AI_ACCT_CLASS
+AND		A.RESOL_DATE  BETWEEN :AS_FROM_DATE AND :AS_TO_DATE
+AND		A.RESOL_GWA   = :AS_RESOL_GWA
+AND		A.SLIP_CLASS  LIKE :AS_SLIP_CLASS||'%'
+AND		A.STEP_OPT    = 2
+ORDER	BY	A.RESOL_DATE, A.RESOL_NO
+" update="FNDB.HFN101M" updatewhere=0 updatekeyinplace=yes arguments=(("ai_acct_class", number),("as_resol_gwa", string),("as_slip_class", string),("as_from_date", string),("as_to_date", string)) )
+text(band=header alignment="2" text="결의구분" border="0" color="0" x="9" y="8" height="60" width="375" html.valueishtml="0"  name=com_slip_class_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="선택" border="0" color="0" x="3904" y="8" height="60" width="224" html.valueishtml="0"  name=com_chk_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="결의상태" border="0" color="0" x="1166" y="8" height="60" width="379" html.valueishtml="0"  name=com_step_opt_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="결의번호" border="0" color="0" x="777" y="8" height="60" width="379" html.valueishtml="0"  name=resol_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="결의일자" border="0" color="0" x="393" y="8" height="60" width="375" html.valueishtml="0"  name=resol_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="적요" border="0" color="0" x="1554" y="8" height="60" width="1467" html.valueishtml="0"  name=remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="결의총금액" border="0" color="0" x="3429" y="8" height="60" width="466" html.valueishtml="0"  name=com_resol_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="송부일자" border="0" color="0" x="3031" y="8" height="60" width="389" html.valueishtml="0"  name=pass_dt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=25 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="8" height="60" width="375" format="[general]" html.valueishtml="0"  name=com_slip_class_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="393" y="8" height="60" width="375" format="@@@@/@@/@@" html.valueishtml="0"  name=resol_date visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1554" y="8" height="60" width="1467" format="[general]" html.valueishtml="0"  name=remark visible="1" edit.limit=500 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=21 alignment="0" tabsequence=32766 border="0" color="0" x="1166" y="8" height="60" width="379" format="[general]" html.valueishtml="0"  name=com_step_opt_nm visible="1" edit.limit=4000 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=22 alignment="1" tabsequence=32766 border="0" color="0" x="3429" y="8" height="60" width="466" format="#,###" html.valueishtml="0"  name=com_resol_amt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=24 alignment="2" tabsequence=10 border="0" color="0" x="3904" y="8" height="60" width="224" format="[general]" html.valueishtml="0"  name=com_chk visible="1" checkbox.text="" checkbox.on="1" checkbox.off="0" checkbox.scale=yes checkbox.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="777" y="8" height="60" width="379" format="[general]" html.valueishtml="0"  name=resol_no visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="0" x="3031" y="8" height="60" width="389" format="@@@@/@@/@@" html.valueishtml="0"  name=pass_dt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

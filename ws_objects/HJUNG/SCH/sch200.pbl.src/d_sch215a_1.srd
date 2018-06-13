@@ -1,0 +1,135 @@
+﻿$PBExportHeader$d_sch215a_1.srd
+$PBExportComments$입사생 비용조정처리
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(3) updatewhereclause=yes name=recruit_no dbname="saz220t.recruit_no" dbalias="A.recruit_no" )
+ column=(type=char(8) updatewhereclause=yes name=house_req_dt dbname="saz220t.house_req_dt" dbalias="A.house_req_dt" )
+ column=(type=char(20) updatewhereclause=yes name=hname dbname="saz220t.hname" dbalias="A.hname" )
+ column=(type=char(60) updatewhereclause=yes name=sex dbname="sex" )
+ column=(type=char(50) updatewhereclause=yes name=gwa dbname="gwa" )
+ column=(type=char(1) updatewhereclause=yes name=hakyun dbname="saz220t.hakyun" dbalias="A.hakyun" )
+ column=(type=char(60) updatewhereclause=yes name=door_gb dbname="door_gb" )
+ column=(type=char(60) updatewhereclause=yes name=enter_term dbname="enter_term" )
+ column=(type=char(1) update=yes updatewhereclause=yes key=yes name=house_gb dbname="saz280t.house_gb" dbalias="B.house_gb" )
+ column=(type=char(4) update=yes updatewhereclause=yes key=yes name=std_year dbname="saz280t.std_year" dbalias="B.std_year" )
+ column=(type=char(20) update=yes updatewhereclause=yes key=yes name=house_req_no dbname="saz280t.house_req_no" dbalias="B.house_req_no" )
+ column=(type=char(9) update=yes updatewhereclause=yes name=hakbun dbname="saz280t.hakbun" dbalias="B.hakbun" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=fee_str dbname="saz280t.fee_str" dbalias="B.fee_str" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=fee_end dbname="saz280t.fee_end" dbalias="B.fee_end" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=guarantee_amt dbname="saz280t.guarantee_amt" dbalias="B.guarantee_amt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=enter_amt dbname="saz280t.enter_amt" dbalias="B.enter_amt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=mng_amt dbname="saz280t.mng_amt" dbalias="B.mng_amt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=food_amt dbname="saz280t.food_amt" dbalias="B.food_amt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=dc_amt dbname="saz280t.dc_amt" dbalias="B.dc_amt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=house_fee_tot dbname="saz280t.house_fee_tot" dbalias="B.house_fee_tot" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=cms_bank_cd dbname="saz280t.cms_bank_cd" dbalias="B.cms_bank_cd" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=cms_deposit_no dbname="saz280t.cms_deposit_no" dbalias="B.cms_deposit_no" )
+ column=(type=char(30) update=yes updatewhereclause=yes name=cms_deposit_nm dbname="saz280t.cms_deposit_nm" dbalias="B.cms_deposit_nm" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=bill_prt_yn dbname="saz280t.bill_prt_yn" dbalias="B.bill_prt_yn" values="출력	Y/미출력	N/" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=receipt_status dbname="saz280t.receipt_status" dbalias="B.receipt_status" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=receipt_date dbname="saz280t.receipt_date" dbalias="B.receipt_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=worker dbname="saz280t.worker" dbalias="B.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="saz280t.ipaddr" dbalias="B.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="saz280t.work_date" dbalias="B.work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_uid dbname="saz280t.job_uid" dbalias="B.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="saz280t.job_add" dbalias="B.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="saz280t.job_date" dbalias="B.job_date" )
+ retrieve="  SELECT A.RECRUIT_NO,   
+         A.HOUSE_REQ_DT,   
+         A.HNAME,   
+        (SELECT FNAME FROM CDDB.KCH102D WHERE CODE_GB = 'sex_code' AND  CODE =  A.SEX  )    as SEX,   
+         (SELECT FNAME FROM CDDB.KCH003M WHERE GWA = A.GWA) as GWA,   
+         A.HAKYUN,       
+       (SELECT FNAME FROM CDDB.KCH102D WHERE CODE_GB = 'SAZ36' AND  CODE =  A.DOOR_GB  )   as DOOR_GB,   
+          (SELECT FNAME FROM CDDB.KCH102D WHERE CODE_GB = 'SAZ29' AND  CODE =  A.ENTER_TERM  )   as ENTER_TERM,   
+ B.HOUSE_GB,   
+         B.STD_YEAR,   
+         B.HOUSE_REQ_NO,   
+         B.HAKBUN,   
+         B.FEE_STR,   
+         B.FEE_END,   
+         B.GUARANTEE_AMT,   
+         B.ENTER_AMT,   
+         B.MNG_AMT,   
+         B.FOOD_AMT,   
+         B.DC_AMT,   
+         B.HOUSE_FEE_TOT,   
+         B.CMS_BANK_CD,   
+         B.CMS_DEPOSIT_NO,   
+         B.CMS_DEPOSIT_NM,   
+         B.BILL_PRT_YN,   
+         B.RECEIPT_STATUS,   
+         B.RECEIPT_DATE,   
+         B.WORKER,   
+         B.IPADDR,   
+         B.WORK_DATE,   
+         B.JOB_UID,   
+         B.JOB_ADD,   
+         B.JOB_DATE  
+    FROM SCH.SAZ220T A, 
+         SCH.SAZ280T  B
+   WHERE ( A.house_gb = B.house_gb) and  
+         ( A.std_year = B.std_year) and  
+         ( A.house_req_no = B.house_req_no) and  
+         ( ( B.HOUSE_GB = :as_house_gb ) AND  
+         ( B.STD_YEAR = :as_std_year ) AND  
+ A.GWA LIKE :as_gwa AND
+         ( :as_hakbun = '%' Or B.HAKBUN = :as_hakbun ) )    
+" update="SCH.SAZ280T" updatewhere=0 updatekeyinplace=no arguments=(("as_house_gb", string),("as_std_year", string),("as_gwa", string),("as_hakbun", string)) )
+text(band=header alignment="2" text="성명" border="0" color="33554432" x="430" y="8" height="56" width="448" html.valueishtml="0"  name=hname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="성별" border="0" color="33554432" x="1765" y="8" height="56" width="169" html.valueishtml="0"  name=sex_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="학과" border="0" color="33554432" x="887" y="8" height="56" width="690" html.valueishtml="0"  name=gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="학년" border="0" color="33554432" x="1586" y="8" height="56" width="169" html.valueishtml="0"  name=hakyun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="지원실" border="0" color="33554432" x="1943" y="8" height="56" width="251" html.valueishtml="0"  name=door_gb_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="입사기간" border="0" color="33554432" x="2203" y="8" height="56" width="329" html.valueishtml="0"  name=enter_term_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="학번" border="0" color="0" x="9" y="8" height="56" width="411" html.valueishtml="0"  name=hakbun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="납입시작일" border="0" color="0" x="2542" y="8" height="56" width="357" html.valueishtml="0"  name=fee_str_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="납입종료일" border="0" color="0" x="2907" y="8" height="56" width="361" html.valueishtml="0"  name=fee_end_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="보증금" border="0" color="0" x="3278" y="8" height="56" width="384" html.valueishtml="0"  name=guarantee_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="입사비" border="0" color="0" x="3671" y="8" height="56" width="361" html.valueishtml="0"  name=enter_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="관리비" border="0" color="0" x="4041" y="8" height="56" width="315" html.valueishtml="0"  name=mng_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="식대비" border="0" color="0" x="4366" y="8" height="56" width="265" html.valueishtml="0"  name=food_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="할인금액" border="0" color="0" x="4640" y="8" height="56" width="311" html.valueishtml="0"  name=dc_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="총액" border="0" color="0" x="4960" y="8" height="56" width="416" html.valueishtml="0"  name=house_fee_tot_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="은행코드" border="0" color="0" x="5385" y="8" height="56" width="297" html.valueishtml="0"  name=cms_bank_cd_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계좌번호" border="0" color="0" x="5691" y="8" height="56" width="453" html.valueishtml="0"  name=cms_deposit_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="예금주명" border="0" color="0" x="6153" y="8" height="56" width="293" html.valueishtml="0"  name=cms_deposit_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="고지서출력여부" border="0" color="0" x="6455" y="8" height="56" width="425" html.valueishtml="0"  name=bill_prt_yn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="입금상태" border="0" color="0" x="6889" y="8" height="56" width="315" html.valueishtml="0"  name=receipt_status_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="입금일자" border="0" color="0" x="7214" y="8" height="56" width="425" html.valueishtml="0"  name=receipt_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=21 alignment="2" tabsequence=90 border="0" color="33554432" x="5385" y="8" height="68" width="297" format="[general]" html.valueishtml="0"  name=cms_bank_cd visible="1" dddw.name=d_dddw_code dddw.displaycolumn=cd_nm dddw.datacolumn=cd dddw.percentwidth=200 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes dddw.autoretrieve=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=22 alignment="0" tabsequence=100 border="0" color="33554432" x="5691" y="8" height="68" width="453" format="[general]" html.valueishtml="0"  name=cms_deposit_no visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=23 alignment="2" tabsequence=110 border="0" color="33554432" x="6153" y="8" height="68" width="293" format="[general]" html.valueishtml="0"  name=cms_deposit_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=24 alignment="2" tabsequence=120 border="0" color="33554432" x="6455" y="8" height="68" width="425" format="[general]" html.valueishtml="0"  name=bill_prt_yn visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=25 alignment="2" tabsequence=130 border="0" color="33554432" x="6889" y="8" height="68" width="315" format="[general]" html.valueishtml="0"  name=receipt_status visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=26 alignment="2" tabsequence=140 border="0" color="33554432" x="7218" y="8" height="68" width="421" format="[general]" html.valueishtml="0"  name=receipt_date visible="1" editmask.mask="####/##/##" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="2" tabsequence=20 border="0" color="33554432" x="2912" y="8" height="68" width="357" format="[general]" html.valueishtml="0"  name=fee_end visible="1" editmask.mask="####/##/##" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="2" tabsequence=10 border="0" color="33554432" x="2546" y="8" height="68" width="352" format="[general]" html.valueishtml="0"  name=fee_str visible="1" editmask.mask="####/##/##" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="1" tabsequence=30 border="0" color="33554432" x="3282" y="8" height="68" width="379" format="[general]" html.valueishtml="0"  name=guarantee_amt visible="1" editmask.mask="###,###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=16 alignment="1" tabsequence=40 border="0" color="33554432" x="3675" y="8" height="68" width="357" format="[general]" html.valueishtml="0"  name=enter_amt visible="1" editmask.mask="###,###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=17 alignment="1" tabsequence=50 border="0" color="33554432" x="4046" y="8" height="68" width="311" format="[general]" html.valueishtml="0"  name=mng_amt visible="1" editmask.mask="###,###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=18 alignment="1" tabsequence=60 border="0" color="33554432" x="4370" y="8" height="68" width="261" format="[general]" html.valueishtml="0"  name=food_amt visible="1" editmask.mask="###,###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=19 alignment="1" tabsequence=70 border="0" color="33554432" x="4645" y="8" height="68" width="306" format="[general]" html.valueishtml="0"  name=dc_amt visible="1" editmask.mask="###,###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=20 alignment="1" tabsequence=80 border="0" color="33554432" x="4965" y="8" height="68" width="411" format="[general]" html.valueishtml="0"  name=house_fee_tot visible="1" editmask.mask="###,###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="33554432" x="1586" y="8" height="68" width="169" format="[general]" html.valueishtml="0"  name=hakyun visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="33554432" x="1765" y="8" height="68" width="169" format="[general]" html.valueishtml="0"  name=sex visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="33554432" x="1943" y="8" height="68" width="251" format="[general]" html.valueishtml="0"  name=door_gb visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="33554432" x="2203" y="8" height="68" width="329" format="[general]" html.valueishtml="0"  name=enter_term visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="33554432" x="430" y="8" height="68" width="448" format="[general]" html.valueishtml="0"  name=hname visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="2" tabsequence=32766 border="0" color="33554432" x="9" y="8" height="68" width="411" format="[general]" html.valueishtml="0"  name=hakbun visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="33554432" x="887" y="8" height="68" width="690" format="[general]" html.valueishtml="0"  name=gwa visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

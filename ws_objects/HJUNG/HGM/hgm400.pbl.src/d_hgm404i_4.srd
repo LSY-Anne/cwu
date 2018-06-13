@@ -1,0 +1,84 @@
+﻿$PBExportHeader$d_hgm404i_4.srd
+$PBExportComments$비품수리신청발주
+release 10.5;
+datawindow(units=0 timer_interval=0 color=80269524 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=376 color="536870912" )
+table(column=(type=char(10) update=yes updatewhereclause=yes key=yes name=ord_no dbname="hst032h.ord_no" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=req_no dbname="hst032h.req_no" )
+ column=(type=number update=yes updatewhereclause=yes name=item_seq dbname="hst032h.item_seq" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=dept_code dbname="hst032h.dept_code" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=cust_no dbname="hst032h.cust_no" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=ord_amt dbname="hst032h.ord_amt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=vat_amt dbname="hst032h.vat_amt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=ord_class dbname="hst032h.ord_class" initial="6" values="발주	6/입고	7/" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=ord_day dbname="hst032h.ord_day" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=ord_date dbname="hst032h.ord_date" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=pay_date dbname="hst032h.pay_date" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=devilery_dt dbname="hst032h.devilery_dt" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=sign_condition dbname="hst032h.sign_condition" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=remark dbname="hst032h.remark" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hst032h.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hst032h.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hst032h.work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hst032h.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hst032h.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hst032h.job_date" )
+ retrieve="SELECT	A.ORD_NO,
+         A.REQ_NO,
+         A.ITEM_SEQ,
+			A.DEPT_CODE,
+			B.CUST_NO,
+			A.ORD_AMT,
+			A.VAT_AMT,
+			A.ORD_CLASS,
+			A.ORD_DAY,
+			A.ORD_DATE,
+			A.PAY_DATE,
+			A.DEVILERY_DT,
+			A.SIGN_CONDITION,
+			A.REMARK,
+			A.WORKER,
+			A.IPADDR,
+			A.WORK_DATE,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE			
+FROM		STDB.HST032H A, STDB.HST031H B
+WHERE		A.ORD_NO = B.ORD_NO
+AND      A.ORD_NO   = :as_ord_no
+and      a.cust_no = :as_cust_no
+" update="STDB.HST032H" updatewhere=0 updatekeyinplace=no arguments=(("as_ord_no", string),("as_cust_no", string))  sort="ord_no A dept_code A cust_no A " )
+text(band=detail alignment="1" text="발주번호" border="0" color="0" x="0" y="44" height="60" width="439" html.valueishtml="0"  name=ord_no_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="결재조건" border="0" color="0" x="32" y="120" height="60" width="402" html.valueishtml="0"  name=sign_condition_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="입고예정일" border="0" color="0" x="37" y="208" height="60" width="398" html.valueishtml="0"  name=devilery_dt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=10 border="5" color="0" x="453" y="120" height="64" width="599" format="[general]" html.valueishtml="0"  name=sign_condition visible="1" dddw.name=dddw_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=yes dddw.case=any dddw.vscrollbar=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=12 alignment="2" tabsequence=20 border="5" color="0" x="453" y="204" height="64" width="599" format="@@@@/@@/@@" html.valueishtml="0"  name=devilery_dt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="1" text="발주일자" border="0" color="0" x="1230" y="116" height="60" width="320" html.valueishtml="0"  name=ord_day_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="발주부서" border="0" color="0" x="2258" y="208" height="60" width="480" html.valueishtml="0"  name=dept_code_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="5" color="0" x="2757" y="204" height="64" width="599" format="[general]" html.valueishtml="0"  name=dept_code visible="1" dddw.name=dddw_dept_code_apply dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=yes dddw.case=any dddw.vscrollbar=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="80269524" )
+text(band=detail alignment="1" text="비고" border="0" color="0" x="32" y="288" height="60" width="402" html.valueishtml="0"  name=remark_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=40 border="5" color="0" x="453" y="288" height="64" width="2898" format="[general]" html.valueishtml="0"  name=remark visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="5" color="0" x="1568" y="200" height="60" width="599" format="[general]" html.valueishtml="0"  name=ord_class visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="80269524" )
+text(band=detail alignment="1" text="발주상태" border="0" color="0" x="1225" y="196" height="60" width="320" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="80269524" )
+column(band=detail id=10 alignment="2" tabsequence=30 border="5" color="0" x="1568" y="116" height="64" width="599" format="@@@@/@@/@@" html.valueishtml="0"  name=ord_date visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="1" text="거래처명" border="0" color="0" x="2432" y="124" height="60" width="293" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="5" color="0" x="2752" y="116" height="64" width="599" format="[general]" html.valueishtml="0"  name=cust_no visible="1" dddw.name=dddw_cust dddw.displaycolumn=cust_name dddw.datacolumn=cust_no dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="80269524" )
+text(band=detail alignment="1" text="부가세" border="0" color="0" x="4791" y="40" height="60" width="402" html.valueishtml="0"  name=vat_amt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="5" color="0" x="5211" y="40" height="64" width="599" format="#,###,##0" html.valueishtml="0"  name=vat_amt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="5" color="0" x="457" y="36" height="64" width="599" format="[general]" html.valueishtml="0"  name=ord_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="80269524" )
+text(band=detail alignment="1" text="발주금액" border="0" color="0" x="4782" y="128" height="60" width="416" html.valueishtml="0"  name=ord_amt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="5" color="0" x="5216" y="128" height="64" width="599" format="#,###,##0" html.valueishtml="0"  name=ord_amt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

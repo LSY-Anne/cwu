@@ -1,0 +1,75 @@
+﻿$PBExportHeader$d_hge505a_3.srd
+$PBExportComments$강사지급내역(hpa116t)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=76 color="536870912" )
+summary(height=84 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(4) update=yes updatewhereclause=yes name=year dbname="hpa116t.year" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=hakgi dbname="hpa116t.hakgi" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=month dbname="hpa116t.month" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=member_no dbname="hpa116t.member_no" )
+ column=(type=decimal(0) updatewhereclause=yes name=pay_item_code dbname="hpa116t.pay_item_code" )
+ column=(type=decimal(2) updatewhereclause=yes name=pay_time dbname="hpa116t.pay_time" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=pay_amt dbname="hpa116t.pay_amt" )
+ column=(type=char(5) updatewhereclause=yes name=worker dbname="hpa116t.worker" )
+ column=(type=char(20) updatewhereclause=yes name=ipaddr dbname="hpa116t.ipaddr" )
+ column=(type=datetime updatewhereclause=yes name=work_date dbname="hpa116t.work_date" )
+ column=(type=char(1) updatewhereclause=yes name=holiday_opt dbname="hpa116t.holiday_opt" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hpa116t.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hpa116t.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hpa116t.job_date" )
+ column=(type=decimal(0) updatewhereclause=yes name=d_hpa102m_price_per_time dbname="hpa116t.price_per_time" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=retro_amt dbname="hpa116t.retro_amt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=month_amt dbname="hpa116t.month_amt" )
+ column=(type=char(4000) updatewhereclause=yes name=pay_item_name dbname="pay_item_name" )
+ retrieve="  SELECT A.YEAR,   
+         A.HAKGI,   
+         A.MONTH,   
+         A.MEMBER_NO,   
+         A.PAY_ITEM_CODE, 
+         A.PAY_TIME,   
+         A.PAY_AMT,   
+         A.WORKER,   
+         A.IPADDR,   
+         A.WORK_DATE,   
+         A.HOLIDAY_OPT,   
+         A.JOB_UID,   
+         A.JOB_ADD,   
+         A.JOB_DATE,   
+         B.PRICE_PER_TIME,   
+         A.RETRO_AMT,   
+         A.MONTH_AMT,
+			FU_CODE_NM('COMM','SEC_CODE',B.SEC_CODE,'K') PAY_ITEM_NAME
+    FROM GEDB.HPA116T A, HAKSA.D_HPA102M B
+   WHERE ( A.PAY_ITEM_CODE = B.PAY_ITEM_CODE) AND
+			( ( A.YEAR = :as_year ) AND  
+         ( A.HAKGI  = :as_hakgi ) AND  
+         ( A.MONTH  = :ai_month ) AND  
+         ( A.MEMBER_NO = :as_member_no ) )   
+ORDER BY A.PAY_ITEM_CODE ASC" arguments=(("as_year", string),("as_hakgi", string),("ai_month", number),("as_member_no", string)) )
+text(band=header alignment="2" text="시수" border="0" color="0" x="946" y="12" height="56" width="242" html.valueishtml="0"  name=pay_time_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="지급강사료" border="0" color="0" x="1198" y="12" height="56" width="530" html.valueishtml="0"  name=pay_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="초과120금액" border="0" color="0" x="1737" y="12" height="56" width="466" html.valueishtml="0"  name=retro_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="합계금액" border="0" color="0" x="521" y="12" height="56" width="416" html.valueishtml="0"  name=month_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="강사료구분" border="0" color="0" x="9" y="12" height="56" width="503" html.valueishtml="0"  name=pay_item_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="68" width="503" format="[general]" html.valueishtml="0"  name=pay_item_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=16 alignment="1" tabsequence=20 border="0" color="0" x="1737" y="4" height="72" width="466" format="#,###" html.valueishtml="0"  name=retro_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="8388608" x="1198" y="4" height="72" width="530" format="#,##0" html.valueishtml="0"  name=pay_amt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="946" y="4" height="72" width="242" format="#0" html.valueishtml="0"  name=pay_time visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=17 alignment="1" tabsequence=10 border="0" color="0" x="521" y="4" height="72" width="416" format="#,###" html.valueishtml="0"  name=month_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240)" )
+compute(band=summary alignment="2" expression="sum ( pay_time )"border="0" color="8388608" x="946" y="8" height="60" width="242" format="#" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum ( pay_amt)"border="0" color="8388608" x="1198" y="8" height="60" width="530" format="#,##0" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum ( retro_amt )"border="0" color="8388608" x="1737" y="8" height="60" width="466" format="#,##0" html.valueishtml="0"  name=compute_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum ( month_amt )"border="0" color="8388608" x="521" y="8" height="60" width="416" format="#,##0" html.valueishtml="0"  name=compute_4 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

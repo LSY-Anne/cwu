@@ -1,0 +1,134 @@
+﻿$PBExportHeader$d_sch209p_1.srd
+$PBExportComments$입사미배정현황
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 225 print.margin.right = 225 print.margin.top = 150 print.margin.bottom = 150 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=648 color="536870912" )
+summary(height=8 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=112 color="536870912" )
+table(column=(type=char(9) updatewhereclause=yes name=hakbun dbname="saz220t.hakbun" dbalias="B.hakbun" )
+ column=(type=char(20) updatewhereclause=yes name=hname dbname="saz220t.hname" dbalias="B.hname" )
+ column=(type=char(1) updatewhereclause=yes name=sex dbname="saz220t.sex" dbalias="B.sex" values="남	1/여	2/" )
+ column=(type=char(20) updatewhereclause=yes name=cell_no dbname="saz220t.cell_no" dbalias="B.cell_no" )
+ column=(type=char(20) updatewhereclause=yes name=parent_nm dbname="saz220t.parent_nm" dbalias="B.parent_nm" )
+ column=(type=char(20) updatewhereclause=yes name=parent_cell dbname="saz220t.parent_cell" dbalias="B.parent_cell" )
+ column=(type=char(50) updatewhereclause=yes name=gwa dbname="gwa" )
+ column=(type=char(1) updatewhereclause=yes name=hakyun dbname="saz220t.hakyun" dbalias="B.hakyun" )
+ column=(type=char(2) updatewhereclause=yes name=enter_term dbname="saz220t.enter_term" dbalias="B.enter_term" )
+ column=(type=char(2) updatewhereclause=yes name=door_gb dbname="saz220t.door_gb" dbalias="B.door_gb" )
+ column=(type=char(2) updatewhereclause=yes name=area_gb dbname="saz220t.area_gb" dbalias="B.area_gb" )
+ column=(type=decimal(4) updatewhereclause=yes name=bef_grade dbname="saz240t.bef_grade" dbalias="C.bef_grade" )
+ column=(type=number updatewhereclause=yes name=tot_point dbname="tot_point" )
+ column=(type=decimal(0) updatewhereclause=yes name=final_rank dbname="saz240t.final_rank" dbalias="C.final_rank" )
+ column=(type=char(1) updatewhereclause=yes name=rm_yn dbname="rm_yn" )
+ retrieve="SELECT B.HAKBUN,
+B.HNAME,
+B.SEX ,
+B.CELL_NO ,
+B.PARENT_NM ,
+B.PARENT_CELL ,
+(SELECT FNAME FROM CDDB.KCH003M WHERE GWA = B.GWA) as GWA ,
+B.HAKYUN ,
+B.ENTER_TERM ,
+B.DOOR_GB ,
+B.AREA_GB  ,
+C.BEF_GRADE,
+NVL(C.AREA_RATE, 0) + NVL(C.RECORD_RATE, 0) - NVL(C.DEMERIT_RATE, 0) AS TOT_POINT,
+C.FINAL_RANK,
+(CASE WHEN (SELECT COUNT(*) FROM SCH.SAZ260T D WHERE D.HOUSE_GB = B.HOUSE_GB 
+                                    AND D.STD_YEAR = B.STD_YEAR 
+                                    AND D.HOUSE_REQ_NO = B.HOUSE_REQ_NO
+                                    AND D.DOOR_GB = B.DOOR_GB) >= 1 THEN 'Y' ELSE 'N' END) AS RM_YN
+ FROM SCH.SAZ250T A, SCH.SAZ220T B , SCH.SAZ240T C
+WHERE A.STAT_CD = '2'
+AND ( A.HOUSE_GB = B.HOUSE_GB ) and  
+ ( A.STD_YEAR = B.STD_YEAR ) and  
+      ( A.HAKBUN = B.HAKBUN )    AND
+      A.HOUSE_GB = C.HOUSE_GB(+) AND
+      A.STD_YEAR = C.STD_YEAR(+) AND
+      A.HOUSE_REQ_NO = C.HOUSE_REQ_NO(+) AND
+      A.HOUSE_GB = :as_gb AND
+      A.STD_YEAR = :as_year
+      
+              " arguments=(("as_gb", string),("as_year", string)) )
+text(band=header alignment="2" text="입사 미배정 현황" border="0" color="33554432" x="32" y="212" height="96" width="4622" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-16" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="32" y1="524" x2="4654" y2="524"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="No" border="0" color="0" x="50" y="560" height="56" width="206" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성명" border="0" color="33554432" x="270" y="560" height="56" width="375" html.valueishtml="0"  name=hname_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학년" border="0" color="33554432" x="658" y="560" height="56" width="123" html.valueishtml="0"  name=hakyun_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성별" border="0" color="33554432" x="795" y="560" height="56" width="123" html.valueishtml="0"  name=sex_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="핸드폰" border="0" color="33554432" x="933" y="560" height="56" width="366" html.valueishtml="0"  name=cell_no_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학부모명" border="0" color="33554432" x="1312" y="560" height="56" width="384" html.valueishtml="0"  name=parent_nm_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학부모핸드폰" border="0" color="33554432" x="1710" y="560" height="56" width="402" html.valueishtml="0"  name=parent_cell_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학과" border="0" color="33554432" x="2126" y="560" height="56" width="590" html.valueishtml="0"  name=gwa_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="입사기간" border="0" color="33554432" x="2729" y="560" height="56" width="293" html.valueishtml="0"  name=enter_term_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="지원실" border="0" color="33554432" x="3035" y="560" height="56" width="183" html.valueishtml="0"  name=door_gb_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="지역" border="0" color="33554432" x="3232" y="560" height="56" width="293" html.valueishtml="0"  name=area_gb_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="평점" border="0" color="33554432" x="3538" y="560" height="56" width="165" html.valueishtml="0"  name=bef_grade_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="총점" border="0" color="33554432" x="3717" y="560" height="56" width="187" html.valueishtml="0"  name=tot_point_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="순위" border="0" color="33554432" x="3918" y="560" height="56" width="146" html.valueishtml="0"  name=final_rank_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="SMS" border="0" color="33554432" x="4434" y="560" height="56" width="192" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="룸메이트신청" border="0" color="33554432" x="4082" y="560" height="56" width="338" html.valueishtml="0"  name=rm_yn_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="32" y1="644" x2="4654" y2="644"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="32" y1="0" x2="4654" y2="0"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="32" y1="0" x2="4654" y2="0"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=15 alignment="2" tabsequence=32766 border="0" color="33554432" x="4082" y="28" height="68" width="338" format="[general]" html.valueishtml="0"  name=rm_yn visible="1" edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="getrow()"border="0" color="0" x="50" y="28" height="68" width="206" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="270" y="28" height="68" width="375" format="[general]" html.valueishtml="0"  name=hname  tag="성명" visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="33554432" x="658" y="28" height="68" width="123" format="[general]" html.valueishtml="0"  name=hakyun  tag="학년" visible="1" edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="33554432" x="795" y="28" height="68" width="123" format="[general]" html.valueishtml="0"  name=sex  tag="성별" visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="33554432" x="933" y="28" height="68" width="366" format="[general]" html.valueishtml="0"  name=cell_no  tag="핸드폰" visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="33554432" x="1312" y="28" height="68" width="384" format="[general]" html.valueishtml="0"  name=parent_nm  tag="보호자명" visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="33554432" x="1710" y="28" height="68" width="402" format="[general]" html.valueishtml="0"  name=parent_cell  tag="보호자핸드폰" visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="2126" y="28" height="68" width="590" format="[general]" html.valueishtml="0"  name=gwa  tag="학과" visible="1" edit.limit=4 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="33554432" x="2729" y="28" height="68" width="293" format="[general]" html.valueishtml="0"  name=enter_term  tag="입사기간" visible="1" edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="33554432" x="3035" y="28" height="68" width="183" format="[general]" html.valueishtml="0"  name=door_gb  tag="실구분" visible="1" edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="33554432" x="3232" y="28" height="68" width="293" format="[general]" html.valueishtml="0"  name=area_gb  tag="지역구분" visible="1" edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="2" tabsequence=32766 border="0" color="33554432" x="3918" y="28" height="68" width="146" format="[general]" html.valueishtml="0"  name=final_rank  tag="평가순위" visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="2" tabsequence=32766 border="0" color="33554432" x="3717" y="28" height="68" width="187" format="[general]" html.valueishtml="0"  name=tot_point visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="2" tabsequence=32766 border="0" color="33554432" x="3538" y="28" height="68" width="165" format="[general]" html.valueishtml="0"  name=bef_grade  tag="전년도평점" visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="27" y1="524" x2="27" y2="692"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="27" y1="0" x2="27" y2="168"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="261" y1="524" x2="261" y2="692"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="261" y1="0" x2="261" y2="168"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="649" y1="524" x2="649" y2="692"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="649" y1="0" x2="649" y2="168"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="786" y1="524" x2="786" y2="692"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="786" y1="0" x2="786" y2="168"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="923" y1="524" x2="923" y2="692"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="923" y1="0" x2="923" y2="168"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1303" y1="524" x2="1303" y2="692"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1303" y1="0" x2="1303" y2="168"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1701" y1="524" x2="1701" y2="692"  name=l_17 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1701" y1="0" x2="1701" y2="168"  name=l_18 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2117" y1="524" x2="2117" y2="692"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2117" y1="0" x2="2117" y2="168"  name=l_20 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2720" y1="524" x2="2720" y2="692"  name=l_21 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2720" y1="0" x2="2720" y2="168"  name=l_22 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3026" y1="524" x2="3026" y2="692"  name=l_23 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3026" y1="0" x2="3026" y2="168"  name=l_24 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3223" y1="524" x2="3223" y2="692"  name=l_25 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3223" y1="0" x2="3223" y2="168"  name=l_26 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3529" y1="524" x2="3529" y2="692"  name=l_27 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3529" y1="0" x2="3529" y2="168"  name=l_28 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3707" y1="524" x2="3707" y2="692"  name=l_29 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3707" y1="0" x2="3707" y2="168"  name=l_30 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3909" y1="524" x2="3909" y2="692"  name=l_31 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3909" y1="0" x2="3909" y2="168"  name=l_32 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="4073" y1="524" x2="4073" y2="692"  name=l_33 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="4073" y1="0" x2="4073" y2="168"  name=l_34 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="4425" y1="524" x2="4425" y2="692"  name=l_35 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="4425" y1="0" x2="4425" y2="168"  name=l_36 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="4649" y1="524" x2="4649" y2="692"  name=l_37 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="4649" y1="0" x2="4649" y2="168"  name=l_38 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

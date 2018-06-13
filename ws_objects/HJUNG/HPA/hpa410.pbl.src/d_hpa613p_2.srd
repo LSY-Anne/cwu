@@ -1,0 +1,191 @@
+﻿$PBExportHeader$d_hpa613p_2.srd
+$PBExportComments$소득자료 제출 집계표 출력(제출용 재직자)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 2 print.margin.left = 27 print.margin.right = 27 print.margin.top = 400 print.margin.bottom = 200 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=1324 color="536870912" )
+summary(height=1444 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=188 color="536870912" )
+table(column=(type=char(40) updatewhereclause=yes name=campus_name dbname="hpa018h.campus_name" )
+ column=(type=char(10) updatewhereclause=yes name=business_no dbname="hpa018h.business_no" )
+ column=(type=char(120) updatewhereclause=yes name=address dbname="hpa018h.address" )
+ column=(type=char(16) updatewhereclause=yes name=tel_phone dbname="hpa018h.tel_phone" )
+ column=(type=char(20) updatewhereclause=yes name=president dbname="hpa018h.president" )
+ column=(type=char(14) updatewhereclause=yes name=corp_no dbname="hpa018h.corp_no" )
+ column=(type=char(4) updatewhereclause=yes name=year dbname="hpa018h.year" )
+ column=(type=number updatewhereclause=yes name=total_cnt dbname="total_cnt" )
+ column=(type=number updatewhereclause=yes name=total_amt dbname="total_amt" )
+ column=(type=number updatewhereclause=yes name=decision_income_tax dbname="decision_income_tax" )
+ column=(type=number updatewhereclause=yes name=decision_jumin_tax dbname="decision_jumin_tax" )
+ column=(type=number updatewhereclause=yes name=decision_farm_tax dbname="decision_farm_tax" )
+ retrieve="
+	select	distinct e.campus_name, e.business_no, e.address, e.tel_phone, e.president, e.CORP_NO, a.year,
+
+				(	select	count(*)
+					from		padb.hpa018h
+					where		year				=		:as_year
+					and		gwa		like	:as_gwa || '%'
+					and		jikjong_code	>=		:ai_str_jikjong
+					and		jikjong_code	<=		:ai_end_jikjong	)	total_cnt,
+				(	select	nvl(sum(labor_income_amt), 0) + nvl(sum(non_tax_tot), 0)
+					from		padb.hpa018h
+					where		year				=		:as_year
+					and		gwa		like	:as_gwa || '%'
+					and		jikjong_code	>=		:ai_str_jikjong
+					and		jikjong_code	<=		:ai_end_jikjong	)	total_amt,
+				
+				(	select	nvl(sum(decision_income_tax), 0)
+					from		padb.hpa018h
+					where		year				=		:as_year
+					and		gwa		like	:as_gwa || '%'
+					and		jikjong_code	>=		:ai_str_jikjong
+					and		jikjong_code	<=		:ai_end_jikjong	)	decision_income_tax,
+				(	select	nvl(sum(decision_jumin_tax), 0)
+					from		padb.hpa018h
+					where		year				=		:as_year
+					and		gwa		like	:as_gwa || '%'
+					and		jikjong_code	>=		:ai_str_jikjong
+					and		jikjong_code	<=		:ai_end_jikjong	)	decision_jumin_tax,
+				(	select	nvl(sum(decision_farm_tax), 0)
+					from		padb.hpa018h
+					where		year				=		:as_year
+					and		gwa		like	:as_gwa || '%'
+					and		jikjong_code	>=		:ai_str_jikjong
+					and		jikjong_code	<=		:ai_end_jikjong	)	decision_farm_tax				
+	from		padb.hpa018h a,
+				cddb.kch000m e,
+				indb.hin001m k
+	where		a.year			=		:as_year
+	and		a.member_no		=		k.member_no
+	and		k.jaejik_opt	=		1
+	and		a.gwa		like	:as_gwa || '%'
+	and		a.jikjong_code	>=		:ai_str_jikjong
+	and		a.jikjong_code	<=		:ai_end_jikjong	" arguments=(("as_year", string),("as_gwa", string),("ai_str_jikjong", number),("ai_end_jikjong", number)) )
+line(band=header x1="9" y1="76" x2="9" y2="1556"  name=l_147 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="" border="0" color="0" x="320" y="384" height="60" width="585" html.valueishtml="0"  name=t_jikjong_name visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="[원천징수사무처리규정 별지 제27호 서식]" border="0" color="0" x="9" y="8" height="60" width="1792" html.valueishtml="0"  name=t_81 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="제          출          내          용" border="0" color="0" x="27" y="936" height="60" width="3319" html.valueishtml="0"  name=t_12 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="1" text="[재직자]" border="0" color="0" x="27" y="384" height="60" width="274" html.valueishtml="0"  name=t_20 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="소 득 자 료 제 출 집 계 표" border="0" color="0" x="23" y="200" height="112" width="3259" html.valueishtml="0"  name=t_80 visible="1"  font.face="굴림체" font.height="-18" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="① 사업자등록번호" border="0" color="0" x="407" y="488" height="60" width="571" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="② 법인 등록번호" border="0" color="0" x="1947" y="488" height="60" width="521" html.valueishtml="0"  name=t_21 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="⑤ 사업장소재지" border="0" color="0" x="407" y="764" height="60" width="571" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=header id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1010" y="744" height="144" width="878" format="[general]" html.valueishtml="0"  name=address visible="1" edit.limit=120 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="③ 법   인   명" border="0" color="0" x="407" y="592" height="60" width="571" html.valueishtml="0"  name=t_68 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="④  대   표   자" border="0" color="0" x="1947" y="592" height="60" width="521" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="(상   호)" border="0" color="0" x="407" y="660" height="60" width="571" html.valueishtml="0"  name=t_27 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="(성   명)" border="0" color="0" x="1947" y="660" height="60" width="521" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=header x1="384" y1="456" x2="384" y2="892"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="997" y1="456" x2="997" y2="892"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1929" y1="456" x2="1929" y2="892"  name=l_168 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2487" y1="456" x2="2487" y2="892"  name=l_31 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="징" border="0" color="0" x="123" y="476" height="60" width="174" html.valueishtml="0"  name=t_16 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="수" border="0" color="0" x="123" y="560" height="60" width="174" html.valueishtml="0"  name=t_23 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="의" border="0" color="0" x="123" y="644" height="60" width="174" html.valueishtml="0"  name=t_24 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="무" border="0" color="0" x="123" y="728" height="60" width="174" html.valueishtml="0"  name=t_25 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="자" border="0" color="0" x="123" y="812" height="60" width="174" html.valueishtml="0"  name=t_26 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="⑥ 전 화 번 호" border="0" color="0" x="1947" y="772" height="60" width="521" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="원 천 징 수 세 액" border="0" color="0" x="1970" y="1052" height="56" width="1033" html.valueishtml="0"  name=t_44 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="⑧
+제출 " border="0" color="0" x="283" y="1104" height="112" width="411" html.valueishtml="0"  name=t_22 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=header x1="1883" y1="1128" x2="3355" y2="1128"  name=l_32 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="⑭
+법인세" border="0" color="0" x="2290" y="1176" height="112" width="379" html.valueishtml="0"  name=t_35 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=header x1="265" y1="1016" x2="265" y2="1552"  name=l_167 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="704" y1="1016" x2="704" y2="1552"  name=l_25 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1102" y1="1016" x2="1102" y2="1552"  name=l_27 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="년월일" border="0" color="0" x="283" y="1220" height="56" width="411" html.valueishtml="0"  name=t_28 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=header x1="1266" y1="1016" x2="1266" y2="1552"  name=l_29 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1422" y1="1016" x2="1422" y2="1552"  name=l_34 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1883" y1="1016" x2="1883" y2="1552"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2272" y1="1132" x2="2272" y2="1668"  name=l_36 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2683" y1="1132" x2="2683" y2="1668"  name=l_38 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2981" y1="1132" x2="2981" y2="1668"  name=l_40 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="9" y1="896" x2="3355" y2="896"  name=l_178 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="9" y1="1016" x2="3355" y2="1016"  name=l_30 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="9" y1="1320" x2="3355" y2="1320"  name=l_39 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="384" y1="576" x2="3355" y2="576"  name=l_176 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="384" y1="728" x2="3355" y2="728"  name=l_177 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="⑪
+건수" border="0" color="0" x="1280" y="1104" height="112" width="137" html.valueishtml="0"  name=t_42 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="⑫
+소득(수입)
+금액" border="0" color="0" x="1435" y="1104" height="168" width="434" html.valueishtml="0"  name=t_33 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=header x1="3360" y1="80" x2="3360" y2="1556"  name=l_148 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="⑨
+소득종류" border="0" color="0" x="718" y="1104" height="112" width="375" html.valueishtml="0"  name=t_40 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="⑦
+귀속년도" border="0" color="0" x="23" y="1104" height="112" width="233" html.valueishtml="0"  name=t_17 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=header id=1 alignment="0" tabsequence=32766 border="0" color="0" x="1010" y="624" height="60" width="681" format="[general]" html.valueishtml="0"  name=campus_name visible="1" edit.limit=40 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=2 alignment="0" tabsequence=32766 border="0" color="0" x="1010" y="488" height="60" width="681" format="@@@ - @@ - @@@@@" html.valueishtml="0"  name=business_no visible="1" edit.limit=10 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=6 alignment="0" tabsequence=32766 border="0" color="0" x="2501" y="496" height="60" width="795" format="@@@@@@ - @@@@@@@" html.valueishtml="0"  name=corp_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=5 alignment="0" tabsequence=32766 border="0" color="0" x="2501" y="620" height="60" width="795" format="[general]" html.valueishtml="0"  name=president visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=4 alignment="0" tabsequence=32766 border="0" color="0" x="2501" y="772" height="60" width="795" format="[general]" html.valueishtml="0"  name=tel_phone visible="1" edit.limit=16 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="9" y1="456" x2="3355" y2="456"  name=l_175 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="9" y1="80" x2="3355" y2="80"  name=l_174 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="⑬
+소득세" border="0" color="0" x="1897" y="1176" height="112" width="366" html.valueishtml="0"  name=t_34 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="16
+주민세" border="0" color="0" x="2994" y="1176" height="112" width="357" html.valueishtml="0"  name=t_38 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="⑮
+농어촌
+특별세" border="0" color="0" x="2702" y="1144" height="168" width="270" html.valueishtml="0"  name=t_36 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="⑩
+매수" border="0" color="0" x="1120" y="1104" height="112" width="137" html.valueishtml="0"  name=t_41 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=detail x1="9" y1="0" x2="9" y2="400"  name=l_2 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=detail alignment="1" expression="0"border="0" color="0" x="3662" y="560" height="56" width="297" format="#,##0" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression="0"border="0" color="0" x="3333" y="560" height="56" width="297" format="#,##0" html.valueishtml="0"  name=comp_amt visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression="0"border="0" color="0" x="3858" y="648" height="56" width="297" format="#,##0" html.valueishtml="0"  name=compute_4 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression="0"border="0" color="0" x="2409" y="676" height="56" width="306" format="#,##0" html.valueishtml="0"  name=compute_5 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression="0"border="0" color="0" x="3685" y="772" height="56" width="306" format="#,##0" html.valueishtml="0"  name=compute_6 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression="0"border="0" color="0" x="4142" y="484" height="56" width="325" format="#,##0" html.valueishtml="0"  name=compute_7 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="265" y1="0" x2="265" y2="372"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="704" y1="0" x2="704" y2="372"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1102" y1="0" x2="1102" y2="372"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1266" y1="0" x2="1266" y2="372"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1883" y1="0" x2="1883" y2="372"  name=l_18 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2272" y1="0" x2="2272" y2="372"  name=l_45 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2683" y1="0" x2="2683" y2="372"  name=l_46 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2981" y1="0" x2="2981" y2="372"  name=l_47 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1422" y1="0" x2="1422" y2="372"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3360" y1="0" x2="3360" y2="400"  name=l_4 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="9" y1="184" x2="3355" y2="184"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=11 alignment="1" tabsequence=32766 border="0" color="0" x="2994" y="72" height="60" width="357" format="#,##0" html.valueishtml="0"  name=decision_jumin_tax visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="1" tabsequence=32766 border="0" color="0" x="2702" y="72" height="60" width="270" format="#,##0" html.valueishtml="0"  name=decision_farm_tax visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="0" x="1897" y="76" height="60" width="366" format="#,##0" html.valueishtml="0"  name=decision_income_tax visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="1435" y="72" height="56" width="421" format="#,##0" html.valueishtml="0"  name=total_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="1280" y="72" height="56" width="137" format="#0" html.valueishtml="0"  name=total_cnt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="1120" y="72" height="56" width="137" format="#0" html.valueishtml="0"  name=total_cnt_1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="근로소득" border="0" color="0" x="718" y="76" height="56" width="375" html.valueishtml="0"  name=t_18 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="2" expression="string ( f_today(), '@@@@/@@/@@')"border="0" color="0" x="283" y="72" height="56" width="411" format="[GENERAL]" html.valueishtml="0"  name=compute_3 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="23" y="72" height="60" width="233" format="[general]" html.valueishtml="0"  name=year visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=summary alignment="2" text="작  성
+
+요  령" border="0" color="0" x="55" y="920" height="180" width="242" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=summary alignment="2" text="위 소득자료제출집계표의 제출내용을 제출합니다." border="0" color="0" x="407" y="104" height="60" width="1760" html.valueishtml="0"  name=t_29 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=summary x1="329" y1="748" x2="329" y2="1416"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="5" y1="744" x2="3355" y2="744"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="5" y1="1424" x2="3360" y2="1424"  name=l_19 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="today()"border="0" color="0" x="1147" y="316" height="60" width="800" format="yyyy 년 mm 월 dd 일" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=summary alignment="0" text="3. 건수 : 소득자 건수(명세서의 경우 레인 건수)" border="0" color="0" x="347" y="1044" height="56" width="2981" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=summary alignment="0" text="4. 소득(수입)금액:총급여와비과세 금액을 합계한 금액(원천징수이행상황신고서 상의 지급액과 동일)" border="0" color="0" x="347" y="1116" height="56" width="3008" html.valueishtml="0"  name=t_10 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=summary alignment="0" text="2. 매수 : 지급조서의 매수(페이지 수)" border="0" color="0" x="347" y="972" height="56" width="2981" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=summary alignment="0" text="사업연말, 비거주자의 사업 기타소득, 퇴직소득, 연금소득 등으로 구분하여 별지로 작성" border="0" color="0" x="439" y="880" height="56" width="2912" html.valueishtml="0"  name=t_15 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=summary alignment="0" text="1. 귀속연도별 이자소득, 배당소득, 근로소득(갑종,을종), 기타소득(거주자), 사업소득(거주자), " border="0" color="0" x="343" y="800" height="56" width="3008" html.valueishtml="0"  name=t_9 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=summary alignment="0" text="- 사업 기타소득의 경우 ~"소액부징수~"를 제외함" border="0" color="0" x="443" y="1188" height="56" width="1952" html.valueishtml="0"  name=t_14 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=summary alignment="0" text="5.원천징수세액 : 근로(갑종,을종) 사업연말 연금소득 퇴직소득은 결정세액을 기재하고" border="0" color="0" x="347" y="1260" height="56" width="2994" html.valueishtml="0"  name=t_11 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=summary alignment="0" text="이자 배당 사업 기타소득의 경우에는 원천징수세액을 기재합니다." border="0" color="0" x="832" y="1332" height="56" width="2491" html.valueishtml="0"  name=t_13 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=summary alignment="2" text="징수(보고)의무자" border="0" color="0" x="1307" y="572" height="60" width="704" html.valueishtml="0"  name=t_30 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=summary alignment="2" text="(서명 또는 인)" border="0" color="0" x="2624" y="572" height="60" width="608" html.valueishtml="0"  name=t_31 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=summary x1="9" y1="0" x2="9" y2="1416"  name=l_14 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="3360" y1="0" x2="3360" y2="1416"  name=l_17 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

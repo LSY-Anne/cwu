@@ -1,0 +1,64 @@
+﻿$PBExportHeader$d_hpa605p_3.srd
+$PBExportComments$소득자별 근로소득 원천징수영수증출력(Nested)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 2 print.margin.left = 174 print.margin.right = 174 print.margin.top = 0 print.margin.bottom = 76 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=60 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes name=hpa024m_member_no dbname="hpa024m.member_no" )
+ column=(type=char(4) updatewhereclause=yes name=hpa024m_year dbname="hpa024m.year" )
+ column=(type=char(13) updatewhereclause=yes name=jumin_no dbname="hpa024m.jumin_no" )
+ column=(type=decimal(0) updatewhereclause=yes name=gwangae_code dbname="hpa024m.gwangae_code" )
+ column=(type=decimal(0) updatewhereclause=yes name=foreigner_gbn dbname="hpa024m.foreigner_gbn" )
+ column=(type=char(20) updatewhereclause=yes name=name dbname="hpa024m.name" )
+ column=(type=decimal(0) updatewhereclause=yes name=basic_opt dbname="hpa024m.basic_opt" )
+ column=(type=decimal(0) updatewhereclause=yes name=handicap_opt dbname="hpa024m.handicap_opt" )
+ column=(type=decimal(0) updatewhereclause=yes name=child_opt dbname="hpa024m.child_opt" )
+ column=(type=decimal(0) updatewhereclause=yes name=insure_opt dbname="hpa024m.insure_opt" )
+ column=(type=decimal(0) updatewhereclause=yes name=medical_opt dbname="hpa024m.medical_opt" )
+ column=(type=decimal(0) updatewhereclause=yes name=education_opt dbname="hpa024m.education_opt" )
+ column=(type=decimal(0) updatewhereclause=yes name=card_opt dbname="hpa024m.card_opt" )
+ retrieve="SELECT	A.MEMBER_NO,
+			A.YEAR,
+			A.JUMIN_NO,
+			A.GWANGAE_CODE,
+			A.FOREIGNER_GBN,
+			A.NAME,
+			A.BASIC_OPT,
+			A.HANDICAP_OPT,
+			A.CHILD_OPT,
+			A.INSURE_OPT,
+			A.MEDICAL_OPT,
+			A.EDUCATION_OPT,
+			A.CARD_OPT
+			
+FROM		PADB.HPA024M A,
+			PADB.HPA019H B
+WHERE		A.YEAR		=  B.YEAR
+AND		A.MEMBER_NO =  B.MEMBER_NO
+AND		A.YEAR		=  :as_year
+AND		A.MEMBER_NO like  :AS_MEMBER_NO||'%'
+ORDER	BY	A.JUMIN_NO" arguments=(("AS_YEAR", string),("AS_MEMBER_NO", string)) )
+ellipse(band=detail x="1833" y="4" height="40" width="50"  name=oval_1 visible="1~tif (    handicap_opt = 1, 1, 0)" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+ellipse(band=detail x="2080" y="4" height="40" width="50"  name=oval_2 visible="1~tif (     child_opt = 1, 1, 0)" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+ellipse(band=detail x="2313" y="4" height="40" width="50"  name=oval_3 visible="1~tif (    insure_opt = 1, 1, 0)" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+ellipse(band=detail x="2533" y="4" height="40" width="50"  name=oval_4 visible="1~tif (    medical_opt = 1, 1, 0)" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+ellipse(band=detail x="2752" y="4" height="40" width="50"  name=oval_6 visible="1~tif (    education_opt = 1, 1, 0)" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+ellipse(band=detail x="2990" y="4" height="40" width="50"  name=oval_7 visible="1~tif (    card_opt = 1, 1, 0)" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+ellipse(band=detail x="1595" y="4" height="40" width="50"  name=oval_5 visible="1~tif (   basic_opt  = 1, 1, 0)" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="402" y="4" height="40" width="219" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="667" y="4" height="40" width="727" format="[general]" html.valueishtml="0"  name=jumin_no visible="1" editmask.mask="######-#******" editmask.focusrectangle=no  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="40" width="73" format="[general]" html.valueishtml="0"  name=gwangae_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="192" y="4" height="40" width="73" format="[general]" html.valueishtml="0"  name=foreigner_gbn visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

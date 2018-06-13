@@ -1,0 +1,89 @@
+﻿$PBExportHeader$d_hjk102a_1_org.srd
+$PBExportComments$[청운대]인정학점등록
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=132 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=136 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes key=yes name=hakbun dbname="jaehak_hakjuk.hakbun" )
+ column=(type=char(4) updatewhereclause=yes name=gwa dbname="jaehak_hakjuk.gwa" )
+ column=(type=char(20) updatewhereclause=yes name=hname dbname="jaehak_hakjuk.hname" )
+ column=(type=char(13) updatewhereclause=yes name=jumin_no dbname="jaehak_hakjuk.jumin_no" )
+ column=(type=char(2) updatewhereclause=yes name=iphak_gubun dbname="jaehak_hakjuk.iphak_gubun" )
+ column=(type=char(3) update=yes updatewhereclause=yes name=injung_hakjum dbname="jaehak_hakjuk.injung_hakjum" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=college_id dbname="jaehak_hakjuk.college_id" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=college_name dbname="jaehak_hakjuk.college_name" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=college_gwa dbname="jaehak_hakjuk.college_gwa" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=college_gwaname dbname="jaehak_hakjuk.college_gwaname" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=college_jol_date dbname="jaehak_hakjuk.college_jol_date" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=college_jol_hakyun dbname="jaehak_hakjuk.college_jol_hakyun" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=college_gubun dbname="jaehak_hakjuk.college_gubun" values="동일계	1/비동일계	2/" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="jaehak_hakjuk.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="jaehak_hakjuk.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="jaehak_hakjuk.work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="jaehak_hakjuk.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="jaehak_hakjuk.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="jaehak_hakjuk.job_date" )
+ retrieve="SELECT  	HAKSA.JAEHAK_HAKJUK.HAKBUN ,
+			HAKSA.JAEHAK_HAKJUK.GWA ,
+			HAKSA.JAEHAK_HAKJUK.HNAME ,
+			HAKSA.JAEHAK_HAKJUK.JUMIN_NO ,
+			HAKSA.JAEHAK_HAKJUK.IPHAK_GUBUN ,
+			HAKSA.JAEHAK_HAKJUK.INJUNG_HAKJUM ,
+			HAKSA.JAEHAK_HAKJUK.COLLEGE_ID ,
+			HAKSA.JAEHAK_HAKJUK.COLLEGE_NAME,
+			HAKSA.JAEHAK_HAKJUK.COLLEGE_GWA,
+			HAKSA.JAEHAK_HAKJUK.COLLEGE_GWANAME, 
+			HAKSA.JAEHAK_HAKJUK.COLLEGE_JOL_DATE,
+			HAKSA.JAEHAK_HAKJUK.COLLEGE_JOL_HAKYUN, 
+			HAKSA.JAEHAK_HAKJUK.COLLEGE_GUBUN,
+             JAEHAK_HAKJUK.WORKER,
+             JAEHAK_HAKJUK.IPADDR,  
+             JAEHAK_HAKJUK.WORK_DATE,
+             JAEHAK_HAKJUK.JOB_UID,
+             JAEHAK_HAKJUK.JOB_ADD, 
+             JAEHAK_HAKJUK.JOB_DATE      
+FROM 		HAKSA.JAEHAK_HAKJUK ,
+			CDDB.KCH003M    
+WHERE 	HAKSA.JAEHAK_HAKJUK.GWA	=	CDDB.KCH003M.GWA
+AND		HAKSA.JAEHAK_HAKJUK.IPHAK_GUBUN 	= '04'  
+and		HAKSA.JAEHAK_HAKJUK.IPHAK_DATE like :as_year || '%'
+and      HAKSA.JAEHAK_HAKJUK.HAKBUN 		like :as_hakbun  || '%'
+and      HAKSA.JAEHAK_HAKJUK.GWA 			like :as_gwa  || '%'
+ORDER BY CDDB.KCH003M.ORDER_SEQ,
+			HAKSA.JAEHAK_HAKJUK.HAKBUN 			
+			" update="HAKSA.JAEHAK_HAKJUK" updatewhere=1 updatekeyinplace=no arguments=(("as_year", string),("as_hakbun", string),("as_gwa", string)) )
+text(band=header alignment="2" text="학번" border="0" color="25058105" x="5" y="4" height="60" width="325" html.valueishtml="0"  name=hakbun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="성명" border="0" color="25058105" x="334" y="4" height="60" width="315" html.valueishtml="0"  name=hname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="주민번호" border="0" color="25058105" x="654" y="4" height="60" width="590" html.valueishtml="0"  name=jumin_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="입학구분" border="0" color="25058105" x="2245" y="4" height="60" width="352" html.valueishtml="0"  name=iphak_gubun_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="졸업학년" border="0" color="25058105" x="2601" y="4" height="60" width="352" html.valueishtml="0"  name=college_jol_hakyun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="동일계구분" border="0" color="25058105" x="2958" y="4" height="60" width="512" html.valueishtml="0"  name=college_gubun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="학과" border="0" color="25058105" x="1243" y="4" height="60" width="992" html.valueishtml="0"  name=gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="이전대학" border="0" color="25058105" x="5" y="68" height="64" width="1010" html.valueishtml="0"  name=college_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="졸업일자" border="0" color="25058105" x="2245" y="68" height="64" width="709" html.valueishtml="0"  name=college_jol_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="인정학점" border="0" color="25058105" x="2958" y="68" height="64" width="512" html.valueishtml="0"  name=injung_hakjum_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="이전대학학과" border="0" color="25058105" x="1019" y="68" height="64" width="1221" html.valueishtml="0"  name=college_gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+column(band=detail id=7 alignment="0" tabsequence=30 border="0" color="0" x="5" y="72" height="60" width="1010" format="[general]" html.valueishtml="0"  name=college_id visible="1" dddw.name=d_dddw_college dddw.displaycolumn=college_name dddw.datacolumn=college_id dddw.percentwidth=155 dddw.lines=5 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="1090519039~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=11 alignment="2" tabsequence=50 border="0" color="0" x="2245" y="72" height="60" width="713" format="[general]" html.valueishtml="0"  name=college_jol_date visible="1" editmask.mask="xxxx.xx.xx" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="1090519039~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=6 alignment="2" tabsequence=60 border="0" color="255" x="2962" y="72" height="60" width="512" format="[general]" html.valueishtml="0"  name=injung_hakjum visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="1090519039~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=9 alignment="0" tabsequence=40 border="0" color="0" x="1019" y="72" height="60" width="1221" format="[general]" html.valueishtml="0"  name=college_gwa visible="1" dddw.name=d_dddw_collegehakgwa dddw.displaycolumn=hakgwa_name dddw.datacolumn=hakgwa_id dddw.percentwidth=111 dddw.lines=5 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="1090519039~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="5" y="4" height="64" width="325" format="[general]" html.valueishtml="0"  name=hakbun visible="1" edit.limit=10 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12639424~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="334" y="4" height="64" width="315" format="[general]" html.valueishtml="0"  name=hname visible="1" edit.limit=10 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="1090519039~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="654" y="4" height="64" width="590" format="[general]" html.valueishtml="0"  name=jumin_no visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="1090519039~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="2245" y="4" height="64" width="352" format="[general]" html.valueishtml="0"  name=iphak_gubun visible="1" dddw.name=d_dddw_ipgubun dddw.displaycolumn=iphak_gubun_name dddw.datacolumn=iphak_gubun_id dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="1090519039~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=12 alignment="2" tabsequence=10 border="0" color="0" x="2601" y="4" height="64" width="357" format="[general]" html.valueishtml="0"  name=college_jol_hakyun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="1090519039~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=13 alignment="2" tabsequence=20 border="0" color="255" x="2962" y="4" height="64" width="512" format="[general]" html.valueishtml="0"  name=college_gubun visible="1" ddlb.limit=2 ddlb.allowedit=yes ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="1090519039~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="1248" y="4" height="64" width="992" format="[general]" html.valueishtml="0"  name=gwa visible="1" dddw.name=d_dddw_hakgwa dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="1090519039~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

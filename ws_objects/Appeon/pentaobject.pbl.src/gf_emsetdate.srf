@@ -1,0 +1,26 @@
+﻿$PBExportHeader$gf_emsetdate.srf
+global type gf_emsetdate from function_object
+end type
+
+forward prototypes
+global function boolean gf_emsetdate (editmask obj)
+end prototypes
+
+global function boolean gf_emsetdate (editmask obj);Vector	vc
+Boolean	lb_rtn
+Date		ldt_date
+vc = Create Vector
+
+obj.getdata(ldt_date)
+vc.setproperty('date', String(ldt_date))
+
+lb_rtn = gf_setopencontrol('w_calendar', obj, vc)
+
+IF lb_rtn THEN
+	obj.text = vc.getproperty("curdate")
+END IF
+
+Return lb_rtn
+
+end function
+

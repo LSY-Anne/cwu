@@ -1,0 +1,87 @@
+﻿$PBExportHeader$d_hpa405a_1.srd
+$PBExportComments$연말정산 기부금 지급조서 자료 생성( RECORD 읽기용)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes name=member_no dbname="hpa025m.member_no" )
+ column=(type=char(40) updatewhereclause=yes name=so_name dbname="hpa025m.so_name" )
+ column=(type=char(4) updatewhereclause=yes name=year dbname="hpa025m.year" )
+ column=(type=char(13) updatewhereclause=yes name=business_no dbname="hpa025m.business_no" )
+ column=(type=char(40) updatewhereclause=yes name=business_name dbname="hpa025m.business_name" )
+ column=(type=char(2) updatewhereclause=yes name=gibo_code dbname="hpa025m.gibo_code" )
+ column=(type=number updatewhereclause=yes name=seq_no dbname="hpa025m.seq_no" )
+ column=(type=char(8) updatewhereclause=yes name=apply_month dbname="hpa025m.apply_month" )
+ column=(type=decimal(0) updatewhereclause=yes name=gibo_count dbname="hpa025m.gibo_count" )
+ column=(type=number updatewhereclause=yes name=gibo_amt dbname="hpa025m.gibo_amt" )
+ column=(type=char(20) updatewhereclause=yes name=gibo_no dbname="hpa025m.gibo_no" )
+ column=(type=char(13) updatewhereclause=yes name=self_jumin_no dbname="hpa025m.self_jumin_no" )
+ column=(type=char(20) updatewhereclause=yes name=name dbname="hpa025m.name" )
+ column=(type=char(13) updatewhereclause=yes name=jumin_no dbname="hpa025m.jumin_no" )
+ column=(type=char(1) updatewhereclause=yes name=gwangae_code dbname="hpa025m.gwangae_code" )
+ column=(type=char(1) updatewhereclause=yes name=foreigner_gbn dbname="hpa025m.foreigner_gbn" )
+ column=(type=number updatewhereclause=yes name=foreigner_gbn_so dbname="foreigner_gbn_so" )
+ retrieve="SELECT A.MEMBER_NO,
+	C.NAME				so_name,   
+	A.YEAR,
+	A.BUSINESS_NO,
+	A.BUSINESS_NAME,   
+	A.GIBO_CODE,
+	A.SEQ_NO,
+	A.APPLY_MONTH,
+	A.GIBO_COUNT,
+	A.GIBO_AMT,
+   A.gibo_no,
+	C.JUMIN_NO    			         SElF_JUMIN_NO,
+	A.NAME,
+	A.JUMIN_NO,
+	A.GWANGAE_CODE,
+	A.FOREIGNER_GBN,
+	DECODE(B.FOREIGNER_GBN,118,1,9)  FOREIGNER_GBN_SO
+FROM PADB.HPA025M  A,
+	  PADB.HPA019H  B,
+	  INDB.HIN001M	 C
+WHERE  A.MEMBER_NO	= B.MEMBER_NO
+AND	A.MEMBER_NO	=  C.MEMBER_NO
+AND	A.YEAR		=	B.YEAR
+AND	A.YEAR		=	:AS_YEAR
+ORDER BY A.MEMBER_NO" arguments=(("as_year", string)) )
+text(band=header alignment="0" text="사번" border="0" color="0" x="201" y="4" height="56" width="183" html.valueishtml="0"  name=member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="년도" border="0" color="0" x="9" y="4" height="56" width="183" html.valueishtml="0"  name=year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="소득자주민번호" border="0" color="0" x="1024" y="4" height="56" width="498" html.valueishtml="0"  name=self_jumin_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="기부자 주민번호" border="0" color="0" x="1531" y="4" height="56" width="457" html.valueishtml="0"  name=jumin_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="관계코드" border="0" color="0" x="1998" y="4" height="56" width="229" html.valueishtml="0"  name=gwangae_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="소득자 내외국인" border="0" color="0" x="594" y="4" height="56" width="421" html.valueishtml="0"  name=foreigner_gbn_so_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="기부처사업자번호" border="0" color="0" x="2235" y="4" height="56" width="448" html.valueishtml="0"  name=business_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="상호" border="0" color="0" x="2693" y="4" height="56" width="773" html.valueishtml="0"  name=business_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="기부코드" border="0" color="0" x="3474" y="4" height="56" width="247" html.valueishtml="0"  name=gibo_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="건수" border="0" color="0" x="3730" y="4" height="56" width="142" html.valueishtml="0"  name=gibo_count_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="기부금액" border="0" color="0" x="3881" y="4" height="56" width="384" html.valueishtml="0"  name=gibo_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="소득자" border="0" color="0" x="393" y="4" height="56" width="192" html.valueishtml="0"  name=so_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="기부자 내외국인" border="0" color="0" x="4274" y="4" height="56" width="224" html.valueishtml="0"  name=foreigner_gbn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="2235" y="4" height="76" width="448" format="[general]" html.valueishtml="0"  name=business_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="0" x="4274" y="4" height="76" width="224" format="[general]" html.valueishtml="0"  name=foreigner_gbn visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="0" x="594" y="4" height="76" width="421" format="[general]" html.valueishtml="0"  name=foreigner_gbn_so visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="0" x="3881" y="4" height="76" width="384" format="#,##0" html.valueishtml="0"  name=gibo_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="3474" y="4" height="76" width="247" format="[general]" html.valueishtml="0"  name=gibo_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="3730" y="4" height="76" width="142" format="[general]" html.valueishtml="0"  name=gibo_count visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="1998" y="4" height="76" width="229" format="[general]" html.valueishtml="0"  name=gwangae_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="1531" y="4" height="76" width="457" format="[general]" html.valueishtml="0"  name=jumin_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="201" y="4" height="76" width="183" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="1024" y="4" height="76" width="498" format="[general]" html.valueishtml="0"  name=self_jumin_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="393" y="4" height="76" width="192" format="[general]" html.valueishtml="0"  name=so_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="76" width="183" format="[general]" html.valueishtml="0"  name=year visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="2693" y="4" height="76" width="773" format="[general]" html.valueishtml="0"  name=business_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

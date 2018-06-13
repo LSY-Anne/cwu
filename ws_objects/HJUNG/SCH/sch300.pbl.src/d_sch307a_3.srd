@@ -1,0 +1,70 @@
+﻿$PBExportHeader$d_sch307a_3.srd
+$PBExportComments$프로그램신청등록 - 신청등록
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=828 color="536870912" )
+table(column=(type=char(1) update=yes updatewhereclause=yes key=yes name=house_gb dbname="saz350t.house_gb" dbalias=".house_gb" )
+ column=(type=char(8) update=yes updatewhereclause=yes key=yes name=req_dt dbname="saz350t.req_dt" dbalias=".req_dt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=req_no dbname="saz350t.req_no" dbalias=".req_no" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=allocate_no dbname="saz350t.allocate_no" dbalias=".allocate_no" )
+ column=(type=char(9) update=yes updatewhereclause=yes name=hakbun dbname="saz350t.hakbun" dbalias=".hakbun" )
+ column=(type=char(20) updatewhereclause=yes name=hname dbname="hname" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=contact_no dbname="saz350t.contact_no" dbalias=".contact_no" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=cel_no dbname="saz350t.cel_no" dbalias=".cel_no" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=email dbname="saz350t.email" dbalias=".email" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=worker dbname="saz350t.worker" dbalias=".worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="saz350t.ipaddr" dbalias=".ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="saz350t.work_date" dbalias=".work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_uid dbname="saz350t.job_uid" dbalias=".job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="saz350t.job_add" dbalias=".job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="saz350t.job_date" dbalias=".job_date" )
+ retrieve="  SELECT  	SCH.SAZ350T.HOUSE_GB ,           
+				SCH.SAZ350T.REQ_DT ,           
+				SCH.SAZ350T.REQ_NO ,           
+				SCH.SAZ350T.ALLOCATE_NO ,           
+				SCH.SAZ350T.HAKBUN ,           
+				(SELECT A.HNAME FROM HAKSA.SUM220TL A WHERE A.HAKBUN = SCH.SAZ350T.HAKBUN) AS HNAME,           
+				SCH.SAZ350T.CONTACT_NO ,           
+				SCH.SAZ350T.CEL_NO ,           
+				SCH.SAZ350T.EMAIL ,           
+				SCH.SAZ350T.WORKER ,           
+				SCH.SAZ350T.IPADDR ,           
+				SCH.SAZ350T.WORK_DATE ,           
+				SCH.SAZ350T.JOB_UID ,           
+				SCH.SAZ350T.JOB_ADD ,           
+				SCH.SAZ350T.JOB_DATE     
+	FROM 	SCH.SAZ350T      
+	WHERE 	( SCH.SAZ350T.HOUSE_GB = :as_house_gb ) And          
+				( SCH.SAZ350T.REQ_DT = :as_req_dt ) And          
+				( SCH.SAZ350T.REQ_NO = :ai_req_no )   " update="SCH.SAZ350T" updatewhere=1 updatekeyinplace=no arguments=(("as_house_gb", string),("as_req_dt", string),("ai_req_no", number)) )
+text(band=detail alignment="1" text="기숙사구분" border="0" color="33554432" x="37" y="28" height="60" width="352" html.valueishtml="0"  name=house_gb_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="407" y="28" height="60" width="507" format="[general]" html.valueishtml="0"  name=house_gb visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+bitmap(band=detail filename="..\img\dwbtn\ib_calendar.gif" x="827" y="120" height="72" width="82" border="0"  name=p_frdt  tag="datecol(req_dt)" visible="1" )
+text(band=detail alignment="1" text="신청일자" border="0" color="33554432" x="37" y="124" height="60" width="352" html.valueishtml="0"  name=req_dt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=10 border="0" color="33554432" x="407" y="124" height="60" width="411" format="[general]" html.valueishtml="0"  name=req_dt  tag="date" visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="순번" border="0" color="33554432" x="32" y="220" height="60" width="352" html.valueishtml="0"  name=req_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="33554432" x="402" y="220" height="60" width="329" format="[general]" html.valueishtml="0"  name=req_no visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="학번" border="0" color="33554432" x="37" y="316" height="60" width="352" html.valueishtml="0"  name=hakbun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="33554432" x="407" y="316" height="60" width="274" format="[general]" html.valueishtml="0"  name=hakbun visible="1" edit.limit=9 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="성명" border="0" color="33554432" x="32" y="412" height="60" width="352" html.valueishtml="0"  name=hname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="33554432" x="402" y="412" height="60" width="727" format="[general]" html.valueishtml="0"  name=hname visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="가능연락처" border="0" color="33554432" x="32" y="508" height="60" width="352" html.valueishtml="0"  name=contact_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=20 border="0" color="33554432" x="402" y="508" height="60" width="727" format="[general]" html.valueishtml="0"  name=contact_no visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="핸드폰번호" border="0" color="33554432" x="32" y="604" height="60" width="352" html.valueishtml="0"  name=cel_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=30 border="0" color="33554432" x="402" y="604" height="60" width="727" format="[general]" html.valueishtml="0"  name=cel_no visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="E-Mail" border="0" color="33554432" x="32" y="700" height="60" width="352" html.valueishtml="0"  name=email_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=40 border="0" color="33554432" x="402" y="700" height="60" width="727" format="[general]" html.valueishtml="0"  name=email visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

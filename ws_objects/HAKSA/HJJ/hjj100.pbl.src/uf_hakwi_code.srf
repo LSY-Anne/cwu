@@ -1,0 +1,22 @@
+﻿$PBExportHeader$uf_hakwi_code.srf
+$PBExportComments$[청운대]과별로 학위코드 return (학위코드)
+global type uf_hakwi_code from function_object
+end type
+
+forward prototypes
+global function string uf_hakwi_code (string as_gwa)
+end prototypes
+
+global function string uf_hakwi_code (string as_gwa);string 	ls_hakwi_code
+
+select	hakwi_code
+into		:ls_hakwi_code
+from		cddb.kch003m
+where		gwa = :as_gwa
+and		gwa_gubun = '1'
+and		length(	trim(gwa)) = 4
+USING SQLCA ;
+
+return ls_hakwi_code
+end function
+

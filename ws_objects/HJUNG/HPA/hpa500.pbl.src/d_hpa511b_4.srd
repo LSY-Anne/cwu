@@ -1,0 +1,140 @@
+﻿$PBExportHeader$d_hpa511b_4.srd
+$PBExportComments$강사료 기초자료 생성 - 오류리스트 출력
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=4 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=char(5) updatewhereclause=yes key=yes name=member_no dbname="hin001m.member_no" )
+ column=(type=char(40) updatewhereclause=yes name=kname dbname="hin001m.kname" )
+ column=(type=char(4) updatewhereclause=yes name=dept_code dbname="hin001m.dept_code" )
+ column=(type=char(4) updatewhereclause=yes name=duty_code dbname="hin001m.duty_code" )
+ column=(type=char(3) updatewhereclause=yes name=sal_class dbname="hin001m.sal_class" )
+ column=(type=char(4) updatewhereclause=yes name=bojik_code1 dbname="hin001m.bojik_code1" )
+ column=(type=number updatewhereclause=yes name=sisu dbname="sisu" )
+ column=(type=number updatewhereclause=yes name=sec_code dbname="hin001m.sec_code" )
+ retrieve="SELECT  B.MEMBER_NO  as MEMBER_NO,
+        B.NAME as KNAME,
+	     B.GWA as DEPT_CODE,
+	     B.DUTY_CODE as DUTY_CODE,
+	     B.SAL_CLASS as SAL_CLASS,
+	     B.BOJIK_CODE1 as BOJIK_CODE1,
+		  SUM(A.SISU) SISU,
+		  B.SEC_CODE
+   FROM (SELECT 	YEAR, HAKGI, MEMBER_NO,                                                            
+		 	 		   COUNT(SIGAN) AS	SISU                                                  
+				FROM	(SELECT	DISTINCT A.MEMBER_NO	AS	MEMBER_NO,                    
+								nvl(B.YOIL||B.SIGAN, ' ') AS SIGAN ,
+								A.YEAR, A.HAKGI                        
+				FROM	HAKSA.GAESUL_GWAMOK	A,                                    
+						HAKSA.SIGANPYO		B                                     
+				WHERE	A.YEAR			=	B.YEAR                
+				AND	A.HAKGI			=	B.HAKGI               
+				AND	A.GWA				=	B.GWA         
+				AND	A.HAKYUN			=	B.HAKYUN      
+				AND	A.BAN				=	B.BAN         
+				AND	A.GWAMOK_ID		=	B.GWAMOK_ID           
+				AND	A.GWAMOK_SEQ	=	B.GWAMOK_SEQ                  
+				AND	A.BUNBAN			=	B.BUNBAN      
+				AND	A.YEAR			=	:IS_YY                
+				AND	A.HAKGI			=	:IS_HAKGI  
+            AND   A.GWAMOK_ID NOT LIKE 'TAA9999%'
+            AND   A.GWAMOK_ID NOT LIKE 'TAA0003%'                
+				AND	(A.PASS_GUBUN	=	'N' OR A.PASS_GUBUN IS NULL ) 
+				AND	A.SISU	<> 0 
+            AND nvl(A.TMT_JUNGONG_GUBUN, ' ') = ' ' )
+		GROUP BY MEMBER_NO, YEAR, HAKGI 
+		UNION ALL
+
+      SELECT YEAR, HAKGI, MEMBER_NO, 
+             sum(nvl(case when T1.tmt_jungong_gubun = '1' then nvl(T1.su_inwon, 0)
+                          when T1.tmt_jungong_gubun = '2' then trunc(nvl(T1.su_inwon, 0) / 3, 0) + case when mod(nvl(T1.su_inwon, 0) , 3) > 0 then 1 else 0 end end, 0)) SISU
+        FROM HAKSA.GAESUL_GWAMOK	T1
+       WHERE T1.YEAR			=	:IS_YY                
+			AND T1.HAKGI		=	:IS_HAKGI
+         AND (T1.PASS_GUBUN	=	'N' 	OR T1.PASS_GUBUN IS NULL )
+         AND T1.SISU	<> 0
+         AND nvl(T1.TMT_JUNGONG_GUBUN, ' ') <> ' '
+       GROUP BY MEMBER_NO, YEAR, HAKGI 
+
+		UNION ALL
+		SELECT YEAR, HAKGI, MEMBER_NO,                                                            
+		 	 		     DECODE(:is_hakgi,'3',SISU * 5,'4',SISU * 5, 0) AS	SISU                                                  
+				 FROM	HAKSA.GAESUL_GWAMOK	A                   
+				 WHERE  A.YEAR		=	:IS_YY                
+				 AND	  A.HAKGI	=	:IS_HAKGI                  
+				 AND	  A.SISU		<> 0 
+                                          
+				
+		UNION  ALL
+		SELECT A.YEAR,A.HAKGI, A.MEMBER_NO, SUM(A.sisu)
+     	  FROM HAKSA.D_GAESUL_GWAMOK A, 
+		  		 INDB.HIN001M B 
+    	 WHERE A.year  = :is_yy
+      	AND A.hakgi = :is_hakgi
+			AND A.MEMBER_NO = B.MEMBER_NO
+			AND B.DUTY_CODE NOT IN ('301')
+		   AND A.GWAMOK_ID NOT LIKE '__5047'
+		   AND A.GWAMOK_ID NOT LIKE '__5048'
+		   AND A.GWAMOK_ID NOT LIKE '__5091'
+		   AND A.GWAMOK_ID NOT LIKE '__5092'
+			AND B.JAEJIK_OPT IN (1,2,4)	
+    	 GROUP BY A.year, A.hakgi, A.member_no )  A,                                                         
+        				 			  INDB.HIN001M B
+ WHERE A.MEMBER_NO = B.MEMBER_NO (+)
+   AND A.YEAR  	 = :IS_YY
+   AND A.HAKGI     = :IS_HAKGI
+   AND A.MEMBER_NO LIKE :IS_MEMBER||'%'
+   AND B.GWA       LIKE :IS_GWA||'%'
+	AND B.JAEJIK_OPT IN (1,2,4)
+	AND rtrim(B.DUTY_CODE)  IN ('101','102','103','104','106','107','108','109','111','112','115','301')
+GROUP BY B.MEMBER_NO,
+         B.NAME,
+	      B.GWA,
+	      B.DUTY_CODE,
+	      B.SAL_CLASS,
+	      B.BOJIK_CODE1,
+		   B.SEC_CODE
+UNION  ALL
+SELECT 	B.MEMBER_NO  as MEMBER_NO,
+        B.NAME as KNAME,
+	     B.GWA as DEPT_CODE,
+	     B.DUTY_CODE as DUTY_CODE,
+	     B.SAL_CLASS as SAL_CLASS,
+	     B.BOJIK_CODE1 as BOJIK_CODE1,
+		  0 SISU,
+		  B.SEC_CODE
+FROM  INDB.HIN001M B
+WHERE B.JAEJIK_OPT = 2
+AND   rtrim(B.DUTY_CODE)  = '301'
+" update="INDB.HIN001M" updatewhere=0 updatekeyinplace=no arguments=(("is_yy", string),("is_hakgi", string),("is_member", string),("is_gwa", string)) )
+text(band=header alignment="0" text="Hin001m Member No" border="0" color="0" x="9" y="4" height="60" width="293" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hin001m Kname" border="0" color="0" x="311" y="4" height="60" width="325" html.valueishtml="0"  name=t_9 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hin001m Dept Code" border="0" color="0" x="645" y="4" height="60" width="247" html.valueishtml="0"  name=t_10 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hin001m Duty Code" border="0" color="0" x="901" y="4" height="60" width="247" html.valueishtml="0"  name=t_11 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hin001m Sal Class" border="0" color="0" x="1157" y="4" height="60" width="320" html.valueishtml="0"  name=t_12 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hin001m Bojik Code1" border="0" color="0" x="1486" y="4" height="60" width="288" html.valueishtml="0"  name=t_13 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Sisu" border="0" color="0" x="1783" y="4" height="60" width="183" html.valueishtml="0"  name=t_14 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hin001m Bojik Code1" border="0" color="0" x="1975" y="4" height="60" width="306" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hin001m Sec Code" border="0" color="0" x="2290" y="4" height="60" width="498" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="68" width="293" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="311" y="4" height="68" width="325" format="[general]" html.valueishtml="0"  name=kname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="645" y="4" height="68" width="247" format="[general]" html.valueishtml="0"  name=dept_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="901" y="4" height="68" width="247" format="[general]" html.valueishtml="0"  name=duty_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="1157" y="4" height="68" width="320" format="[general]" html.valueishtml="0"  name=sal_class visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1486" y="4" height="68" width="288" format="[general]" html.valueishtml="0"  name=hin001m_bojik_code1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="1783" y="4" height="68" width="183" format="[general]" html.valueishtml="0"  name=sisu visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1975" y="4" height="68" width="306" format="[general]" html.valueishtml="0"  name=bojik_code1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="2290" y="4" height="68" width="498" format="[general]" html.valueishtml="0"  name=sec_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,70 @@
+﻿$PBExportHeader$f_getinsacnt.srf
+$PBExportComments$교원수를 구한다(A:as_year, ai_gubun, R:교원수)
+global type f_getinsacnt from function_object
+end type
+
+forward prototypes
+global function integer f_getinsacnt (string as_year, string as_str_duty, string as_end_duty)
+end prototypes
+
+global function integer f_getinsacnt (string as_year, string as_str_duty, string as_end_duty);// ==========================================================================================
+// 기    능 : 	과세미달 교원수를 구한다.
+// 작 성 인 : 	안금옥
+// 작성일자 : 	2002.04
+// 함수원형 : 	f_getinsacnt(string as_year, string as_str_duty, string as_end_duty)	return	integer
+// 인    수 :	as_year		-	기준년도
+//					as_str_duty	-	조회시작직급
+//					as_end_duty	-	조회종료직급
+// 되 돌 림 :	과세미달 교원수
+// 주의사항 :
+// 수정사항 :
+// ==========================================================================================
+
+integer	li_cnt = 0
+
+select	count(distinct aa.member_no) count
+into		:li_cnt
+from		(	select	member_no, jumin_no, duty_code
+				from		indb.hin001m b
+				where		duty_code	>=		:as_str_duty
+				and		duty_code	<=		:as_end_duty
+				and		member_no		in		
+							(	select	member_no
+								from	(	select	member_no, jumin_no
+											from		indb.hin001m a
+											where		(substr(firsthire_date, 1, 4)	<=	:as_year
+											and		(retire_date	is null or substr(retire_date, 1, 4) >= :as_year))
+											order by	jaejik_opt, 
+														decode(substr(duty_code, 1, 1), '3', 'z' || duty_code, '0' || duty_code),
+														firsthire_date	DESC,
+														decode(substr(member_no, 1, 1), '0', 'z' || member_no, '0' || member_no) )
+								where		jumin_no	=	b.jumin_no
+								and		rownum	=	1	)	)	aa
+where		(	(	select	nvl(sum(a.pay_amt), 0)
+					from		padb.hpa005d a, padb.hpa003m c
+					where		a.year_month	like	:as_year || '%'
+					and		c.trans_gbn		=		9
+					and		a.code			=		c.code
+					and		substr(a.code, 1, 1)	<	'5'
+					and		a.member_no		in		(	select	member_no
+																from		indb.hin001m
+																where		jumin_no	=	aa.jumin_no	)	)	+
+				(	select	nvl(sum(pay_amt), 0)
+					from		padb.hpa116t
+					where		year				=		:as_year
+					and		member_no		in		(	select	member_no
+																from		indb.hin001m
+																where		jumin_no	=	aa.jumin_no	)	)	)	*	0.2	>
+				(	select	nvl(sum(pay_amt), 0)
+						from		padb.hpa005d
+						where		year_month	like	:as_year || '%'
+						and		code			in		('06', '10')
+						and		member_no	in		(	select	member_no
+																from		indb.hin001m
+																where		jumin_no = aa.jumin_no	)	)	;
+																
+if sqlca.sqlcode <> 0 or isnull(li_cnt)	then	li_cnt = 0
+
+return	li_cnt
+end function
+

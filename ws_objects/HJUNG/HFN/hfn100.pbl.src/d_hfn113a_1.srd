@@ -1,0 +1,78 @@
+﻿$PBExportHeader$d_hfn113a_1.srd
+$PBExportComments$기초잔액_등록용
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=76 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=hfn501h_acct_class dbname="hfn501h.acct_class" )
+ column=(type=char(4) update=yes updatewhereclause=yes key=yes name=hfn501h_bdgt_year dbname="hfn501h.bdgt_year" )
+ column=(type=char(8) update=yes updatewhereclause=yes key=yes name=hfn501h_acct_date dbname="hfn501h.acct_date" )
+ column=(type=char(6) update=yes updatewhereclause=yes key=yes name=hfn501h_acct_code dbname="hfn501h.acct_code" )
+ column=(type=char(30) updatewhereclause=yes name=hac001m_acct_name dbname="hac001m.acct_name" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=hfn501h_mana_code dbname="hfn501h.mana_code" )
+ column=(type=char(20) update=yes updatewhereclause=yes key=yes name=hfn501h_mana_data dbname="hfn501h.mana_data" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=hfn501h_dr_alt_amt dbname="hfn501h.dr_alt_amt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=hfn501h_dr_cash_amt dbname="hfn501h.dr_cash_amt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=hfn501h_cr_alt_amt dbname="hfn501h.cr_alt_amt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=hfn501h_cr_cash_amt dbname="hfn501h.cr_cash_amt" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=hfn501h_worker dbname="hfn501h.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=hfn501h_ipaddr dbname="hfn501h.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=hfn501h_work_date dbname="hfn501h.work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=hfn501h_job_uid dbname="hfn501h.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=hfn501h_job_add dbname="hfn501h.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=hfn501h_job_date dbname="hfn501h.job_date" )
+ column=(type=number updatewhereclause=yes name=com_dr_amt dbname="com_dr_amt" )
+ column=(type=number updatewhereclause=yes name=com_cr_amt dbname="com_cr_amt" )
+ column=(type=char(1) updatewhereclause=yes name=hac001m_drcr_class dbname="hac001m.drcr_class" )
+ retrieve="SELECT	A.ACCT_CLASS,
+			A.BDGT_YEAR,
+			A.ACCT_DATE,
+			A.ACCT_CODE,
+			B.ACCT_NAME ACCT_NAME,
+			A.MANA_CODE,
+			A.MANA_DATA,
+			A.DR_ALT_AMT,
+			A.DR_CASH_AMT,
+			A.CR_ALT_AMT,
+			A.CR_CASH_AMT,
+			A.WORKER,
+			A.IPADDR,
+			A.WORK_DATE,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE,
+			NVL(A.DR_ALT_AMT,0) + NVL(A.DR_CASH_AMT,0)	COM_DR_AMT,
+			NVL(A.CR_ALT_AMT,0) + NVL(A.CR_CASH_AMT,0)	COM_CR_AMT,
+			B.DRCR_CLASS
+FROM		FNDB.HFN501H A, ACDB.HAC001M B
+WHERE		A.ACCT_CODE = B.ACCT_CODE (+)
+AND		A.ACCT_CLASS = :AI_ACCTCLASS
+AND		BDGT_YEAR = :AS_BDGTYEAR
+AND		ACCT_DATE = :AS_BDGTYEAR||'0000'" update="FNDB.HFN501H" updatewhere=1 updatekeyinplace=no arguments=(("ai_AcctClass", number),("as_BdgtYear", string))  sort="hfn501h_acct_code A hfn501h_mana_data A " )
+text(band=header alignment="2" text="계정과목명" border="0" color="0" x="293" y="8" height="56" width="608" html.valueishtml="0"  name=hac001m_acct_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="관리항목DATA" border="0" color="0" x="1285" y="8" height="56" width="841" html.valueishtml="0"  name=hfn501h_mana_data_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="차변금액" border="0" color="0" x="2135" y="8" height="56" width="521" html.valueishtml="0"  name=com_dr_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="대변금액" border="0" color="0" x="2665" y="8" height="56" width="530" html.valueishtml="0"  name=com_cr_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="관리항목명" border="0" color="0" x="910" y="8" height="56" width="366" html.valueishtml="0"  name=hfn501h_mana_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="잔    액" border="0" color="0" x="3205" y="8" height="56" width="544" html.valueishtml="0"  name=com_jan_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계정코드" border="0" color="0" x="9" y="8" height="56" width="274" html.valueishtml="0"  name=hfn501h_acct_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=10 border="0" color="0" x="9" y="4" height="68" width="274" format="[general]" html.valueishtml="0"  name=hfn501h_acct_code visible="1" editmask.autoskip=yes editmask.mask="XXXX-XX" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="0" tabsequence=30 border="0" color="0" x="1285" y="8" height="68" width="841" format="[general]" html.valueishtml="0" protect="0~tif( hfn501h_mana_code <> 0, 0, 1)"  name=hfn501h_mana_data visible="1" edit.limit=40 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif( hfn501h_mana_code <> 0, 16777215, 80269524)" )
+column(band=detail id=18 alignment="1" tabsequence=40 border="0" color="0" x="2135" y="8" height="68" width="521" format="[general]" html.valueishtml="0"  name=com_dr_amt visible="1" editmask.mask="###,###,###,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=19 alignment="1" tabsequence=50 border="0" color="0" x="2665" y="8" height="68" width="530" format="[general]" html.valueishtml="0"  name=com_cr_amt visible="1" editmask.mask="###,###,###,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=20 border="0" color="0" x="293" y="8" height="68" width="608" format="[general]" html.valueishtml="0"  name=hac001m_acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="910" y="8" height="68" width="366" format="[general]" html.valueishtml="0"  name=hfn501h_mana_code visible="1" dddw.name=dddw_hfn_mana_code dddw.displaycolumn=mana_name dddw.datacolumn=mana_code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="1" expression="if( hac001m_drcr_class = 'D', com_dr_amt - com_cr_amt, if(hac001m_drcr_class = 'C',com_cr_amt - com_dr_amt,0) )"border="0" color="0" x="3205" y="8" height="68" width="544" format="#,###" html.valueishtml="0"  name=com_jan_amt visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

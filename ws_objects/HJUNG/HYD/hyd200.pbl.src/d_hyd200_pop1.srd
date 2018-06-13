@@ -1,0 +1,111 @@
+﻿$PBExportHeader$d_hyd200_pop1.srd
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=3780 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes name=receipt_no dbname="hyd310t.receipt_no" )
+ column=(type=char(40) updatewhereclause=yes name=name dbname="hin001m.name" )
+ column=(type=char(40) updatewhereclause=yes name=name_eng dbname="hin001m.name_eng" )
+ column=(type=char(50) updatewhereclause=yes name=gwa dbname="gwa" )
+ column=(type=char(60) updatewhereclause=yes name=tpi_dvs_cd dbname="tpi_dvs_cd" )
+ column=(type=char(1000) updatewhereclause=yes name=org_lang_ppr_nm dbname="hyd301t.org_lang_ppr_nm" )
+ column=(type=char(1000) updatewhereclause=yes name=diff_lang_ppr_nm dbname="hyd301t.diff_lang_ppr_nm" )
+ column=(type=char(300) updatewhereclause=yes name=scjnl_nm dbname="hyd301t.scjnl_nm" )
+ column=(type=char(60) updatewhereclause=yes name=pblc_ntn_cd dbname="pblc_ntn_cd" )
+ column=(type=char(150) updatewhereclause=yes name=pblc_plc_nm dbname="hyd301t.pblc_plc_nm" )
+ column=(type=char(20) updatewhereclause=yes name=pblc_vol_no dbname="hyd301t.pblc_vol_no" )
+ column=(type=char(6) updatewhereclause=yes name=pblc_ym dbname="hyd301t.pblc_ym" )
+ column=(type=decimal(0) updatewhereclause=yes name=total_athr_cnt dbname="hyd301t.total_athr_cnt" )
+ retrieve="SELECT B.RECEIPT_NO,
+D.NAME,
+D.NAME_ENG,
+(SELECT FNAME FROM CDDB.KCH003M WHERE D.GWA=GWA) AS GWA,
+(SELECT FNAME FROM CDDB.KCH102D WHERE CODE_GB = 'HYD1180' AND CODE =   C.TPI_DVS_CD)      AS TPI_DVS_CD,
+A.ORG_LANG_PPR_NM,
+A.DIFF_LANG_PPR_NM,
+A.SCJNL_NM,
+(SELECT FNAME FROM CDDB.KCH102D WHERE CODE_GB = 'HYD2000' AND CODE =   A.PBLC_NTN_CD) AS PBLC_NTN_CD,
+A.PBLC_PLC_NM,
+A.PBLC_VOL_NO,
+A.PBLC_YM,
+A.TOTAL_ATHR_CNT
+ FROM YGDB.HYD301T A, YGDB.HYD310T B, YGDB.HYD307T C, INDB.HIN001M D
+WHERE A.STD_YM = B.STD_YM(+)
+AND A.MEMBER_NO = B.MEMBER_NO(+)
+AND A.MNG_NO = B.MNG_NO(+)
+AND B.SUPPORT_GB(+) = '1'
+AND A.STD_YM = C.STD_YM
+AND A.MEMBER_NO = C.MEMBER_NO
+AND A.MNG_NO = C.MNG_NO
+AND C.INCLUDE_GB = '1'
+AND A.MEMBER_NO = D.MEMBER_NO
+AND A.STD_YM = :as_ym
+AND A.MEMBER_NO = :as_member_no
+AND A.MNG_NO = :as_mng_no" arguments=(("as_ym", string),("as_member_no", string),("as_mng_no", string)) )
+rectangle(band=detail x="1842" y="752" height="124" width="1458"  name=r_12 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+rectangle(band=detail x="101" y="512" height="364" width="3200"  name=r_14 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+rectangle(band=detail x="101" y="512" height="3248" width="3200"  name=r_3 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+rectangle(band=detail x="1842" y="512" height="124" width="1458"  name=r_11 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+rectangle(band=detail x="1842" y="512" height="364" width="352"  name=r_2 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+rectangle(band=detail x="101" y="3444" height="316" width="3200"  name=r_16 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+rectangle(band=detail x="398" y="2196" height="184" width="2903"  name=r_6 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+rectangle(band=detail x="101" y="412" height="1968" width="695"  name=r_4 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+rectangle(band=detail x="101" y="412" height="1968" width="302"  name=r_5 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+rectangle(band=detail x="398" y="512" height="1148" width="398"  name=r_1 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="논문게재료 지원신청서" border="0" color="0" x="110" y="192" height="100" width="3182" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-16" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="신청자" border="0" color="0" x="165" y="652" height="56" width="201" html.valueishtml="0"  name=t_4 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="게재학술지" border="0" color="0" x="119" y="1712" height="56" width="288" html.valueishtml="0"  name=t_12 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="접수번호" border="0" color="0" x="133" y="436" height="56" width="247" html.valueishtml="0"  name=t_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="청운대학교 연구처" border="0" color="0" x="2688" y="436" height="56" width="608" html.valueishtml="0"  name=t_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="407" y="424" height="84" width="379" format="[general]" html.valueishtml="0"  name=receipt_no visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="첨부서류:  논문별쇄본  2부." border="0" color="0" x="137" y="3580" height="56" width="690" html.valueishtml="0"  name=t_26 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="(인)" border="0" color="0" x="2848" y="3128" height="56" width="165" html.valueishtml="0"  name=t_25 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="위와 같이 학술지에 논문을 게재하고 논문게재료 지원을 신청합니다." border="0" color="0" x="119" y="2516" height="56" width="3168" html.valueishtml="0"  name=t_19 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="2" expression="gf_sys_datetime()"border="0" color="0" x="1321" y="2840" height="52" width="741" format="YYYY년  mm월  dd일" html.valueishtml="0"  name=compute_9 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="2318" y="3128" height="80" width="581" format="[general]" html.valueishtml="0"  name=name_1 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="신청자" border="0" color="0" x="2130" y="3128" height="56" width="165" html.valueishtml="0"  name=t_24 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="2" tabsequence=32766 border="0" color="0" x="2331" y="2252" height="80" width="937" format="[general]" html.valueishtml="0"  name=pblc_ym visible="1" editmask.mask="####/##" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="발행일자" border="0" color="0" x="1957" y="2252" height="56" width="306" html.valueishtml="0"  name=t_17 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="0" x="823" y="2252" height="84" width="1079" format="[general]" html.valueishtml="0"  name=pblc_vol_no visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="게재지호수" border="0" color="0" x="443" y="2252" height="56" width="306" html.valueishtml="0"  name=t_16 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+rectangle(band=detail x="398" y="2016" height="184" width="2903"  name=r_7 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+rectangle(band=detail x="398" y="1836" height="184" width="2903"  name=r_8 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="발행기관" border="0" color="0" x="443" y="2068" height="56" width="306" html.valueishtml="0"  name=t_15 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="0" x="823" y="2068" height="84" width="2441" format="[general]" html.valueishtml="0"  name=pblc_plc_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="발 행 국" border="0" color="0" x="443" y="1888" height="56" width="306" html.valueishtml="0"  name=t_14 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="0" x="823" y="1888" height="76" width="2441" format="[general]" html.valueishtml="0"  name=pblc_ntn_cd visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+rectangle(band=detail x="398" y="1656" height="184" width="2903"  name=r_9 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="학술지명" border="0" color="0" x="443" y="1712" height="56" width="306" html.valueishtml="0"  name=t_13 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="823" y="1712" height="84" width="2441" format="[general]" html.valueishtml="0"  name=scjnl_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+rectangle(band=detail x="101" y="1656" height="4" width="3200"  name=r_10 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="823" y="968" height="212" width="2455" format="[general]" html.valueishtml="0"  name=org_lang_ppr_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="국       문" border="0" color="0" x="453" y="1048" height="56" width="293" html.valueishtml="0"  name=t_10 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="영       문" border="0" color="0" x="480" y="1436" height="56" width="238" html.valueishtml="0"  name=t_11 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="823" y="1356" height="228" width="2455" format="[general]" html.valueishtml="0"  name=diff_lang_ppr_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="성   명" border="0" color="0" x="512" y="592" height="56" width="178" html.valueishtml="0"  name=t_5 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="(영문)" border="0" color="0" x="517" y="720" height="56" width="169" html.valueishtml="0"  name=t_6 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="823" y="592" height="80" width="987" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="823" y="708" height="92" width="987" format="[general]" html.valueishtml="0"  name=name_eng visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="게재예정" border="0" color="0" x="137" y="1132" height="56" width="238" html.valueishtml="0"  name=t_9 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="논문제목" border="0" color="0" x="137" y="1216" height="56" width="233" html.valueishtml="0"  name=t_18 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+rectangle(band=detail x="1920" y="2196" height="184" width="375"  name=r_13 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+rectangle(band=detail x="398" y="1260" height="400" width="2903"  name=r_15 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="2213" y="544" height="76" width="1065" format="[general]" html.valueishtml="0"  name=gwa visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="소속학과 " border="0" color="0" x="1865" y="544" height="56" width="306" html.valueishtml="0"  name=t_7 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="전체저자수" border="0" color="0" x="1865" y="664" height="56" width="306" html.valueishtml="0"  name=t_23 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="게재구분" border="0" color="0" x="1865" y="784" height="56" width="306" html.valueishtml="0"  name=t_8 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="2" tabsequence=32766 border="0" color="0" x="2213" y="664" height="76" width="1065" format="[general]" html.valueishtml="0"  name=total_athr_cnt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="2213" y="784" height="76" width="1065" format="[general]" html.valueishtml="0"  name=tpi_dvs_cd visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

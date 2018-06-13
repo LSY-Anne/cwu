@@ -1,0 +1,73 @@
+﻿$PBExportHeader$d_hml208p_1.srd
+$PBExportComments$학과별마일리지총괄내역
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=84 color="31112622" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(50) updatewhereclause=yes name=gwa dbname="gwa" )
+ column=(type=char(50) updatewhereclause=yes name=gwa_nm dbname="gwa_nm" )
+ column=(type=char(1) updatewhereclause=yes name=jyua dbname="jyua" values="주간	1/야간	2/" )
+ column=(type=char(1) updatewhereclause=yes name=hakyun dbname="hakyun" )
+ column=(type=char(10) updatewhereclause=yes name=jaehak_hakjuk_hakbun dbname="jaehak_hakjuk.hakbun" )
+ column=(type=char(20) updatewhereclause=yes name=hname dbname="hname" )
+ column=(type=char(1) updatewhereclause=yes name=sex dbname="sex" values="남	1/여	2/" )
+ column=(type=number updatewhereclause=yes name=req_point dbname="req_point" )
+ column=(type=number updatewhereclause=yes name=app_point dbname="app_point" )
+ retrieve="  SELECT
+   MAX((SELECT FNAME FROM CDDB.KCH003M WHERE TRIM(GWA)= TRIM(b.GWA) )) as GWA, 
+    MAX((SELECT FNAME FROM CDDB.KCH003M WHERE TRIM(GWA)= TRIM(A.GWA) )) AS GWA_nm, 
+       MAX(A.JUYA_GUBUN) AS JYUA,
+    MAX(A.SU_HAKYUN) AS HAKYUN,   
+    A.HAKBUN AS HAKBUN,   
+     MAX(A.HNAME) AS HNAME, 
+     MAX(A.SEX) AS SEX,  
+        SUM(NVL(B.REQUEST_POINT, 0)) AS REQ_POINT,   
+        SUM(NVL(B.APPROVAL_POINT, 0)) AS APP_POINT
+        FROM HAKSA.JAEHAK_HAKJUK A,   
+         HAKSA.POINT_GWA_USE B 
+   WHERE (A.HAKBUN =B.HAKBUN  ) and  
+         (:as_gwa = '%' Or B.GWA = :as_gwa ) AND  
+         (:as_hakyun = '%' Or A.SU_HAKYUN = :as_hakyun ) AND
+         (:as_sex = '%' Or   A.SEX = :as_sex) AND
+         ( :as_hakbun = '%' Or A.HAKBUN = :as_hakbun )            
+         AND B.APPROVAL_YN = '3'
+    GROUP BY B.GWA, A.GWA, A.HAKBUN
+    HAVING SUM(NVL(B.REQUEST_POINT, 0)) BETWEEN :AI_FR_MIL AND :AI_TO_MIL" arguments=(("as_gwa", string),("as_hakyun", string),("as_sex", string),("as_hakbun", string),("ai_fr_mil", number),("ai_to_mil", number))  sort="gwa A gwa_nm A " )
+group(level=1 header.height=0 trailer.height=84 by=("gwa" ) header.color="536870912" trailer.color="32106985" )
+text(band=header alignment="2" text="마일리지배정학과/부서" border="0" color="33554432" x="9" y="8" height="56" width="974" html.valueishtml="0"  name=gwa_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학생소속학과" border="0" color="33554432" x="992" y="8" height="56" width="1024" html.valueishtml="0"  name=gwa_nm_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="주/야" border="0" color="33554432" x="2025" y="8" height="56" width="256" html.valueishtml="0"  name=jyua_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학년" border="0" color="33554432" x="2290" y="8" height="56" width="206" html.valueishtml="0"  name=hakyun_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학번" border="0" color="33554432" x="2505" y="8" height="56" width="375" html.valueishtml="0"  name=jaehak_hakjuk_hakbun_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="이름" border="0" color="33554432" x="2889" y="8" height="56" width="434" html.valueishtml="0"  name=hname_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성별" border="0" color="33554432" x="3333" y="8" height="56" width="210" html.valueishtml="0"  name=sex_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="신청마일리지" border="0" color="33554432" x="3552" y="8" height="56" width="421" html.valueishtml="0"  name=req_point_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="승인마일리지" border="0" color="33554432" x="3982" y="8" height="56" width="398" html.valueishtml="0"  name=app_point_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="9" y="8" height="68" width="974" format="[general]" html.valueishtml="0"  name=gwa visible="1" edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="992" y="8" height="68" width="1024" format="[general]" html.valueishtml="0"  name=gwa_nm visible="1" edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="33554432" x="2025" y="8" height="68" width="256" format="[general]" html.valueishtml="0"  name=jyua visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="33554432" x="2290" y="8" height="68" width="206" format="[general]" html.valueishtml="0"  name=hakyun visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="33554432" x="2505" y="8" height="68" width="375" format="[general]" html.valueishtml="0"  name=jaehak_hakjuk_hakbun visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="33554432" x="2889" y="8" height="68" width="434" format="[general]" html.valueishtml="0"  name=hname visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="33554432" x="3333" y="8" height="68" width="210" format="[general]" html.valueishtml="0"  name=sex visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="33554432" x="3552" y="8" height="68" width="421" format="[general]" html.valueishtml="0"  name=req_point visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="33554432" x="3982" y="8" height="68" width="398" format="[general]" html.valueishtml="0"  name=app_point visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(req_point for group 1)"border="0" color="33554432" x="3552" y="4" height="72" width="421" format="[general]" html.valueishtml="0"  name=compute_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(app_point for group 1)"border="0" color="33554432" x="3982" y="4" height="72" width="398" format="[general]" html.valueishtml="0"  name=compute_4 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression=" gwa +' 소계'"border="0" color="0" x="5" y="8" height="56" width="978" format="[GENERAL]" html.valueishtml="0"  name=compute_5 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum(req_point for all)"border="0" color="33554432" x="3552" y="4" height="72" width="421" format="[general]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(app_point for all)"border="0" color="33554432" x="3982" y="4" height="72" width="398" format="[general]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=summary alignment="1" text="합계" border="0" color="0" x="5" y="8" height="56" width="978" html.valueishtml="0"  name=t_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

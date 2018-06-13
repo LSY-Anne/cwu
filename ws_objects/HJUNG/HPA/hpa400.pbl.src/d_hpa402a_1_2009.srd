@@ -1,0 +1,38 @@
+﻿$PBExportHeader$d_hpa402a_1_2009.srd
+$PBExportComments$외래교수 라벨 주소록
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=2 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 82 print.margin.right = 82 print.margin.top = 208 print.margin.bottom = 184 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no label.name="Laser-A4 Address 3.39 x 9.91 L7162" label.width=1710 label.height=512 label.rows=8 label.rows.spacing=0 label.columns=2 label.columns.spacing=46 label.topdown=no label.sheet=yes label.shape=roundrectangle label.ellipse_height=447 label.ellipse_width=447 )
+detail(height=512 color="536870912" )
+table(column=(type=char(5) updatewhereclause=yes name=hin001m_member_no dbname="hin001m.member_no" dbalias="A.member_no" )
+ column=(type=char(40) updatewhereclause=yes name=hin001m_name dbname="hin001m.name" dbalias="A.name" )
+ column=(type=char(6) updatewhereclause=yes name=hin011m_home_postno dbname="hin011m.home_postno" dbalias="B.home_postno" )
+ column=(type=char(100) updatewhereclause=yes name=hin011m_home_addr1 dbname="hin011m.home_addr1" dbalias="B.home_addr1" )
+ column=(type=char(80) updatewhereclause=yes name=hin011m_home_addr2 dbname="hin011m.home_addr2" dbalias="B.home_addr2" )
+ retrieve="SELECT A.MEMBER_NO,
+A.NAME,
+B.HOME_POSTNO,
+B.HOME_ADDR1,
+B.HOME_ADDR2
+FROM INDB.HIN001M A,INDB.HIN011M B,PADB.HPAP46T C
+WHERE A.MEMBER_NO = B.MEMBER_NO
+AND     A.MEMBER_NO = C.P46NNO
+AND     C.P46YAR = :as_year
+AND     A.JAEJIK_OPT = '1'
+AND   trim(A.DUTY_CODE) = :as_duty
+ORDER BY A.MEMBER_NO" arguments=(("as_year", string),("as_duty", string)) )
+compute(band=detail alignment="0" expression=" hin011m_home_addr1  +  hin011m_home_addr2 "border="0" color="0" x="142" y="132" height="140" width="1518" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="142" y="432" height="60" width="334" format="[general]" html.valueishtml="0"  name=hin001m_member_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="933" y="308" height="76" width="425" format="[general]" html.valueishtml="0"  name=hin001m_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="귀하" border="0" color="0" x="1422" y="308" height="76" width="155" html.valueishtml="0"  name=t_1 visible="1"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="1074" y="400" height="76" width="439" format="@@@-@@@" html.valueishtml="0"  name=hin011m_home_postno visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

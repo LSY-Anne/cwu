@@ -1,0 +1,86 @@
+﻿$PBExportHeader$d_hjk106a_1.srd
+$PBExportComments$[청운대]역종등록
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=88 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes key=yes name=hakbun dbname="jaehak_hakjuk.hakbun" )
+ column=(type=char(4) updatewhereclause=yes name=gwa dbname="jaehak_hakjuk.gwa" )
+ column=(type=char(1) updatewhereclause=yes name=dr_hakyun dbname="jaehak_hakjuk.dr_hakyun" )
+ column=(type=char(20) updatewhereclause=yes name=hname dbname="jaehak_hakjuk.hname" )
+ column=(type=char(13) updatewhereclause=yes name=jumin_no dbname="jaehak_hakjuk.jumin_no" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=yukjong_id dbname="jaehak_hakjuk.yukjong_id" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=gunbun dbname="jaehak_hakjuk.gunbun" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=ipdae_date dbname="jaehak_hakjuk.ipdae_date" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=junyuk_date dbname="jaehak_hakjuk.junyuk_date" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=gunbyul_id dbname="jaehak_hakjuk.gunbyul_id" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=grade_id dbname="jaehak_hakjuk.grade_id" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="jaehak_hakjuk.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="jaehak_hakjuk.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="jaehak_hakjuk.work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="jaehak_hakjuk.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="jaehak_hakjuk.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="jaehak_hakjuk.job_date" )
+ retrieve="SELECT  	A.HAKBUN ,
+			A.GWA ,
+			A.DR_HAKYUN,
+			A.HNAME ,
+			A.JUMIN_NO ,
+			A.YUKJONG_ID,
+			A.GUNBUN,
+			A.IPDAE_DATE,
+			A.JUNYUK_DATE,
+			A.GUNBYUL_ID,
+			A.GRADE_ID,
+             A.WORKER,
+             A.IPADDR,  
+             A.WORK_DATE,
+             A.JOB_UID,
+             A.JOB_ADD, 
+             A.JOB_DATE
+FROM 		HAKSA.JAEHAK_HAKJUK A,
+			CDDB.KCH003M	B
+WHERE 	A.GWA				=		B.GWA
+AND		A.HAKBUN 		like :as_hakbun
+AND     	A.GWA 			like :as_gwa 
+AND		A.DR_HAKYUN	like :as_hakyun
+AND		A.SEX 			= '1'			
+ORDER BY B.ORDER_SEQ,
+			A.DR_HAKYUN ,
+			A.HAKBUN 			
+			" update="HAKSA.JAEHAK_HAKJUK" updatewhere=0 updatekeyinplace=yes arguments=(("as_hakbun", string),("as_gwa", string),("as_hakyun", string))  sort="gwa A dr_hakyun A hakbun A " )
+text(band=header alignment="2" text="학과" border="0" color="8388608" x="5" y="4" height="80" width="402" html.valueishtml="0"  name=gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학번" border="0" color="8388608" x="411" y="4" height="80" width="325" html.valueishtml="0"  name=hakbun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="402" format="[general]" html.valueishtml="0"  name=gwa visible="1" dddw.name=d_dddw_shorthakgwa dddw.displaycolumn=sname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="411" y="4" height="76" width="325" format="[general]" html.valueishtml="0"  name=hakbun visible="1" edit.limit=10 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계급코드" border="0" color="8388608" x="3886" y="4" height="80" width="338" html.valueishtml="0"  name=grade_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=11 alignment="2" tabsequence=60 border="0" color="0" x="3886" y="4" height="76" width="338" format="[general]" html.valueishtml="0"  name=grade_id visible="1" dddw.name=d_dddw_gradecode dddw.displaycolumn=grade_name dddw.datacolumn=grade_id dddw.percentwidth=150 dddw.lines=10 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="주특기" border="0" color="8388608" x="3438" y="4" height="80" width="443" html.valueishtml="0"  name=gunbyul_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=10 alignment="2" tabsequence=50 border="0" color="0" x="3438" y="4" height="76" width="443" format="[general]" html.valueishtml="0"  name=gunbyul_id visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="전역일자" border="0" color="8388608" x="2994" y="4" height="80" width="439" html.valueishtml="0"  name=junyuk_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=9 alignment="2" tabsequence=40 border="0" color="0" x="2994" y="4" height="76" width="439" format="[general]" html.valueishtml="0"  name=junyuk_date visible="1" editmask.mask="XXXX.XX.XX" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="전입일" border="0" color="8388608" x="2555" y="4" height="80" width="434" html.valueishtml="0"  name=ipdae_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=8 alignment="2" tabsequence=30 border="0" color="0" x="2555" y="4" height="76" width="434" format="@@@@" html.valueishtml="0"  name=ipdae_date visible="1" editmask.mask="XXXX.XX.XX" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="군번" border="0" color="8388608" x="2130" y="4" height="80" width="421" html.valueishtml="0"  name=gunbun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=7 alignment="2" tabsequence=20 border="0" color="0" x="2130" y="4" height="76" width="421" format="[general]" html.valueishtml="0"  name=gunbun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="역종코드" border="0" color="8388608" x="1815" y="4" height="80" width="311" html.valueishtml="0"  name=yukjong_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=6 alignment="2" tabsequence=10 border="0" color="0" x="1815" y="4" height="76" width="311" format="[general]" html.valueishtml="0"  name=yukjong_id visible="1" dddw.name=d_dddw_yukjongcode dddw.displaycolumn=yukjong_name dddw.datacolumn=yukjong_id dddw.percentwidth=200 dddw.lines=5 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="학년" border="0" color="8388608" x="1600" y="4" height="80" width="210" html.valueishtml="0"  name=dr_hakyun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="1600" y="4" height="76" width="210" format="[general]" html.valueishtml="0"  name=dr_hakyun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="주민번호" border="0" color="8388608" x="1093" y="4" height="80" width="503" html.valueishtml="0"  name=jumin_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="1093" y="4" height="76" width="503" format="@@@@@@-*******" html.valueishtml="0"  name=jumin_no visible="1" edit.limit=13 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="성명" border="0" color="8388608" x="741" y="4" height="80" width="347" html.valueishtml="0"  name=hname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="741" y="4" height="76" width="347" format="[general]" html.valueishtml="0"  name=hname visible="1" edit.limit=10 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

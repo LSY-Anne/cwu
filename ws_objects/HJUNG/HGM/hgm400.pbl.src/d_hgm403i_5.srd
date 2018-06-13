@@ -1,0 +1,91 @@
+﻿$PBExportHeader$d_hgm403i_5.srd
+$PBExportComments$물품 견적서 - 저장
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(10) update=yes updatewhereclause=yes name=req_no dbname="hst107h.req_no" )
+ column=(type=number update=yes updatewhereclause=yes name=item_seq dbname="hst107h.item_seq" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=cust_no dbname="hst107h.cust_no" )
+ column=(type=number update=yes updatewhereclause=yes name=quot_num dbname="hst107h.quot_num" initial="1" )
+ column=(type=number update=yes updatewhereclause=yes name=cust_num dbname="hst107h.cust_num" initial="1" )
+ column=(type=number update=yes updatewhereclause=yes name=quot_price dbname="hst107h.quot_price" initial="0" )
+ column=(type=char(10) updatewhereclause=yes name=ord_no dbname="hst107h.ord_no" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hst107h.worker" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hst107h.work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hst107h.ipaddr" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hst107h.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hst107h.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hst107h.job_date" )
+ column=(type=char(7) updatewhereclause=yes name=item_no dbname="hst107h.item_no" )
+ column=(type=char(40) updatewhereclause=yes name=item_name dbname="hst107h.item_name" )
+ column=(type=number updatewhereclause=yes name=update_qty dbname="update_qty" )
+ column=(type=char(7) updatewhereclause=yes name=midd dbname="hst107h.midd" )
+ column=(type=char(60) updatewhereclause=yes name=model dbname="hst107h.model" )
+ column=(type=char(100) updatewhereclause=yes name=item_stand_size dbname="hst107h.item_stand_size" )
+ column=(type=char(4) updatewhereclause=yes name=apply_gwa dbname="hst107h.apply_gwa" )
+ retrieve="  SELECT A.REQ_NO,   
+			A.ITEM_SEQ,
+         A.CUST_NO,   
+         A.QUOT_NUM,   
+         A.CUST_NUM,   
+         A.QUOT_PRICE,   
+			A.ORD_NO,
+         A.WORKER,   
+         A.WORK_DATE,
+			A.IPADDR,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE,         
+         B.ITEM_NO,    
+			B.ITEM_NAME,
+         NVL(B.UPDATE_QTY,0)  UPDATE_QTY,
+         B.ITEM_NO MIDD,
+			B.MODEL,
+			B.ITEM_STAND_SIZE,
+			B.APPLY_GWA
+			
+    FROM STDB.HST107H A,   
+         STDB.HST105H B
+   WHERE  A.REQ_NO = B.REQ_NO       AND   
+			 A.ITEM_SEQ	=	B.ITEM_SEQ	AND
+          A.REQ_NO like :as_req_no||'%'     AND 
+          B.ITEM_NO like :as_item_no||'%' and
+		  	 b.ord_class = '4'
+" arguments=(("as_req_no", string),("as_item_no", string))  sort="req_no A cust_no A item_name A " )
+group(level=1 header.height=0 trailer.height=0 by=("req_no" , "cust_no" , "quot_num" , "cust_num" , "quot_price" , "worker" , "work_date" , "ipaddr" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text="순서" border="0" color="0" x="9" y="8" height="56" width="160" html.valueishtml="0"  name=compute_1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="접수번호" border="0" color="0" x="178" y="4" height="56" width="398" html.valueishtml="0"  name=req_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="거래처" border="0" color="0" x="585" y="8" height="56" width="626" html.valueishtml="0"  name=cust_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="품목코드" border="0" color="0" x="1221" y="8" height="56" width="315" html.valueishtml="0"  name=midd_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="품목명" border="0" color="0" x="1915" y="4" height="56" width="617" html.valueishtml="0"  name=item_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="수 량" border="0" color="0" x="4087" y="8" height="56" width="197" html.valueishtml="0"  name=update_qty_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="단가" border="0" color="0" x="4293" y="8" height="56" width="416" html.valueishtml="0"  name=quot_price_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="금 액" border="0" color="0" x="4718" y="8" height="56" width="443" html.valueishtml="0"  name=compute_2_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="모델" border="0" color="0" x="2542" y="8" height="56" width="645" html.valueishtml="0"  name=model_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="규격" border="0" color="0" x="3195" y="8" height="56" width="882" html.valueishtml="0"  name=item_stand_size_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="신청부서" border="0" color="0" x="1545" y="8" height="56" width="361" html.valueishtml="0"  name=apply_gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=20 alignment="0" tabsequence=32766 border="0" color="0" x="1545" y="8" height="68" width="361" format="[general]" html.valueishtml="0"  name=apply_gwa visible="1" dddw.name=dddw_dept_code_apply dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="2" expression="getrow()"border="0" color="0" x="9" y="8" height="68" width="160" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="1" expression="update_qty * quot_price"border="0" color="0" x="4718" y="8" height="68" width="443" format="#,###,##0" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="585" y="8" height="68" width="626" format="[general]" html.valueishtml="0"  name=cust_no visible="1" dddw.name=dddw_cust dddw.displaycolumn=cust_name dddw.datacolumn=cust_no dddw.percentwidth=200 dddw.lines=15 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.nilisnull=yes dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="1915" y="8" height="68" width="617" format="[general]" html.valueishtml="0"  name=item_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=19 alignment="0" tabsequence=32766 border="0" color="0" x="3195" y="8" height="68" width="882" format="[general]" html.valueishtml="0"  name=item_stand_size visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="0" x="1221" y="8" height="68" width="315" format="[general]" html.valueishtml="0"  name=midd visible="1" dddw.name=dddw_midd_name dddw.displaycolumn=midd_name dddw.datacolumn=midd_code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="0" color="0" x="2542" y="8" height="68" width="645" format="[general]" html.valueishtml="0"  name=model visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="4293" y="8" height="68" width="416" format="#,###,##0" html.valueishtml="0"  name=quot_price visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=16 alignment="2" tabsequence=32766 border="0" color="0" x="4087" y="8" height="68" width="197" format="#,###,##0" html.valueishtml="0"  name=update_qty visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="178" y="8" height="68" width="398" format="[general]" html.valueishtml="0"  name=req_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

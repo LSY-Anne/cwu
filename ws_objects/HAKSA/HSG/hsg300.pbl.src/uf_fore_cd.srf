@@ -1,0 +1,41 @@
+﻿$PBExportHeader$uf_fore_cd.srf
+$PBExportComments$학번별 외국어 능력
+global type uf_fore_cd from function_object
+end type
+
+forward prototypes
+global function string uf_fore_cd (string as_hakbun)
+end prototypes
+
+global function string uf_fore_cd (string as_hakbun);String ls_forname,   ls_fore,   ls_grade
+Int    ii
+
+ls_forname     = ''
+DECLARE cur_1  CURSOR FOR
+	SELECT B.FNAME,
+	       C.FNAME
+	  FROM SUM240TL A, CDDB.KCH001M B, CDDB.KCH001M C
+	 WHERE A.HAKBUN     = :as_hakbun
+	   AND A.FORE_CD    = B.CODE
+		AND B.TYPE       = 'for_code'
+		AND A.FORE_GRADE = C.CODE
+		AND C.TYPE       = 'SUM20'
+	 ORDER BY A.FORE_CD;
+
+ OPEN   cur_1;
+ DO WHILE(TRUE)
+ FETCH cur_1 INTO  :ls_fore,  :ls_grade ;
+ IF SQLCA.SQLCODE  <> 0 THEN  EXIT
+ 
+    ii           = ii + 1
+	 IF ii        = 1 THEN
+       ls_forname    = ls_fore + '(' + ls_grade + ')'
+	 ELSE
+       ls_forname    = ls_forname + ',' + ls_fore + '(' + ls_grade + ')'
+	 END IF
+Loop
+Close  Cur_1;
+
+return ls_forname
+end function
+

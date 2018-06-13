@@ -1,0 +1,66 @@
+﻿$PBExportHeader$d_hgm402i_22.srd
+$PBExportComments$비품수리신청리스트
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(8) updatewhereclause=yes name=apply_date dbname="hst027m.apply_date" )
+ column=(type=number updatewhereclause=yes name=apply_no dbname="hst027m.apply_no" )
+ column=(type=char(11) updatewhereclause=yes name=id_no dbname="hst027m.id_no" )
+ column=(type=char(4) updatewhereclause=yes name=rep_gwa dbname="hst027m.rep_gwa" )
+ column=(type=char(40) updatewhereclause=yes name=item_name dbname="hst027m.item_name" )
+ column=(type=char(100) updatewhereclause=yes name=item_stand_size dbname="hst027m.item_stand_size" )
+ column=(type=decimal(0) updatewhereclause=yes name=stat_class dbname="hst027m.stat_class" initial="1" values="	2/	4" )
+ column=(type=char(10) updatewhereclause=yes name=req_no dbname="hst027m.req_no" )
+ column=(type=number updatewhereclause=yes name=item_seq dbname="hst027m.item_seq" )
+ column=(type=decimal(0) updatewhereclause=yes name=item_class dbname="hst027m.item_class" )
+ column=(type=decimal(0) updatewhereclause=yes name=item_class dbname="hst027m.item_class" )
+ column=(type=decimal(0) updatewhereclause=yes name=apply_amt dbname="hst027m.apply_amt" )
+ retrieve="SELECT B.APPLY_DATE,
+		 B.APPLY_NO,
+		 B.ID_NO,
+		 B.REP_GWA,
+   	 C.ITEM_NAME,  	
+ 		 A.ITEM_STAND_SIZE,
+		 B.STAT_CLASS,
+		 B.REQ_NO,
+		 B.ITEM_SEQ,
+		 B.ITEM_CLASS,
+       b.item_class,
+       B.apply_amt		   
+    FROM STDB.HST027M A,   
+         STDB.HST030H B,
+			STDB.HST004M C
+   WHERE A.id_no 			= B.id_no
+	 AND  A.ITEM_CLASS 	= B.ITEM_CLASS
+	 AND  A.ITEM_NO 		= C.ITEM_NO
+	 AND  B.STAT_CLASS 	= 2
+	 And  B.APPLY_DATE between	:as_fr_date and :as_to_date
+	 AND	REP_GWA like  	:as_rep_gwa||'%'" arguments=(("as_fr_date", string),("as_to_date", string),("as_rep_gwa", string))  sort="req_no A " )
+text(band=header alignment="2" text="구분" border="0" color="0" x="9" y="8" height="56" width="146" html.valueishtml="0"  name=stat_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="접수번호" border="0" color="0" x="165" y="8" height="56" width="379" html.valueishtml="0"  name=req_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="신청부서" border="0" color="0" x="553" y="8" height="56" width="507" html.valueishtml="0"  name=rep_gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="품목명" border="0" color="0" x="1070" y="8" height="56" width="599" html.valueishtml="0"  name=item_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="예상금액" border="0" color="0" x="1678" y="8" height="56" width="443" html.valueishtml="0"  name=apply_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="신청일자" border="0" color="0" x="2130" y="8" height="56" width="370" html.valueishtml="0"  name=apply_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="등재번호" border="0" color="0" x="2510" y="8" height="56" width="448" html.valueishtml="0"  name=id_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=10 border="0" color="0" x="9" y="8" height="68" width="146" format="[general]" html.valueishtml="0"  name=stat_class visible="1" checkbox.text="" checkbox.on="2" checkbox.off="4" checkbox.scale=no checkbox.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="2130" y="8" height="68" width="370" format="[general]" html.valueishtml="0"  name=apply_date visible="1" editmask.mask="xxxx/xx/xx"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="2510" y="8" height="68" width="448" format="[general]" html.valueishtml="0"  name=id_no visible="1" edit.limit=20 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="1070" y="8" height="68" width="599" format="[general]" html.valueishtml="0"  name=item_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="165" y="8" height="68" width="379" format="[general]" html.valueishtml="0"  name=req_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="1" tabsequence=32766 border="0" color="0" x="1678" y="8" height="68" width="443" format="#,##0" html.valueishtml="0"  name=apply_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="553" y="8" height="68" width="507" format="[general]" html.valueishtml="0"  name=rep_gwa visible="1" dddw.name=dddw_hakgwa_all dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,43 @@
+﻿$PBExportHeader$f_childretrievearg1.srf
+$PBExportComments$값보다 큰경우에만 사용하게한다.
+global type f_childretrievearg1 from function_object
+end type
+
+forward prototypes
+global function integer f_childretrievearg1 (datawindow sdw_dwname, string as_column, string as_type, integer ai_code)
+end prototypes
+
+global function integer f_childretrievearg1 (datawindow sdw_dwname, string as_column, string as_type, integer ai_code);//////////////////////////////////////////////////////////////////
+// 	작성목적 : 드롭다운 데이타 원도우사용.
+//    적 성 인 : 이현수
+//		작성일자 : 2002.10
+//    변 경 인 :
+//    변경일자 :
+//    변경사유 :
+//////////////////////////////////////////////////////////////////
+
+/*************************************************************
+* 드롭다운 데이타 원도우사용.                                * 
+* 컬럼을 드롭다운 데이타 원도우로 변경한다.                  *
+* Arg1 : 데이타 원도우의 이름.                               *
+* Arg2 : 컬럼명.                                             *
+* Arg3 : Cddb.Kch001m.Type 의 타입                           * 
+**************************************************************/
+datawindowchild dwc
+int i_cnt 
+string s_data
+
+sdw_dwname.Getchild(as_column,dwc)
+
+dwc.settransobject(sqlca)
+if dwc.retrieve(as_type) < 1 then 
+	i_cnt = 0
+	dwc.insertrow(0)
+else
+	i_cnt = 1
+	dwc.SetFilter("code >= " + String(ai_code))	
+	dwc.Filter()
+end If
+return i_cnt
+end function
+

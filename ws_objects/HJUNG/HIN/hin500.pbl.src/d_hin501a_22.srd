@@ -1,0 +1,78 @@
+﻿$PBExportHeader$d_hin501a_22.srd
+$PBExportComments$경력증명서(영문)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=12 color="536870912" )
+detail(height=4076 color="536870912" )
+table(column=(type=decimal(0) updatewhereclause=yes name=hin013h_apply_no dbname="hin013h.apply_no" )
+ column=(type=char(30) updatewhereclause=yes name=ename dbname="ename" )
+ column=(type=decimal(0) updatewhereclause=yes name=hin001m_sex_code dbname="hin013h.sex_code" )
+ column=(type=char(10) updatewhereclause=yes name=birthday dbname="birthday" )
+ column=(type=char(10) updatewhereclause=yes name=day dbname="day" )
+ column=(type=char(40) updatewhereclause=yes name=d_ename dbname="d_ename" )
+ column=(type=char(40) updatewhereclause=yes name=e_ename dbname="e_ename" )
+ column=(type=char(10) updatewhereclause=yes name=from_date dbname="from_date" )
+ column=(type=char(10) updatewhereclause=yes name=to_date dbname="to_date" )
+ retrieve="SELECT 	A.apply_no,
+			Trim(B.ename) AS ename,
+			B.SEX_CODE,
+			to_char(to_date(substr(B.jumin_no, 3, 2) || substr(B.jumin_no, 5, 2) || '19' || substr(B.jumin_no, 1, 2)),'mm dd yyyy') AS birthday,
+			to_char(sysdate, 'mm dd yyyy') AS day,
+			TRIM(C.edepart_name) AS d_ename,
+			TRIM(C.ejikwi_name) AS e_ename,
+			to_char(to_date(substr(C.from_date, 5, 2) || substr(C.from_date, 7, 2) || substr(C.from_date, 1, 4)),'mm dd yyyy') AS from_date,
+			to_char(to_date(substr(C.to_date, 5, 2)   || substr(C.to_date, 7, 2)   || substr(C.to_date, 1, 4))  ,'mm dd yyyy') AS to_date
+FROM		indb.hin013h A,
+			indb.hin001m B,
+			indb.hin009h C
+WHERE		A.apply_name = B.member_no
+AND		A.apply_name = C.member_no
+AND		B.member_no = C.member_no
+AND		A.apply_no = :ar_apply_no
+" arguments=(("ar_apply_no", number)) )
+compute(band=detail alignment="1" expression="Page() + '/'  + PageCount()"border="0" color="0" x="2917" y="28" height="60" width="265" format="[GENERAL]" html.valueishtml="0"  name=page visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="2619" y="244" height="72" width="370" format="[general]" html.valueishtml="0"  name=day visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="1" text="PERIOD        :" border="0" color="0" x="270" y="556" height="72" width="549" html.valueishtml="0"  name=t_10 visible="1"  font.face="바탕체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="1728" y="556" height="72" width="681" format="[general]" html.valueishtml="0"  name=to_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="846" y="556" height="72" width="718" format="[general]" html.valueishtml="0"  name=from_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="-" border="0" color="0" x="1605" y="560" height="72" width="55" html.valueishtml="0"  name=t_2 visible="1"  font.face="바탕체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="3259" y1="392" x2="3259" y2="4060"  name=l_2 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="251" y1="388" x2="251" y2="4056"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="256" y1="388" x2="3255" y2="388"  name=l_3 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="SHINSUNG   COLLEGE" border="0" color="0" x="265" y="540" height="132" width="2967" html.valueishtml="0"  name=t_6 visible="1"  font.face="Times New Roman" font.height="-22" font.weight="700"  font.family="0" font.pitch="0" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="49, Dukma-ri, Jeongmi-myoun" border="0" color="0" x="265" y="748" height="64" width="2967" html.valueishtml="0"  name=t_12 visible="1"  font.face="Times New Roman TUR" font.height="-10" font.weight="400"  font.family="0" font.pitch="0" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="Dangjin-gun, Chungnam, 343-861, Republic of Korea" border="0" color="0" x="265" y="824" height="64" width="2967" html.valueishtml="0"  name=t_13 visible="1"  font.face="Times New Roman TUR" font.height="-10" font.weight="400"  font.family="0" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="Tel : (8241) 350-1501 ~~ 4   Fax : (8241) 350-1165" border="0" color="0" x="265" y="900" height="64" width="2967" html.valueishtml="0"  name=t_14 visible="1"  font.face="Times New Roman TUR" font.height="-10" font.weight="400"  font.family="0" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="2505" y="1232" height="60" width="549" format="[general]" html.valueishtml="0"  name=today visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="JOB     CAREER" border="0" color="0" x="265" y="1432" height="112" width="2967" html.valueishtml="0"  name=t_16 visible="1"  font.face="Book Antiqua" font.height="-18" font.weight="700"  font.family="0" font.pitch="2" font.charset="0" font.underline="1" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="This  is  to  certify  that  the  individual  named  below  gave lectures as a part time" border="0" color="0" x="265" y="1696" height="60" width="2953" html.valueishtml="0"  name=t_17 visible="1"  font.face="바탕체" font.height="-10" font.weight="400"  font.family="0" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="lecturer  at  Shinsung   College,  Chungnam,  Korea." border="0" color="0" x="274" y="1776" height="60" width="2450" html.valueishtml="0"  name=t_18 visible="1"  font.face="바탕체" font.height="-10" font.weight="400"  font.family="0" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="1449" y="2160" height="72" width="960" format="[general]" html.valueishtml="0"  name=ename visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1440" y="2272" height="72" width="969" format="[general]" html.valueishtml="0"  name=hin001m_sex_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1449" y="2388" height="72" width="960" format="[general]" html.valueishtml="0"  name=birthday visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="1449" y="2508" height="72" width="960" format="[general]" html.valueishtml="0"  name=e_ename visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1449" y="2736" height="72" width="960" format="[general]" html.valueishtml="0"  name=d_ename visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=detail x1="256" y1="4060" x2="3255" y2="4060"  name=l_5 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="President  of  Shinsung  College" border="0" color="0" x="379" y="3692" height="100" width="1536" html.valueishtml="0"  name=t_1 visible="1"  font.face="Bell MT" font.height="-16" font.weight="700"  font.family="0" font.pitch="0" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="Lee,   Byung   Ha" border="0" color="0" x="1966" y="3676" height="144" width="1024" html.valueishtml="0"  name=t_7 visible="1"  font.face="Perpetua" font.height="-22" font.weight="400"  font.family="0" font.pitch="0" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="Name in Full :" border="0" color="0" x="873" y="2160" height="72" width="549" html.valueishtml="0"  name=kname_t visible="1"  font.face="바탕체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="SEX           :" border="0" color="0" x="873" y="2272" height="72" width="549" html.valueishtml="0"  name=jikgeub_code_t visible="1"  font.face="바탕체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="DATE OF BIRTH :" border="0" color="0" x="873" y="2388" height="72" width="549" html.valueishtml="0"  name=jumin_no_t visible="1"  font.face="바탕체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="POSITION      :" border="0" color="0" x="873" y="2508" height="72" width="549" html.valueishtml="0"  name=t_9 visible="1"  font.face="바탕체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="SECTION       :" border="0" color="0" x="873" y="2736" height="72" width="549" html.valueishtml="0"  name=t_11 visible="1"  font.face="바탕체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=footer x1="256" y1="1092" x2="3255" y2="1092"  name=l_4 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=footer alignment="2" text="President  of  Shinsung  College" border="0" color="0" x="379" y="588" height="100" width="1536" html.valueishtml="0"  name=t_15 visible="1"  font.face="Bell MT" font.height="-16" font.weight="700"  font.family="0" font.pitch="0" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=footer alignment="2" text="Lee,   Byung   Ha" border="0" color="0" x="1966" y="572" height="144" width="1024" html.valueishtml="0"  name=t_5 visible="1"  font.face="Perpetua" font.height="-22" font.weight="400"  font.family="0" font.pitch="0" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,62 @@
+﻿$PBExportHeader$d_sch_student_pop_2.srd
+$PBExportComments$기숙사생조회 - 사생정보
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(4) updatewhereclause=yes name=std_year dbname="saz220t.std_year" dbalias=".std_year" )
+ column=(type=char(9) updatewhereclause=yes name=hakbun dbname="saz220t.hakbun" dbalias=".hakbun" )
+ column=(type=char(20) updatewhereclause=yes name=hname dbname="saz220t.hname" dbalias=".hname" )
+ column=(type=char(1) updatewhereclause=yes name=sex dbname="saz220t.sex" dbalias=".sex" )
+ column=(type=char(4) updatewhereclause=yes name=gwa dbname="saz220t.gwa" dbalias=".gwa" )
+ column=(type=char(1) updatewhereclause=yes name=hakyun dbname="saz220t.hakyun" dbalias=".hakyun" )
+ column=(type=char(13) updatewhereclause=yes name=jumin_no dbname="saz220t.jumin_no" dbalias=".jumin_no" )
+ column=(type=char(20) updatewhereclause=yes name=cell_no dbname="saz220t.cell_no" dbalias=".cell_no" )
+ column=(type=char(50) updatewhereclause=yes name=fname dbname="kch003m.fname" dbalias=".fname" )
+ retrieve="  SELECT SCH.SAZ220T.STD_YEAR,   
+         SCH.SAZ220T.HAKBUN,   
+         SCH.SAZ220T.HNAME,   
+         SCH.SAZ220T.SEX,   
+         SCH.SAZ220T.GWA,   
+         SCH.SAZ220T.HAKYUN,   
+         SCH.SAZ220T.JUMIN_NO,   
+         SCH.SAZ220T.CELL_NO,   
+         CDDB.KCH003M.FNAME  
+    FROM SCH.SAZ220T,   
+         CDDB.KCH003M  
+   WHERE ( SCH.SAZ220T.GWA = CDDB.KCH003M.GWA ) and  
+         ( ( SCH.SAZ220T.HOUSE_GB = :as_house_gb ) AND  
+         ( SCH.SAZ220T.STD_YEAR = Decode(:as_std_year, '%', SCH.SAZ220T.STD_YEAR, :as_std_year) ) AND  
+         ( SCH.SAZ220T.HAKBUN = Decode(:as_hakbun, '%', SCH.SAZ220T.HAKBUN, :as_hakbun) ) AND  
+         ( SCH.SAZ220T.HNAME = Decode(:as_hname, '%', SCH.SAZ220T.HNAME, :as_hname) ) AND  
+         ( SCH.SAZ220T.CELL_NO = Decode(:as_cell_no, '%', SCH.SAZ220T.CELL_NO, :as_cell_no) ) )    
+" arguments=(("as_house_gb", string),("as_std_year", string),("as_hakbun", string),("as_hname", string),("as_cell_no", string)) )
+text(band=header alignment="2" text="성명" border="0" color="33554432" x="608" y="8" height="56" width="594" html.valueishtml="0"  name=hname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성별" border="0" color="33554432" x="1211" y="8" height="56" width="165" html.valueishtml="0"  name=sex_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학년" border="0" color="33554432" x="2139" y="8" height="56" width="160" html.valueishtml="0"  name=hakyun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="주민등록번호" border="0" color="33554432" x="2309" y="8" height="56" width="553" html.valueishtml="0"  name=jumin_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="핸드폰번호" border="0" color="33554432" x="2871" y="8" height="56" width="590" html.valueishtml="0"  name=cell_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학과" border="0" color="33554432" x="1385" y="8" height="56" width="745" html.valueishtml="0"  name=fname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학번" border="0" color="33554432" x="265" y="8" height="56" width="334" html.valueishtml="0"  name=hakbun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학년도" border="0" color="0" x="9" y="8" height="56" width="247" html.valueishtml="0"  name=std_year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="608" y="8" height="68" width="594" format="[general]" html.valueishtml="0"  name=hname visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="2871" y="8" height="68" width="590" format="[general]" html.valueishtml="0"  name=cell_no visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="33554432" x="2309" y="8" height="68" width="553" format="@@@@@@-@@@@@@@" html.valueishtml="0"  name=jumin_no visible="1" edit.limit=13 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="33554432" x="2139" y="8" height="68" width="160" format="[general]" html.valueishtml="0"  name=hakyun visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="33554432" x="1211" y="8" height="68" width="165" format="[general]" html.valueishtml="0"  name=sex visible="1" dddw.name=d_dddw_code dddw.displaycolumn=cd_nm dddw.datacolumn=cd dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="33554432" x="1385" y="8" height="68" width="745" format="[general]" html.valueishtml="0"  name=fname visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="265" y="8" height="68" width="334" format="[general]" html.valueishtml="0"  name=hakbun visible="1" edit.limit=9 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="33554432" x="9" y="8" height="68" width="247" format="[general]" html.valueishtml="0"  name=std_year  tag="yyyy" visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

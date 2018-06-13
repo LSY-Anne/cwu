@@ -1,0 +1,137 @@
+﻿$PBExportHeader$d_hpa412a_12.srd
+$PBExportComments$소득공제신고서 - 연금보험료공제및특별공제
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=1220 color="536870912" )
+table(column=(type=char(5) updatewhereclause=yes name=h01nno dbname="hin001m.h01nno" )
+ column=(type=char(40) updatewhereclause=yes name=h01knm dbname="hin001m.h01knm" )
+ column=(type=number updatewhereclause=yes name=p02s03 dbname="p02s03" )
+ column=(type=number updatewhereclause=yes name=p02s04 dbname="p02s04" )
+ column=(type=number updatewhereclause=yes name=p02s05 dbname="p02s05" )
+ column=(type=number updatewhereclause=yes name=p42ipr dbname="p42ipr" )
+ column=(type=number updatewhereclause=yes name=p42pen dbname="p42pen" )
+ column=(type=number updatewhereclause=yes name=p42emp dbname="p42emp" )
+ column=(type=number updatewhereclause=yes name=p42ykm dbname="p42ykm" )
+ column=(type=number updatewhereclause=yes name=d3103 dbname="d3103" )
+ column=(type=number updatewhereclause=yes name=d3104 dbname="d3104" )
+ column=(type=number updatewhereclause=yes name=d4103 dbname="d4103" )
+ column=(type=number updatewhereclause=yes name=s3103 dbname="s3103" )
+ column=(type=number updatewhereclause=yes name=s3104 dbname="s3104" )
+ column=(type=number updatewhereclause=yes name=s4103 dbname="s4103" )
+ retrieve="  SELECT A.MEMBER_NO AS H01NNO,   
+         A.NAME	AS H01KNM,     
+NVL((SELECT SUM(PAY_AMT) FROM PADB.HPA005D 
+                    WHERE MEMBER_NO =A.MEMBER_NO    
+                        AND (YEAR_MONTH  BETWEEN :as_fr_mm AND :as_to_mm) 
+                        AND CODE IN ('54', '57')), 0)  AS P02S03,   
+NVL((SELECT SUM(PAY_AMT) FROM PADB.HPA005D 
+                    WHERE MEMBER_NO = A.MEMBER_NO    
+                        AND (YEAR_MONTH  BETWEEN :as_fr_mm AND :as_to_mm) 
+                        AND CODE = '71'), 0) AS P02S04,   
+NVL((SELECT SUM(PAY_AMT) FROM PADB.HPA005D 
+                    WHERE MEMBER_NO = A.MEMBER_NO    
+                        AND (YEAR_MONTH  BETWEEN :as_fr_mm AND :as_to_mm) 
+                        AND CODE = '78'), 0) AS P02S05,   
+         NVL(C.P42IPR, 0) AS P42IPR,   
+         NVL(C.P42PEN, 0) AS P42PEN,   
+         NVL(C.P42EMP, 0) AS P42EMP,   
+         NVL(C.P42YKM, 0) AS P42YKM  ,
+    NVL((SELECT SUM(NVL(P41DEM, 0)) FROM PADB.HPAP41D 
+      WHERE P41YAR = :AS_YEAR AND P41NNO = A.MEMBER_NO AND P41DCD = '3100' AND P41DGB = '3103'), 0) AS D3103,
+    NVL((SELECT SUM(NVL(P41DEM, 0)) FROM PADB.HPAP41D 
+      WHERE P41YAR = :AS_YEAR AND P41NNO = A.MEMBER_NO AND P41DCD = '3100' AND P41DGB = '3104'), 0) AS D3104,
+    NVL((SELECT SUM(NVL(P41DEM, 0)) FROM PADB.HPAP41D 
+      WHERE P41YAR = :AS_YEAR AND P41NNO = A.MEMBER_NO AND P41DCD = '4100' AND P41DGB = '4103'), 0) AS D4103,
+    NVL((SELECT SUM(NVL(P41SAM, 0)) FROM PADB.HPAP41D 
+      WHERE P41YAR = :AS_YEAR AND P41NNO = A.MEMBER_NO AND P41DCD = '3100' AND P41DGB = '3103'), 0) AS S3103,
+    NVL((SELECT SUM(NVL(P41SAM, 0)) FROM PADB.HPAP41D 
+      WHERE P41YAR = :AS_YEAR AND P41NNO = A.MEMBER_NO AND P41DCD = '3100' AND P41DGB = '3104'), 0) AS S3104,
+    NVL((SELECT SUM(NVL(P41SAM, 0)) FROM PADB.HPAP41D 
+      WHERE P41YAR = :AS_YEAR AND P41NNO = A.MEMBER_NO AND P41DCD = '4100' AND P41DGB = '4103'), 0) AS S4103
+    FROM INDB.HIN001M A ,
+(SELECT P42NNO, 
+      	  		   SUM(NVL(P42IPR, 0)) AS P42IPR,
+		   SUM(NVL(P42EMP, 0)) AS P42EMP,
+            SUM(NVL(P42PEN, 0)) AS P42PEN,
+ 		   SUM(NVL(P42YKM, 0)) AS P42YKM
+FROM PADB.HPAP42T 
+WHERE P42NNO =:as_MEMBER_NO
+AND P42YAR = :as_year
+GROUP BY P42NNO)  C  
+   WHERE  A.MEMBER_NO = C.P42NNO(+)
+   AND  ( A.MEMBER_NO = :as_MEMBER_NO ) " arguments=(("as_year", string),("as_member_no", string),("as_fr_mm", string),("as_to_mm", number)) )
+rectangle(band=detail x="448" y="1144" height="80" width="521"  name=r_23 visible="1" brush.hatch="6" brush.color="30332891" pen.style="5" pen.width="5" pen.color="553648127"  background.mode="2" background.color="30332891" )
+text(band=detail alignment="2" text="100만원" border="0" color="33554432" x="457" y="1076" height="52" width="498" html.valueishtml="0"  name=t_77 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="100만원" border="0" color="33554432" x="457" y="1000" height="52" width="498" html.valueishtml="0"  name=t_76 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="전액" border="0" color="33554432" x="457" y="924" height="52" width="498" html.valueishtml="0"  name=t_75 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="전액" border="0" color="33554432" x="457" y="848" height="52" width="498" html.valueishtml="0"  name=t_74 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="전액" border="0" color="33554432" x="457" y="772" height="52" width="498" html.valueishtml="0"  name=t_73 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="전액" border="0" color="33554432" x="457" y="696" height="52" width="498" html.valueishtml="0"  name=t_72 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=detail x1="965" y1="0" x2="965" y2="1228"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+text(band=detail alignment="2" text="공제액" border="0" color="33554432" x="978" y="16" height="52" width="539" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="한도액" border="0" color="33554432" x="457" y="620" height="52" width="498" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="지출액" border="0" color="33554432" x="14" y="620" height="52" width="421" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+rectangle(band=detail x="448" y="536" height="76" width="521"  name=r_1 visible="1" brush.hatch="6" brush.color="30332891" pen.style="5" pen.width="5" pen.color="553648127"  background.mode="2" background.color="30332891" )
+line(band=detail x1="443" y1="0" x2="443" y2="1228"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+line(band=detail x1="0" y1="0" x2="0" y2="1228"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+text(band=detail alignment="2" text="지출보험료" border="0" color="33554432" x="14" y="16" height="52" width="421" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="한도액" border="0" color="33554432" x="457" y="16" height="52" width="498" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="전액" border="0" color="33554432" x="457" y="320" height="52" width="498" html.valueishtml="0"  name=t_9 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="전액" border="0" color="33554432" x="457" y="244" height="52" width="498" html.valueishtml="0"  name=t_10 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="전액" border="0" color="33554432" x="457" y="168" height="52" width="498" html.valueishtml="0"  name=t_13 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="전액" border="0" color="33554432" x="457" y="92" height="52" width="498" html.valueishtml="0"  name=t_14 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="작성방법 참조" border="0" color="33554432" x="457" y="396" height="52" width="498" html.valueishtml="0"  name=t_19 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="작성방법 참조" border="0" color="33554432" x="457" y="472" height="52" width="498" html.valueishtml="0"  name=t_20 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=detail x1="5" y1="1140" x2="1527" y2="1140"  name=l_143 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+line(band=detail x1="5" y1="1064" x2="1527" y2="1064"  name=l_46 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+line(band=detail x1="5" y1="988" x2="1527" y2="988"  name=l_45 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+line(band=detail x1="5" y1="908" x2="1527" y2="908"  name=l_50 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+line(band=detail x1="5" y1="836" x2="1527" y2="836"  name=l_44 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+line(band=detail x1="5" y1="760" x2="1527" y2="760"  name=l_49 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+line(band=detail x1="5" y1="684" x2="1527" y2="684"  name=l_43 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+line(band=detail x1="5" y1="608" x2="1527" y2="608"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+line(band=detail x1="5" y1="532" x2="1527" y2="532"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+line(band=detail x1="5" y1="460" x2="1527" y2="460"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+line(band=detail x1="5" y1="384" x2="1527" y2="384"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+line(band=detail x1="5" y1="308" x2="1527" y2="308"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+line(band=detail x1="5" y1="232" x2="1527" y2="232"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+line(band=detail x1="5" y1="156" x2="1527" y2="156"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+line(band=detail x1="5" y1="76" x2="1527" y2="76"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+line(band=detail x1="5" y1="0" x2="1527" y2="0"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="134217751"  background.mode="2" background.color="1073741824" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="33554432" x="14" y="176" height="48" width="421" format="#,##0" html.valueishtml="0"  name=p02s04 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="33554432" x="983" y="704" height="48" width="535" format="#,##0" html.valueishtml="0"  name=p42ipr_1 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="33554432" x="983" y="780" height="48" width="535" format="#,##0" html.valueishtml="0"  name=p02s03_1 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="33554432" x="983" y="852" height="48" width="535" format="#,##0" html.valueishtml="0"  name=p42emp_1 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="33554432" x="983" y="928" height="52" width="535" format="#,##0" html.valueishtml="0"  name=p02s05_1 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="33554432" x="983" y="1008" height="48" width="535" format="#,##0" html.valueishtml="0"  name=d3103 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="1" tabsequence=32766 border="0" color="33554432" x="983" y="1084" height="48" width="535" format="#,##0" html.valueishtml="0"  name=d3104 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression=" p42ipr  +  p02s03  +  p42emp  +  p02s05  +  D3103  +  D3104 "border="0" color="33554432" x="983" y="1164" height="48" width="535" format="#,##0" html.valueishtml="0"  name=compute_4 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression=" p42ipr  +  p02s03  +  p42emp  +  p02s05  +  s3103  +  s3104 "border="0" color="33554432" x="14" y="1164" height="48" width="421" format="#,##0" html.valueishtml="0"  name=compute_3 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="1" tabsequence=32766 border="0" color="33554432" x="14" y="1084" height="48" width="421" format="#,##0" html.valueishtml="0"  name=s3104 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="1" tabsequence=32766 border="0" color="33554432" x="14" y="1008" height="48" width="421" format="#,##0" html.valueishtml="0"  name=s3103 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="33554432" x="14" y="928" height="52" width="421" format="#,##0" html.valueishtml="0"  name=p02s05 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="33554432" x="14" y="852" height="48" width="421" format="#,##0" html.valueishtml="0"  name=p42emp visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="33554432" x="18" y="780" height="48" width="421" format="#,##0" html.valueishtml="0"  name=p02s03 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="33554432" x="14" y="704" height="48" width="421" format="#,##0" html.valueishtml="0"  name=p42ipr visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="33554432" x="14" y="404" height="48" width="421" format="#,##0" html.valueishtml="0"  name=p42ykm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression=" p02s04 + d4103 + P42PEN"border="0" color="33554432" x="983" y="552" height="48" width="535" format="#,##0" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="1" tabsequence=32766 border="0" color="33554432" x="983" y="476" height="48" width="535" format="#,##0" html.valueishtml="0"  name=d4103 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression="P42PEN + P02S04 + P42YKM +  s4103 "border="0" color="33554432" x="14" y="552" height="48" width="421" format="#,##0" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="1" tabsequence=32766 border="0" color="33554432" x="14" y="476" height="48" width="421" format="#,##0" html.valueishtml="0"  name=s4103 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="33554432" x="983" y="176" height="48" width="535" format="#,##0" html.valueishtml="0"  name=p02s04_1 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="33554432" x="14" y="96" height="52" width="421" format="#,##0" html.valueishtml="0"  name=p42pen visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="33554432" x="983" y="100" height="48" width="535" format="#,##0" html.valueishtml="0"  name=p42pen_1 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

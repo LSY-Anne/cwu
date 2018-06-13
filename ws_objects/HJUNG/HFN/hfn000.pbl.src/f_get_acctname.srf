@@ -1,0 +1,29 @@
+﻿$PBExportHeader$f_get_acctname.srf
+$PBExportComments$계정명 가져오기
+global type f_get_acctname from function_object
+end type
+
+forward prototypes
+global function string f_get_acctname (string as_slip_gubun, string as_acct_code)
+end prototypes
+
+global function string f_get_acctname (string as_slip_gubun, string as_acct_code);string	ls_acct_name, ls_acct_iname, ls_acct_oname, ls_drcr_class
+string	ls_return
+
+select 	acct_name, 		acct_iname, 		acct_oname, 		drcr_class
+into		:ls_acct_name,	:ls_acct_iname, 	:ls_acct_oname, 	:ls_drcr_class
+from 		acdb.hac001m
+where 	acct_code = :as_acct_code ;
+
+if as_slip_gubun = '1' then
+	ls_return = ls_acct_iname
+elseif as_slip_gubun = '2' then
+	ls_return = ls_acct_oname
+else
+	ls_return = ls_acct_name
+end if
+
+return ls_return
+
+end function
+

@@ -1,0 +1,127 @@
+﻿$PBExportHeader$d_hin501a_11.srd
+$PBExportComments$재직증명서(국문)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 2 print.margin.left = 300 print.margin.right = 0 print.margin.top = 400 print.margin.bottom = 200 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=3688 color="536870912" )
+table(column=(type=char(8) updatewhereclause=yes name=hin013h_apply_date dbname="hin013h.apply_date" )
+ column=(type=decimal(0) updatewhereclause=yes name=hin013h_member_opt dbname="hin013h.member_opt" )
+ column=(type=number updatewhereclause=yes name=apply_no dbname="hin013h.apply_no" )
+ column=(type=char(20) updatewhereclause=yes name=hin001m_name_han dbname="hin013h.name_han" )
+ column=(type=char(5) updatewhereclause=yes name=hin013h_member_no dbname="hin013h.member_no" )
+ column=(type=char(100) updatewhereclause=yes name=hin011m_home_addr1 dbname="hin013h.home_addr1" )
+ column=(type=char(80) updatewhereclause=yes name=hin011m_home_addr2 dbname="hin013h.home_addr2" )
+ column=(type=char(10) updatewhereclause=yes name=hin013h_apply_name dbname="hin013h.apply_name" )
+ column=(type=decimal(0) updatewhereclause=yes name=hin013h_print_opt dbname="hin013h.print_opt" )
+ column=(type=decimal(0) updatewhereclause=yes name=hin013h_lang_opt dbname="hin013h.lang_opt" )
+ column=(type=decimal(0) updatewhereclause=yes name=hin013h_print_num dbname="hin013h.print_num" )
+ column=(type=char(60) updatewhereclause=yes name=hin013h_use_opt dbname="hin013h.use_opt" )
+ column=(type=char(40) updatewhereclause=yes name=hin013h_ename dbname="hin013h.ename" )
+ column=(type=char(13) updatewhereclause=yes name=hin001m_jumin_no dbname="hin013h.jumin_no" )
+ column=(type=char(8) updatewhereclause=yes name=hin001m_hakwonhire_date dbname="hin013h.hakwonhire_date" )
+ column=(type=char(4000) updatewhereclause=yes name=com_dept_nm dbname="com_dept_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_duty_nm dbname="com_duty_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_jikwi_nm dbname="com_jikwi_nm" )
+ column=(type=char(8) updatewhereclause=yes name=com_sysdate dbname="com_sysdate" )
+ retrieve="SELECT	A.APPLY_DATE,
+			A.MEMBER_OPT,
+			A.APPLY_NO,
+			B.NAME_HAN,	
+			A.MEMBER_NO,
+			C.HOME_ADDR1,
+			C.HOME_ADDR2,			
+			A.APPLY_NAME,
+			A.PRINT_OPT,
+			A.LANG_OPT,
+			A.PRINT_NUM,
+			A.USE_OPT,
+			A.NAME_ENG	ENAME,
+			B.JUMIN_NO,
+			B.HAKWONHIRE_DATE,
+			FU_DEPT_NM(B.GWA,'K')			COM_DEPT_NM,
+			FU_DUTY_NM(B.DUTY_CODE,'K')	COM_DUTY_NM,
+			FU_CODE_NM('COMM','JIKWI_CODE',B.JIKWI_CODE,'K')	COM_JIKWI_NM,
+			TO_CHAR(SYSDATE,'YYYYMMDD')	COM_SYSDATE
+FROM		INDB.HIN013H A,
+			INDB.HIN001M B,
+			INDB.HIN011M C
+WHERE		A.MEMBER_NO = B.MEMBER_NO(+)
+AND		A.MEMBER_NO = C.MEMBER_NO(+)
+AND		A.MEMBER_OPT = :ai_MemberOpt
+AND		A.APPLY_DATE = :as_ApplyDate
+AND		A.APPLY_NO   = :al_ApplyNo
+ORDER	BY	A.APPLY_DATE DESC,
+			A.APPLY_NO DESC,
+			A.APPLY_NAME" arguments=(("ai_MemberOpt", number),("as_ApplyDate", string),("al_ApplyNo", number)) )
+line(band=detail x1="14" y1="8" x2="3013" y2="8"  name=l_3 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="9" y1="8" x2="9" y2="3676"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3017" y1="8" x2="3017" y2="3676"  name=l_2 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="3680" x2="3013" y2="3680"  name=l_4 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="" border="0" color="0" x="457" y="3148" height="148" width="1755" html.valueishtml="0"  name=t_campus_jang visible="1"  font.face="굴림체" font.height="-24" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="위와 같이 재직을 증명합니다." border="0" color="0" x="160" y="2232" height="72" width="2830" html.valueishtml="0"  name=t_9 visible="1"  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="재  직  증  명  서" border="0" color="0" x="23" y="184" height="148" width="2981" html.valueishtml="0"  name=t_3 visible="1"  font.face="바탕체" font.height="-24" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="" border="0" color="0" x="50" y="28" height="60" width="974" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="420" x2="3013" y2="420"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="972" x2="3013" y2="972"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="2084" x2="3013" y2="2084"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="1688" x2="3013" y2="1688"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="471" y1="420" x2="471" y2="2084"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1038" y1="420" x2="1038" y2="1688"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="640" y1="420" x2="640" y2="720"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="471" y1="720" x2="3013" y2="720"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="640" y1="572" x2="1847" y2="572"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="475" y1="1196" x2="3017" y2="1196"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="475" y1="1444" x2="3017" y2="1444"  name=l_17 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="∼" border="0" color="0" x="1682" y="1540" height="72" width="146" html.valueishtml="0"  name=t_6 visible="1~t0"  font.face="바탕체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=19 alignment="0" tabsequence=32766 border="0" color="0" x="1847" y="1540" height="72" width="585" format="@@@@/@@/@@" html.valueishtml="0"  name=com_sysdate visible="1~t0" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕체" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression=" com_sysdate "border="0" color="0" x="23" y="2564" height="76" width="2981" format="@@@@ 년  @@ 월  @@ 일" html.valueishtml="0"  name=compute_1 visible="1~t0"  font.face="바탕체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="" border="0" color="0" x="18" y="2564" height="72" width="2985" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=detail x1="2569" y1="2992" x2="2569" y2="3676"  name=l_18 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2574" y1="3432" x2="3017" y2="3432"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2574" y1="3328" x2="3017" y2="3328"  name=l_20 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2574" y1="3100" x2="3017" y2="3100"  name=l_21 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2574" y1="2992" x2="3017" y2="2992"  name=l_22 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2240" y1="420" x2="2240" y2="720"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1847" y1="420" x2="1847" y2="720"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=15 alignment="2" tabsequence=32766 border="0" color="0" x="1106" y="1540" height="72" width="558" format="@@@@/@@/@@" html.valueishtml="0"  name=hin001m_hakwonhire_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕체" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="담당자" border="0" color="0" x="2642" y="3344" height="72" width="293" html.valueishtml="0"  name=t_18 visible="1"  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="과장" border="0" color="0" x="2624" y="3016" height="72" width="311" html.valueishtml="0"  name=t_10 visible="1"  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="용 도" border="0" color="0" x="55" y="1840" height="72" width="357" html.valueishtml="0"  name=t_17 visible="1"  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="617" y="1836" height="72" width="1975" format="[general]" html.valueishtml="0"  name=hin013h_use_opt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="여기에 윈도에서 저장한다" border="0" color="0" x="1097" y="1540" height="72" width="1335" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="현재" border="0" color="0" x="2455" y="1540" height="72" width="146" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="0" x="1065" y="1364" height="72" width="992" format="[general]" html.valueishtml="0"  name=com_duty_nm visible="1~t0" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="0" color="0" x="1065" y="1284" height="72" width="1353" format="[general]" html.valueishtml="0"  name=com_jikwi_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="재직사항" border="0" color="0" x="41" y="1268" height="72" width="366" html.valueishtml="0"  name=t_19 visible="1"  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="0" x="1079" y="1068" height="72" width="992" format="[general]" html.valueishtml="0"  name=com_dept_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1093" y="608" height="72" width="741" format="[general]" html.valueishtml="0"  name=hin001m_name_han visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="1097" y="468" height="72" width="709" format="[general]" html.valueishtml="0"  name=hin013h_apply_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="2281" y="548" height="72" width="718" format="@@@@@@-@@@@@@@" html.valueishtml="0"  name=hin001m_jumin_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="주민등록
+번    호" border="0" color="0" x="1865" y="508" height="144" width="366" html.valueishtml="0"  name=t_15 visible="1"  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="한 글" border="0" color="0" x="667" y="472" height="72" width="311" html.valueishtml="0"  name=t_13 visible="1"  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="한 자" border="0" color="0" x="681" y="608" height="72" width="288" html.valueishtml="0"  name=t_14 visible="1"  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="성
+명" border="0" color="0" x="503" y="508" height="144" width="91" html.valueishtml="0"  name=t_12 visible="1"  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="인적사항" border="0" color="0" x="78" y="632" height="72" width="329" html.valueishtml="0"  name=t_11 visible="1"  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="주    소" border="0" color="0" x="512" y="800" height="72" width="480" html.valueishtml="0"  name=t_16 visible="1"  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="직위 또는
+직     급" border="0" color="0" x="512" y="1248" height="144" width="480" html.valueishtml="0"  name=jikgeub_code_t visible="1"  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="소    속 " border="0" color="0" x="512" y="1064" height="72" width="480" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="기     간 " border="0" color="0" x="512" y="1540" height="72" width="480" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1051" y="784" height="72" width="1947" format="[general]" html.valueishtml="0"  name=hin011m_home_addr1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="1051" y="868" height="72" width="1947" format="[general]" html.valueishtml="0"  name=hin011m_home_addr2 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="2578" y1="3324" x2="3008" y2="3104"  name=l_23 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

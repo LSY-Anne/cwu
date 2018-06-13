@@ -1,0 +1,138 @@
+﻿$PBExportHeader$d_sch408p_1.srd
+$PBExportComments$벌점통계표
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 2 print.margin.left = 174 print.margin.right = 174 print.margin.top = 376 print.margin.bottom = 228 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=120 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=124 color="536870912" )
+table(column=(type=char(2) updatewhereclause=yes name=sex dbname="sex" )
+ column=(type=char(40) updatewhereclause=yes name=avl_per dbname="avl_per" )
+ column=(type=number updatewhereclause=yes name=a_bul dbname="a_bul" )
+ column=(type=number updatewhereclause=yes name=bul_per dbname="bul_per" )
+ column=(type=number updatewhereclause=yes name=a_sang dbname="a_sang" )
+ column=(type=number updatewhereclause=yes name=sang_per dbname="sang_per" )
+ retrieve="SELECT   (CASE WHEN SEX = 1 THEN '남'
+             WHEN SEX = 2 THEN '여'
+             END) SEX,
+          TRIM(AVL_PER) AS AVL_PER,
+          SUM(BUL) AS A_BUL,
+		 0 AS BUL_PER,
+          SUM(SANG) AS A_SANG,
+		 0 AS SANG_PER
+FROM     (SELECT    A.SEX,
+                    A.AVL_PER,
+                    0 AS BUL,
+                    0 AS SANG
+          FROM      SCH.SAZ120D A,
+                    SCH.SAZ370T B,
+                    SCH.SAZ250T C
+          WHERE     C.HOUSE_GB = A.HOUSE_GB
+          AND       C.STD_YEAR = A.STD_YEAR
+          AND       C.HOUSE_CD = A.HOUSE_CD
+          AND       C.ROOM_CD = A.ROOM_CD
+          AND       C.DOOR_GB = A.DOOR_GB
+          AND       B.HOUSE_GB = C.HOUSE_GB
+          AND       B.STD_YEAR = C.STD_YEAR
+          AND       B.ALLOCATE_NO = C.ALLOCATE_NO
+          AND       B.HAKBUN = C.HAKBUN
+          AND       B.HOUSE_GB = :as_house_gb
+          AND       B.STD_YEAR = :as_std_year
+          GROUP BY  A.SEX,
+                    A.AVL_PER
+          UNION ALL
+          SELECT    A.SEX,
+                    A.AVL_PER,
+                    COUNT(*) AS BUL,
+                    0 AS SANG
+          FROM      SCH.SAZ120D A,
+                    SCH.SAZ370T B,
+                    SCH.SAZ250T C
+          WHERE     C.HOUSE_GB = A.HOUSE_GB
+          AND       C.STD_YEAR = A.STD_YEAR
+          AND       C.HOUSE_CD = A.HOUSE_CD
+          AND       C.ROOM_CD = A.ROOM_CD
+          AND       C.DOOR_GB = A.DOOR_GB
+          AND       B.HOUSE_GB = C.HOUSE_GB
+          AND       B.STD_YEAR = C.STD_YEAR
+          AND       B.ALLOCATE_NO = C.ALLOCATE_NO
+          AND       B.HAKBUN = C.HAKBUN
+          AND       TRIM(B.PP_GB) = '2'
+          AND       B.HOUSE_GB = :as_house_gb
+          AND       B.STD_YEAR = :as_std_year
+          GROUP BY  A.SEX,
+                    A.AVL_PER        
+          UNION ALL
+          SELECT    A.SEX,
+                    A.AVL_PER,
+                    0 AS BUL,
+                    COUNT(*) AS SANG
+          FROM      SCH.SAZ120D A,
+                    SCH.SAZ370T B,
+                    SCH.SAZ250T C
+          WHERE     C.HOUSE_GB = A.HOUSE_GB
+          AND       C.STD_YEAR = A.STD_YEAR
+          AND       C.HOUSE_CD = A.HOUSE_CD
+          AND       C.ROOM_CD = A.ROOM_CD
+          AND       C.DOOR_GB = A.DOOR_GB
+          AND       B.HOUSE_GB = C.HOUSE_GB
+          AND       B.STD_YEAR = C.STD_YEAR
+          AND       B.ALLOCATE_NO = C.ALLOCATE_NO
+          AND       B.HAKBUN = C.HAKBUN
+          AND       TRIM(B.PP_GB) = '1'
+          AND       B.HOUSE_GB = :as_house_gb
+          AND       B.STD_YEAR = :as_std_year
+          GROUP BY  A.SEX,
+                    A.AVL_PER) D
+GROUP BY SEX, AVL_PER" arguments=(("as_house_gb", string),("as_std_year", string))  sort="sex A avl_per A " )
+group(level=1 header.height=0 trailer.height=124 by=("sex" ) header.color="536870912" trailer.color="536870912" )
+group(level=2 header.height=0 trailer.height=0 by=("avl_per" ) header.color="536870912" trailer.color="536870912" )
+rectangle(band=header x="9" y="0" height="120" width="3273"  name=r_1 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="0" )
+text(band=header alignment="2" text="성별" border="0" color="33554432" x="0" y="32" height="56" width="425" html.valueishtml="0"  name=sex_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="구분" border="0" color="33554432" x="439" y="32" height="56" width="466" html.valueishtml="0"  name=avl_per_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="벌점자인원" border="0" color="33554432" x="919" y="32" height="56" width="576" html.valueishtml="0"  name=a_bul_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="벌점비율" border="0" color="33554432" x="1509" y="32" height="56" width="576" html.valueishtml="0"  name=bul_per_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="상점자인원" border="0" color="33554432" x="2098" y="32" height="56" width="576" html.valueishtml="0"  name=a_sang_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="상점비율" border="0" color="33554432" x="2688" y="32" height="56" width="576" html.valueishtml="0"  name=sang_per_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=header x1="430" y1="0" x2="430" y2="124"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+line(band=header x1="914" y1="0" x2="914" y2="132"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+line(band=header x1="1499" y1="0" x2="1499" y2="132"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+line(band=header x1="2094" y1="0" x2="2094" y2="132"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+line(band=header x1="2679" y1="0" x2="2679" y2="132"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+line(band=detail x1="434" y1="120" x2="3278" y2="120"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+line(band=detail x1="3278" y1="0" x2="3278" y2="132"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+line(band=detail x1="2679" y1="0" x2="2679" y2="132"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+line(band=detail x1="2094" y1="0" x2="2094" y2="132"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+line(band=detail x1="1499" y1="0" x2="1499" y2="132"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+line(band=detail x1="914" y1="0" x2="914" y2="132"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+line(band=detail x1="430" y1="0" x2="430" y2="160"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+line(band=detail x1="9" y1="0" x2="9" y2="132"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="439" y="28" height="68" width="466" format="[general]" html.valueishtml="0"  name=avl_per visible="1" editmask.mask="##인실" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="33554432" x="919" y="28" height="68" width="576" format="[general]" html.valueishtml="0"  name=a_bul visible="1" edit.limit=0 edit.case=any edit.format="" edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="a_bul  / compute_2 "border="0" color="33554432" x="1509" y="28" height="56" width="576" format="##0.0%" html.valueishtml="0"  name=bul_per visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="33554432" x="2098" y="28" height="68" width="576" format="###,##0" html.valueishtml="0"  name=a_sang visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="a_sang  /  compute_3"border="0" color="33554432" x="2688" y="28" height="56" width="576" format="##0.0%" html.valueishtml="0"  name=sang_per visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="cumulativeSum( 1 for group 1)"border="0" color="33554432" x="32" y="16" height="56" width="82" format="[GENERAL]" html.valueishtml="0"  name=group1_row visible="0"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="33554432" x="0" y="28" height="68" width="425" format="[general]" html.valueishtml="0"  name=sex visible="1~tif( group1_row = 1,1,0)" edit.limit=6 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=trailer.1 x1="9" y1="120" x2="3273" y2="120"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+line(band=trailer.1 x1="9" y1="0" x2="9" y2="136"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+line(band=trailer.1 x1="914" y1="0" x2="914" y2="136"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+line(band=trailer.1 x1="1499" y1="0" x2="1499" y2="136"  name=l_17 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+line(band=trailer.1 x1="2094" y1="0" x2="2094" y2="136"  name=l_18 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+line(band=trailer.1 x1="2679" y1="0" x2="2679" y2="136"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+line(band=trailer.1 x1="3278" y1="0" x2="3278" y2="136"  name=l_20 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+text(band=trailer.1 alignment="2" text="계" border="0" color="0" x="23" y="28" height="56" width="882" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="2" expression="sum(a_bul for group 1)"border="0" color="33554432" x="933" y="28" height="56" width="558" format="[general]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="2" expression="sum(a_sang for group 1)"border="0" color="33554432" x="2112" y="28" height="56" width="553" format="[general]" html.valueishtml="0"  name=compute_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=trailer.1 x1="9" y1="0" x2="3282" y2="0"  name=l_21 visible="1" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="33554432" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

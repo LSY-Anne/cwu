@@ -1,0 +1,101 @@
+﻿$PBExportHeader$d_hgm503a.srd
+$PBExportComments$물품입고현황
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=number update=yes updatewhereclause=yes key=yes name=hst109h_in_no dbname="hst109h.in_no" initial="1" )
+ column=(type=char(10) update=yes updatewhereclause=yes key=yes name=hst109h_ord_no dbname="hst109h.ord_no" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=gwa dbname="hst109h.gwa" initial="1301" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=hst109h_req_date dbname="hst109h.req_date" )
+ column=(type=char(40) updatewhereclause=yes name=item_name dbname="hst109h.item_name" )
+ column=(type=char(7) update=yes updatewhereclause=yes name=item_no dbname="hst109h.item_no" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=hst109h_in_date dbname="hst109h.in_date" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=hst109h_in_qty dbname="hst109h.in_qty" )
+ column=(type=decimal(2) update=yes updatewhereclause=yes name=hst109h_in_price dbname="hst109h.in_price" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=hst109h_in_amt dbname="hst109h.in_amt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=hst109h_item_class dbname="hst109h.item_class" )
+ column=(type=char(50) update=yes updatewhereclause=yes name=hst109h_remark dbname="hst109h.remark" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=hst109h_cust_no dbname="hst109h.cust_no" )
+ column=(type=char(4) updatewhereclause=yes name=apply_gwa dbname="hst109h.apply_gwa" )
+ column=(type=char(6) updatewhereclause=yes name=acct_code dbname="hst109h.acct_code" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=revenue_opt dbname="hst109h.revenue_opt" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=proof_date dbname="hst109h.proof_date" )
+ column=(type=number update=yes updatewhereclause=yes key=yes name=hst109h_item_seq dbname="hst109h.item_seq" initial="1" )
+ column=(type=char(10) update=yes updatewhereclause=yes key=yes name=hst109h_req_no dbname="hst109h.req_no" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=hst109h_in_opt dbname="hst109h.in_opt" initial="1" values="	1/	0" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hst109h.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hst109h.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hst109h.work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hst109h.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hst109h.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hst109h.job_date" )
+ retrieve="  SELECT A.IN_NO,   
+         A.ORD_NO,
+         A.GWA,   
+			A.REQ_DATE,
+         B.ITEM_NAME, 
+         A.ITEM_NO,  
+         A.IN_DATE,     
+         A.IN_QTY,   
+         A.IN_PRICE,   
+         A.IN_AMT,   
+         A.ITEM_CLASS,   
+         A.REMARK,   
+         A.CUST_NO,
+         C.APPLY_GWA,
+         C.ACCT_CODE,
+         A.REVENUE_OPT,
+         A.PROOF_DATE,
+         A.ITEM_SEQ,
+         A.REQ_NO,
+         A.IN_OPT,
+         A.WORKER, 
+         A.IPADDR,
+         A.WORK_DATE,
+         A.JOB_UID,
+         A.JOB_ADD,
+         A.JOB_DATE      
+ FROM    STDB.HST109H A,
+         STDB.HST004M B,
+         STDB.HST105H C
+ WHERE   A.ITEM_NO = B.ITEM_NO
+ AND     A.ORD_NO  = C.ORD_NO(+)
+ AND     A.REQ_NO  = C.REQ_NO(+)
+  AND     A.IN_DATE  BETWEEN  :as_fr_date AND :as_to_date
+ AND     nvl(C.APPLY_GWA,' ') LIKE :as_gwa
+ AND     nvl(C.ACCT_CODE,' ') LIKE :as_acct_code" update="STDB.HST109H" updatewhere=0 updatekeyinplace=no arguments=(("as_fr_date", string),("as_to_date", string),("as_gwa", string),("as_acct_code", string))  sort="hst109h_ord_no A hst109h_in_date A " )
+text(band=header alignment="2" text="구분" border="0" color="0" x="9" y="8" height="56" width="133" html.valueishtml="0"  name=hst109h_in_opt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="품목명" border="0" color="0" x="850" y="8" height="56" width="581" html.valueishtml="0"  name=item_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="입고일자" border="0" color="0" x="151" y="8" height="56" width="338" html.valueishtml="0"  name=hst109h_in_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="신청부서" border="0" color="0" x="1440" y="8" height="56" width="562" html.valueishtml="0"  name=apply_gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계정과목" border="0" color="0" x="3529" y="8" height="56" width="686" html.valueishtml="0"  name=acct_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="증빙일자" border="0" color="0" x="4224" y="8" height="56" width="343" html.valueishtml="0"  name=proof_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="수량" border="0" color="0" x="2011" y="8" height="56" width="155" html.valueishtml="0"  name=hst109h_in_qty_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="단가" border="0" color="0" x="2176" y="8" height="56" width="352" html.valueishtml="0"  name=hst109h_in_price_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="금액" border="0" color="0" x="2537" y="8" height="56" width="416" html.valueishtml="0"  name=hst109h_in_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="거래처명" border="0" color="0" x="2962" y="8" height="56" width="558" html.valueishtml="0"  name=hst109h_cust_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="발주번호" border="0" color="0" x="498" y="8" height="56" width="343" html.valueishtml="0"  name=hst109h_ord_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="850" y="8" height="60" width="581" format="[general]" html.valueishtml="0"  name=item_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=20 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="8" height="60" width="133" format="[general]" html.valueishtml="0"  name=hst109h_in_opt visible="1" checkbox.text="" checkbox.on="1" checkbox.off="0" checkbox.scale=no checkbox.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="498" y="8" height="60" width="343" format="[general]" html.valueishtml="0"  name=hst109h_ord_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="151" y="8" height="60" width="338" format="@@@@/@@/@@" html.valueishtml="0"  name=hst109h_in_date visible="1" editmask.mask="####/##/##" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="1440" y="8" height="60" width="562" format="[general]" html.valueishtml="0"  name=apply_gwa pointer="HyperLink!" visible="1" dddw.name=dddw_hakgwa_all dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=200 dddw.lines=0 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="3529" y="8" height="60" width="686" format="[general]" html.valueishtml="0"  name=acct_code pointer="HyperLink!" visible="1" dddw.name=dddw_acct_code_totel dddw.displaycolumn=name dddw.datacolumn=code dddw.percentwidth=200 dddw.lines=0 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=17 alignment="2" tabsequence=32766 border="0" color="0" x="4224" y="8" height="60" width="343" format="[general]" html.valueishtml="0"  name=proof_date visible="1" editmask.mask="####/##/##" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="2011" y="8" height="60" width="155" format="[general]" html.valueishtml="0"  name=hst109h_in_qty visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="2176" y="8" height="60" width="352" format="#,##0" html.valueishtml="0"  name=hst109h_in_price visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="0" x="2537" y="8" height="60" width="416" format="#,##0" html.valueishtml="0"  name=hst109h_in_amt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="0" x="2962" y="8" height="60" width="558" format="[general]" html.valueishtml="0"  name=hst109h_cust_no visible="1" dddw.name=dddw_cust_all dddw.displaycolumn=cust_name dddw.datacolumn=cust_no dddw.percentwidth=150 dddw.lines=0 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

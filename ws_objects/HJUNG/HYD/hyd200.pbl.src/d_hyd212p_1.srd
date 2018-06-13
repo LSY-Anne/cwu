@@ -1,0 +1,58 @@
+﻿$PBExportHeader$d_hyd212p_1.srd
+$PBExportComments$연구실적현황2
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=84 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" height.autosize=yes )
+table(column=(type=char(50) updatewhereclause=yes name=sbjt_no dbname="hyd308t.sbjt_no" )
+ column=(type=char(300) updatewhereclause=yes name=biz_nm dbname="hyd308t.biz_nm" )
+ column=(type=char(40) updatewhereclause=yes name=name dbname="name" )
+ column=(type=char(300) updatewhereclause=yes name=rsch_sbjt_nm dbname="hyd308t.rsch_sbjt_nm" )
+ column=(type=char(6) updatewhereclause=yes name=rsch_stt_ym dbname="hyd308t.rsch_stt_ym" )
+ column=(type=char(6) updatewhereclause=yes name=rsch_end_ym dbname="hyd308t.rsch_end_ym" )
+ column=(type=char(150) updatewhereclause=yes name=rsrcct_sppt_agc_nm dbname="hyd308t.rsrcct_sppt_agc_nm" )
+ column=(type=number updatewhereclause=yes name=tot_rsrcct dbname="tot_rsrcct" )
+ retrieve="SELECT A.SBJT_NO 
+	   ,A.BIZ_NM 
+	   ,(SELECT NAME FROM INDB.HIN001M WHERE A.MEMBER_NO = MEMBER_NO) AS NAME
+	   ,A.RSCH_SBJT_NM 
+	   ,A.RSCH_STT_YM 
+	   ,A.RSCH_END_YM 
+	   ,A.RSRCCT_SPPT_AGC_NM 
+	   ,NVL((SELECT SUM(B.TOT_RSRCCT) FROM YGDB.HYD309T B
+WHERE A.STD_YM = B.STD_YM
+AND A.MEMBER_NO = B.MEMBER_NO
+AND A.MNG_NO = B.MNG_NO), 0) AS TOT_RSRCCT	   
+FROM YGDB.HYD308T A
+WHERE SUBSTR(A.STD_YM,1,4) = :as_year" arguments=(("as_year", string)) )
+text(band=header alignment="2" text="과제번호" border="0" color="33554432" x="14" y="8" height="56" width="398" html.valueishtml="0"  name=sbjt_no_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="사업명" border="0" color="33554432" x="425" y="8" height="56" width="571" html.valueishtml="0"  name=biz_nm_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="연구책임자" border="0" color="33554432" x="1010" y="8" height="56" width="393" html.valueishtml="0"  name=name_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="연구과제명" border="0" color="33554432" x="1417" y="8" height="56" width="1765" html.valueishtml="0"  name=rsch_sbjt_nm_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="시작년월일" border="0" color="33554432" x="3195" y="8" height="56" width="329" html.valueishtml="0"  name=rsch_stt_ym_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="종료년월일" border="0" color="33554432" x="3538" y="8" height="56" width="329" html.valueishtml="0"  name=rsch_end_ym_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="지원기관명" border="0" color="33554432" x="3881" y="8" height="56" width="718" html.valueishtml="0"  name=rsrcct_sppt_agc_nm_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="총연구비" border="0" color="33554432" x="4613" y="8" height="56" width="338" html.valueishtml="0"  name=tot_rsrcct_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="425" y="8" height="68" width="571" format="[general]" html.valueishtml="0"  name=biz_nm  tag="사업명" visible="1" edit.limit=300 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes edit.autovscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="33554432" x="1010" y="8" height="68" width="393" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=40 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="1417" y="8" height="68" width="1765" format="[general]" html.valueishtml="0"  name=rsch_sbjt_nm  tag="연구과제명" visible="1" edit.limit=300 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes edit.autovscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="33554432" x="3881" y="8" height="68" width="718" format="[general]" html.valueishtml="0"  name=rsrcct_sppt_agc_nm  tag="연구비지원기관" visible="1" edit.limit=150 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="33554432" x="4613" y="8" height="68" width="338" format="[general]" html.valueishtml="0"  name=tot_rsrcct visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="33554432" x="14" y="8" height="68" width="398" format="[general]" html.valueishtml="0"  name=sbjt_no  tag="연구과제번호" visible="1" edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="33554432" x="3195" y="8" height="68" width="329" format="[general]" html.valueishtml="0"  name=rsch_stt_ym  tag="연구개시년월" visible="1" edit.limit=6 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="33554432" x="3538" y="8" height="68" width="329" format="[general]" html.valueishtml="0"  name=rsch_end_ym  tag="연구종료년월" visible="1" edit.limit=6 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=summary alignment="2" text="과제수" border="0" color="33554432" x="5" y="12" height="56" width="407" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="rowcount()"border="0" color="33554432" x="421" y="12" height="56" width="576" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

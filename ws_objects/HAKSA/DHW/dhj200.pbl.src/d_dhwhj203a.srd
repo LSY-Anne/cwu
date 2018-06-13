@@ -1,0 +1,83 @@
+﻿$PBExportHeader$d_dhwhj203a.srd
+$PBExportComments$[대학원학적] 학적변동관리(학적변동입력)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=88 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(9) update=yes updatewhereclause=yes key=yes name=hakbun dbname="d_hakbyen.hakbun" )
+ column=(type=char(8) update=yes updatewhereclause=yes key=yes name=hjmod_sijum dbname="d_hakbyen.hjmod_sijum" )
+ column=(type=char(1) update=yes updatewhereclause=yes key=yes name=hjmod_id dbname="d_hakbyen.hjmod_id" )
+ column=(type=char(3) update=yes updatewhereclause=yes name=hjmod_sayu_id dbname="d_hakbyen.hjmod_sayu_id" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=year dbname="d_hakbyen.year" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=hakgi dbname="d_hakbyen.hakgi" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=hakgicha dbname="d_hakbyen.hakgicha" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=mod_year dbname="d_hakbyen.mod_year" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=mod_hakgi dbname="d_hakbyen.mod_hakgi" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=mod_date dbname="d_hakbyen.mod_date" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=sungjuk_injung dbname="d_hakbyen.sungjuk_injung" initial="1" values="인정	1/인정	0" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=delete_yn dbname="d_hakbyen.delete_yn" initial="N" values="	Y/	N" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="d_hakbyen.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="d_hakbyen.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="d_hakbyen.work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="d_hakbyen.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="d_hakbyen.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="d_hakbyen.job_date" )
+ retrieve="  SELECT HAKBUN,   
+         HJMOD_SIJUM,   
+         HJMOD_ID,   
+         HJMOD_SAYU_ID,   
+         YEAR,   
+         HAKGI,   
+         HAKGICHA,   
+         MOD_YEAR,   
+         MOD_HAKGI,   
+         MOD_DATE,   
+         SUNGJUK_INJUNG,
+         DELETE_YN,
+         WORKER,   
+         IPADDR,   
+         WORK_DATE,   
+         JOB_UID,   
+         JOB_ADD,   
+         JOB_DATE  
+    FROM HAKSA.D_HAKBYEN  
+   WHERE HAKBUN = :as_hakbun
+       AND NVL(DELETE_YN, 'N') LIKE :AS_DELETE_YN || '%'  
+" update="HAKSA.D_HAKBYEN" updatewhere=0 updatekeyinplace=no arguments=(("as_hakbun", string),("AS_DELETE_YN", string)) )
+text(band=header alignment="2" text="학적변동" border="0" color="8388608" x="343" y="4" height="80" width="274" html.valueishtml="0"  name=hjmod_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학번" border="0" color="8388608" x="5" y="4" height="80" width="334" html.valueishtml="0"  name=hakbun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="변동사유" border="0" color="8388608" x="622" y="4" height="80" width="389" html.valueishtml="0"  name=hjmod_sayu_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="변동일자" border="0" color="8388608" x="1015" y="4" height="80" width="334" html.valueishtml="0"  name=hjmod_sijum_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="년도" border="0" color="8388608" x="1353" y="4" height="80" width="206" html.valueishtml="0"  name=year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학기" border="0" color="8388608" x="1563" y="4" height="80" width="151" html.valueishtml="0"  name=hakgi_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학기차" border="0" color="8388608" x="1719" y="4" height="80" width="238" html.valueishtml="0"  name=hakgicha_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="성적인정" border="0" color="8388608" x="1961" y="4" height="80" width="274" html.valueishtml="0"  name=sungjuk_injung_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="복학년도" border="0" color="8388608" x="2231" y="4" height="80" width="274" html.valueishtml="0"  name=mod_year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="복학학기" border="0" color="8388608" x="2501" y="4" height="80" width="283" html.valueishtml="0"  name=mod_hakgi_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="복학예정일" border="0" color="8388608" x="2789" y="4" height="80" width="329" html.valueishtml="0"  name=mod_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="343" y="4" height="76" width="274" format="[general]" html.valueishtml="0"  name=hjmod_id visible="1" dddw.name=d_dddw_d_hjmod dddw.displaycolumn=hjmod_name dddw.datacolumn=hjmod_id dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="334" format="[general]" html.valueishtml="0"  name=hakbun visible="1" edit.limit=9 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=10 border="0" color="0" x="622" y="4" height="76" width="389" format="[general]" html.valueishtml="0"  name=hjmod_sayu_id visible="1" dddw.name=d_dddw_d_hjmod_sayu dddw.displaycolumn=hjmod_sayu_name dddw.datacolumn=hjmod_sayu_id dddw.percentwidth=240 dddw.lines=0 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.nilisnull=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="0" color="0" x="1015" y="4" height="76" width="334" format="[general]" html.valueishtml="0"  name=hjmod_sijum visible="1" editmask.mask="XXXX.XX.XX" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=30 border="0" color="0" x="1353" y="4" height="76" width="206" format="[general]" html.valueishtml="0"  name=year visible="1" edit.limit=4 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=40 border="0" color="0" x="1563" y="4" height="76" width="151" format="[general]" html.valueishtml="0"  name=hakgi visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=50 border="0" color="0" x="1719" y="4" height="76" width="238" format="[general]" html.valueishtml="0"  name=hakgicha visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="0" tabsequence=60 border="0" color="0" x="1961" y="4" height="76" width="274" format="[general]" html.valueishtml="0"  name=sungjuk_injung visible="1" checkbox.text="인정" checkbox.on="1" checkbox.off="0" checkbox.scale=no checkbox.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="2" tabsequence=70 border="0" color="0" x="2240" y="4" height="76" width="256" format="[general]" html.valueishtml="0"  name=mod_year visible="1" edit.limit=4 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="2" tabsequence=80 border="0" color="0" x="2501" y="4" height="76" width="283" format="[general]" html.valueishtml="0"  name=mod_hakgi visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=90 border="0" color="0" x="2789" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=mod_date visible="1" editmask.mask="XXXX.XX.XX" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="삭제" border="0" color="8388608" x="3127" y="4" height="80" width="146" html.valueishtml="0"  name=delete_yn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=12 alignment="2" tabsequence=32766 border="0" color="0" x="3127" y="4" height="76" width="146" format="[general]" html.valueishtml="0"  name=delete_yn visible="1" checkbox.text="" checkbox.on="Y" checkbox.off="N" checkbox.scale=yes checkbox.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,49 @@
+﻿$PBExportHeader$gf_dberr_msg.srf
+$PBExportComments$DB Error Message
+global type gf_dberr_msg from function_object
+end type
+
+forward prototypes
+global subroutine gf_dberr_msg (string arg_win, string arg_dw_nm, integer arg_db_code, string arg_db_message)
+end prototypes
+
+global subroutine gf_dberr_msg (string arg_win, string arg_dw_nm, integer arg_db_code, string arg_db_message);////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Function : gf_dberr_msg
+//
+// Purpose  : DataBase의 Error Code와 Error Message를 Input Argument로 받아서
+//				  Message Code에 따른 적절한 Message를 띄운다.
+//				  DataWindow Control의 DBError Event에서 Call한다.
+//
+// Scope    : public
+//
+// Arguments: string arg_db_code    (DataWindow Control DBErr Event의 sqldbcode Argument)
+//            string arg_db_message (DataWindow Control DBErr Event의 sqlerrtext Argument)
+//
+// Returns  : None
+//
+////////////////////////////////////////////////////////////////////////////////////////////
+
+String		ls_err_msg
+
+Vector	vc
+vc = Create Vector
+
+Choose Case arg_db_code 
+	Case -3
+		ls_err_msg = '작업 중 다른 사용자가 해당 데이터를 변경하였습니다. 조회를 다시한후 실행하십시오.'
+	Case Else
+		ls_err_msg = arg_db_message
+End Choose
+
+vc.setProperty("err_win", arg_win)
+vc.setProperty("err_plce", arg_dw_nm)
+vc.setProperty("err_line", '')
+vc.setProperty("err_no",	String(arg_db_code, '00000'))
+vc.setProperty("err_detl", ls_err_msg)
+OpenWithParm(w_system_error, vc)
+
+Destroy vc
+
+end subroutine
+

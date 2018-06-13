@@ -1,0 +1,100 @@
+﻿$PBExportHeader$d_dhwdr207a.srd
+$PBExportComments$[대학원등록] 환불처리
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=88 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=200 color="536870912" )
+table(column=(type=char(9) updatewhereclause=yes name=d_hakjuk_hakbun dbname="d_hakjuk.hakbun" )
+ column=(type=number updatewhereclause=yes name=hj dbname="hj" )
+ column=(type=number updatewhereclause=yes name=ip dbname="ip" )
+ column=(type=number updatewhereclause=yes name=dr dbname="dr" )
+ column=(type=number updatewhereclause=yes name=ww dbname="ww" )
+ column=(type=number updatewhereclause=yes name=ij dbname="ij" )
+ column=(type=number updatewhereclause=yes name=dj dbname="dj" )
+ column=(type=number updatewhereclause=yes name=ipn dbname="ipn" )
+ column=(type=number updatewhereclause=yes name=dn dbname="dn" )
+ column=(type=number updatewhereclause=yes name=won dbname="won" )
+ column=(type=char(1) updatewhereclause=yes name=d_hakjuk_gwajung_id dbname="d_hakjuk.gwajung_id" )
+ column=(type=char(3) updatewhereclause=yes name=d_hakjuk_gwa_id dbname="d_hakjuk.gwa_id" )
+ column=(type=char(20) updatewhereclause=yes name=d_hakjuk_hname dbname="d_hakjuk.hname" )
+ column=(type=char(4) updatewhereclause=yes name=d_hakjuk_jungong_id dbname="d_hakjuk.jungong_id" )
+ column=(type=char(1) updatewhereclause=yes name=wn dbname="wn" values="완납	1/미완납	0/" )
+ column=(type=char(4) updatewhereclause=yes name=d_dungrok_year dbname="d_hakjuk.year" )
+ column=(type=char(1) updatewhereclause=yes name=d_dungrok_hakgi dbname="d_hakjuk.hakgi" )
+ retrieve="SELECT 	A.HAKBUN,
+			SUM(NVL(B.HAKJUM, 0 ))	 	HJ,
+			SUM(NVL(B.IPHAK, 0 )) 		IP,
+			SUM(NVL(B.DUNGROK, 0 ))		DR,
+			SUM(NVL(B.WONWOO, 0 )) 		WW,
+			SUM(NVL(B.I_JANGHAK, 0 ))	IJ,
+			SUM(NVL(B.D_JANGHAK, 0 ))	DJ,
+			SUM(NVL(B.IPHAK_N, 0 )) 	IPN,
+			SUM(NVL(B.DUNGROK_N, 0 )) 	DN,
+			SUM(NVL(B.WONWOO, 0 )) 		WON,
+			A.GWAJUNG_ID,
+			A.GWA_ID,
+			A.HNAME,
+			A.JUNGONG_ID,
+			MAX(B.WAN_YN) 		WN,
+ 			B.YEAR,
+			B.HAKGI
+FROM		HAKSA.D_HAKJUK		A,
+			HAKSA.D_DUNGROK	B
+WHERE		A.HAKBUN			=	B.HAKBUN
+AND		B.YEAR			=	:as_year
+AND		B.HAKGI			=	:as_hakgi
+AND		A.GWAJUNG_ID	like	:as_gwajung
+AND		A.GWA_ID			like	:as_hakgwa
+AND		A.GYEYUL_ID		like	:as_gyeyul_id
+AND		A.JUNGONG_ID	like	:as_jungong
+AND		A.HAKBUN			like	:as_hakbun
+GROUP BY A.HAKBUN,
+			A.GWA_ID,
+			A.HNAME,
+ 			B.YEAR,
+			B.HAKGI,
+			A.GWAJUNG_ID,
+			A.JUNGONG_ID" arguments=(("as_year", string),("as_hakgi", string),("as_gwajung", string),("as_gyeyul_id", string),("as_hakgwa", string),("as_jungong", string),("as_hakbun", string)) )
+text(band=header alignment="2" text="" border="0" color="25058105" x="5" y="4" height="80" width="823" html.valueishtml="0"  name=d_hakjuk_hakbun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="입학금" border="0" color="25058105" x="832" y="4" height="80" width="361" html.valueishtml="0"  name=ip_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="등록금" border="0" color="25058105" x="1198" y="4" height="80" width="361" html.valueishtml="0"  name=dr_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="입학장학금" border="0" color="25058105" x="1563" y="4" height="80" width="416" html.valueishtml="0"  name=ij_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="등록장학금" border="0" color="25058105" x="1984" y="4" height="80" width="416" html.valueishtml="0"  name=dj_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="원우회비" border="0" color="25058105" x="2405" y="4" height="80" width="416" html.valueishtml="0"  name=ww_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="합계" border="0" color="25058105" x="2821" y="4" height="80" width="407" html.valueishtml="0"  name=compute_1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+line(band=detail x1="0" y1="196" x2="3237" y2="196"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="8388736"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="학번" border="0" color="8388608" x="5" y="0" height="56" width="215" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=detail alignment="2" text="총납입금" border="0" color="8388608" x="539" y="0" height="56" width="288" html.valueishtml="0"  name=t_9 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=detail alignment="2" text="기납입금" border="0" color="8388608" x="539" y="64" height="56" width="288" html.valueishtml="0"  name=t_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=detail alignment="2" text="잔여금" border="0" color="8388608" x="539" y="128" height="56" width="288" html.valueishtml="0"  name=t_4 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=detail alignment="2" text="성명" border="0" color="8388608" x="5" y="64" height="56" width="215" html.valueishtml="0"  name=t_10 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=detail alignment="2" text="완납" border="0" color="8388608" x="5" y="128" height="56" width="215" html.valueishtml="0"  name=t_11 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=15 alignment="2" tabsequence=32766 border="0" color="255" x="224" y="128" height="60" width="311" format="[general]" html.valueishtml="0"  name=wn visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+compute(band=detail alignment="1" expression="ip  - if( isnull( ipn ), 0,  ipn  ) - if(isnull(  Ij ), 0,   Ij  ) "border="0" color="24276589" x="832" y="128" height="60" width="361" format="#,##0" html.valueishtml="0"  name=iphak_j visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+compute(band=detail alignment="1" expression=" dr -  dn  - if(isnull(  dj ), 0,   dj  ) "border="0" color="24276589" x="1198" y="128" height="60" width="361" format="#,##0" html.valueishtml="0"  name=dungrok_j visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="24276589" x="1198" y="64" height="60" width="361" format="#,##0" html.valueishtml="0"  name=dn visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="24276589" x="832" y="0" height="60" width="361" format="#,##0" html.valueishtml="0"  name=ip visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="24276589" x="832" y="64" height="60" width="361" format="#,##0" html.valueishtml="0"  name=ipn visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="24276589" x="1198" y="0" height="60" width="361" format="#,##0" html.valueishtml="0"  name=dr visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+compute(band=detail alignment="1" expression="ww  - if(isnull(  won   ), 0,   won )  "border="0" color="24276589" x="2405" y="128" height="60" width="416" format="#,##0" html.valueishtml="0"  name=wonwoo_j visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+compute(band=detail alignment="1" expression=" if(isnull(  ip  ), 0,  ip  ) +  if(isnull(  dr  ), 0,   dr  ) + if(isnull(  ww  ), 0,   ww  ) - (if(isnull(  dj ), 0,   dj  )  + if(isnull(  ij ), 0,   ij  )   )"border="0" color="24276589" x="2825" y="0" height="60" width="407" format="#,##0" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+compute(band=detail alignment="1" expression="iphak_j + dungrok_j +   wonwoo_j "border="0" color="24276589" x="2825" y="128" height="60" width="407" format="#,##0" html.valueishtml="0"  name=compute_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+compute(band=detail alignment="1" expression="  if(isnull(  ipn  ), 0,   ipn ) +  if(isnull(  dn) , 0,   dn ) + if(isnull(  won ), 0,   won  )"border="0" color="24276589" x="2825" y="64" height="60" width="407" format="#,##0" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="24276589" x="2405" y="0" height="60" width="416" format="#,##0" html.valueishtml="0"  name=ww visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="24276589" x="2405" y="64" height="60" width="416" format="#,##0" html.valueishtml="0"  name=won visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="24276589" x="1563" y="0" height="192" width="416" format="#,##0" html.valueishtml="0"  name=ij visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="24276589" x="1984" y="0" height="192" width="416" format="#,##0" html.valueishtml="0"  name=dj visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="24276589" x="224" y="64" height="60" width="311" format="[general]" html.valueishtml="0"  name=d_hakjuk_hname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="24276589" x="224" y="0" height="60" width="311" format="[general]" html.valueishtml="0"  name=d_hakjuk_hakbun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

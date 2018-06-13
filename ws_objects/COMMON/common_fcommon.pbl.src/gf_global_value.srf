@@ -1,0 +1,28 @@
+﻿$PBExportHeader$gf_global_value.srf
+$PBExportComments$로그인사번 및 부서등 조건에 맞는 기본자료를 받아오는 함수
+global type gf_global_value from function_object
+end type
+
+forward prototypes
+global function string gf_global_value (integer as_gb)
+end prototypes
+
+global function string gf_global_value (integer as_gb);/* Global 로 정의하여 사용하는 부분에 대하여 해당 구분별로 그 값을 리턴하는 함수로 출력물에서 별도로 
+해당 내역을 체크할 필요없이 바로 확인하여 사용할 수 있도록 한다.
+
+	Argument :  1 -> 사번/출력자
+	
+	Comment : 추후 해당 Return 값이 다르게 표현을 요할 시에는 해당 번호를
+	 				순차적으로 부여하여 사용하도록 한다.
+*/
+
+String	ls_return
+
+Choose Case as_gb
+	Case 1
+		ls_return = gs_empCode + " / " + gs_DeptName
+End Choose
+
+Return ls_return
+end function
+

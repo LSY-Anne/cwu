@@ -1,0 +1,97 @@
+﻿$PBExportHeader$d_hpa601a_3.srd
+$PBExportComments$연말정산 기초자료 생성(급여기초자료)(인사마스타기준)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(5) update=yes updatewhereclause=yes name=member_no dbname="member_no" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=name dbname="name" )
+ column=(type=char(13) update=yes updatewhereclause=yes name=jumin_no dbname="jumin_no" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=jaejik_opt dbname="jaejik_opt" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=firsthire_date dbname="firsthire_date" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=gwa dbname="gwa" )
+ column=(type=char(3) update=yes updatewhereclause=yes name=duty_code dbname="duty_code" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=jikwi_code dbname="jikwi_code" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=jikmu_code dbname="jikmu_code" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=bojik_code1 dbname="bojik_code1" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=retire_date dbname="retire_date" )
+ column=(type=char(50) updatewhereclause=yes name=kch003m_fname dbname="fname" )
+ column=(type=char(20) updatewhereclause=yes name=hin003m_02v_duty_name dbname="duty_name" )
+ column=(type=char(40) updatewhereclause=yes name=hin003m_02v_jikjong_fname dbname="jikjong_fname" )
+ retrieve="  select	b.member_no,
+			rtrim(b.name) name,
+			b.jumin_no,
+			b.jaejik_opt,
+			b.firsthire_date,
+			b.gwa,
+			b.duty_code,
+			b.jikwi_code,
+			b.jikmu_code,
+			b.bojik_code1,
+			b.retire_date,
+			c.fname,
+			d.duty_name,
+			d.jikjong_fname
+from		(	select	member_no
+				from		padb.hpa001m
+				where		year_month like :as_year||'%' )	a,
+			indb.hin001m b,
+			cddb.kch003m c,
+			indb.hin003m_02v d
+where		b.duty_code	=		d.duty_code (+)
+and		b.gwa			=		c.gwa (+)
+and		b.member_no				=		a.member_no (+)
+and		b.gwa				like		:as_gwa || '%'
+and		d.jikjong_code			>=		:ai_str_jikjong
+and		d.jikjong_code			<=		:ai_end_jikjong   
+and		b.member_no				>=		:as_str_member
+and		b.member_no				<=		:as_end_member
+and		decode(b.jaejik_opt,2,1,b.jaejik_opt) 	>=		decode(:ai_jaejik_opt,0,0,:ai_jaejik_opt)
+and		decode(b.jaejik_opt,2,1,b.jaejik_opt)	<=		decode(:ai_jaejik_opt,0,9,:ai_jaejik_opt)
+and		(b.retire_date			is		null or	b.retire_date like :as_year||'%')
+group by 	b.member_no,
+			b.name,
+			b.jumin_no,
+			b.jaejik_opt,
+			b.firsthire_date,
+			b.gwa,
+			b.duty_code,
+			b.jikwi_code,
+			b.jikmu_code,
+			b.bojik_code1,
+			b.retire_date,
+			c.fname,
+			d.duty_name,
+			d.jikjong_fname
+order  by   b.member_no" arguments=(("as_year", string),("as_gwa", string),("ai_str_jikjong", number),("ai_end_jikjong", number),("as_str_member", string),("as_end_member", string),("ai_jaejik_opt", number)) )
+text(band=header alignment="2" text="개인번호" border="0" color="0" x="9" y="12" height="56" width="384" html.valueishtml="0"  name=member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="성 명" border="0" color="0" x="402" y="12" height="56" width="407" html.valueishtml="0"  name=name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="주민등록번호" border="0" color="0" x="818" y="12" height="56" width="517" html.valueishtml="0"  name=jumin_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="조직명" border="0" color="0" x="2359" y="12" height="56" width="571" html.valueishtml="0"  name=kch003m_fname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직급명" border="0" color="0" x="3410" y="12" height="56" width="457" html.valueishtml="0"  name=hin003m_02v_duty_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직종명" border="0" color="0" x="2939" y="12" height="56" width="462" html.valueishtml="0"  name=hin003m_02v_jikjong_fname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="재직구분" border="0" color="0" x="1344" y="12" height="56" width="270" html.valueishtml="0"  name=jaejik_opt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="최초임용일" border="0" color="0" x="1623" y="12" height="56" width="357" html.valueishtml="0"  name=firsthire_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="퇴직일자" border="0" color="0" x="1989" y="12" height="56" width="361" html.valueishtml="0"  name=retire_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="384" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="402" y="4" height="72" width="407" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="818" y="4" height="72" width="517" format="@@@@@@-@@@@@@@" html.valueishtml="0"  name=jumin_no visible="1" edit.limit=13 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="3" tabsequence=32766 border="0" color="0" x="2359" y="4" height="72" width="571" format="[general]" html.valueishtml="0"  name=kch003m_fname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="2" tabsequence=32766 border="0" color="0" x="3410" y="4" height="72" width="457" format="[general]" html.valueishtml="0"  name=hin003m_02v_duty_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="2" tabsequence=32766 border="0" color="0" x="2939" y="4" height="72" width="462" format="[general]" html.valueishtml="0"  name=hin003m_02v_jikjong_fname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="1344" y="4" height="72" width="270" format="[general]" html.valueishtml="0"  name=jaejik_opt visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="1623" y="4" height="72" width="357" format="@@@@/@@/@@" html.valueishtml="0"  name=firsthire_date visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="0" x="1989" y="4" height="72" width="361" format="@@@@/@@/@@" html.valueishtml="0"  name=retire_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

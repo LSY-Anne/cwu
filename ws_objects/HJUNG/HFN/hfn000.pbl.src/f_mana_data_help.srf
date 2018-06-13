@@ -1,0 +1,188 @@
+﻿$PBExportHeader$f_mana_data_help.srf
+$PBExportComments$관리항목의 내용 도움말 처리
+global type f_mana_data_help from function_object
+end type
+
+forward prototypes
+global subroutine f_mana_data_help (datawindow adw_drcr, integer ai_row, string as_colname)
+end prototypes
+
+global subroutine f_mana_data_help (datawindow adw_drcr, integer ai_row, string as_colname);// ==========================================================================================
+// Function Name	:	f_mana_data_help
+// Function 설명	:	관리항목 내용 도움말 조회
+// Argument			:	datawindow(현재 Datawindow)
+// 						ai_row(현재행)
+//							as_colname(현재행의 컬럼명)
+// Return			:
+// ==========================================================================================
+s_insa_com	lstr_com, lstr_Rtn
+string		ls_colname, ls_coldata
+integer		li_mana_code
+
+choose case as_colname
+	case 'mana_data1'
+		ls_colname   = 'mana_code1'
+		ls_coldata   = 'com_mana1_name'
+		li_mana_code = adw_drcr.getitemnumber(ai_row, 'mana_code1')
+	case 'mana_data2'
+		ls_colname   = 'mana_code2'
+		ls_coldata   = 'com_mana2_name'
+		li_mana_code = adw_drcr.getitemnumber(ai_row, 'mana_code2')
+	case 'mana_data3'
+		ls_colname   = 'mana_code3'
+		ls_coldata   = 'com_mana2_name'
+		li_mana_code = adw_drcr.getitemnumber(ai_row, 'mana_code3')
+	case 'mana_data4'
+		ls_colname   = 'mana_code4'
+		ls_coldata   = 'com_mana2_name'
+		li_mana_code = adw_drcr.getitemnumber(ai_row, 'mana_code4')
+end choose
+
+if adw_drcr.getitemstring(ai_row, 'com_mi_gubun') = 'Y' then
+	if adw_drcr.getitemstring(ai_row, 'drcr_class') <> adw_drcr.getitemstring(ai_row, 'com_drcr_class') then
+		if adw_drcr.getitemnumber(ai_row, ls_colname) = adw_drcr.getitemnumber(ai_row, 'com_mana_code') then
+			lstr_com.ls_item[1] = string(adw_drcr.getitemnumber(ai_row, 'acct_class'))
+			lstr_com.ls_item[2] = adw_drcr.getitemstring(ai_row, 'acct_code')
+			
+			openwithparm(w_hfn_sang_data, lstr_com)
+		
+			lstr_rtn = message.powerobjectparm
+		
+			if not isvalid(lstr_rtn) then
+				adw_drcr.setitem(ai_row, ls_colname, '')
+				return
+			end if
+		
+			adw_drcr.setitem(ai_row, as_colname, lstr_rtn.ls_item[1])
+			adw_drcr.setitem(ai_row, ls_coldata, lstr_rtn.ls_item[2])
+			if adw_drcr.dataobject = 'd_hfn201a_3' then
+				if adw_drcr.getitemnumber(ai_row, 'resol_amt') > dec(lstr_rtn.ls_item[3]) then
+					adw_drcr.setitem(ai_row, 'resol_amt', 0)
+					messagebox('확인', '상계금액의 잔액보다 결의금액이 클 수 없습니다.')
+					return
+				end if
+			else
+				if adw_drcr.getitemnumber(ai_row, 'slip_amt') > dec(lstr_rtn.ls_item[3]) then
+					adw_drcr.setitem(ai_row, 'slip_amt', 0)
+					messagebox('확인', '상계금액의 잔액보다 전표금액이 클 수 없습니다.')
+					return
+				end if
+			end if
+			return
+		end if
+	end if
+end if
+
+choose case li_mana_code
+	case 1		// 계좌번호
+		open(w_hfn003m)
+		
+		lstr_rtn = message.powerobjectparm
+			
+		if not isvalid(lstr_rtn) then
+			adw_drcr.setitem(ai_row, ls_colname, '')
+			adw_drcr.setitem(ai_row, as_colname, '')
+			return
+		end if
+		
+		adw_drcr.setitem(ai_row, as_colname, lstr_rtn.ls_item[1])
+		adw_drcr.setitem(ai_row, ls_coldata, lstr_rtn.ls_item[2])
+	case 2		// 거래처번호
+		open(w_hfn_cust)
+		
+		lstr_rtn = message.powerobjectparm
+			
+		if not isvalid(lstr_rtn) then
+			adw_drcr.setitem(ai_row, ls_colname, '')
+			adw_drcr.setitem(ai_row, as_colname, '')
+			return
+		end if
+		
+		adw_drcr.setitem(ai_row, as_colname, lstr_rtn.ls_item[1])
+		adw_drcr.setitem(ai_row, ls_coldata, lstr_rtn.ls_item[2])
+	case 3		// 인사번호
+		lstr_com.ls_item[1] = ''
+		lstr_com.ls_item[2] = ''
+		lstr_com.ls_item[3] = ''
+		
+		openwithparm(w_hin000h, lstr_com)
+		
+		lstr_rtn = message.powerobjectparm
+			
+		if not isvalid(lstr_rtn) then
+			adw_drcr.setitem(ai_row, ls_colname, '')
+			adw_drcr.setitem(ai_row, as_colname, '')
+			return
+		end if
+		
+		adw_drcr.setitem(ai_row, as_colname, lstr_rtn.ls_item[2])
+		adw_drcr.setitem(ai_row, ls_coldata, lstr_rtn.ls_item[1])
+	case 4		// 카드번호
+		open(w_hfn009m)
+		
+		lstr_rtn = message.powerobjectparm
+			
+		if not isvalid(lstr_rtn) then
+			adw_drcr.setitem(ai_row, ls_colname, '')
+			adw_drcr.setitem(ai_row, as_colname, '')
+			return
+		end if
+		
+		adw_drcr.setitem(ai_row, as_colname, lstr_rtn.ls_item[1])
+		adw_drcr.setitem(ai_row, ls_coldata, lstr_rtn.ls_item[2])
+	case 6		// 차입금번호
+		open(w_hfn005m)
+		
+		lstr_rtn = message.powerobjectparm
+			
+		if not isvalid(lstr_rtn) then
+			adw_drcr.setitem(ai_row, ls_colname, '')
+			adw_drcr.setitem(ai_row, as_colname, '')
+			return
+		end if
+		
+		adw_drcr.setitem(ai_row, as_colname, lstr_rtn.ls_item[1])
+		adw_drcr.setitem(ai_row, ls_coldata, lstr_rtn.ls_item[2])
+	case 7		// 수표번호
+		open(w_hfn004m)
+		
+		lstr_rtn = message.powerobjectparm
+			
+		if not isvalid(lstr_rtn) then
+			adw_drcr.setitem(ai_row, ls_colname, '')
+			adw_drcr.setitem(ai_row, as_colname, '')
+			return
+		end if
+		
+		adw_drcr.setitem(ai_row, as_colname, lstr_rtn.ls_item[1])
+		adw_drcr.setitem(ai_row, ls_coldata, lstr_rtn.ls_item[2])
+	case 8		// 증권번호
+		open(w_hfn006m)
+		
+		lstr_rtn = message.powerobjectparm
+			
+		if not isvalid(lstr_rtn) then
+			adw_drcr.setitem(ai_row, ls_colname, '')
+			adw_drcr.setitem(ai_row, as_colname, '')
+			return
+		end if
+		
+		adw_drcr.setitem(ai_row, as_colname, lstr_rtn.ls_item[1])
+		adw_drcr.setitem(ai_row, ls_coldata, lstr_rtn.ls_item[2])
+	case 10		// 은행
+		open(w_hfn000m)
+		
+		lstr_rtn = message.powerobjectparm
+			
+		if not isvalid(lstr_rtn) then
+			adw_drcr.setitem(ai_row, ls_colname, '')
+			adw_drcr.setitem(ai_row, as_colname, '')
+			return
+		end if
+		
+		adw_drcr.setitem(ai_row, as_colname, lstr_rtn.ls_item[1])
+		adw_drcr.setitem(ai_row, ls_coldata, lstr_rtn.ls_item[2])
+end choose
+
+end subroutine
+

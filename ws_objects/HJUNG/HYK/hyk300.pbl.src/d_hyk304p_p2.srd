@@ -1,0 +1,74 @@
+﻿$PBExportHeader$d_hyk304p_p2.srd
+$PBExportComments$교원업적평가표 출력-연구
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=152 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=100 color="536870912" )
+table(column=(type=char(6) update=yes updatewhereclause=yes name=evl_ym dbname="hyk203t.evl_ym" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=appoint_gb dbname="hyk203t.appoint_gb" )
+ column=(type=char(5) updatewhereclause=yes name=member_no dbname="hyk201t.member_no" )
+ column=(type=char(146) update=yes updatewhereclause=yes name=evl_area dbname="evl_area" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=evl_item dbname="hyk203t.evl_item" )
+ column=(type=char(300) update=yes updatewhereclause=yes name=evl_nm dbname="hyk203t.evl_nm" )
+ column=(type=decimal(4) update=yes updatewhereclause=yes name=std_point dbname="hyk203t.std_point" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=evl_grade dbname="hyk203t.evl_grade" )
+ column=(type=decimal(4) update=yes updatewhereclause=yes name=evl_point dbname="hyk203t.evl_point" )
+ retrieve="  SELECT A.EVL_YM,   
+         A.APPOINT_GB,   
+         B.MEMBER_NO,   
+         (SELECT TO_CHAR(ORDER_SEQ) || '. ' ||FNAME FROM CDDB.KCH102D WHERE UPPER(CODE_GB) = 'HYK01' AND  CODE = :AS_AREA) 
+       ||' (' || (SELECT EVL_RATE FROM YGDB.HYK101M WHERE APPOINT_GB = A.APPOINT_GB AND EVL_AREA = :AS_AREA) || '%)'  AS EVL_AREA,   
+         A.EVL_ITEM,   
+         A.EVL_NM,   
+         A.STD_POINT,   
+         A.EVL_GRADE,   
+         A.EVL_POINT
+    FROM YGDB.HYK203T  A, YGDB.HYK201T B
+   WHERE ( A.EVL_YM(+) = :as_ym ) AND  
+         ( A.APPOINT_GB(+) = :as_gb ) AND  
+A.MEMBER_NO (+) = B.MEMBER_NO AND
+         ( B.MEMBER_NO = :as_member_no )   AND
+          A.EVL_AREA(+) = :as_area
+
+            
+" arguments=(("as_ym", string),("as_gb", string),("as_member_no", string),("as_area", string)) )
+text(band=header alignment="2" text="평가영역" border="0" color="33554432" x="32" y="64" height="56" width="448" html.valueishtml="0"  name=evl_area_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="485" y1="32" x2="485" y2="184"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="18751006" )
+line(band=header x1="5" y1="32" x2="5" y2="184"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="18751006" )
+line(band=header x1="5" y1="148" x2="3145" y2="148"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="18751006" )
+line(band=header x1="3141" y1="32" x2="3141" y2="244"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="18751006" )
+line(band=header x1="5" y1="28" x2="3145" y2="28"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="18751006" )
+compute(band=detail alignment="0" expression="getrow()"border="0" color="33554432" x="133" y="24" height="56" width="5" format="[GENERAL]" html.valueishtml="0"  name=row_num visible="0"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="5" y1="96" x2="3145" y2="96"  name=l_16 visible="1~tIf ( row_num = last(row_num for all), 1, 0)" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="18751006" )
+column(band=detail id=4 alignment="2" tabsequence=40 border="0" color="33554432" x="32" y="12" height="68" width="448" format="[general]" html.valueishtml="0"  name=evl_area visible="1" edit.limit=1 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="489" y1="96" x2="3145" y2="96"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="18751006" )
+line(band=detail x1="3141" y1="0" x2="3141" y2="152"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="18751006" )
+line(band=detail x1="485" y1="0" x2="485" y2="152"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="18751006" )
+line(band=detail x1="5" y1="0" x2="5" y2="152"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="18751006" )
+text(band=header alignment="2" text="평  가  항  목" border="0" color="33554432" x="494" y="64" height="56" width="1687" html.valueishtml="0"  name=evl_nm_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=60 border="0" color="33554432" x="494" y="12" height="68" width="1687" format="[general]" html.valueishtml="0"  name=evl_nm visible="1" edit.limit=300 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=header x1="2190" y1="32" x2="2190" y2="184"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="18751006" )
+line(band=detail x1="2190" y1="0" x2="2190" y2="152"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="18751006" )
+text(band=header alignment="2" text="배점" border="0" color="33554432" x="2203" y="64" height="56" width="274" html.valueishtml="0"  name=std_point_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=70 border="0" color="33554432" x="2203" y="12" height="68" width="274" format="[general]" html.valueishtml="0"  name=std_point visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="점수" border="0" color="33554432" x="2853" y="64" height="56" width="279" html.valueishtml="0"  name=evl_point_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="2" tabsequence=90 border="0" color="33554432" x="2853" y="12" height="68" width="279" format="[general]" html.valueishtml="0"  name=evl_point visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=header x1="2843" y1="32" x2="2843" y2="184"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="18751006" )
+line(band=detail x1="2843" y1="0" x2="2843" y2="152"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="18751006" )
+line(band=header x1="2487" y1="32" x2="2487" y2="184"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="18751006" )
+line(band=detail x1="2487" y1="0" x2="2487" y2="152"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="18751006" )
+text(band=header alignment="2" text="실적건수" border="0" color="33554432" x="2505" y="64" height="56" width="325" html.valueishtml="0"  name=t_1 visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+
+sparse(names="evl_area")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

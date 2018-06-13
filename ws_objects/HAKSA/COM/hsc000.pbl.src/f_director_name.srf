@@ -1,0 +1,24 @@
+﻿$PBExportHeader$f_director_name.srf
+$PBExportComments$대학원장성명을 가져온다.
+global type f_director_name from function_object
+end type
+
+forward prototypes
+global function string f_director_name (string as_gubun)
+end prototypes
+
+global function string f_director_name (string as_gubun);// 대학원장 성명을 가져온다.
+String ls_name
+
+SELECT DECODE( :as_gubun, 'K', FNAME, ENAME )
+   INTO :ls_name
+  FROM CDDB.KCH102D
+ WHERE CODE_GB = 'COM02'
+ USING SQLCA ;
+ 
+If sqlca.sqlcode <> 0 Then Return '' ;
+
+
+Return ls_name
+end function
+

@@ -1,0 +1,30 @@
+﻿$PBExportHeader$f_dberr.srf
+$PBExportComments$데이타 베이스 에러 메세지를 출력한다.
+global type f_dberr from function_object
+end type
+
+forward prototypes
+global function integer f_dberr ()
+end prototypes
+
+global function integer f_dberr ();//////////////////////////////////////////////////////////////////
+// 	작성목적 : 데이타 베이스 에러 유무를 체크한다.
+//    적 성 인 : 이현수
+//		작성일자 : 2002.10
+//    변 경 인 :
+//    변경일자 :
+//    변경사유 :
+//////////////////////////////////////////////////////////////////
+
+Long l_Code
+
+//데이타 베이스를 검색한후 그에해당하는 코드를 리턴한다. 
+L_code =  sqlca.sqlcode
+
+if L_code < 0  then
+	MessageBox('에러 번호 : ' + String(L_code) ,sqlca.sqlerrText)
+end If
+
+return L_code
+end function
+

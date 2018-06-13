@@ -1,0 +1,88 @@
+﻿$PBExportHeader$d_hsg203a.srd
+$PBExportComments$[청운대]동아리 행사관리
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(8) update=yes updatewhereclause=yes key=yes name=serial dbname="dongari_hengsa.serial" dbalias=".serial" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=year dbname="dongari_hengsa.year" dbalias=".year" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=hakgi dbname="dongari_hengsa.hakgi" dbalias=".hakgi" )
+ column=(type=char(3) update=yes updatewhereclause=yes name=dongari_id dbname="dongari_hengsa.dongari_id" dbalias=".dongari_id" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=hengsa_name dbname="dongari_hengsa.hengsa_name" dbalias=".hengsa_name" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=start_ilja dbname="dongari_hengsa.start_ilja" dbalias=".start_ilja" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=end_ilja dbname="dongari_hengsa.end_ilja" dbalias=".end_ilja" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=hengsa_sigan dbname="dongari_hengsa.hengsa_sigan" dbalias=".hengsa_sigan" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=hengsa_jangso dbname="dongari_hengsa.hengsa_jangso" dbalias=".hengsa_jangso" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=bigo dbname="dongari_hengsa.bigo" dbalias=".bigo" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="dongari_hengsa.worker" dbalias=".worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="dongari_hengsa.ipaddr" dbalias=".ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="dongari_hengsa.work_date" dbalias=".work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="dongari_hengsa.job_uid" dbalias=".job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="dongari_hengsa.job_add" dbalias=".job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="dongari_hengsa.job_date" dbalias=".job_date" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=inwon_stu dbname="dongari_hengsa.inwon_stu" dbalias=".inwon_stu" )
+ column=(type=char(13) update=yes updatewhereclause=yes name=bisang dbname="dongari_hengsa.bisang" dbalias=".bisang" )
+ column=(type=char(30) update=yes updatewhereclause=yes name=dp_name dbname="dongari_hengsa.dp_name" dbalias=".dp_name" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=jiwongum dbname="dongari_hengsa.jiwongum" dbalias=".jiwongum" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=jiwonbi dbname="dongari_hengsa.jiwonbi" dbalias=".jiwonbi" initial="0" )
+ retrieve="  SELECT HAKSA.DONGARI_HENGSA.SERIAL,   
+         HAKSA.DONGARI_HENGSA.YEAR,   
+         HAKSA.DONGARI_HENGSA.HAKGI,   
+         HAKSA.DONGARI_HENGSA.DONGARI_ID,   
+         HAKSA.DONGARI_HENGSA.HENGSA_NAME,   
+         HAKSA.DONGARI_HENGSA.START_ILJA,   
+         HAKSA.DONGARI_HENGSA.END_ILJA,   
+         HAKSA.DONGARI_HENGSA.HENGSA_SIGAN,   
+         HAKSA.DONGARI_HENGSA.HENGSA_JANGSO,   
+         HAKSA.DONGARI_HENGSA.BIGO,   
+         HAKSA.DONGARI_HENGSA.WORKER,   
+         HAKSA.DONGARI_HENGSA.IPADDR,   
+         HAKSA.DONGARI_HENGSA.WORK_DATE,   
+         HAKSA.DONGARI_HENGSA.JOB_UID,   
+         HAKSA.DONGARI_HENGSA.JOB_ADD,   
+         HAKSA.DONGARI_HENGSA.JOB_DATE,
+         HAKSA.DONGARI_HENGSA.INWON_STU,
+         HAKSA.DONGARI_HENGSA.BISANG,
+         HAKSA.DONGARI_HENGSA.DP_NAME,
+         jiwongum,
+         jiwonbi
+    FROM HAKSA.DONGARI_HENGSA  
+   WHERE ( HAKSA.DONGARI_HENGSA.YEAR = :as_year ) AND  
+         ( HAKSA.DONGARI_HENGSA.HAKGI = :as_hakgi ) AND  
+         ( HAKSA.DONGARI_HENGSA.DONGARI_ID like :as_dongari )    
+" update="HAKSA.DONGARI_HENGSA" updatewhere=1 updatekeyinplace=no arguments=(("as_year", string),("as_hakgi", string),("as_dongari", string))  sort="year A hakgi A dongari_id A " )
+text(band=header alignment="2" text="행사명" border="0" color="8388608" x="603" y="4" height="56" width="1129" html.valueishtml="0"  name=hengsa_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="동아리" border="0" color="8388608" x="5" y="4" height="56" width="594" html.valueishtml="0"  name=dongari_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="행사장소" border="0" color="8388608" x="2894" y="4" height="56" width="901" html.valueishtml="0"  name=hengsa_jangso_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="행사종료일" border="0" color="8388608" x="2313" y="4" height="56" width="576" html.valueishtml="0"  name=end_ilja_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="행사시작일" border="0" color="8388608" x="1737" y="4" height="56" width="571" html.valueishtml="0"  name=start_ilja_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="지원금" border="0" color="8388608" x="3799" y="4" height="56" width="443" html.valueishtml="0"  name=jiwongum_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="지도비" border="0" color="8388608" x="4247" y="4" height="56" width="443" html.valueishtml="0"  name=jiwonbi_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="학생대표자명" border="0" color="8388608" x="4695" y="4" height="56" width="416" html.valueishtml="0"  name=dp_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="학생수" border="0" color="8388608" x="5115" y="4" height="56" width="219" html.valueishtml="0"  name=inwon_stu_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="비상연락망" border="0" color="8388608" x="5339" y="4" height="56" width="457" html.valueishtml="0"  name=bisang_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="비고" border="0" color="8388608" x="5801" y="4" height="56" width="1152" html.valueishtml="0"  name=bigo_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=10 border="0" color="0" x="5" y="4" height="76" width="594" format="[general]" html.valueishtml="0"  name=dongari_id visible="1" dddw.name=d_dddw_dongari dddw.displaycolumn=dongari_name1 dddw.datacolumn=dongari_id dddw.percentwidth=166 dddw.lines=5 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="0" tabsequence=50 border="0" color="0" x="2894" y="4" height="76" width="901" format="[general]" html.valueishtml="0"  name=hengsa_jangso visible="1" edit.limit=40 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=20 border="0" color="0" x="603" y="4" height="76" width="1129" format="[general]" html.valueishtml="0"  name=hengsa_name visible="1" edit.limit=40 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=30 border="0" color="0" x="1733" y="4" height="76" width="571" format="[general]" html.valueishtml="0"  name=start_ilja  tag="DATE" visible="1" editmask.mask="####.##.## ##시" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=40 border="0" color="0" x="2313" y="4" height="76" width="576" format="[general]" html.valueishtml="0"  name=end_ilja  tag="DATE" visible="1" editmask.mask="####.##.## ##시" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=20 alignment="1" tabsequence=60 border="0" color="0" x="3799" y="4" height="76" width="443" format="[general]" html.valueishtml="0"  name=jiwongum visible="1" editmask.mask="###,###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=21 alignment="1" tabsequence=70 border="0" color="0" x="4247" y="4" height="76" width="443" format="[general]" html.valueishtml="0"  name=jiwonbi visible="1" editmask.mask="###,###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=19 alignment="0" tabsequence=80 border="0" color="0" x="4695" y="4" height="76" width="416" format="[general]" html.valueishtml="0"  name=dp_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=17 alignment="1" tabsequence=90 border="0" color="0" x="5115" y="4" height="76" width="219" format="[general]" html.valueishtml="0"  name=inwon_stu visible="1" editmask.mask="###,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=18 alignment="0" tabsequence=100 border="0" color="0" x="5339" y="4" height="76" width="457" format="[general]" html.valueishtml="0"  name=bisang visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=110 border="0" color="0" x="5801" y="4" height="76" width="1152" format="[general]" html.valueishtml="0"  name=bigo visible="1" edit.limit=100 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

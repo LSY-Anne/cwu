@@ -1,0 +1,114 @@
+﻿$PBExportHeader$d_hsg111p_1.srd
+$PBExportComments$개인별 상담 리스트
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=396 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=100 color="536870912" height.autosize=yes )
+table(column=(type=char(20) updatewhereclause=yes key=yes name=rst_no dbname="sum140tl.rst_no" dbalias=".rst_no" )
+ column=(type=char(4) updatewhereclause=yes key=yes name=year dbname="sum140tl.year" dbalias=".year" )
+ column=(type=char(2) updatewhereclause=yes key=yes name=hakgi dbname="sum140tl.hakgi" dbalias=".hakgi" )
+ column=(type=char(60) updatewhereclause=yes name=hakgi_nm dbname="hakgi_nm" )
+ column=(type=char(20) updatewhereclause=yes key=yes name=case_no dbname="sum140tl.case_no" dbalias=".case_no" )
+ column=(type=char(20) updatewhereclause=yes key=yes name=hakbun dbname="sum140tl.hakbun" dbalias=".hakbun" )
+ column=(type=char(20) updatewhereclause=yes name=hname dbname="hname" )
+ column=(type=char(2) updatewhereclause=yes name=counsel_tp dbname="sum140tl.counsel_tp" dbalias=".counsel_tp" )
+ column=(type=char(8) updatewhereclause=yes name=counsel_dt dbname="sum140tl.counsel_dt" dbalias=".counsel_dt" )
+ column=(type=char(20) updatewhereclause=yes name=tel dbname="sum140tl.tel" dbalias=".tel" )
+ column=(type=char(20) updatewhereclause=yes name=hp dbname="sum140tl.hp" dbalias=".hp" )
+ column=(type=char(4) updatewhereclause=yes name=start_time dbname="sum140tl.start_time" dbalias=".start_time" )
+ column=(type=char(4) updatewhereclause=yes name=end_time dbname="sum140tl.end_time" dbalias=".end_time" )
+ column=(type=char(20) updatewhereclause=yes name=counseller dbname="sum140tl.counseller" dbalias=".counseller" )
+ column=(type=char(40) updatewhereclause=yes name=coun_nm dbname="coun_nm" )
+ column=(type=char(30) updatewhereclause=yes name=counsel_place dbname="sum140tl.counsel_place" dbalias=".counsel_place" )
+ column=(type=char(6) updatewhereclause=yes name=counsel_cd dbname="sum140tl.counsel_cd" dbalias=".counsel_cd" )
+ column=(type=char(200) updatewhereclause=yes name=title dbname="sum140tl.title" dbalias=".title" )
+ column=(type=char(2000) updatewhereclause=yes name=context dbname="sum140tl.context" dbalias=".context" )
+ column=(type=char(200) updatewhereclause=yes name=include_file_path dbname="sum140tl.include_file_path" dbalias=".include_file_path" )
+ column=(type=char(200) updatewhereclause=yes name=include_file_path2 dbname="sum140tl.include_file_path2" dbalias=".include_file_path2" )
+ column=(type=char(200) updatewhereclause=yes name=include_file_path3 dbname="sum140tl.include_file_path3" dbalias=".include_file_path3" )
+ column=(type=char(6) updatewhereclause=yes name=act_tp dbname="sum140tl.act_tp" dbalias=".act_tp" )
+ column=(type=char(6) updatewhereclause=yes name=purpose dbname="sum140tl.purpose" dbalias=".purpose" )
+ column=(type=char(4) updatewhereclause=yes name=gwa dbname="sum140tl.gwa" dbalias=".gwa" )
+ column=(type=char(60) updatewhereclause=yes name=gwa_nm dbname="sum140tl.gwa_nm" dbalias=".gwa_nm" )
+ column=(type=char(1) updatewhereclause=yes name=su_hakyun dbname="sum140tl.su_hakyun" dbalias=".su_hakyun" )
+ column=(type=char(1) updatewhereclause=yes name=sex dbname="sum140tl.sex" dbalias=".sex" )
+ retrieve="SELECT         RST_NO
+       ,YEAR
+       ,HAKGI
+       ,(SELECT FNAME FROM CDDB.KCH102D WHERE CODE_GB = 'HSG01' AND CODE = A.HAKGI) AS HAKGI_NM
+       ,CASE_NO
+       ,HAKBUN
+,(SELECT HNAME
+  FROM HAKSA.JAEHAK_HAKJUK 
+ WHERE HAKBUN   = A.HAKBUN) AS  HNAME
+       ,COUNSEL_TP
+       ,COUNSEL_DT
+       ,TEL
+       ,HP
+       ,START_TIME
+       ,END_TIME
+       ,COUNSELLER
+       ,(SELECT NAME FROM INDB.HIN001M WHERE MEMBER_NO = TRIM(A.COUNSELLER)) AS COUN_NM
+       ,COUNSEL_PLACE
+       ,COUNSEL_CD
+       ,TITLE
+       ,CONTEXT
+       ,INCLUDE_FILE_PATH
+       ,INCLUDE_FILE_PATH2
+       ,INCLUDE_FILE_PATH3
+       ,ACT_TP
+       ,PURPOSE
+       ,GWA
+       ,GWA_NM
+       ,SU_HAKYUN
+       ,SEX
+        FROM HAKSA.SUM140TL A
+WHERE A.YEAR = :AS_YEAR
+AND A.HAKGI = :AS_HAKGI
+AND (:AS_GWA = '%' OR A.GWA = :AS_GWA)
+AND A.COUNSEL_DT BETWEEN :AS_FR_DT AND :AS_TO_DT
+AND (:AS_MEMBER_NO = '%' OR HAKBUN = :as_member_no)
+" update="HAKSA.SUM140TL" updatewhere=0 updatekeyinplace=no arguments=(("as_year", string),("as_hakgi", string),("as_gwa", string),("as_fr_dt", string),("as_to_dt", string),("as_member_no", string))  sort="year A hakgi A hakbun A counsel_dt A " )
+group(level=1 header.height=0 trailer.height=4 by=("hakbun" ) newpage=yes header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="1" text="학번:" border="0" color="0" x="27" y="220" height="56" width="178" html.valueishtml="0"  name=t_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="1" text="성명:" border="0" color="0" x="539" y="220" height="56" width="178" html.valueishtml="0"  name=t_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="개인별 상담 리스트" border="0" color="33554432" x="5" y="40" height="100" width="4878" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-16" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=header x1="0" y1="300" x2="4901" y2="300"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="0" y1="392" x2="4901" y2="392"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="NO" border="0" color="33554432" x="18" y="320" height="56" width="151" html.valueishtml="0"  name=no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="학과" border="0" color="0" x="887" y="320" height="56" width="672" html.valueishtml="0"  name=gwa_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="상담일자" border="0" color="0" x="526" y="320" height="56" width="352" html.valueishtml="0"  name=counsel_dt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="학년" border="0" color="0" x="2176" y="320" height="56" width="192" html.valueishtml="0"  name=su_hakyun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="학기" border="0" color="0" x="343" y="320" height="56" width="174" html.valueishtml="0"  name=hakgi_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="상담자" border="0" color="0" x="2377" y="320" height="56" width="297" html.valueishtml="0"  name=coun_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="년도" border="0" color="0" x="178" y="320" height="56" width="155" html.valueishtml="0"  name=year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="내용" border="0" color="0" x="2683" y="320" height="56" width="2208" html.valueishtml="0"  name=context_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="학번" border="0" color="0" x="1568" y="320" height="56" width="297" html.valueishtml="0"  name=hakbun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="성명" border="0" color="0" x="1874" y="320" height="56" width="293" html.valueishtml="0"  name=hname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=header id=6 alignment="0" tabsequence=32766 border="0" color="0" x="219" y="220" height="68" width="297" format="[general]" html.valueishtml="0"  name=hakbun_1 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=header id=7 alignment="0" tabsequence=32766 border="0" color="0" x="736" y="220" height="68" width="293" format="[general]" html.valueishtml="0"  name=hname_1 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="0" y1="0" x2="4901" y2="0"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=detail alignment="2" expression="cumulativesum(1 for group 1)"border="0" color="0" x="18" y="16" height="68" width="151" format="[GENERAL]" html.valueishtml="0"  name=no visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=26 alignment="0" tabsequence=32766 border="0" color="0" x="887" y="16" height="68" width="672" format="[general]" html.valueishtml="0"  name=gwa_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="0" x="526" y="16" height="68" width="352" format="[general]" html.valueishtml="0"  name=counsel_dt visible="1" editmask.mask="####/##/##" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=27 alignment="2" tabsequence=32766 border="0" color="0" x="2176" y="16" height="68" width="192" format="[general]'학년'" html.valueishtml="0"  name=su_hakyun visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="343" y="16" height="68" width="174" format="[general]" html.valueishtml="0"  name=hakgi_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="2" tabsequence=32766 border="0" color="0" x="2377" y="16" height="68" width="297" format="[general]" html.valueishtml="0"  name=coun_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="178" y="16" height="68" width="155" format="[general]" html.valueishtml="0"  name=year visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=19 alignment="0" tabsequence=32766 border="0" color="0" x="2683" y="16" height="68" width="2208" format="[general]" html.valueishtml="0"  name=context visible="1" height.autosize=yes edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="1568" y="16" height="68" width="297" format="[general]" html.valueishtml="0"  name=hakbun visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="1874" y="16" height="68" width="293" format="[general]" html.valueishtml="0"  name=hname visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=trailer.1 x1="0" y1="0" x2="4901" y2="0"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

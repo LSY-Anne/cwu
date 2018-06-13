@@ -1,0 +1,64 @@
+﻿$PBExportHeader$d_hjk001a_8.srd
+$PBExportComments$[청운대]우편번호 관리
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=88 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(5) update=yes updatewhereclause=yes key=yes name=serial dbname="zipcodes.serial" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=zip_id dbname="zipcodes.zip_id" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=zip_name1 dbname="zipcodes.zip_name1" )
+ column=(type=char(30) update=yes updatewhereclause=yes name=zip_name2 dbname="zipcodes.zip_name2" )
+ column=(type=char(70) update=yes updatewhereclause=yes name=zip_name3 dbname="zipcodes.zip_name3" )
+ column=(type=char(70) update=yes updatewhereclause=yes name=zip_name4 dbname="zipcodes.zip_name4" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="zipcodes.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="zipcodes.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="zipcodes.work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="zipcodes.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="zipcodes.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="zipcodes.job_date" )
+ retrieve="SELECT  	ZIPCODES.SERIAL ,
+			ZIPCODES.ZIP_ID ,
+			ZIPCODES.ZIP_NAME1 ,
+			ZIPCODES.ZIP_NAME2 ,
+			ZIPCODES.ZIP_NAME3 ,
+			ZIPCODES.ZIP_NAME4,
+             WORKER,
+			IPADDR,
+			WORK_DATE,
+			JOB_UID,
+			JOB_ADD,
+			JOB_DATE
+FROM 		HAKSA.ZIPCODES      
+WHERE 	( ZIPCODES.ZIP_ID like :as_id1 || '%' ) 
+and   	( ZIPCODES.ZIP_NAME1 like :as_name1 || '%' ) 
+and   	( ZIPCODES.ZIP_NAME2 like :as_name2 || '%' ) 
+and   	( ZIPCODES.ZIP_NAME3 like '%'||:as_name3||'%')   
+ORDER BY ZIPCODES.SERIAL    ASC  
+
+
+" update="HAKSA.ZIPCODES" updatewhere=1 updatekeyinplace=no arguments=(("as_id1", string),("as_name1", string),("as_name2", string),("as_name3", string)) )
+text(band=header alignment="2" text="일련번호" border="0" color="25058105" x="0" y="4" height="80" width="320" html.valueishtml="0"  name=serial_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="구/군" border="0" color="25058105" x="1033" y="4" height="80" width="407" html.valueishtml="0"  name=zip_name2_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="동/리" border="0" color="25058105" x="1445" y="4" height="80" width="1179" html.valueishtml="0"  name=zip_name3_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="번지" border="0" color="25058105" x="2629" y="4" height="80" width="626" html.valueishtml="0"  name=zip_name4_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="우편번호" border="0" color="25058105" x="325" y="4" height="80" width="384" html.valueishtml="0"  name=zip_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="시/도" border="0" color="25058105" x="713" y="4" height="80" width="315" html.valueishtml="0"  name=zip_name1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+column(band=detail id=1 alignment="2" tabsequence=10 border="0" color="24276589" x="0" y="4" height="76" width="320" format="[general]" html.valueishtml="0"  name=serial  tag="일련번호" visible="1" edit.limit=5 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=40 border="0" color="24276589" x="1033" y="4" height="76" width="407" format="[general]" html.valueishtml="0"  name=zip_name2  tag="주소2" visible="1" edit.limit=30 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=50 border="0" color="24276589" x="1445" y="4" height="76" width="1179" format="[general]" html.valueishtml="0"  name=zip_name3  tag="주소3" visible="1" edit.limit=70 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=60 border="0" color="24276589" x="2629" y="4" height="76" width="626" format="[general]" html.valueishtml="0"  name=zip_name4  tag="주소4" visible="1" edit.limit=140 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=20 border="0" color="24276589" x="325" y="4" height="76" width="384" format="[general]" html.valueishtml="0"  name=zip_id  tag="우편번호" visible="1" editmask.mask="###-###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=30 border="0" color="24276589" x="713" y="4" height="76" width="315" format="[general]" html.valueishtml="0"  name=zip_name1  tag="주소1" visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

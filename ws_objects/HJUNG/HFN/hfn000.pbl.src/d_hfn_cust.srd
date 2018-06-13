@@ -1,0 +1,47 @@
+﻿$PBExportHeader$d_hfn_cust.srd
+$PBExportComments$거래처 조회
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(7) updatewhereclause=yes key=yes name=cust_no dbname="hst001m.cust_no" )
+ column=(type=char(60) updatewhereclause=yes name=cust_name dbname="hst001m.cust_name" )
+ column=(type=char(10) updatewhereclause=yes name=business_no dbname="hst001m.business_no" )
+ column=(type=char(20) updatewhereclause=yes name=president_name dbname="hst001m.president_name" )
+ column=(type=decimal(0) updatewhereclause=yes name=bank_code dbname="hst001m.bank_code" )
+ column=(type=char(20) updatewhereclause=yes name=acct_no dbname="hst001m.acct_no" )
+ column=(type=char(40) updatewhereclause=yes name=depositor dbname="hst001m.depositor" )
+ retrieve="SELECT	A.CUST_NO,
+			A.CUST_NAME,
+			A.BUSINESS_NO,
+			A.PRESIDENT_NAME,
+			A.BANK_CODE,
+			A.ACCT_NO,
+			A.DEPOSITOR
+FROM		STDB.HST001M A
+WHERE		A.CUST_NAME LIKE :AS_CUST_NAME||'%'
+AND		nvl(A.BUSINESS_NO,'') LIKE :as_rsvn_no||'%'
+ORDER	BY	A.CUST_NAME
+
+
+" update="STDB.HST001M" updatewhere=1 updatekeyinplace=no arguments=(("as_cust_name", string),("as_rsvn_no", string)) )
+text(band=header alignment="2" text="거래처번호" border="0" color="0" x="9" y="8" height="56" width="311" html.valueishtml="0"  name=cust_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="거래처명" border="0" color="0" x="329" y="8" height="56" width="914" html.valueishtml="0"  name=cust_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="사업자등록번호" border="0" color="0" x="1253" y="8" height="56" width="443" html.valueishtml="0"  name=business_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="대표자명" border="0" color="0" x="1705" y="8" height="56" width="562" html.valueishtml="0"  name=president_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="68" width="311" format="[general]" html.valueishtml="0"  name=cust_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="329" y="4" height="68" width="914" format="[general]" html.valueishtml="0"  name=cust_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="1253" y="4" height="68" width="443" format="@@@-@@-@@@@@" html.valueishtml="0"  name=business_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1705" y="4" height="68" width="562" format="[general]" html.valueishtml="0"  name=president_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

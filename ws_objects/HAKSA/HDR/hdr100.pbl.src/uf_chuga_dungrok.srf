@@ -1,0 +1,269 @@
+﻿$PBExportHeader$uf_chuga_dungrok.srf
+$PBExportComments$[청운대]정정이 일어날 경우(장학생아닌경우)
+global type uf_chuga_dungrok from function_object
+end type
+
+forward prototypes
+global function integer uf_chuga_dungrok (string as_year, string as_hakgi, string as_hakyun, string as_hakbun, string as_gwa, string as_gubun, string as_bujun)
+end prototypes
+
+global function integer uf_chuga_dungrok (string as_year, string as_hakgi, string as_hakyun, string as_hakbun, string as_gwa, string as_gubun, string as_bujun);//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//재학생이고 장학생이 아니고 수강정정이 생긴 경우
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+string	ls_gwajung, ls_hakgwa, ls_jungong, ls_janghak, ls_dung_gubun
+string	ls_chuga, ls_hwan
+long		ll_iphak_m, ll_dungrok_m , ll_dungrok_sugang, ll_realdungrok
+long		ll_dungrok, ll_janghak, ll_dungrok_before, ll_janghak_before
+long		ll_hakjum, ll_hakjum_before, ll_hakjum_sugang, ll_chasu, ll_ihakjum
+long		ll_bhakjum, ll_iphak, ll_bdr
+//복수전공 및 부전공이 없는 학생 등록금 계산
+if as_gubun = '0' or isnull(as_gubun) or as_gubun = '' then
+	
+	//1.수강학점 가져오기
+	SELECT	SUM(HAKJUM)
+	INTO		:ll_ihakjum
+	FROM		HAKSA.SUGANG_TRANS
+	WHERE		HAKBUN 	= :as_hakbun
+	AND		YEAR		= :as_year
+	AND		HAKGI		= :as_hakgi
+	AND		SUNGJUK_INJUNG	=	'Y'
+	USING SQLCA ;
+	
+	if sqlca.sqlcode = 100 then
+		ll_hakjum = 0		
+	elseif sqlca.sqlcode = -1 then
+		messagebox("오류", as_hakbun + "추가 수강신청학점 계산중 오류발생~r~n" + sqlca.sqlerrtext)
+		return 2
+	end if	
+	
+	//등록금모델 가져오기
+	SELECT	IPHAK,
+				DUNGROK
+	INTO		:ll_iphak,
+				:ll_dungrok
+	FROM		HAKSA.DUNGROK_MODEL
+	WHERE		YEAR			=	:as_year
+	AND		HAKGI			=	:as_hakgi
+	AND		GWA			=	:as_gwa
+	AND		HAKYUN		=	:as_hakyun
+	USING SQLCA ;
+
+	if sqlca.sqlcode <> 0 then
+		messagebox("오류", as_hakbun + "추가 등록금모델 생성중 오류발생~r~n" + sqlca.sqlerrtext)
+		return 2
+	end if
+	
+	ll_hakjum_sugang 	= ll_ihakjum
+	
+//복수전공인 학생 등록금 계산
+elseif as_gubun  = '1' then
+	
+	//1. 수강학점 가져오기
+	SELECT 	SUM(DECODE(ISU_ID, '60', HAKJUM, 0)) BOKSU_HAKJUM,
+				SUM(DECODE(ISU_ID, '60',0, HAKJUM)) IABAN_HAKJUM
+	INTO		:ll_bhakjum,
+				:ll_ihakjum
+	FROM		HAKSA.SUGANG_TRANS
+	WHERE		HAKBUN 	= :as_hakbun
+	AND		YEAR		= :as_year
+	AND		HAKGI		= :as_hakgi
+	USING SQLCA ;
+	
+	if sqlca.sqlcode = 100 then
+		ll_hakjum = 0
+		
+	elseif sqlca.sqlcode = -1 then
+		messagebox("오류", as_hakbun + "추가 복수수강 신청학점 계산중 오류발생~r~n" + sqlca.sqlerrtext)
+		return 2
+	end if
+	
+	//2. 일반등록금 계산(장학금은 바로 적용되지 않고, )
+	SELECT	IPHAK,
+				DUNGROK				
+	INTO		:ll_iphak,
+				:ll_dungrok
+	FROM		HAKSA.DUNGROK_MODEL
+	WHERE		YEAR		= :as_year
+	AND		HAKGI 	= :as_hakgi
+	AND		GWA		= :as_gwa
+	AND		HAKYUN 	= :as_hakyun
+	USING SQLCA ;
+
+	if sqlca.sqlcode <> 0 then
+		messagebox("오류", as_hakbun + "추가 복수전공 일반등록금모델 적용중 오류발생~r~n" + sqlca.sqlerrtext)
+		return 2
+	end if
+	
+	//3. 복수전공 등록금 계산
+	SELECT	DUNGROK	
+	INTO		:ll_bdr
+	FROM		HAKSA.DUNGROK_MODEL
+	WHERE		YEAR		= :as_year
+	AND		HAKGI 	= :as_hakgi
+	AND		GWA		= :as_bujun
+	AND		HAKYUN 	= :as_hakyun
+	USING SQLCA ;
+
+	if sqlca.sqlcode <> 0 then
+		messagebox("오류", as_hakbun + "추가 복수전공 등록금모델 적용중 오류발생~r~n" + sqlca.sqlerrtext)
+		return 2
+	end if
+	
+	ll_hakjum_sugang = ll_bhakjum + ll_ihakjum
+
+//부전공인 학생 등록금 계산	
+elseif as_gubun = '2' then
+	
+	//1. 수강학점 가져오기
+	SELECT 	SUM(DECODE(ISU_ID, '50', HAKJUM, 0)) BUJUN_HAKJUM,
+				SUM(DECODE(ISU_ID, '50', 0, HAKJUM)) IABAN_HAKJUM
+	INTO		:ll_bhakjum,
+				:ll_ihakjum
+	FROM		HAKSA.SUGANG_TRANS
+	WHERE		HAKBUN 	= :as_hakbun
+	AND		YEAR		= :as_year
+	AND		HAKGI		= :as_hakgi
+	USING SQLCA ;
+	
+	if sqlca.sqlcode = 100 then
+		ll_hakjum = 0
+		
+	elseif sqlca.sqlcode = -1 then
+		messagebox("오류", as_hakbun + "추가 부전공수강 신청학점 계산중 오류발생~r~n" + sqlca.sqlerrtext)
+		return 2
+	end if	
+	
+	//2. 일반등록금 계산(장학금은 바로 적용되지 않고, )
+	SELECT	IPHAK,
+				DUNGROK			
+	INTO		:ll_iphak,
+				:ll_dungrok
+	FROM		HAKSA.DUNGROK_MODEL
+	WHERE		YEAR		= :as_year
+	AND		HAKGI 	= :as_hakgi
+	AND		GWA		= :as_gwa
+	AND		HAKYUN 	= :as_hakyun
+	USING SQLCA ;
+
+	if sqlca.sqlcode <> 0 then
+		messagebox("오류", as_hakbun + "추가 부전공 일반등록금모델 적용중 오류발생~r~n" + sqlca.sqlerrtext)
+		return 2
+	end if
+	
+	//3. 부전공 등록금 계산
+	SELECT	DUNGROK	
+	INTO		:ll_bdr
+	FROM		HAKSA.DUNGROK_MODEL
+	WHERE		YEAR		= :as_year
+	AND		HAKGI 	= :as_hakgi
+	AND		GWA		= :as_bujun
+	AND		HAKYUN 	= :as_hakyun
+	USING SQLCA ;
+
+	if sqlca.sqlcode <> 0 then
+		messagebox("오류", as_hakbun + "추가 부전공 등록금모델 적용중 오류발생~r~n" + sqlca.sqlerrtext)
+		return 2
+	end if
+	
+	ll_hakjum_sugang 	= ll_bhakjum + ll_ihakjum
+end if
+
+// 기존 수강신청으로 생성된 등록금 및 장학금
+SELECT	SUM(HAKJUM),
+			SUM(DUNGROK),
+			SUM(D_JANGHAK)
+INTO		:ll_hakjum_before,
+			:ll_dungrok_before,
+			:ll_janghak_before
+FROM		HAKSA.DUNGROK_GWANRI
+WHERE		HAKBUN		=	:as_hakbun
+AND		YEAR			=	:as_year
+AND		HAKGI			=	:as_hakgi
+USING SQLCA ;
+
+ll_hakjum = ll_hakjum_sugang - ll_hakjum_before
+
+if ll_hakjum = 0 then
+	return 1
+	
+elseif ll_hakjum > 0 then
+	ls_hwan 		= 'N'
+	ls_chuga 	= 'Y'
+	ll_realdungrok	= ll_hakjum * ll_dungrok
+		
+elseif ll_hakjum < 0 then
+	ls_hwan 		= 'Y'
+	ls_chuga 	= 'N'	
+	ll_realdungrok	= ll_hakjum * ll_dungrok
+	
+end if
+
+//등록최고차수를 구한다.
+SELECT	nvl(MAX(CHASU),0) + 1
+INTO		:ll_chasu
+FROM		HAKSA.DUNGROK_GWANRI
+WHERE		YEAR		=	:as_year
+AND		HAKGI		=	:as_hakgi
+AND		HAKBUN	=	:as_hakbun	
+USING SQLCA ;
+
+//등록구분 체크
+SELECT	HJMOD_ID
+INTO	:ls_dung_gubun
+FROM	HAKSA.HAKJUKBYENDONG
+WHERE	YEAR		=	:as_year
+AND	HAKGI		=	:as_hakgi
+AND	HAKBUN	=	:as_hakbun	
+AND	HJMOD_SIJUM	=	(	SELECT MAX(HJMOD_SIJUM)
+								FROM	HAKSA.HAKJUKBYENDONG
+								WHERE	YEAR		=	:as_year
+								AND	HAKGI		=	:as_hakgi
+								AND	HAKBUN	=	:as_hakbun
+							)	USING SQLCA ;
+							
+if sqlca.sqlcode = 0 then
+	if ls_dung_gubun = 'C' then
+		ls_dung_gubun = '4'
+		
+	elseif ls_dung_gubun = 'I' then
+		ls_dung_gubun = '5'
+		
+	else
+		ls_dung_gubun = '1'
+		
+	end if
+	
+elseif sqlca.sqlcode = 100 then
+	ls_dung_gubun = '1'
+	
+else 
+	messagebox("확인","등록구분 체크중 오류발생~r~n" + sqlca.sqlerrtext)
+	return 2
+	
+end if
+
+//Table Insert
+INSERT INTO	HAKSA.DUNGROK_GWANRI
+		(	HAKBUN,		YEAR,				HAKGI,			SU_HAKYUN,	CHASU,		
+			HAKJUM,		IPHAK,			DUNGROK,			HAKSENGWHE,	GYOJAE,
+			MEMORIAL,	ALBUM,			DONGCHANGWHE,	D_JANGHAK,	WAN_YN,		
+			DUNG_YN,		BUN_YN,			CHU_YN,			HWAN_YN,		DUNGROK_GUBUN,
+			WORKER,		IPADDR
+		)
+VALUES		
+		(	:as_hakbun,	:as_year,		:as_hakgi,			:as_hakyun,	:ll_chasu,	
+			:ll_hakjum,	0,					:ll_realdungrok,	0,				0,	
+			0,				0,					0,						0,				'N',		
+			'N',			'N',				:ls_chuga,			:ls_hwan,	:ls_dung_gubun,
+			:gs_empcode,		:gs_ip
+		)	
+USING SQLCA ;
+
+if sqlca.sqlcode = 0 then
+	return 0
+else
+	messagebox("오류", as_hakbun + "추가 등록내역 생성중 오류발생~r~n" + sqlca.sqlerrtext)
+	return 2
+end if
+end function
+

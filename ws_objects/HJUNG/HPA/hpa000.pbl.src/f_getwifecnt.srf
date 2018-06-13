@@ -1,0 +1,38 @@
+﻿$PBExportHeader$f_getwifecnt.srf
+$PBExportComments$배우자를 구한다(A:member_no,R:wifecnt)
+global type f_getwifecnt from function_object
+end type
+
+forward prototypes
+global function integer f_getwifecnt (string as_member_no)
+end prototypes
+
+global function integer f_getwifecnt (string as_member_no);// ==========================================================================================
+// 기    능 : 	배우자를 구한다.
+// 작 성 인 : 	안금옥
+// 작성일자 : 	2002.04
+// 함수원형 : 	f_getwifecnt(string as_member_no)	return	integer
+// 인    수 :	as_member_no	-	개인번호
+// 되 돌 림 :	배우자수
+// 주의사항 :
+// 수정사항 :
+// ==========================================================================================
+
+integer	li_cnt = 0
+
+if isnull(as_member_no) or trim(as_member_no) = '' then	return	0
+
+// 배우자수를 구한다.
+select	count(*)
+into		:li_cnt
+from		indb.hin019h
+where		member_no	=	:as_member_no
+and		relation		in (2, 3)	
+and		sudang_yn	=	'1'	;
+
+if li_cnt > 1 then	li_cnt = 1
+
+return	li_cnt
+
+end function
+

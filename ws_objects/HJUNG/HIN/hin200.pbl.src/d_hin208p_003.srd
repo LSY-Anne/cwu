@@ -1,0 +1,110 @@
+﻿$PBExportHeader$d_hin208p_003.srd
+$PBExportComments$인사기록카드_기본사항_[경력]전력
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 2 print.margin.left = 110 print.margin.right = 110 print.margin.top = 300 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=400 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=116 color="536870912" )
+table(column=(type=char(5) update=yes updatewhereclause=yes key=yes name=member_no dbname="hin009h.member_no" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=career_seq dbname="hin009h.career_seq" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=career_opt dbname="hin009h.career_opt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=proces_opt dbname="hin009h.proces_opt" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=from_date dbname="hin009h.from_date" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=to_date dbname="hin009h.to_date" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=career_gbn dbname="hin009h.career_gbn" values="	9/	0" )
+ column=(type=char(80) update=yes updatewhereclause=yes name=career_con dbname="hin009h.career_con" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=place_name dbname="hin009h.place_name" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=depart_name dbname="hin009h.depart_name" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=edepart_name dbname="hin009h.edepart_name" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=jikwi_name dbname="hin009h.jikwi_name" )
+ column=(type=char(40) updatewhereclause=yes name=duty_name dbname="hin009h.duty_name" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=ejikwi_name dbname="hin009h.ejikwi_name" )
+ column=(type=decimal(2) update=yes updatewhereclause=yes name=work_year dbname="hin009h.work_year" )
+ column=(type=decimal(2) update=yes updatewhereclause=yes name=decision_year dbname="hin009h.decision_year" )
+ column=(type=decimal(1) update=yes updatewhereclause=yes name=hwan_rate dbname="hin009h.hwan_rate" )
+ column=(type=decimal(2) update=yes updatewhereclause=yes name=hwan_year dbname="hin009h.hwan_year" )
+ column=(type=decimal(2) update=yes updatewhereclause=yes name=car_year dbname="hin009h.car_year" )
+ column=(type=number updatewhereclause=yes name=com_career_ym dbname="hin009h.com_career_ym" )
+ column=(type=char(4) updatewhereclause=yes name=sal_year dbname="hin009h.sal_year" )
+ column=(type=char(3) update=yes updatewhereclause=yes name=sal_class dbname="hin009h.sal_class" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=sal_date dbname="hin009h.sal_date" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=sal_leftmonth dbname="hin009h.sal_leftmonth" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=sign_opt dbname="hin009h.sign_opt" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hin009h.worker" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hin009h.work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hin009h.ipaddr" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hin009h.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hin009h.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hin009h.job_date" )
+ column=(type=char(4000) updatewhereclause=yes name=com_career_opt dbname="com_career_opt" )
+ column=(type=char(4000) updatewhereclause=yes name=com_proces_opt dbname="com_proces_opt" )
+ retrieve="SELECT	A.MEMBER_NO,
+			A.CAREER_SEQ,
+			A.CAREER_OPT,
+			A.PROCES_OPT,
+			A.FROM_DATE,
+			A.TO_DATE,
+			A.CAREER_GBN,
+			A.CAREER_CON,
+			A.PLACE_NAME,
+			A.GWA_NAME      DEPART_NAME,
+			A.GWA_NAME_ENG  EDEPART_NAME,
+			A.JIKWI_NAME,
+			A.DUTY_NAME,
+			A.EJIKWI_NAME,
+			A.WORK_YEAR,
+			A.DECISION_YEAR,
+			A.HWAN_RATE,
+			A.HWAN_YEAR,
+			A.CAR_YEAR,
+			0	COM_CAREER_YM,
+			A.SAL_YEAR,
+			A.SAL_CLASS,
+			A.SAL_DATE,
+			A.SAL_LEFTMONTH,
+			A.SIGN_OPT,
+			A.WORKER,
+			A.WORK_DATE,
+			A.IPADDR,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE,
+			FU_CODE_NM('COMM','career_opt',A.CAREER_OPT,'K')	COM_CAREER_OPT,
+			FU_CODE_NM('COMM','proces_opt',A.PROCES_OPT,'K')	COM_PROCES_OPT
+FROM		INDB.HIN009H A
+WHERE		A.MEMBER_NO = :as_MemberNo
+AND		A.PROCES_OPT IN ('4','5','9')
+ORDER	BY	A.FROM_DATE,
+			A.TO_DATE,
+			A.PROCES_OPT
+" update="INDB.HIN009H" updatewhere=0 updatekeyinplace=no arguments=(("as_MemberNo", string)) )
+line(band=header x1="9" y1="232" x2="3392" y2="232"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="9" y1="396" x2="3392" y2="396"  name=l_17 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="경력" border="0" color="0" x="23" y="284" height="60" width="302" html.valueishtml="0"  name=career_seq_t visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="재직기간" border="0" color="0" x="398" y="284" height="60" width="718" html.valueishtml="0"  name=from_date_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="비고" border="0" color="0" x="2926" y="284" height="60" width="425" html.valueishtml="0"  name=depart_name_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="343" y1="232" x2="343" y2="396"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="9" y1="232" x2="9" y2="408"  name=l_80 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3392" y1="232" x2="3392" y2="408"  name=l_10 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="직위" border="0" color="0" x="2354" y="284" height="60" width="507" html.valueishtml="0"  name=jikwi_name_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="근무처" border="0" color="0" x="1230" y="284" height="60" width="1033" html.valueishtml="0"  name=career_con_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=detail x1="343" y1="112" x2="3392" y2="112"  name=l_19 visible="1" pen.style="0" pen.width="5~tif(getrow() = last(getrow() for page), 10, 5)" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="786" y="24" height="60" width="329" format="@@@@.@@.@@" html.valueishtml="0"  name=to_date visible="1" edit.limit=8 edit.case=any edit.autoselect=yes edit.nilisnull=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="398" y="24" height="60" width="329" format="@@@@.@@.@@" html.valueishtml="0"  name=from_date visible="1" edit.limit=8 edit.case=any edit.autoselect=yes edit.nilisnull=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="-" border="0" color="0" x="741" y="24" height="60" width="41" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=detail x1="3392" y1="0" x2="3392" y2="124"  name=l_23 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="343" y1="0" x2="343" y2="124"  name=l_22 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=12 alignment="2" tabsequence=32766 border="0" color="0" x="2354" y="24" height="60" width="507" format="[general]" html.valueishtml="0"  name=jikwi_name visible="1" edit.limit=40 edit.case=any edit.autoselect=yes edit.nilisnull=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="1230" y="24" height="60" width="1033" format="[general]" html.valueishtml="0"  name=career_con visible="1" edit.limit=80 edit.case=any edit.autoselect=yes edit.nilisnull=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

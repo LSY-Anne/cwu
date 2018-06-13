@@ -1,0 +1,52 @@
+﻿$PBExportHeader$uf_hakgwa_chk.srf
+global type uf_hakgwa_chk from function_object
+end type
+
+forward prototypes
+global function string uf_hakgwa_chk (string as_year, string as_hakbun, string as_hakyun)
+end prototypes
+
+global function string uf_hakgwa_chk (string as_year, string as_hakbun, string as_hakyun);String ls_hakyun,   ls_afgwa,   ls_chk,   ls_year,   ls_gwa
+Int    li_hakgi,    li_hakyun,  li_year,  li_chk
+
+SELECT gwa
+  INTO :ls_gwa
+  FROM haksa.jaehak_hakjuk
+ WHERE hakbun   = :as_hakbun
+ USING SQLCA ;
+ 
+IF sqlca.sqlnrows = 0 THEN
+	messagebox("알림", as_hakbun + '의 학번이 재학자료에 없으니 확인바랍니다.')
+	return ls_chk
+END IF
+
+ls_chk          = ls_gwa
+li_hakyun       = Integer(as_hakyun)
+
+SELECT nvl(af_gwa, ' '),  nvl(af_year, 0)
+  INTO :ls_afgwa,         :li_year
+  FROM CDDB.KCH003M
+ WHERE gwa      = :ls_gwa
+ USING SQLCA ;
+ 
+IF sqlca.sqlnrows = 0 THEN
+	messagebox("알림", ls_gwa + '학과의 정보가 없으니 확인바랍니다.')
+	return ls_chk
+END IF
+
+IF isnull(ls_afgwa) OR ls_afgwa = ' ' THEN
+	return ls_chk
+END IF
+
+SELECT to_number(:as_year) - :li_year + 1
+  INTO :li_chk
+  FROM dual
+ USING SQLCA ;
+
+IF li_hakyun   <= li_chk  THEN
+	ls_chk       = ls_afgwa
+END IF
+
+return ls_chk
+end function
+

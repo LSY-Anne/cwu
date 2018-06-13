@@ -1,0 +1,28 @@
+﻿$PBExportHeader$d_btnlist.srd
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=0 color="536870912" )
+table(column=(type=char(5) updatewhereclause=yes name=pgmno dbname="pgmno" dbalias="pgmno" )
+ column=(type=char(1000) updatewhereclause=yes name=btnlist dbname="btnlist" )
+ retrieve="select a.pgm_no  as pgmno, a.use_btn  as btnlist
+  from cddb.pf_pgm_role			a
+		 ,cddb.pf_userrole				b
+where a.role_no	  		= b.role_no
+    and b.emp_code  		= :as_empcode
+    and a.pgm_no		in (select pgm_no from cddb.pf_pgm_mst where pgm_id = :as_pgmid )
+" arguments=(("as_empcode", string),("as_pgmid", string)) )
+column(band=detail id=1 alignment="0" tabsequence=0 border="0" color="0" x="9" y="0" height="76" width="151" html.valueishtml="0"  name=pf_pgm_role_pgmno visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Pf Pgm Role Pgmno" border="0" color="0" x="5" y="4" height="76" width="155" html.valueishtml="0"  name=pf_pgm_role_pgmno_t visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

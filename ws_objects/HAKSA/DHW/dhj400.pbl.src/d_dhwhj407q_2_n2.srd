@@ -1,0 +1,39 @@
+﻿$PBExportHeader$d_dhwhj407q_2_n2.srd
+$PBExportComments$[대학원학적] 성적증명서(영문)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=148 color="536870912" )
+table(column=(type=number updatewhereclause=yes name=injung_hakjum dbname="injung_hakjum" )
+ column=(type=number updatewhereclause=yes name=hakjum dbname="hakjum" )
+ column=(type=number updatewhereclause=yes name=pyen_avg dbname="pyen_avg" )
+ retrieve="SELECT	NVL(A.INJUNG_HAKJUM, 0)	AS	INJUNG_HAKJUM,
+			SUM(B.HAKJUM)	AS	HAKJUM,
+			ROUND(SUM(B.PYENGJUM) / SUM(B.HAKJUM), 2)	AS	PYEN_AVG
+FROM		HAKSA.D_HAKJUK		A,
+			HAKSA.D_SUGANG		B
+WHERE		A.HAKBUN	=	B.HAKBUN
+AND		B.HAKBUN	=	:as_hakbun
+AND		B.SUNGJUK_INJUNG	=	'1'
+GROUP BY A.INJUNG_HAKJUM
+
+
+" arguments=(("as_hakbun", string)) )
+text(band=detail alignment="1" text="/4.50" border="0" color="0" x="160" y="80" height="60" width="160" html.valueishtml="0"  name=t_1 visible="1"  font.face="바탕체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="80" height="60" width="137" format="0.00" html.valueishtml="0"  name=pyen_avg visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="바탕체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression=" injung_hakjum  +  hakjum "border="0" color="0" x="0" y="4" height="64" width="329" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="바탕체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="0" y="220" height="64" width="329" format="[general]" html.valueishtml="0"  name=hakjum visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="바탕체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="448" y="224" height="60" width="329" format="[general]" html.valueishtml="0"  name=injung_hakjum visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

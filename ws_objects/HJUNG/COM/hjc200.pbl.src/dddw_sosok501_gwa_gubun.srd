@@ -1,0 +1,34 @@
+﻿$PBExportHeader$dddw_sosok501_gwa_gubun.srd
+$PBExportComments$과구분에 의한 조직코드와 명(gwa_gubun(S) --> 9:부서 1:학과)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=char(4) updatewhereclause=yes name=dept_code dbname="dept_code" )
+ column=(type=char(50) updatewhereclause=yes name=dept_name dbname="dept_name" )
+ retrieve="select	rtrim(gwa) 		as	dept_code,
+			rtrim(fname)	as	dept_name
+from		cddb.kch003m
+where		use_gubun	=	'Y'
+and		gwa_gubun	like	:as_gwa_gubun || '%'
+order by	decode(gwa_gubun,'9',1,2) asc,
+			order_seq asc
+	
+" arguments=(("as_gwa_gubun", string)) )
+text(band=header alignment="0" text="Dept Code" border="0" color="0" x="9" y="4" height="56" width="233" html.valueishtml="0"  name=t_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="Dept Name" border="0" color="0" x="251" y="4" height="56" width="937" html.valueishtml="0"  name=t_4 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="233" format="[general]" html.valueishtml="0"  name=dept_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="251" y="4" height="72" width="937" format="[general]" html.valueishtml="0"  name=dept_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

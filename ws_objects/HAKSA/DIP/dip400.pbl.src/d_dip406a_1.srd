@@ -1,0 +1,76 @@
+﻿$PBExportHeader$d_dip406a_1.srd
+$PBExportComments$[대학원입시] 등록금 납부관리(납입금 조회)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=68 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=340 color="536870912" )
+table(column=(type=number updatewhereclause=yes name=iphak dbname="iphak" )
+ column=(type=number updatewhereclause=yes name=dungrok dbname="dungrok" )
+ column=(type=number updatewhereclause=yes name=wonwoo dbname="wonwoo" )
+ column=(type=number updatewhereclause=yes name=i_janghak dbname="i_janghak" )
+ column=(type=number updatewhereclause=yes name=d_janghak dbname="d_janghak" )
+ column=(type=number updatewhereclause=yes name=iphak_y dbname="iphak_y" )
+ column=(type=number updatewhereclause=yes name=dungrok_y dbname="dungrok_y" )
+ column=(type=number updatewhereclause=yes name=iphak_n dbname="iphak_n" )
+ column=(type=number updatewhereclause=yes name=dungrok_n dbname="dungrok_n" )
+ column=(type=number updatewhereclause=yes name=wonwoo_n dbname="wonwoo_n" )
+ column=(type=number updatewhereclause=yes name=sil_i dbname="sil_i" )
+ column=(type=number updatewhereclause=yes name=sil_d dbname="sil_d" )
+ column=(type=number updatewhereclause=yes name=sil_w dbname="sil_w" )
+ retrieve="SELECT	SUM(IPHAK)		AS	IPHAK,   
+			SUM(DUNGROK)	AS	DUNGROK,	   
+			SUM(WONWOO)		AS	WONWOO,   
+			SUM(I_JANGHAK)	AS	I_JANGHAK,   
+			SUM(D_JANGHAK)	AS	D_JANGHAK,
+			SUM(IPHAK) - NVL(SUM(I_JANGHAK), 0)		AS	IPHAK_Y,
+			SUM(DUNGROK) - NVL(SUM(D_JANGHAK), 0)	AS	DUNGROK_Y,
+			NVL(SUM(IPHAK_N), 0)		AS IPHAK_N,
+			NVL(SUM(DUNGROK_N), 0)	AS	DUNGROK_N,   
+			NVL(SUM(WONWOO_N), 0)	AS	WONWOO_N,
+			SUM(IPHAK) - NVL(SUM(I_JANGHAK), 0) - NVL(SUM(IPHAK_N), 0)	AS	SIL_I,
+			SUM(DUNGROK) - NVL(SUM(D_JANGHAK), 0) - NVL(SUM(DUNGROK_N), 0)	AS	SIL_D,
+			SUM(WONWOO) - NVL(SUM(WONWOO_N), 0) AS SIL_W
+FROM	DIPSI.DI_DUNGROK  
+WHERE	YEAR		= :as_year
+AND	HAKGI		= :as_hakgi
+AND	SUHUM_NO	= :as_suhum
+GROUP BY SUHUM_NO
+" arguments=(("as_year", string),("as_hakgi", string),("as_suhum", string)) )
+text(band=header alignment="2" text="등록금 납입 내역" border="6" color="16777215" x="9" y="4" height="56" width="2089" html.valueishtml="0"  name=t_6 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="8421376" )
+text(band=detail alignment="2" text="입학감면" border="0" color="8388608" x="1431" y="0" height="56" width="329" html.valueishtml="0"  name=i_janghak_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=detail alignment="2" text="등록감면" border="0" color="8388608" x="1765" y="0" height="56" width="329" html.valueishtml="0"  name=d_janghak_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=detail alignment="2" text="구분" border="0" color="8388608" x="9" y="0" height="56" width="416" html.valueishtml="0"  name=t_4 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=detail alignment="2" text="입학금" border="0" color="8388608" x="430" y="0" height="56" width="329" html.valueishtml="0"  name=iphak_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=detail alignment="2" text="등록금" border="0" color="8388608" x="763" y="0" height="56" width="329" html.valueishtml="0"  name=dungrok_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=detail alignment="2" text="원우회비" border="0" color="8388608" x="1097" y="0" height="56" width="329" html.valueishtml="0"  name=wonwoo_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="1097" y="68" height="60" width="329" format="#,##0" html.valueishtml="0"  name=wonwoo visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="1431" y="68" height="60" width="329" format="#,##" html.valueishtml="0"  name=i_janghak visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12639424" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="1765" y="68" height="60" width="329" format="#,##" html.valueishtml="0"  name=d_janghak visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12639424" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="430" y="68" height="60" width="329" format="#,##0" html.valueishtml="0"  name=iphak visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="763" y="68" height="60" width="329" format="#,##0" html.valueishtml="0"  name=dungrok visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="430" y="136" height="60" width="329" format="#,##0" html.valueishtml="0"  name=iphak_y visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="763" y="136" height="60" width="329" format="#,##0" html.valueishtml="0"  name=dungrok_y visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="1097" y="136" height="60" width="329" format="#,##0" html.valueishtml="0"  name=wonwoo_1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="430" y="204" height="60" width="329" format="#,##0" html.valueishtml="0"  name=iphak_n visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=11 alignment="1" tabsequence=32766 border="0" color="128" x="430" y="272" height="60" width="329" format="#,##0" html.valueishtml="0"  name=sil_i visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="763" y="204" height="60" width="329" format="#,##0" html.valueishtml="0"  name=dungrok_n visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="0" x="1097" y="204" height="60" width="329" format="#,##0" html.valueishtml="0"  name=wonwoo_n visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=12 alignment="1" tabsequence=32766 border="0" color="128" x="763" y="272" height="60" width="329" format="#,##0" html.valueishtml="0"  name=sil_d visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=13 alignment="1" tabsequence=32766 border="0" color="128" x="1097" y="272" height="60" width="329" format="#,##0" html.valueishtml="0"  name=sil_w visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="총액" border="0" color="8388608" x="9" y="68" height="56" width="416" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=detail alignment="2" text="납입할 금액" border="0" color="8388608" x="9" y="136" height="56" width="416" html.valueishtml="0"  name=t_5 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=detail alignment="2" text="현재 납입금" border="0" color="8388608" x="9" y="204" height="56" width="416" html.valueishtml="0"  name=t_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=detail alignment="2" text="잔액" border="0" color="8388608" x="9" y="272" height="56" width="416" html.valueishtml="0"  name=t_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

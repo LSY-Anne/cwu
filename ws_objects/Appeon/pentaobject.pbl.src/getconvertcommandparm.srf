@@ -1,0 +1,23 @@
+﻿$PBExportHeader$getconvertcommandparm.srf
+global type getconvertcommandparm from function_object
+end type
+
+forward prototypes
+global function vector getconvertcommandparm (string as_param)
+end prototypes
+
+global function vector getconvertcommandparm (string as_param);Vector		vct
+String			ls_key[2]
+
+vct = Create Vector
+StringTokenizer  strtoken, subtoken
+strtoken.setTokenizer(as_param, '&')
+
+do while strtoken.hasmoretokens()
+	subtoken.setTokenizer(strtoken.nexttoken(), '=')
+	vct.setProperty(subtoken.gettoken(1), subtoken.gettoken(2))
+loop
+
+return vct
+end function
+

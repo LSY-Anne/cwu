@@ -1,0 +1,28 @@
+﻿$PBExportHeader$f_nextyymm.srf
+$PBExportComments$다음달의정보리턴.
+global type f_nextyymm from function_object
+end type
+
+forward prototypes
+global function string f_nextyymm (string as_yymm)
+end prototypes
+
+global function string f_nextyymm (string as_yymm);//다음달을 조회한다
+int  i_yy,i_mm
+string s_yy,s_mm
+
+s_yy  = left(as_yymm,4)
+s_mm  = right(as_yymm,2)
+
+i_mm  = Integer(s_mm)
+i_yy  = INteger(s_yy)
+i_mm += 1
+IF i_mm > 12 then
+	i_mm  = 1
+	i_yy += 1
+end IF
+s_yy  = string(i_yy,'0000')
+s_mm  = string(i_mm,'00')
+return s_yy + s_mm
+end function
+

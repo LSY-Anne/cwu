@@ -1,0 +1,124 @@
+﻿$PBExportHeader$d_hin205b_1.srd
+$PBExportComments$경력자료생성_등록용
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=76 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(10) update=yes updatewhereclause=yes key=yes name=member_no dbname="hin009h.member_no" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=career_seq dbname="hin009h.career_seq" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=career_opt dbname="hin009h.career_opt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=proces_opt dbname="hin009h.proces_opt" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=from_date dbname="hin009h.from_date" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=to_date dbname="hin009h.to_date" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=career_gbn dbname="hin009h.career_gbn" )
+ column=(type=char(80) update=yes updatewhereclause=yes name=career_con dbname="hin009h.career_con" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=place_name dbname="hin009h.place_name" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=gwa_name dbname="hin009h.gwa_name" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=gwa_name_eng dbname="hin009h.gwa_name_eng" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=jikwi_name dbname="hin009h.jikwi_name" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=ejikwi_name dbname="hin009h.ejikwi_name" )
+ column=(type=decimal(2) update=yes updatewhereclause=yes name=work_year dbname="hin009h.work_year" )
+ column=(type=decimal(2) update=yes updatewhereclause=yes name=decision_year dbname="hin009h.decision_year" )
+ column=(type=decimal(1) update=yes updatewhereclause=yes name=hwan_rate dbname="hin009h.hwan_rate" )
+ column=(type=decimal(2) update=yes updatewhereclause=yes name=hwan_year dbname="hin009h.hwan_year" )
+ column=(type=decimal(2) update=yes updatewhereclause=yes name=car_year dbname="hin009h.car_year" )
+ column=(type=char(3) update=yes updatewhereclause=yes name=sal_class dbname="hin009h.sal_class" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=sal_leftmonth dbname="hin009h.sal_leftmonth" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=sign_opt dbname="hin009h.sign_opt" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=worker dbname="hin009h.worker" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hin009h.work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hin009h.ipaddr" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=job_uid dbname="hin009h.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hin009h.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hin009h.job_date" )
+ column=(type=char(20) updatewhereclause=yes name=kname dbname="hin009h.kname" )
+ column=(type=char(4000) updatewhereclause=yes name=com_career_opt_nm dbname="com_career_opt_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_proces_opt_nm dbname="com_proces_opt_nm" )
+ column=(type=char(4) updatewhereclause=yes name=com_career_gbn_nm dbname="com_career_gbn_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_sign_opt_nm dbname="com_sign_opt_nm" )
+ retrieve="SELECT	A.MEMBER_NO,
+			A.CAREER_SEQ,
+			A.CAREER_OPT,
+			A.PROCES_OPT,
+			A.FROM_DATE,
+			A.TO_DATE,
+
+			A.CAREER_GBN,
+			A.CAREER_CON,
+			A.PLACE_NAME,
+			A.GWA_NAME,
+			A.GWA_NAME_ENG,
+			A.JIKWI_NAME,
+			A.EJIKWI_NAME,
+			A.WORK_YEAR,
+			A.DECISION_YEAR,
+			A.HWAN_RATE,
+			A.HWAN_YEAR,
+			A.CAR_YEAR,
+			A.SAL_CLASS,
+			A.SAL_LEFTMONTH,
+			A.SIGN_OPT,
+			A.WORKER,
+			A.WORK_DATE,
+			A.IPADDR,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE,
+			B.NAME			KNAME,
+			FU_CODE_NM('HAENG','CAREER_OPT',A.CAREER_OPT,'K')	COM_CAREER_OPT_NM,
+			FU_CODE_NM('HAENG','PROCES_OPT',A.PROCES_OPT,'K')	COM_PROCES_OPT_NM,
+			DECODE(A.CAREER_GBN,9,'인정','')							COM_CAREER_GBN_NM,
+			FU_CODE_NM('COMM','SIGN_OPT',A.SIGN_OPT,'K')			COM_SIGN_OPT_NM
+FROM		INDB.HIN009H A,
+			INDB.HIN001M B
+WHERE		A.MEMBER_NO  = B.MEMBER_NO
+AND		B.NAME       LIKE :as_KName||'%'
+AND		B.DUTY_CODE  BETWEEN DECODE(:as_JikjongCode,'1','000','2','400','000') 
+							 AND     DECODE(:as_JikjongCode,'1','399','2','999','999')
+AND		A.PROCES_OPT IN (1,2)
+ORDER	BY	B.NAME,
+			A.PROCES_OPT,
+			A.FROM_DATE" update="INDB.HIN009H" updatewhere=1 updatekeyinplace=no arguments=(("as_JikjongCode", string),("as_KName", string)) )
+text(band=header alignment="2" text="개인번호" border="0" color="0" x="9" y="8" height="56" width="279" html.valueishtml="0"  name=member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="성명" border="0" color="0" x="297" y="8" height="56" width="265" html.valueishtml="0"  name=kname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="경력순번" border="0" color="0" x="571" y="8" height="56" width="256" html.valueishtml="0"  name=career_seq_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="처리구분" border="0" color="0" x="837" y="8" height="56" width="338" html.valueishtml="0"  name=com_proces_opt_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="시작일" border="0" color="0" x="1184" y="8" height="56" width="347" html.valueishtml="0"  name=from_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="종료일" border="0" color="0" x="1541" y="8" height="56" width="352" html.valueishtml="0"  name=to_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="경력구분" border="0" color="0" x="1902" y="8" height="56" width="558" html.valueishtml="0"  name=com_career_opt_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="경력내용" border="0" color="0" x="2469" y="8" height="56" width="631" html.valueishtml="0"  name=career_con_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="경력년월" border="0" color="0" x="3109" y="8" height="56" width="279" html.valueishtml="0"  name=work_year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="인정년월" border="0" color="0" x="3397" y="8" height="56" width="279" html.valueishtml="0"  name=decision_year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="환산율" border="0" color="0" x="3685" y="8" height="56" width="219" html.valueishtml="0"  name=hwan_rate_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="환산년월" border="0" color="0" x="3913" y="8" height="56" width="274" html.valueishtml="0"  name=hwan_year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="경력누계" border="0" color="0" x="4197" y="8" height="56" width="256" html.valueishtml="0"  name=car_year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="결재구분" border="0" color="0" x="4462" y="8" height="56" width="370" html.valueishtml="0"  name=com_sign_opt_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="근속구분" border="0" color="0" x="4841" y="8" height="56" width="288" html.valueishtml="0"  name=com_career_gbn_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="279" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=28 alignment="2" tabsequence=32766 border="0" color="0" x="297" y="4" height="72" width="265" format="[general]" html.valueishtml="0"  name=kname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="571" y="4" height="72" width="256" format="[general]" html.valueishtml="0"  name=career_seq visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="2469" y="4" height="72" width="631" format="[general]" html.valueishtml="0"  name=career_con visible="1" edit.limit=80 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=29 alignment="0" tabsequence=32766 border="0" color="0" x="1902" y="4" height="72" width="558" format="[general]" html.valueishtml="0"  name=com_career_opt_nm visible="1" edit.limit=4000 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=30 alignment="0" tabsequence=32766 border="0" color="0" x="837" y="4" height="72" width="338" format="[general]" html.valueishtml="0"  name=com_proces_opt_nm visible="1" edit.limit=4000 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=31 alignment="2" tabsequence=32766 border="0" color="0" x="4841" y="4" height="72" width="288" format="[general]" html.valueishtml="0"  name=com_career_gbn_nm visible="1" edit.limit=4000 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=32 alignment="2" tabsequence=32766 border="0" color="0" x="4462" y="4" height="72" width="370" format="[general]" html.valueishtml="0"  name=com_sign_opt_nm visible="1" edit.limit=4000 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="1184" y="4" height="72" width="347" format="@@@@/@@/@@" html.valueishtml="0"  name=from_date visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="1541" y="4" height="72" width="352" format="@@@@/@@/@@" html.valueishtml="0"  name=to_date visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=16 alignment="1" tabsequence=32766 border="0" color="0" x="3685" y="4" height="72" width="219" format="##0.0" html.valueishtml="0"  name=hwan_rate visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="1" tabsequence=32766 border="0" color="0" x="3109" y="4" height="72" width="279" format="##0.00" html.valueishtml="0"  name=work_year visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="1" tabsequence=32766 border="0" color="0" x="3397" y="4" height="72" width="279" format="##0.00" html.valueishtml="0"  name=decision_year visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=17 alignment="1" tabsequence=32766 border="0" color="0" x="3913" y="4" height="72" width="274" format="##0.00" html.valueishtml="0"  name=hwan_year visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=18 alignment="1" tabsequence=32766 border="0" color="0" x="4197" y="4" height="72" width="256" format="##0.00" html.valueishtml="0"  name=car_year visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+
+sparse(names="member_no	kname	com_proces_opt_nm")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

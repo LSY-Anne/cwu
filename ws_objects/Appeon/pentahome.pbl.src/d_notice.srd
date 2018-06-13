@@ -1,0 +1,56 @@
+﻿$PBExportHeader$d_notice.srd
+$PBExportComments$전산알림정보
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(5) updatewhereclause=yes name=req_member_no dbname="pf_notice.req_member_no" )
+ column=(type=char(40) updatewhereclause=yes name=req_member_nm dbname="req_member_nm" )
+ column=(type=char(4) updatewhereclause=yes name=req_gwa dbname="pf_notice.req_gwa" )
+ column=(type=char(8) updatewhereclause=yes key=yes name=req_dt dbname="pf_notice.req_dt" )
+ column=(type=decimal(0) updatewhereclause=yes key=yes name=req_seq dbname="pf_notice.req_seq" )
+ column=(type=char(20) updatewhereclause=yes name=area_gb dbname="pf_notice.area_gb" )
+ column=(type=char(5) updatewhereclause=yes name=process_member_no dbname="pf_notice.process_member_no" )
+ column=(type=char(40) updatewhereclause=yes name=process_member_nm dbname="process_member_nm" )
+ column=(type=char(8) updatewhereclause=yes name=process_dt dbname="pf_notice.process_dt" )
+ column=(type=char(1000) updatewhereclause=yes name=req_memo dbname="pf_notice.req_memo" )
+ column=(type=char(1000) updatewhereclause=yes name=process_memo dbname="pf_notice.process_memo" )
+ retrieve="SELECT 		A.REQ_MEMBER_NO,
+				(SELECT NAME  FROM INDB.HIN001M WHERE MEMBER_NO = A.REQ_MEMBER_NO) AS REQ_MEMBER_NM,
+				A.REQ_GWA,
+				A.REQ_DT,
+				A.REQ_SEQ,
+				A.AREA_GB,
+				A.PROCESS_MEMBER_NO,
+				(SELECT NAME  FROM INDB.HIN001M WHERE MEMBER_NO = A.PROCESS_MEMBER_NO) AS PROCESS_MEMBER_NM,
+				A.PROCESS_DT,
+				A.REQ_MEMO,
+				A.PROCESS_MEMO
+FROM 		CDDB.PF_NOTICE A
+WHERE 		ROWNUM < 5
+ORDER BY 	A.REQ_DT DESC,
+				A.REQ_SEQ DESC
+" update="CDDB.PF_NOTICE" updatewhere=0 updatekeyinplace=no )
+text(band=header alignment="2" text="요청자" border="0" color="0" x="9" y="8" height="56" width="293" html.valueishtml="0"  name=req_member_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="요청일자" border="0" color="0" x="311" y="8" height="56" width="325" html.valueishtml="0"  name=req_dt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="업무구분" border="0" color="0" x="645" y="8" height="56" width="347" html.valueishtml="0"  name=area_gb_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="처리자" border="0" color="0" x="2944" y="8" height="56" width="288" html.valueishtml="0"  name=process_member_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="요청내역" border="0" color="0" x="1001" y="8" height="56" width="1934" html.valueishtml="0"  name=req_memo_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="76" width="293" format="[general]" html.valueishtml="0"  name=req_member_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="315" y="4" height="76" width="320" format="[general]" html.valueishtml="0"  name=req_dt visible="1" editmask.mask="####.##.##" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="645" y="4" height="76" width="347" format="[general]" html.valueishtml="0"  name=area_gb visible="1" dddw.name=d_dddw_code dddw.displaycolumn=cd_nm dddw.datacolumn=cd dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.autoretrieve=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="2944" y="4" height="76" width="288" format="[general]" html.valueishtml="0"  name=process_member_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="1001" y="4" height="76" width="1934" format="[general]" html.valueishtml="0"  name=req_memo visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,65 @@
+﻿$PBExportHeader$d_hsu708p.srd
+$PBExportComments$[청운대]교수별 수업평가 결과_건의사항
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=824 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=256 color="536870912" height.autosize=yes )
+table(column=(type=char(5) updatewhereclause=yes name=evaluate_proposal_member_no dbname="evaluate_proposal.member_no" )
+ column=(type=char(100) updatewhereclause=yes name=gwamok_code_gwamok_hname dbname="evaluate_proposal.gwamok_hname" )
+ column=(type=char(50) updatewhereclause=yes name=kch003m_fname dbname="evaluate_proposal.fname" )
+ column=(type=char(4) updatewhereclause=yes name=kch003m_gwa dbname="evaluate_proposal.gwa" )
+ column=(type=char(7) updatewhereclause=yes name=evaluate_proposal_gwamok_id dbname="evaluate_proposal.gwamok_id" )
+ column=(type=decimal(0) updatewhereclause=yes name=evaluate_proposal_gwamok_seq dbname="evaluate_proposal.gwamok_seq" )
+ column=(type=char(400) updatewhereclause=yes name=evaluate_proposal_proposal dbname="proposal" )
+ retrieve="SELECT 	DISTINCT
+			A.MEMBER_NO,   
+			B.GWAMOK_HNAME,
+			D.FNAME,
+			D.GWA,
+			A.GWAMOK_ID,   
+			A.GWAMOK_SEQ,
+			REPLACE(A.PROPOSAL,chr(13)||chr(10)) proposal  
+FROM 		HAKSA.EVALUATE_PROPOSAL		A,   
+			HAKSA.GWAMOK_CODE	B,
+			HAKSA.PROF_SYM		C,
+			CDDB.KCH003M 		D		
+WHERE 	A.GWAMOK_ID		= 	B.GWAMOK_ID 
+and  		A.GWAMOK_SEQ	=	B.GWAMOK_SEQ 
+and  		A.MEMBER_NO		=	C.MEMBER_NO 
+AND		C.GWA				=	D.GWA
+AND		A.YEAR			= 	:as_year 
+AND		A.HAKGI			= 	:as_hakgi 
+AND		A.MEMBER_NO like :as_member_no 
+AND		REPLACE(A.PROPOSAL, ' ', null) IS NOT NULL
+" arguments=(("as_year", string),("as_hakgi", string),("as_member_no", string))  sort="kch003m_gwa A evaluate_proposal_member_no A evaluate_proposal_gwamok_id A evaluate_proposal_gwamok_seq A " )
+group(level=1 header.height=0 trailer.height=0 by=("evaluate_proposal_gwamok_id" ) newpage=yes header.color="536870912" trailer.color="536870912" )
+compute(band=header alignment="2" expression=" as_year + '년도 ' +  as_hakgi + '학기 교수별 강의평가 설문결과'"border="1" color="0" x="379" y="168" height="108" width="2651" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-18" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="교수명 :" border="0" color="0" x="155" y="556" height="60" width="302" html.valueishtml="0"  name=member_no_t visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="119" y1="696" x2="3273" y2="696"  name=l_5 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="본 강좌를 수강함으로써 유익했던 점과 건의하고 싶은 사항을 자유롭게 기재하여 주십시오" border="0" color="0" x="165" y="736" height="60" width="2990" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="3273" y1="696" x2="3273" y2="896"  name=l_7 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="119" y1="820" x2="3273" y2="820"  name=l_6 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="119" y1="696" x2="119" y2="896"  name=l_8 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="소속학과 :" border="0" color="0" x="1970" y="620" height="60" width="494" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=3 alignment="0" tabsequence=32766 border="0" color="0" x="2469" y="620" height="60" width="791" format="[general]" html.valueishtml="0"  name=kch003m_fname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=header id=1 alignment="0" tabsequence=32766 border="0" color="0" x="466" y="552" height="60" width="489" format="[general]" html.valueishtml="0"  name=evaluate_proposal_member_no visible="1" dddw.name=d_dddw_prof dddw.displaycolumn=name dddw.datacolumn=member_no dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="과목명 :" border="0" color="0" x="155" y="620" height="60" width="302" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=2 alignment="0" tabsequence=32766 border="0" color="0" x="466" y="620" height="60" width="1408" format="[general]" html.valueishtml="0"  name=gwamok_code_gwamok_hname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="160" y="24" height="208" width="3072" format="[general]" html.valueishtml="0"  name=evaluate_proposal_proposal visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=detail x1="119" y1="252" x2="3273" y2="252"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="119" y1="0" x2="3273" y2="0"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3273" y1="0" x2="3273" y2="256"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="119" y1="0" x2="119" y2="256"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

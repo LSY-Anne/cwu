@@ -1,0 +1,107 @@
+﻿$PBExportHeader$d_hfn301q_1.srd
+$PBExportComments$결의서전표 Check
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=76 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=decimal(0) updatewhereclause=yes name=slip_class dbname="slip_class" values="수입	1/지출	2/" )
+ column=(type=char(8) updatewhereclause=yes name=resol_date dbname="resol_date" )
+ column=(type=number updatewhereclause=yes name=resol_no dbname="resol_no" )
+ column=(type=number updatewhereclause=yes name=resol_seq dbname="resol_seq" )
+ column=(type=char(6) updatewhereclause=yes name=com_resol_acct_code dbname="com_resol_acct_code" )
+ column=(type=char(30) updatewhereclause=yes name=com_resol_acct_name dbname="com_resol_acct_name" )
+ column=(type=decimal(0) updatewhereclause=yes name=resol_amt dbname="resol_amt" )
+ column=(type=char(8) updatewhereclause=yes name=slip_date dbname="slip_date" )
+ column=(type=number updatewhereclause=yes name=slip_no dbname="slip_no" )
+ column=(type=number updatewhereclause=yes name=slip_seq dbname="slip_seq" )
+ column=(type=char(1) updatewhereclause=yes name=drcr_class dbname="drcr_class" values="차변	D/대변	C/" )
+ column=(type=char(6) updatewhereclause=yes name=com_slip_acct_code dbname="com_slip_acct_code" )
+ column=(type=char(30) updatewhereclause=yes name=com_slip_acct_name dbname="com_slip_acct_name" )
+ column=(type=decimal(0) updatewhereclause=yes name=slip_amt dbname="slip_amt" )
+ retrieve="SELECT	AA.SLIP_CLASS,
+			AA.RESOL_DATE,
+			AA.RESOL_NO,
+			AA.RESOL_SEQ,
+			AA.ACCT_CODE	COM_RESOL_ACCT_CODE,
+			AA.COM_RESOL_ACCT_NAME,
+			AA.RESOL_AMT,
+			BB.SLIP_DATE,
+			BB.SLIP_NO,
+			BB.SLIP_SEQ,
+			BB.DRCR_CLASS,
+			BB.ACCT_CODE	COM_SLIP_ACCT_CODE,
+			BB.COM_SLIP_ACCT_NAME,
+			BB.SLIP_AMT
+FROM		(	SELECT	B.SLIP_CLASS,
+							A.RESOL_DATE,
+							A.RESOL_NO,
+							A.RESOL_SEQ,
+							A.ACCT_CODE,
+							DECODE(B.SLIP_CLASS,1,C.ACCT_INAME,2,C.ACCT_ONAME,C.ACCT_NAME)	COM_RESOL_ACCT_NAME,
+							A.RESOL_AMT
+				FROM		FNDB.HFN102M A, FNDB.HFN101M B, ACDB.HAC001M C
+				WHERE		A.ACCT_CLASS = B.ACCT_CLASS
+				AND		A.RESOL_DATE = B.RESOL_DATE
+				AND		A.RESOL_NO   = B.RESOL_NO
+				AND		A.ACCT_CODE  = C.ACCT_CODE (+)
+				AND		A.ACCT_CLASS = :AI_ACCT_CLASS
+				AND		DECODE(:AS_SLIP_CLASS,'0','0',B.SLIP_CLASS) = :AS_SLIP_CLASS
+				AND		B.RESOL_GWA  = :AS_RESOL_GWA
+				AND		A.RESOL_DATE BETWEEN :AS_FROM_DATE AND :AS_TO_DATE	)	AA,
+			(	SELECT	B.RESOL_DATE,
+							B.RESOL_NO,
+							A.RESOL_SEQ,
+							A.SLIP_DATE,
+							A.SLIP_NO,
+							A.SLIP_SEQ,
+							A.DRCR_CLASS,
+							A.ACCT_CODE,
+							DECODE(B.SLIP_CLASS,1,C.ACCT_INAME,2,C.ACCT_ONAME,C.ACCT_NAME)	COM_SLIP_ACCT_NAME,
+							A.SLIP_AMT
+				FROM		FNDB.HFN202M A, FNDB.HFN201M B, ACDB.HAC001M C
+				WHERE		A.ACCT_CLASS = B.ACCT_CLASS
+				AND		A.SLIP_DATE  = B.SLIP_DATE
+				AND		A.SLIP_NO    = B.SLIP_NO
+				AND		A.ACCT_CODE  = C.ACCT_CODE (+)
+				AND		A.ACCT_CLASS = :AI_ACCT_CLASS
+				AND		DECODE(:AS_SLIP_CLASS,'0','0',B.SLIP_CLASS) = :AS_SLIP_CLASS
+				AND		B.SLIP_GWA   = :AS_RESOL_GWA
+				AND		B.RESOL_DATE BETWEEN :AS_FROM_DATE AND :AS_TO_DATE	)	BB
+WHERE		BB.RESOL_DATE = AA.RESOL_DATE (+)
+AND		BB.RESOL_NO   = AA.RESOL_NO (+)
+AND		BB.RESOL_SEQ  = AA.RESOL_SEQ (+)
+ORDER BY	BB.SLIP_DATE, BB.SLIP_NO, BB.SLIP_SEQ
+" arguments=(("ai_acct_class", number),("as_resol_gwa", string),("as_slip_class", string),("as_from_date", string),("as_to_date", string)) )
+text(band=header alignment="2" text="전표금액" border="0" color="0" x="3749" y="12" height="56" width="480" html.valueishtml="0"  name=slip_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="결의서번호" border="0" color="0" x="352" y="12" height="56" width="439" html.valueishtml="0"  name=com_resol_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="결의서계정명" border="0" color="0" x="1143" y="12" height="56" width="590" html.valueishtml="0"  name=com_resol_acct_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="결의금액" border="0" color="0" x="1751" y="12" height="56" width="375" html.valueishtml="0"  name=resol_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="전표번호" border="0" color="0" x="2149" y="12" height="56" width="439" html.valueishtml="0"  name=com_slip_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="전표계정명" border="0" color="0" x="3141" y="12" height="56" width="590" html.valueishtml="0"  name=com_slip_acct_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="결의서구분" border="0" color="0" x="9" y="12" height="56" width="325" html.valueishtml="0"  name=slip_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="결의서순번" border="0" color="0" x="809" y="12" height="56" width="315" html.valueishtml="0"  name=resol_seq_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="전표순번" border="0" color="0" x="2601" y="12" height="56" width="247" html.valueishtml="0"  name=slip_seq_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="전표차대" border="0" color="0" x="2866" y="12" height="56" width="256" html.valueishtml="0"  name=drcr_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="12" height="60" width="325" format="[general]" html.valueishtml="0"  name=slip_class visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="2" expression="resol_date + '-' + string(resol_no)"border="0" color="0" x="352" y="12" height="60" width="439" format="[GENERAL]" html.valueishtml="0"  name=com_resol_no visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1143" y="12" height="60" width="590" format="[general]" html.valueishtml="0"  name=com_resol_acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="1751" y="12" height="60" width="375" format="#,###" html.valueishtml="0"  name=resol_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="2" expression="slip_date + '-' + string(slip_no)"border="0" color="0" x="2144" y="12" height="60" width="439" format="[GENERAL]" html.valueishtml="0"  name=com_slip_no visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="0" x="3141" y="12" height="60" width="590" format="[general]" html.valueishtml="0"  name=com_slip_acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="1" tabsequence=32766 border="0" color="0" x="3749" y="12" height="60" width="480" format="#,###" html.valueishtml="0"  name=slip_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="809" y="12" height="60" width="315" format="[general]" html.valueishtml="0"  name=resol_seq visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="0" x="2601" y="12" height="60" width="247" format="[general]" html.valueishtml="0"  name=slip_seq visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="0" x="2866" y="12" height="60" width="256" format="[general]" html.valueishtml="0"  name=drcr_class visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

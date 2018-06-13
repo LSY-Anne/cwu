@@ -1,0 +1,41 @@
+﻿$PBExportHeader$f_childretrieve.srf
+$PBExportComments$드롭다운 데이타 원도우 (datawindow, column name, code_type)
+global type f_childretrieve from function_object
+end type
+
+forward prototypes
+global function integer f_childretrieve (datawindow sdw_dwname, string as_column, string as_type)
+end prototypes
+
+global function integer f_childretrieve (datawindow sdw_dwname, string as_column, string as_type);//////////////////////////////////////////////////////////////////
+// 	작성목적 : 드롭다운 데이타 원도우사용.
+//    적 성 인 : 이현수
+//		작성일자 : 2002.10
+//    변 경 인 :
+//    변경일자 :
+//    변경사유 :
+//////////////////////////////////////////////////////////////////
+
+/*************************************************************
+* 드롭다운 데이타 원도우사용.                                * 
+* 컬럼을 드롭다운 데이타 원도우로 변경한다.                  *
+* Arg1 : 데이타 원도우의 이름.                               *
+* Arg2 : 컬럼명.                                             *
+* Arg3 : Cddb.Kch001m.Type 의 타입                           * 
+**************************************************************/
+datawindowchild dwc
+int li_cnt 
+string ls_data
+
+sdw_dwname.Getchild(as_column,dwc)
+
+dwc.settransobject(sqlca)
+if dwc.retrieve(as_type) < 1 then 
+	li_cnt = 0
+	dwc.insertrow(0)
+else
+	li_cnt = 1
+end If
+return li_cnt
+end function
+

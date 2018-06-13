@@ -1,0 +1,98 @@
+﻿$PBExportHeader$d_hpa410a_1.srd
+$PBExportComments$기부금 내역
+release 10.5;
+datawindow(units=0 timer_interval=0 color=134217750 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=68 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=char(10) update=yes updatewhereclause=yes key=yes name=member_no dbname="hpa025m.member_no" )
+ column=(type=char(40) updatewhereclause=yes name=name dbname="hpa025m.name" )
+ column=(type=char(4) update=yes updatewhereclause=yes key=yes name=year dbname="hpa025m.year" )
+ column=(type=char(13) update=yes updatewhereclause=yes name=business_no dbname="hpa025m.business_no" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=business_name dbname="hpa025m.business_name" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=gibo_code dbname="hpa025m.gibo_code" )
+ column=(type=number update=yes updatewhereclause=yes key=yes name=seq_no dbname="hpa025m.seq_no" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=apply_month dbname="hpa025m.apply_month" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=gibo_count dbname="hpa025m.gibo_count" )
+ column=(type=number update=yes updatewhereclause=yes name=gibo_amt dbname="hpa025m.gibo_amt" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=gibo_no dbname="hpa025m.gibo_no" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=hpa025m_name dbname="hpa025m.name" )
+ column=(type=char(13) update=yes updatewhereclause=yes name=umin_no dbname="hpa025m.jumin_no" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=gwangae_code dbname="hpa025m.gwangae_code" values="거주자(본인)	1/배우자	2/직계비속	3/" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=foreigner_gbn dbname="hpa025m.foreigner_gbn" values="내국	1/외국	9/" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hpa025m.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hpa025m.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hpa025m.work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hpa025m.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hpa025m.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hpa025m.job_date" )
+ retrieve="SELECT A.MEMBER_NO,
+		C.NAME,   
+		A.YEAR,
+		A.BUSINESS_NO,   
+		A.BUSINESS_NAME,   
+		A.GIBO_CODE,
+		A.SEQ_NO,
+		A.APPLY_MONTH,
+		A.GIBO_COUNT,
+		A.GIBO_AMT,
+		A.GIBO_NO,
+		A.NAME,
+		A.JUMIN_NO,
+		A.GWANGAE_CODE,
+		A.FOREIGNER_GBN, 
+		A.WORKER,   
+		A.IPADDR,   
+		A.WORK_DATE,   
+		A.JOB_UID,   
+		A.JOB_ADD,   
+		A.JOB_DATE
+FROM 	PADB.HPA025M  A,
+	  	PADB.HPA019H  B,
+	  	INDB.HIN001M  C
+WHERE A.MEMBER_NO	=  B.MEMBER_NO
+AND	A.MEMBER_NO	=  C.MEMBER_NO
+AND	A.YEAR		=	B.YEAR
+AND	A.YEAR		=	:AS_YEAR
+AND	A.MEMBER_NO	like :AS_MEMBER_NO||'%'
+ORDER BY A.SEQ_NO" update="PADB.HPA025M" updatewhere=0 updatekeyinplace=no arguments=(("as_year", string),("as_member_no", string)) )
+text(band=header alignment="2" text="성명" border="6" color="0" x="375" y="4" height="56" width="229" html.valueishtml="0"  name=hin001m_name_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="사업자번호" border="6" color="0" x="1531" y="4" height="56" width="352" html.valueishtml="0"  name=hpa025m_business_no_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="사업자상호" border="6" color="0" x="1893" y="4" height="56" width="791" html.valueishtml="0"  name=hpa025m_business_name_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="건수" border="6" color="0" x="2693" y="4" height="56" width="133" html.valueishtml="0"  name=hpa025m_gibo_count_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="기부금" border="6" color="0" x="2834" y="4" height="56" width="311" html.valueishtml="0"  name=hpa025m_gibo_amt_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="기부코드" border="6" color="0" x="1038" y="4" height="56" width="485" html.valueishtml="0"  name=hpa025m_gibo_code_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="년월" border="6" color="0" x="795" y="4" height="56" width="233" html.valueishtml="0"  name=hpa025m_apply_month_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="순번" border="6" color="0" x="9" y="4" height="56" width="133" html.valueishtml="0"  name=hpa025m_seq_no_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="년도" border="6" color="0" x="613" y="4" height="56" width="174" html.valueishtml="0"  name=hpa025m_year_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="사번" border="6" color="0" x="151" y="4" height="56" width="215" html.valueishtml="0"  name=hpa025m_member_no_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="성명" border="6" color="0" x="3154" y="4" height="56" width="215" html.valueishtml="0"  name=hpa025m_name_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="주민번호" border="6" color="0" x="3378" y="4" height="56" width="338" html.valueishtml="0"  name=hpa025m_jumin_no_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="관계" border="6" color="0" x="3726" y="4" height="56" width="343" html.valueishtml="0"  name=hpa025m_gwangae_code_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="내외국인" border="6" color="0" x="4078" y="4" height="56" width="347" html.valueishtml="0"  name=hpa025m_foreigner_gbn_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="8" height="72" width="133" format="[general]" html.valueishtml="0"  name=seq_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+column(band=detail id=3 alignment="2" tabsequence=10 border="0" color="0" x="613" y="8" height="72" width="174" format="[general]" html.valueishtml="0"  name=year visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=40 border="0" color="0" x="1531" y="8" height="72" width="352" format="@@@-@@-@@@@@" html.valueishtml="0"  name=business_no visible="1" editmask.mask="###-##-########" editmask.focusrectangle=no  font.face="굴림" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="0" tabsequence=50 border="0" color="0" x="1893" y="8" height="72" width="791" format="[general]" html.valueishtml="0"  name=business_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="0" tabsequence=30 border="0" color="0" x="1038" y="8" height="72" width="485" format="[general]" html.valueishtml="0"  name=gibo_code visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any  font.face="굴림" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=8 alignment="2" tabsequence=20 border="0" color="0" x="795" y="8" height="72" width="233" format="@@@@/@@" html.valueishtml="0"  name=apply_month visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=9 alignment="2" tabsequence=60 border="0" color="0" x="2693" y="8" height="72" width="133" format="[general]" html.valueishtml="0"  name=gibo_count visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="151" y="8" height="72" width="215" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12639424" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="375" y="8" height="72" width="229" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12639424" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="3726" y="8" height="72" width="343" format="[general]" html.valueishtml="0"  name=gwangae_code visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any ddlb.useasborder=yes  font.face="굴림" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="4078" y="8" height="72" width="347" format="[general]" html.valueishtml="0"  name=foreigner_gbn visible="1" radiobuttons.columns=2 radiobuttons.scale=no radiobuttons.threed=yes  font.face="굴림" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+column(band=detail id=10 alignment="1" tabsequence=70 border="0" color="0" x="2834" y="8" height="72" width="311" format="#,###" html.valueishtml="0"  name=gibo_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="3154" y="8" height="72" width="215" format="[general]" html.valueishtml="0"  name=hpa025m_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="0" x="3378" y="8" height="72" width="338" format="[general]" html.valueishtml="0"  name=umin_no visible="1" editmask.mask="######-#######" editmask.focusrectangle=no  font.face="굴림" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

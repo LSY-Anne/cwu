@@ -1,0 +1,53 @@
+﻿$PBExportHeader$f_getprepay.srf
+$PBExportComments$전근무지자료를 구한다(as_year,as_member,as_gubun:return=구분에 따라)
+global type f_getprepay from function_object
+end type
+
+forward prototypes
+global function string f_getprepay (string as_year, string as_member, string as_gubun, integer ai_seq)
+end prototypes
+
+global function string f_getprepay (string as_year, string as_member, string as_gubun, integer ai_seq);//	전근무지의 급.상여 등을 추출한다.
+//	구분(1.급여,2.상여,3.소득세,4.주민세,5.농특세,6.근무처명, 7.사업자등록번호)
+Decimal{0}	li_Amt1
+Decimal{0}	li_Amt2
+Decimal{0}	li_Amt3
+Decimal{0}	li_Amt4
+Decimal{0}	li_Amt5
+String		ls_name
+String		ls_rsvn
+String		ls_Retn
+
+SELECT	NVL(A.PAY_TOTAL,0), 			NVL(A.BONUS_TOTAL,0),
+			NVL(A.INCOME_TAX,0), 		NVL(A.FARM_TAX,0), 		NVL(A.RESIDENT_TAX,0),
+			A.WORK_PLACE,					A.REGISTER_NO
+INTO		:li_Amt1,						:li_Amt2,
+			:li_Amt3,						:li_Amt4,					:li_Amt5,
+			:ls_name,						:ls_rsvn
+FROM		PADB.HPA017M A
+WHERE		A.YEAR			=	:as_Year
+AND		A.MEMBER_NO  	=	:as_Member
+AND		A.SEQ_NO			=	:ai_seq;
+IF			SQLCA.SQLCODE	=	0	THEN
+	IF	as_Gubun	 =	'1'			THEN
+		ls_Retn	=	STRING(li_Amt1)
+	ELSEIF	as_Gubun	=	'2'	THEN
+		ls_Retn	=	STRING(li_Amt2)
+	ELSEIF	as_Gubun	=	'3'	THEN
+		ls_Retn	=	STRING(li_Amt3)
+	ELSEIF	as_Gubun	=	'4'	THEN
+		ls_Retn	=	STRING(li_Amt4)
+	ELSEIF	as_Gubun	=	'5'	THEN
+		ls_Retn	=	STRING(li_Amt5)
+	ELSEIF	as_Gubun	=	'6'	THEN
+		ls_Retn	=	ls_name
+	ELSEIF	as_Gubun	=	'7'	THEN
+		ls_Retn	=	ls_rsvn
+	END IF
+ELSE
+		ls_Retn	=	'**********'
+END IF
+
+Return ls_Retn
+end function
+

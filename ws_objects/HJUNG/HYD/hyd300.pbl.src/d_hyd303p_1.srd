@@ -1,0 +1,94 @@
+﻿$PBExportHeader$d_hyd303p_1.srd
+$PBExportComments$연구업적평가자료-연구논문
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=3964 color="536870912" )
+table(column=(type=char(5) updatewhereclause=yes name=member_no dbname="hyd301t.member_no" )
+ column=(type=char(60) updatewhereclause=yes name=scjnl_dvs_cd dbname="scjnl_dvs_cd" )
+ column=(type=char(1000) updatewhereclause=yes name=org_lang_ppr_nm dbname="hyd301t.org_lang_ppr_nm" )
+ column=(type=char(300) updatewhereclause=yes name=scjnl_nm dbname="hyd301t.scjnl_nm" )
+ column=(type=char(150) updatewhereclause=yes name=pblc_plc_nm dbname="hyd301t.pblc_plc_nm" )
+ column=(type=char(6) updatewhereclause=yes name=pblc_ym dbname="hyd301t.pblc_ym" )
+ column=(type=char(20) updatewhereclause=yes name=pblc_bk_no dbname="hyd301t.pblc_bk_no" )
+ column=(type=char(20) updatewhereclause=yes name=pblc_vol_no dbname="hyd301t.pblc_vol_no" )
+ column=(type=char(20) updatewhereclause=yes name=stt_page dbname="hyd301t.stt_page" )
+ column=(type=char(20) updatewhereclause=yes name=end_page dbname="hyd301t.end_page" )
+ column=(type=char(20) updatewhereclause=yes name=pblc_ntn_cd dbname="hyd301t.pblc_ntn_cd" )
+ column=(type=char(20) updatewhereclause=yes name=tpi_dvs_cd dbname="tpi_dvs_cd" )
+ column=(type=number updatewhereclause=yes name=member_cnt dbname="member_cnt" )
+ column=(type=char(6) updatewhereclause=yes name=rsch_stt_ym dbname="hyd308t.rsch_stt_ym" )
+ column=(type=char(6) updatewhereclause=yes name=rsch_end_ym dbname="hyd308t.rsch_end_ym" )
+ column=(type=char(150) updatewhereclause=yes name=rsrcct_sppt_agc_nm dbname="hyd308t.rsrcct_sppt_agc_nm" )
+ column=(type=number updatewhereclause=yes name=tot_sum dbname="tot_sum" )
+ retrieve="SELECT A.MEMBER_NO
+ ,(SELECT FNAME FROM CDDB.KCH102D WHERE UPPER(CODE_GB) = 'HYD1100' AND  CODE = A.SCJNL_DVS_CD ) AS  SCJNL_DVS_CD             
+       ,A.ORG_LANG_PPR_NM    
+       ,A.SCJNL_NM           
+       ,A.PBLC_PLC_NM        
+       ,A.PBLC_YM            
+       ,A.PBLC_BK_NO         
+       ,A.PBLC_VOL_NO        
+       ,A.STT_PAGE           
+       ,A.END_PAGE           
+       ,A.PBLC_NTN_CD       ,
+      (SELECT TPI_DVS_CD FROM  YGDB.HYD307T WHERE STD_YM = A.STD_YM 
+					AND MEMBER_NO = A.MEMBER_NO 
+					AND INCLUDE_GB = '1'
+					AND MNG_NO = A.MNG_NO
+					AND PCN_RSCHR_REG_NO = A.MEMBER_NO) AS TPI_DVS_CD,
+      NVL((SELECT COUNT(*) FROM  YGDB.HYD307T WHERE STD_YM = A.STD_YM 
+					AND MEMBER_NO = A.MEMBER_NO 
+					AND INCLUDE_GB = '1'
+					AND MNG_NO = A.MNG_NO), 0) AS MEMBER_CNT     ,
+      B.RSCH_STT_YM,
+     B.RSCH_END_YM,
+     B.RSRCCT_SPPT_AGC_NM,
+    NVL((SELECT SUM(TOT_RSRCCT) FROM YGDB.HYD309T WHERE STD_YM = A.STD_YM
+						AND MEMBER_NO = A.MEMBER_NO 
+					               AND MNG_NO = A.MNG_NO), 0) AS TOT_SUM
+       FROM YGDB.HYD301T A, YGDB.HYD308T B
+WHERE A.STD_YM BETWEEN :as_fr_mm AND :as_to_mm
+AND A.MEMBER_NO = :as_member_no
+AND A.STD_YM = B.STD_YM(+)
+AND A.MEMBER_NO = B.MEMBER_NO(+)
+AND A.MNG_NO = B.MNG_NO(+)" arguments=(("as_fr_mm", string),("as_to_mm", string),("as_member_no", string)) )
+bitmap(band=detail filename="..\img\hyd303p_1.bmp" x="347" y="156" height="3792" width="2725" border="0"  name=p_1 visible="1" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="919" y="1308" height="68" width="2071" format="[general]" html.valueishtml="0"  name=scjnl_nm  tag="학술지명" visible="1" edit.limit=300 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="914" y="884" height="68" width="1426" format="[general]" html.valueishtml="0"  name=scjnl_dvs_cd  tag="학술지구분" visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="914" y="1000" height="232" width="2048" format="[general]" html.valueishtml="0"  name=org_lang_ppr_nm  tag="원어논문명" visible="1" edit.limit=1000 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.autovscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="33554432" x="965" y="1764" height="68" width="640" format="[general]" html.valueishtml="0"  name=pblc_plc_nm_1  tag="발행처명" visible="1~tif( pblc_ntn_cd = 'KO', 1, 0)" edit.limit=150 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="33554432" x="1687" y="1764" height="68" width="1289" format="[general]" html.valueishtml="0"  name=pblc_plc_nm_2  tag="발행처명" visible="1~tif( pblc_ntn_cd = 'KO', 0, 1)" edit.limit=150 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="33554432" x="923" y="1464" height="68" width="640" format="[general]" html.valueishtml="0"  name=pblc_plc_nm  tag="발행처명" visible="1" edit.limit=150 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="33554432" x="1646" y="1464" height="68" width="160" format="[general]" html.valueishtml="0"  name=pblc_ym  tag="게재년월" visible="1" edit.limit=6 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="1856" y="1464" height="68" width="306" format="[general]" html.valueishtml="0"  name=pblc_bk_no  tag="게재권집번호" visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="2185" y="1464" height="68" width="169" format="[general]" html.valueishtml="0"  name=pblc_vol_no  tag="게재호번호" visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="33554432" x="2405" y="1464" height="68" width="210" format="[general]" html.valueishtml="0"  name=stt_page  tag="시작페이지" visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="33554432" x="2665" y="1464" height="68" width="274" format="[general]" html.valueishtml="0"  name=end_page  tag="끝페이지" visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="○" border="0" color="0" x="937" y="2192" height="56" width="110" html.valueishtml="0"  name=t_1 visible="1~tIf( tpi_dvs_cd = '1', 1, 0)"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="○" border="0" color="0" x="1216" y="2192" height="56" width="59" html.valueishtml="0"  name=t_2 visible="1~tIf( tpi_dvs_cd = '2' and  member_cnt  = 2, 1, 0)"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="○" border="0" color="0" x="1426" y="2192" height="56" width="59" html.valueishtml="0"  name=t_3 visible="1~tIf( tpi_dvs_cd = '2' and  member_cnt  = 3, 1, 0)"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="○" border="0" color="0" x="1641" y="2192" height="56" width="59" html.valueishtml="0"  name=t_4 visible="1~tIf( tpi_dvs_cd = '2' and  member_cnt  = 4, 1, 0)"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="○" border="0" color="0" x="1911" y="2192" height="56" width="59" html.valueishtml="0"  name=t_5 visible="1~tIf( tpi_dvs_cd = '2' and  member_cnt  > 4, 1, 0)"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="○" border="0" color="0" x="2162" y="2192" height="56" width="59" html.valueishtml="0"  name=t_6 visible="1~tIf( tpi_dvs_cd = '4' or  tpi_dvs_cd = '3' and  member_cnt  = 2, 1, 0)"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="○" border="0" color="0" x="2377" y="2192" height="56" width="59" html.valueishtml="0"  name=t_7 visible="1~tIf( tpi_dvs_cd = '4'  or  tpi_dvs_cd = '3' and  member_cnt  = 3, 1, 0)"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="○" border="0" color="0" x="2597" y="2192" height="56" width="59" html.valueishtml="0"  name=t_8 visible="1~tIf( tpi_dvs_cd = '4'  or  tpi_dvs_cd = '3' and  member_cnt  = 4, 1, 0)"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="○" border="0" color="0" x="2871" y="2192" height="56" width="59" html.valueishtml="0"  name=t_9 visible="1~tIf( tpi_dvs_cd = '4' or  tpi_dvs_cd = '3'  and  member_cnt  > 4, 1, 0)"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="1" tabsequence=32766 border="0" color="33554432" x="1326" y="2340" height="56" width="617" format="@@@@년 @@월 부터" html.valueishtml="0"  name=rsch_stt_ym visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="33554432" x="1943" y="2340" height="56" width="672" format="  -  @@@@년 @@월 까지" html.valueishtml="0"  name=rsch_end_ym visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="○" border="0" color="0" x="1061" y="2632" height="56" width="110" html.valueishtml="0"  name=t_10 visible="1~tIf( trim( rsrcct_sppt_agc_nm )  = '' or isnull( rsrcct_sppt_agc_nm ), 1, 0)"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="33554432" x="1371" y="2640" height="56" width="855" format="[general]" html.valueishtml="0"  name=rsrcct_sppt_agc_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="1" tabsequence=32766 border="0" color="33554432" x="2304" y="2640" height="56" width="448" format="#,###,###" html.valueishtml="0"  name=tot_sum visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

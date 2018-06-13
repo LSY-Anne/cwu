@@ -1,0 +1,83 @@
+﻿$PBExportHeader$f_num_to_han.srf
+$PBExportComments$숫자(금액)를 한글로 변환 (ad_number)
+global type f_num_to_han from function_object
+end type
+
+forward prototypes
+global function string f_num_to_han (double ad_number)
+end prototypes
+
+global function string f_num_to_han (double ad_number);//////////////////////////////////////////////////////////////////
+// 	작성목적 : 숫자(금액)를 한글로 변환하여 리턴한다.
+//    적 성 인 : 이현수
+//		작성일자 : 2002.10
+//    변 경 인 :
+//    변경일자 :
+//    변경사유 :
+//////////////////////////////////////////////////////////////////
+string sPosition[], sPosition1[], sPosition2[]
+string s		// will be return
+double dPosition[], dPosition1[], n1
+INT iValue, iValue1, i, j
+
+if ad_number = 0 then return "영"
+if ad_number < 0	then	ad_number = ad_number * -1
+
+sPosition[1] = "조"
+sPosition[2] = "억"
+sPosition[3] = "만"
+sPosition[4] = ""
+
+sPosition1[1] = "천"
+sPosition1[2] = "백"
+sPosition1[3] = "십"
+sPosition1[4] = ""
+
+sPosition2[1] = "일"
+sPosition2[2] = "이"
+sPosition2[3] = "삼"
+sPosition2[4] = "사"
+sPosition2[5] = "오"
+sPosition2[6] = "육"
+sPosition2[7] = "칠"
+sPosition2[8] = "팔"
+sPosition2[9] = "구"
+
+dPosition[1] = 1000000000000.
+dPosition[2] = 100000000
+dPosition[3] = 10000
+dPosition[4] = 1
+
+dPosition1[1] = 1000
+dPosition1[2] = 100
+dPosition1[3] = 10
+dPosition1[4] = 1
+
+if ad_number = 0 then return s
+if isNull(ad_number) then return s
+
+if ad_number < 9999999999999999. then
+
+for i = 1 to 4
+	iValue = ad_number / dPosition[i]
+	ad_number = Mod(ad_number, dPosition[i])
+	if iValue > 0 then
+		n1 = iValue
+		for	j = 1	to	4
+			iValue1 = n1 / dPosition1[j]
+			n1 = Mod(n1, dPosition1[j])
+			if	iValue1 > 0	then
+					s = s + sPosition2[iValue1] + sPosition1[j]
+			end if
+		next
+		s = s + sPosition[i]
+	end if
+next
+
+else
+	messagebox("주의!","금액을 확인하시오!")
+end if
+return s
+
+end function
+

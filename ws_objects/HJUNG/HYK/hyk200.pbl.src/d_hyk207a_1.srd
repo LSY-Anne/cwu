@@ -1,0 +1,104 @@
+﻿$PBExportHeader$d_hyk207a_1.srd
+$PBExportComments$기타업적 평가자료 조정및 확인
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(6) updatewhereclause=yes key=yes name=evl_ym dbname="hyk205t.evl_ym" )
+ column=(type=char(5) updatewhereclause=yes key=yes name=member_no dbname="hyk205t.member_no" )
+ column=(type=char(40) updatewhereclause=yes name=name dbname="name" )
+ column=(type=char(50) updatewhereclause=yes name=gwa dbname="gwa" )
+ column=(type=char(4) updatewhereclause=yes name=duty_code dbname="hyk201t.duty_code" )
+ column=(type=char(12) updatewhereclause=yes key=yes name=mng_no dbname="hyk205t.mng_no" )
+ column=(type=char(1) updatewhereclause=yes name=inout_gb dbname="hyk205t.inout_gb" )
+ column=(type=char(100) updatewhereclause=yes name=prize_nm dbname="hyk205t.prize_nm" )
+ column=(type=char(8) updatewhereclause=yes name=grant_dt dbname="hyk205t.grant_dt" )
+ column=(type=char(100) updatewhereclause=yes name=grant_org dbname="hyk205t.grant_org" )
+ column=(type=char(100) updatewhereclause=yes name=prize_memo dbname="hyk205t.prize_memo" )
+ column=(type=char(1) updatewhereclause=yes name=evl_area dbname="hyk205t.evl_area" )
+ column=(type=char(20) updatewhereclause=yes name=evl_item dbname="hyk205t.evl_item" )
+ column=(type=char(300) updatewhereclause=yes name=evl_nm dbname="evl_nm" )
+ column=(type=number updatewhereclause=yes name=std_point dbname="std_point" )
+ column=(type=decimal(4) update=yes updatewhereclause=yes name=evl_point dbname="hyk205t.evl_point" )
+ column=(type=char(100) updatewhereclause=yes name=remark dbname="hyk205t.remark" )
+ column=(type=char(1) updatewhereclause=yes name=state dbname="hyk205t.state" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=worker dbname="hyk205t.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hyk205t.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hyk205t.work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_uid dbname="hyk205t.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hyk205t.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hyk205t.job_date" )
+ retrieve="SELECT A.EVL_YM
+      	  ,A.MEMBER_NO
+		  ,(SELECT NAME 
+		  	FROM INDB.HIN001M 
+			WHERE A.MEMBER_NO = MEMBER_NO
+			GROUP BY NAME) AS NAME
+		  ,(SELECT FNAME FROM CDDB.KCH003M WHERE B.GWA = GWA) AS GWA
+		  ,B.DUTY_CODE
+           ,A.MNG_NO
+       	  ,A.INOUT_GB
+       	  ,A.PRIZE_NM
+       	  ,A.GRANT_DT
+       	  ,A.GRANT_ORG
+       	  ,A.PRIZE_MEMO
+       	  ,A.EVL_AREA
+       	  ,A.EVL_ITEM
+		  ,(SELECT EVL_NM 
+		    FROM YGDB.HYK103T 
+			WHERE A.EVL_AREA = EVL_AREA 
+			AND A.EVL_ITEM = EVL_ITEM 
+			AND APPOINT_GB = :as_appoint_gb
+			GROUP BY EVL_NM) AS EVL_NM
+		  ,(SELECT STD_POINT 
+		   FROM YGDB.HYK103T 
+			WHERE A.EVL_AREA = EVL_AREA 
+			AND A.EVL_ITEM = EVL_ITEM
+			AND APPOINT_GB = :as_appoint_gb
+			GROUP BY STD_POINT) AS STD_POINT
+       	  ,A.EVL_POINT
+       	  ,A.REMARK
+       	  ,A.STATE
+       	  ,A.WORKER
+       	  ,A.IPADDR
+       	  ,A.WORK_DATE
+       	  ,A.JOB_UID
+       	  ,A.JOB_ADD
+       	  ,A.JOB_DATE
+FROM YGDB.HYK205T A
+         ,YGDB.HYK201T B
+WHERE A.EVL_AREA = '9'
+	AND A.EVL_YM = :as_evl_ym
+	AND B.APPOINT_GB = :as_appoint_gb
+	AND A.MEMBER_NO = B.MEMBER_NO
+    AND (:as_member_no = '%' or A.MEMBER_NO = :as_member_no)" update="YGDB.HYK205T" updatewhere=0 updatekeyinplace=no arguments=(("as_evl_ym", string),("as_appoint_gb", string),("as_member_no", string))  sort="member_no A name A gwa A duty_code A " )
+text(band=header alignment="2" text="사번" border="0" color="33554432" x="9" y="8" height="56" width="297" html.valueishtml="0"  name=member_no_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성명" border="0" color="33554432" x="315" y="8" height="56" width="398" html.valueishtml="0"  name=name_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학과" border="0" color="33554432" x="722" y="8" height="56" width="919" html.valueishtml="0"  name=gwa_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="직급" border="0" color="33554432" x="1650" y="8" height="56" width="334" html.valueishtml="0"  name=duty_code_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="평가항목" border="0" color="33554432" x="1993" y="8" height="56" width="480" html.valueishtml="0"  name=evl_item_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="평가항목명" border="0" color="33554432" x="2482" y="8" height="56" width="1422" html.valueishtml="0"  name=evl_nm_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="기준배점" border="0" color="33554432" x="3913" y="8" height="56" width="256" html.valueishtml="0"  name=std_point_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="득점" border="0" color="33554432" x="4178" y="8" height="56" width="201" html.valueishtml="0"  name=evl_point_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="9" y="8" height="68" width="297" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=5 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="33554432" x="315" y="8" height="68" width="398" format="[general]" html.valueishtml="0"  name=name  tag="kor" visible="1" edit.limit=40 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="33554432" x="722" y="8" height="68" width="919" format="[general]" html.valueishtml="0"  name=gwa visible="1" dddw.name=d_dddw_hakgwa dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.autoretrieve=no dddw.showlist=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="33554432" x="1650" y="8" height="68" width="334" format="[general]" html.valueishtml="0"  name=duty_code visible="1" dddw.name=d_dddw_code dddw.displaycolumn=cd_nm dddw.datacolumn=cd dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.autoretrieve=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="2" tabsequence=32766 border="0" color="33554432" x="1993" y="8" height="68" width="480" format="[general]" html.valueishtml="0"  name=evl_item visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="33554432" x="2482" y="8" height="68" width="1422" format="[general]" html.valueishtml="0"  name=evl_nm  tag="kor" visible="1" edit.limit=300 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="2" tabsequence=32766 border="0" color="33554432" x="3913" y="8" height="68" width="256" format="[general]" html.valueishtml="0"  name=std_point visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="2" tabsequence=10 border="0" color="33554432" x="4183" y="8" height="68" width="197" format="[general]" html.valueishtml="0"  name=evl_point visible="1" editmask.mask="###,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+
+sparse(names="member_no	name	gwa	duty_code")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

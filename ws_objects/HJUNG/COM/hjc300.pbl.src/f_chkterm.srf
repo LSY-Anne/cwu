@@ -1,0 +1,46 @@
+﻿$PBExportHeader$f_chkterm.srf
+$PBExportComments$예산구분에 따라서 요구기간을 체크한다.(년도(S), 예산구분(I), 상태구분(I))
+global type f_chkterm from function_object
+end type
+
+forward prototypes
+global function integer f_chkterm (string as_year, integer ai_bdgt_class, integer ai_stat_class)
+end prototypes
+
+global function integer f_chkterm (string as_year, integer ai_bdgt_class, integer ai_stat_class);// ------------------------------------------------------------------------------------------
+//  Funtion Name :  f_chkterm
+//  개요         :  차수(예산구분)별 요구기간을 체크한다.
+//  Argument     :  as_year(String), ai_bdgt_class(Integer)
+//  Return Value :  Integer(0 정상, -1 실패)
+// ------------------------------------------------------------------------------------------
+
+string	ls_from_dt, ls_to_dt, ls_today
+
+select	nvl(from_date, ''), nvl(to_date, '')
+into		:ls_from_dt, :ls_to_dt
+from		acdb.hac003m
+where		bdgt_year	=	:as_year
+and		bdgt_class	=	:ai_bdgt_class	
+and		stat_class	=	:ai_stat_class	;
+
+if sqlca.sqlcode <> 0 or trim(ls_from_dt) = '' or trim(ls_to_dt) = '' then
+	f_messagebox('3', '요구기간이 정확하지 않습니다.~n~n기획처에 문의하시기 바랍니다!')
+	return	-1
+end if
+
+if not isdate(string(ls_from_dt, '@@@@-@@-@@')) or not isdate(string(ls_to_dt, '@@@@-@@-@@')) then
+	f_messagebox('3', '요구기간이 정확하지 않습니다.~n~n기획처에 문의하시기 바랍니다!')
+	return	-1
+end if
+
+ls_today	=	f_today()
+
+if ls_today >= ls_from_dt and ls_today <= ls_to_dt then
+	return	0
+else
+	f_messagebox('1', '귀하의 해당 요구기간은 ' + string(ls_from_dt, '@@@@년 @@월 @@일') + '부터 ' + string(ls_to_dt, '@@@@년 @@월 @@일') + '입니다~n요구기간을 벗어났습니다.!~n~n기획처에 문의하시기 바랍니다!')
+	return	-1
+end if	
+
+end function
+

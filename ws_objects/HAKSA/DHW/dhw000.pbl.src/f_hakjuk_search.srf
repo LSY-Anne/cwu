@@ -1,0 +1,69 @@
+﻿$PBExportHeader$f_hakjuk_search.srf
+$PBExportComments$[학사]학생조회
+global type f_hakjuk_search from function_object
+end type
+
+forward prototypes
+global function integer f_hakjuk_search (string as_hakbun, string as_hname, ref vector avc_data)
+end prototypes
+
+global function integer f_hakjuk_search (string as_hakbun, string as_hname, ref vector avc_data);String		ls_hakbun,    ls_hname
+Long		ll_cnt
+Integer	li_err_code
+String		ls_err_text
+
+If (Trim(as_hakbun) = '' Or IsNull(as_hakbun) ) And 	(Trim(as_hname) = '' Or IsNull(as_hname) ) Then Return -2 ;
+
+If Trim(as_hakbun) = '' Or IsNull(as_hakbun)	Then	as_hakbun	= '%' ;
+If Trim(as_hname) = '' Or IsNull(as_hname)	Then	as_hname	= '%' ;
+
+SELECT X.HAKBUN
+          , X.HNAME
+		 , COUNT(*) OVER()
+    INTO :ls_hakbun, :ls_hname, :ll_cnt
+   FROM ( 
+			  SELECT A.HAKBUN         AS HAKBUN
+ 					  , A.HNAME           AS HNAME
+				 FROM HAKSA.JAEHAK_HAKJUK  A
+			   WHERE A.HAKBUN LIKE :as_hakbun || '%'
+				   AND A.HNAME  LIKE :as_hname  || '%'
+			 UNION ALL
+			  SELECT A.HAKBUN
+					  , A.HNAME
+				 FROM HAKSA.JOLUP_HAKJUK  A
+			 WHERE A.HAKBUN LIKE :as_hakbun || '%'
+				 AND A.HNAME  LIKE :as_hname  || '%' ) X
+ USING SQLCA ;
+
+	Choose Case	SQLCA.SQLCODE
+		Case	-1
+			If Lower(SQLCA.SQLErrText) = 'select returned more than one row' Or Lower(SQLCA.SQLErrText) = 'select returned more than one row.' Then
+				RETURN 2
+			Else
+				If ll_cnt > 1 Then
+					Return 2
+				Else
+					li_err_code	= SQLCA.SQLDBCode
+					ls_err_text	= SQLCA.SQLErrText
+					gf_sqlerr_msg('Function', 'f_hakjuk_search function', String(31), 'SELECT COUNT(*) FROM 학적', li_err_code, ls_err_text)
+					RETURN -1
+				End If
+			End If
+		Case	100
+				RETURN 0
+		Case	0
+				If ll_cnt > 1 Then
+					RETURN 2
+				Else
+					
+					avc_data = Create Vector
+					avc_data.SetProperty('hakbun',	func.of_nvl(ls_hakbun,		''))
+					avc_data.SetProperty('hname',	func.of_nvl(ls_hname,		''))
+					avc_data.setProperty("parm_cnt",		"1")
+			
+					RETURN 1
+				End If
+	End Choose
+
+end function
+

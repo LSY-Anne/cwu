@@ -1,0 +1,113 @@
+﻿$PBExportHeader$d_hge506b_1.srd
+$PBExportComments$강사기초자료(hpa111m)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes name=member_no dbname="hpa111m.member_no" )
+ column=(type=char(20) updatewhereclause=yes name=name dbname="hpa111m.name" )
+ column=(type=char(4) updatewhereclause=yes name=year dbname="hpa111m.year" )
+ column=(type=char(1) updatewhereclause=yes name=hakgi dbname="hpa111m.hakgi" )
+ column=(type=char(6) updatewhereclause=yes name=gwa dbname="hpa111m.gwa" )
+ column=(type=decimal(0) updatewhereclause=yes name=jikjong_code dbname="hpa111m.jikjong_code" )
+ column=(type=char(4) updatewhereclause=yes name=duty_code dbname="hpa111m.duty_code" )
+ column=(type=decimal(0) updatewhereclause=yes name=sec_code dbname="hpa111m.sec_code" )
+ column=(type=char(3) updatewhereclause=yes name=sal_class dbname="hpa111m.sal_class" )
+ column=(type=decimal(0) updatewhereclause=yes name=bank_code dbname="hpa111m.bank_code" )
+ column=(type=char(20) updatewhereclause=yes name=acct_no dbname="hpa111m.acct_no" )
+ column=(type=decimal(2) updatewhereclause=yes name=num_of_time dbname="hpa111m.num_of_time" )
+ column=(type=decimal(2) updatewhereclause=yes name=num_of_general dbname="hpa111m.num_of_general" )
+ column=(type=decimal(2) updatewhereclause=yes name=num_of_middle dbname="hpa111m.num_of_middle" )
+ column=(type=decimal(2) updatewhereclause=yes name=num_of_large dbname="hpa111m.num_of_large" )
+ column=(type=decimal(2) updatewhereclause=yes name=num_of_etc1 dbname="hpa111m.num_of_etc1" )
+ column=(type=decimal(2) updatewhereclause=yes name=num_of_nigeneral dbname="hpa111m.num_of_nigeneral" )
+ column=(type=decimal(2) updatewhereclause=yes name=num_of_nimiddle dbname="hpa111m.num_of_nimiddle" )
+ column=(type=decimal(2) updatewhereclause=yes name=num_of_nilarge dbname="hpa111m.num_of_nilarge" )
+ column=(type=decimal(2) updatewhereclause=yes name=limit_time dbname="hpa111m.limit_time" )
+ column=(type=char(1) updatewhereclause=yes name=holiday_opt dbname="hpa111m.holiday_opt" )
+ column=(type=char(5) updatewhereclause=yes name=worker dbname="hpa111m.worker" )
+ column=(type=char(20) updatewhereclause=yes name=ipaddr dbname="hpa111m.ipaddr" )
+ column=(type=datetime updatewhereclause=yes name=work_date dbname="hpa111m.work_date" )
+ column=(type=char(50) updatewhereclause=yes name=kch003m_dept_name dbname="hpa111m.dept_name" )
+ column=(type=char(20) updatewhereclause=yes name=v_hin003m_1_duty_name dbname="hpa111m.duty_name" )
+ column=(type=char(40) updatewhereclause=yes name=v_hin003m_1_fname dbname="hpa111m.fname" )
+ retrieve="
+  SELECT A.MEMBER_NO,
+         A.NAME,
+         A.YEAR,
+         A.HAKGI,
+         A.GWA,
+         A.JIKJONG_CODE,
+         A.DUTY_CODE,
+         A.SEC_CODE,
+         A.SAL_CLASS,
+         A.BANK_CODE,
+         A.ACCT_NO,
+         A.NUM_OF_TIME,
+         A.NUM_OF_GENERAL,
+         A.NUM_OF_MIDDLE,
+         A.NUM_OF_LARGE,
+         A.NUM_OF_ETC1,
+         A.NUM_OF_NIGENERAL,
+         A.NUM_OF_NIMIDDLE,
+         A.NUM_OF_NILARGE,
+         A.LIMIT_TIME,
+         A.HOLIDAY_OPT,
+         A.WORKER,
+         A.IPADDR,
+         A.WORK_DATE,
+         C.FNAME AS DEPT_NAME,
+         B.DUTY_NAME,   
+         B.FNAME  
+    FROM GEDB.HPA111M A,   
+         INDB.V_HIN003M_1 B,   
+         CDDB.KCH003M  C
+   WHERE A.gwa 		= C.gwa (+) and  
+         A.duty_code = B.duty_code (+) and  
+         A.YEAR 		= :as_year  AND  
+         A.HAKGI 		= :as_hakgi  AND  
+         A.GWA 		like :as_gwa || '%'  AND
+			A.MEMBER_NO	like	:as_member_no || '%'	 
+ORDER BY A.GWA ASC,
+		   A.MEMBER_NO ASC" arguments=(("as_year", string),("as_hakgi", string),("as_gwa", string),("as_member_no", string)) )
+text(band=header alignment="2" text="직종" border="0" color="0" x="4302" y="12" height="56" width="398" html.valueishtml="0"  name=v_hin003m_1_fname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직급명" border="0" color="0" x="1243" y="12" height="56" width="306" html.valueishtml="0"  name=v_hin003m_1_duty_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="학과명" border="0" color="0" x="576" y="12" height="56" width="658" html.valueishtml="0"  name=kch003m_dept_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="강사료구분" border="0" color="0" x="1559" y="12" height="56" width="448" html.valueishtml="0"  name=sec_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="호봉" border="0" color="0" x="2016" y="12" height="56" width="137" html.valueishtml="0"  name=sal_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="책임시수" border="0" color="0" x="3246" y="12" height="56" width="247" html.valueishtml="0"  name=num_of_time_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="분반" border="0" color="0" x="3954" y="12" height="56" width="165" html.valueishtml="0"  name=num_of_middle_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="합반" border="0" color="0" x="4128" y="12" height="56" width="165" html.valueishtml="0"  name=num_of_large_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="일반" border="0" color="0" x="3776" y="12" height="56" width="169" html.valueishtml="0"  name=num_of_general_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="성 명" border="0" color="0" x="279" y="12" height="56" width="288" html.valueishtml="0"  name=name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="개인번호" border="0" color="0" x="9" y="12" height="56" width="261" html.valueishtml="0"  name=member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="한계시수" border="0" color="0" x="3502" y="12" height="56" width="265" html.valueishtml="0"  name=limit_time_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="은행명" border="0" color="0" x="2162" y="12" height="56" width="439" html.valueishtml="0"  name=bank_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계좌번호" border="0" color="0" x="2610" y="12" height="56" width="626" html.valueishtml="0"  name=acct_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="261" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="2610" y="4" height="72" width="626" format="[general]" html.valueishtml="0"  name=acct_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="1559" y="4" height="72" width="448" format="[general]" html.valueishtml="0"  name=sec_code visible="1" dddw.name=dddw_d_lecture_help dddw.displaycolumn=pay_item_name dddw.datacolumn=pay_item_code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="2162" y="4" height="72" width="439" format="[general]" html.valueishtml="0"  name=bank_code visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="2016" y="4" height="72" width="137" format="[general]" html.valueishtml="0"  name=sal_class visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="2" tabsequence=32766 border="0" color="0" x="3246" y="4" height="72" width="247" format="#" html.valueishtml="0"  name=num_of_time visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="2" tabsequence=32766 border="0" color="0" x="3776" y="4" height="72" width="169" format="#" html.valueishtml="0"  name=num_of_general visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="2" tabsequence=32766 border="0" color="0" x="3954" y="4" height="72" width="165" format="#" html.valueishtml="0"  name=num_of_middle visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="2" tabsequence=32766 border="0" color="0" x="4128" y="4" height="72" width="165" format="#" html.valueishtml="0"  name=num_of_large visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=20 alignment="2" tabsequence=32766 border="0" color="0" x="3502" y="4" height="72" width="265" format="[general]" html.valueishtml="0"  name=limit_time visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=25 alignment="0" tabsequence=32766 border="0" color="0" x="576" y="8" height="60" width="658" format="[general]" html.valueishtml="0"  name=kch003m_dept_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=26 alignment="0" tabsequence=32766 border="0" color="0" x="1243" y="8" height="60" width="306" format="[general]" html.valueishtml="0"  name=v_hin003m_1_duty_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=27 alignment="0" tabsequence=32766 border="0" color="0" x="4302" y="8" height="60" width="398" format="[general]" html.valueishtml="0"  name=v_hin003m_1_fname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="279" y="4" height="72" width="288" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,30 @@
+﻿$PBExportHeader$f_create_tty.srf
+$PBExportComments$To create the n_tty dependent on OS
+global type f_create_tty from function_object
+end type
+
+forward prototypes
+global function n_tty f_create_tty ()
+end prototypes
+
+global function n_tty f_create_tty ();environment l_env
+n_tty lu_tty
+
+GetEnvironment(l_env)
+
+choose case l_env.ostype
+       case Windows!
+//		
+//		IF  l_env.win16 THEN
+//			lu_tty = create n_tty16
+//		ELSE
+//			lu_tty = create n_tty32
+//		END IF
+//	case Windowsnt!
+//		  lu_tty = create n_tty32
+	Case Else
+		  lu_tty = create n_tty
+end choose
+return lu_tty
+end function
+

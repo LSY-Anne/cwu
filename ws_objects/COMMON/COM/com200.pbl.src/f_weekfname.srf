@@ -1,0 +1,81 @@
+﻿$PBExportHeader$f_weekfname.srf
+$PBExportComments$값의 플래그에 따라 요일의 값을 리턴한다.
+global type f_weekfname from function_object
+end type
+
+forward prototypes
+global function string f_weekfname (string as_flag, string as_day)
+end prototypes
+
+global function string f_weekfname (string as_flag, string as_day);//////////////////////////////////////////////////////////////////
+// 	작성목적 : 그날의 일자에 해당하는 요일을 리턴한다.
+//    적 성 인 : 이현수
+//		작성일자 : 2002.10
+//    변 경 인 :
+//    변경일자 :
+//    변경사유 :
+//////////////////////////////////////////////////////////////////
+
+/*******************************************************
+ * as_Flag : 구분값 D : 숫자로 리턴                    *
+ *           구분값 H : 한글 리턴                      *
+ *           구분값 E : 영문 리턴                      * 
+ *******************************************************/
+ 
+date ld_first
+int i_year, i_month, i_day,i_daynumber
+String s_retrun
+
+i_year     = Integer(left(as_day,4))  //년
+i_month    = Integer(mid(as_day,5,2)) //달
+i_day      = Integer(right(as_day,2)) //일
+ld_first   = date(i_year, i_month, i_day)
+
+i_daynumber = daynumber(ld_first)
+
+IF as_Flag = 'D' THEN
+	s_retrun = String(i_daynumber)
+ELSEIF as_Flag = 'H' THEN	
+/****************************************
+ *  국문면에 해당 하는 요일을 리턴한다. *
+ ****************************************/
+	CHOOSE CASE i_daynumber
+	CASE 1
+		s_retrun = '일'			
+	CASE 2
+		s_retrun = '월'
+	CASE 3
+		s_retrun = '화'
+	CASE 4
+		s_retrun = '수'
+	CASE 5
+		s_retrun = '목'
+	CASE 6
+		s_retrun = '금'
+	CASE 7
+		s_retrun = '토'		
+   END CHOOSE
+ELSE
+/****************************************
+ *  영문면에 해당 하는 요일을 리턴한다. *
+ ****************************************/
+	CHOOSE CASE i_daynumber
+	CASE 1
+		s_retrun = 'SUN'			
+	CASE 2
+		s_retrun = 'MON'
+	CASE 3
+		s_retrun = 'TUE'
+	CASE 4
+		s_retrun = 'WED'
+	CASE 5
+		s_retrun = 'THE'
+	CASE 6
+		s_retrun = 'FRI'
+	CASE 7
+		s_retrun = 'SAT'		
+   END CHOOSE	
+END IF
+return s_retrun
+end function
+

@@ -1,0 +1,67 @@
+﻿$PBExportHeader$d_hpa105a_3.srd
+$PBExportComments$이체 은행계좌 리스트
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(5) updatewhereclause=yes name=member_no dbname="member_no" )
+ column=(type=char(40) updatewhereclause=yes name=name dbname="name" )
+ column=(type=char(3) updatewhereclause=yes name=hin001m_duty_code dbname="hin001m.duty_code" )
+ column=(type=decimal(0) updatewhereclause=yes name=hin003m_02v_jikjong_code dbname="hin001m.jikjong_code" )
+ column=(type=char(20) updatewhereclause=yes name=duty_name dbname="duty_name" )
+ column=(type=decimal(0) updatewhereclause=yes name=bank_code dbname="hin001m.bank_code" )
+ column=(type=char(20) updatewhereclause=yes name=acct_no dbname="hin001m.acct_no" )
+ column=(type=char(20) updatewhereclause=yes name=depositor dbname="hin001m.depositor" )
+ column=(type=decimal(0) updatewhereclause=yes name=pay_class dbname="hin001m.pay_class" )
+ column=(type=char(1) updatewhereclause=yes name=use_yn dbname="hin001m.use_yn" values="Y	9/	0/" )
+ retrieve="	
+	select	rtrim(a.member_no) 	member_no,
+				rtrim(a.name)			name,
+				a.duty_code,
+				b.jikjong_code,
+				rtrim(b.duty_name)	duty_name,
+				c.bank_code,
+				c.acct_no,
+				c.depositor,
+				c.pay_class,
+				c.use_yn
+	from		indb.hin001m a, indb.V_HIN003M_1 b, padb.hpa020m c
+	where		b.jikjong_code	>=	:ai_str_jikjong
+	and		b.jikjong_code <=	:ai_end_jikjong
+	and		a.jaejik_opt	in	(1, 2)
+	and		a.duty_code		=	b.duty_code (+)
+	and		a.member_no		=	c.member_no	(+)
+	order by a.duty_code,
+				a.member_no,
+				c.pay_class,
+				c.bank_code" arguments=(("ai_str_jikjong", number),("ai_end_jikjong", number)) )
+text(band=header alignment="2" text="성 명" border="0" color="0" x="361" y="12" height="56" width="453" html.valueishtml="0"  name=name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="개인번호" border="0" color="0" x="9" y="12" height="56" width="343" html.valueishtml="0"  name=member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직 급 명" border="0" color="0" x="823" y="12" height="56" width="576" html.valueishtml="0"  name=duty_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="은행명" border="0" color="0" x="1408" y="12" height="56" width="480" html.valueishtml="0"  name=bank_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계좌번호" border="0" color="0" x="1897" y="12" height="56" width="672" html.valueishtml="0"  name=acct_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="예금주" border="0" color="0" x="2578" y="12" height="56" width="539" html.valueishtml="0"  name=depositor_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="지급구분" border="0" color="0" x="3127" y="12" height="56" width="439" html.valueishtml="0"  name=pay_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="사용" border="0" color="0" x="3575" y="12" height="56" width="155" html.valueishtml="0"  name=use_yn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="343" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="361" y="4" height="72" width="453" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="1408" y="4" height="72" width="480" format="[general]" html.valueishtml="0"  name=bank_code visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="1897" y="4" height="72" width="672" format="[general]" html.valueishtml="0"  name=acct_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="2578" y="4" height="72" width="539" format="[general]" html.valueishtml="0"  name=depositor visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="0" x="3127" y="4" height="72" width="439" format="[general]" html.valueishtml="0"  name=pay_class visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="823" y="4" height="72" width="576" format="[general]" html.valueishtml="0"  name=duty_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="0" x="3575" y="4" height="72" width="155" format="[general]" html.valueishtml="0"  name=use_yn visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+
+sparse(names="member_no	name	duty_name")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

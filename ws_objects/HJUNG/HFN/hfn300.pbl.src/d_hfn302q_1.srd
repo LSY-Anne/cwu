@@ -1,0 +1,71 @@
+﻿$PBExportHeader$d_hfn302q_1.srd
+$PBExportComments$전표미발행결의서리스트
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=76 color="553648127" )
+summary(height=84 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=decimal(0) updatewhereclause=yes name=slip_class dbname="hfn102m.slip_class" values="수입	1/지출	2/" )
+ column=(type=char(8) updatewhereclause=yes name=resol_date dbname="hfn102m.resol_date" )
+ column=(type=number updatewhereclause=yes name=resol_no dbname="hfn102m.resol_no" )
+ column=(type=number updatewhereclause=yes name=resol_seq dbname="hfn102m.resol_seq" )
+ column=(type=char(4) updatewhereclause=yes name=hfn101m_resol_gwa dbname="hfn102m.resol_gwa" )
+ column=(type=char(50) updatewhereclause=yes name=fname dbname="hfn102m.fname" )
+ column=(type=char(6) updatewhereclause=yes name=hfn102m_acct_code dbname="hfn102m.acct_code" )
+ column=(type=char(30) updatewhereclause=yes name=acct_name dbname="acct_name" )
+ column=(type=decimal(0) updatewhereclause=yes name=resol_amt dbname="hfn102m.resol_amt" )
+ column=(type=char(100) updatewhereclause=yes name=remark dbname="hfn102m.remark" )
+ column=(type=char(4000) updatewhereclause=yes name=step dbname="step" )
+ retrieve="SELECT	B.SLIP_CLASS,
+			A.RESOL_DATE,
+			A.RESOL_NO,
+			A.RESOL_SEQ,
+			B.RESOL_GWA,
+			D.FNAME,
+			A.ACCT_CODE,
+			DECODE(B.SLIP_CLASS,1,C.ACCT_INAME,2,C.ACCT_ONAME,C.ACCT_NAME)	ACCT_NAME,
+			A.RESOL_AMT,
+			A.REMARK,
+			FU_CODE_NM('HAENG', 'STEP_OPT', B.STEP_OPT, 'K')	STEP
+FROM		FNDB.HFN102M A, FNDB.HFN101M B, ACDB.HAC001M C, CDDB.KCH003M D
+WHERE		A.ACCT_CLASS = B.ACCT_CLASS
+AND		A.RESOL_DATE = B.RESOL_DATE
+AND		A.RESOL_NO   = B.RESOL_NO
+AND		A.ACCT_CODE  = C.ACCT_CODE (+)
+AND		B.RESOL_GWA  = D.GWA (+)
+AND		A.ACCT_CLASS = :AI_ACCT_CLASS
+AND		B.RESOL_GWA  LIKE :AS_RESOL_GWA||'%'
+AND		(B.SLIP_DATE IS NULL OR TRIM(B.SLIP_DATE) = '')
+ORDER BY A.RESOL_DATE, A.RESOL_NO, A.RESOL_SEQ" arguments=(("ai_acct_class", number),("as_resol_gwa", string)) )
+text(band=header alignment="2" text="구분" border="0" color="0" x="9" y="8" height="56" width="165" html.valueishtml="0"  name=slip_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="결의일자" border="0" color="0" x="558" y="8" height="56" width="361" html.valueishtml="0"  name=resol_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="번호" border="0" color="0" x="928" y="8" height="56" width="174" html.valueishtml="0"  name=resol_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="순번" border="0" color="0" x="1111" y="8" height="56" width="155" html.valueishtml="0"  name=resol_seq_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="결의부서" border="0" color="0" x="1275" y="8" height="56" width="681" html.valueishtml="0"  name=fname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계  정  명" border="0" color="0" x="1966" y="8" height="56" width="736" html.valueishtml="0"  name=acct_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="결의금액" border="0" color="0" x="2711" y="8" height="56" width="521" html.valueishtml="0"  name=resol_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="적    요" border="0" color="0" x="3241" y="8" height="56" width="1678" html.valueishtml="0"  name=remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="결의상태" border="0" color="0" x="183" y="8" height="56" width="366" html.valueishtml="0"  name=step_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="8" height="68" width="165" html.valueishtml="0"  name=slip_class visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="558" y="8" height="68" width="361" format="@@@@/@@/@@" html.valueishtml="0"  name=resol_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="928" y="8" height="68" width="174" format="[general]" html.valueishtml="0"  name=resol_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="1111" y="8" height="68" width="155" format="[general]" html.valueishtml="0"  name=resol_seq visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1275" y="8" height="68" width="681" format="[general]" html.valueishtml="0"  name=fname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="1966" y="8" height="68" width="736" format="[general]" html.valueishtml="0"  name=acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="2711" y="8" height="68" width="521" format="#,###" html.valueishtml="0"  name=resol_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="3241" y="8" height="68" width="1678" format="[general]" html.valueishtml="0"  name=remark visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="183" y="8" height="68" width="366" format="[general]" html.valueishtml="0"  name=step visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=summary alignment="2" text="합      계" border="0" color="0" x="1966" y="8" height="60" width="736" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum(resol_amt for all)"border="0" color="0" x="2711" y="8" height="68" width="521" format="#,###" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+
+sparse(names="slip_class	step	resol_date	resol_no")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

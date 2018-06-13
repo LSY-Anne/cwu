@@ -1,0 +1,27 @@
+﻿$PBExportHeader$gf_nvl.srf
+global type gf_nvl from function_object
+end type
+
+forward prototypes
+global function any gf_nvl (any as_input, any as_output)
+end prototypes
+
+global function any gf_nvl (any as_input, any as_output);string ls_input, ls_input_origin
+
+ls_input_origin = string(as_input) 
+
+select nvl(:ls_input_origin,' ')
+  into: ls_input
+  from dual ;
+  
+if sqlca.sqlcode <> 0 then
+	return sqlca.sqlcode
+end if
+
+if ls_input = ' ' then
+	return as_output
+else 
+	return as_input
+end if
+end function
+

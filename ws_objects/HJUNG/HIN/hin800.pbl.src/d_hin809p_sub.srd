@@ -1,0 +1,332 @@
+﻿$PBExportHeader$d_hin809p_sub.srd
+$PBExportComments$전문대학 교원급여 및 수업시수 현황 dw sub
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=156 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=260 color="536870912" )
+table(column=(type=char(8) updatewhereclause=yes name=duty_code dbname="duty_code" )
+ column=(type=char(1) updatewhereclause=yes name=compute_0002 dbname="compute_0002" )
+ column=(type=number updatewhereclause=yes name=limit_tot dbname="limit_tot" )
+ column=(type=number updatewhereclause=yes name=gyosu_tot dbname="gyosu_tot" )
+ column=(type=number updatewhereclause=yes name=gyosu_fe dbname="gyosu_fe" )
+ column=(type=number updatewhereclause=yes name=soonge_cnt dbname="soonge_cnt" )
+ column=(type=number updatewhereclause=yes name=max dbname="max" )
+ column=(type=number updatewhereclause=yes name=min dbname="min" )
+ column=(type=number updatewhereclause=yes name=avg dbname="avg" )
+ column=(type=number updatewhereclause=yes name=max_t dbname="max_t" )
+ column=(type=number updatewhereclause=yes name=min_t dbname="min_t" )
+ column=(type=number updatewhereclause=yes name=avg_t dbname="avg_t" )
+ retrieve="select a.duty_code,
+ 				'1',
+ 				b.limit_tot, 
+ 				b.gyosu_tot, 
+ 				b.gyosu_fe, 
+ 				c.soonge_cnt, 
+ 				d.max, 
+ 				d.min, 
+ 				d.avg, 
+ 				e.max_t, 
+ 				e.min_t, 
+ 				e.avg_t
+from 
+(	select	duty_code
+	from		indb.hin003m
+	where		duty_code in (101, 102, 103, 104)	) a,
+(	select	duty_code,
+				sum(decode(schedule_gb, 1, 1, '')) as limit_tot,
+				sum(1) as gyosu_tot,
+				sum(decode(substr(jumin_no, 7, 1), 2, 1, '')) as gyosu_fe
+	from		indb.hin001m 
+	where		nation_code = 118
+	group by duty_code	) b,
+(	select	duty_code,
+				sum(1) as soonge_cnt
+	from		indb.hin001m
+	where		nation_code = 118 
+	and		LAST_SCHOOL LIKE '%숭의%'
+	group by duty_code	) c,
+(	SELECT	a.duty_code as duty_code,
+				max(b.pay_amt + b.retro_amt) as max,
+				min(b.pay_amt + b.retro_amt) as min,
+				avg(b.pay_amt + b.retro_amt) as avg
+	FROM		indb.hin001m a,
+				padb.HPA005D b,
+				PADB.HPA003M c
+	WHERE		b.CODE < '50' 
+	and		nation_code = 118 
+	and		b.code = c.code
+	and		c.excepte_gbn <> 1
+	AND		a.member_no = b.member_no 
+	and		SUBSTR(b.YEAR_MONTH,1,4) = '2001' 
+	and		b.pay_amt <> '0'
+	group by a.duty_code	) d,
+(	select	a.duty_code as duty_code,
+				max((num_of_general + num_of_middle + num_of_large + num_of_nigeneral + num_of_nimiddle + num_of_nilarge) +
+					(time_of_pause1 + time_of_pause2 + time_of_pause3) -
+					(bogang_sisu_1 + bogang_sisu_2 + bogang_sisu_3) +
+					(num_of_overtime1 + num_of_overtime2 + num_of_overtime3)) as max_t,
+				min((num_of_general + num_of_middle + num_of_large + num_of_nigeneral + num_of_nimiddle + num_of_nilarge) +
+					(time_of_pause1 + time_of_pause2 + time_of_pause3) -
+					(bogang_sisu_1 + bogang_sisu_2 + bogang_sisu_3) +
+					(num_of_overtime1 + num_of_overtime2 + num_of_overtime3)) as min_t,
+				avg((num_of_general + num_of_middle + num_of_large + num_of_nigeneral + num_of_nimiddle + num_of_nilarge) +
+					(time_of_pause1 + time_of_pause2 + time_of_pause3) -
+					(bogang_sisu_1 + bogang_sisu_2 + bogang_sisu_3) +
+					(num_of_overtime1 + num_of_overtime2 + num_of_overtime3)) as avg_t
+	from		indb.hin001m a,
+				padb.hpa112t b
+	where a.member_no = b.member_no 
+	and	a.nation_code = 118
+	group by a.duty_code	) e
+where	a.duty_code = b.duty_code(+)
+and	a.duty_code = c.duty_code(+)
+and	a.duty_code = d.duty_code(+)
+and	a.duty_code = e.duty_code(+)
+union
+select	'겸임',
+			'2',
+			b.limit_tot, 
+			b.gyosu_tot, 
+			b.gyosu_fe, 
+			c.soonge_cnt, 
+			d.max, 
+			d.min, 
+			d.avg, 
+			e.max_t, 
+			e.min_t, 
+			e.avg_t
+
+
+from 
+(	select	sum(decode(schedule_gb, 1, '', '')) as limit_tot,
+				sum(1) as gyosu_tot,
+				sum(decode(substr(jumin_no, 7, 1), 2, 1, '')) as gyosu_fe
+	from		indb.hin001m 
+	where		nation_code = 118 
+	and		duty_code = 111	) b,
+(	select	sum(1) as soonge_cnt
+	from		indb.hin001m
+	where		nation_code = 118 
+	and		LAST_SCHOOL LIKE '%숭의%' 
+	and		duty_code = 111	) c,
+(	SELECT	max(b.pay_amt + b.retro_amt) as max,
+				min(b.pay_amt + b.retro_amt) as min, 
+				avg(b.pay_amt + b.retro_amt) as avg
+	FROM		indb.hin001m a, 
+				padb.HPA005D b, 
+				padb.HPA003M c
+	WHERE		b.CODE < '50' 
+	and		nation_code = 118 
+	and		b.code = c.code 
+	and		c.excepte_gbn <> 1
+	and		a.member_no = b.member_no 
+	and		SUBSTR(b.YEAR_MONTH,1,4) = '2001' 
+	and		b.pay_amt <> '0'
+	and		a.duty_code = 111	) d,
+(	select	max((num_of_general + num_of_middle + num_of_large + num_of_nigeneral + num_of_nimiddle + num_of_nilarge) +
+					(time_of_pause1 + time_of_pause2 + time_of_pause3) -
+					(bogang_sisu_1 + bogang_sisu_2 + bogang_sisu_3) +
+					(num_of_overtime1 + num_of_overtime2 + num_of_overtime3)) as max_t,
+				min((num_of_general + num_of_middle + num_of_large + num_of_nigeneral + num_of_nimiddle + num_of_nilarge) +
+					(time_of_pause1 + time_of_pause2 + time_of_pause3) -
+					(bogang_sisu_1 + bogang_sisu_2 + bogang_sisu_3) +
+					(num_of_overtime1 + num_of_overtime2 + num_of_overtime3)) as min_t,
+				avg((num_of_general + num_of_middle + num_of_large + num_of_nigeneral + num_of_nimiddle + num_of_nilarge) +
+					(time_of_pause1 + time_of_pause2 + time_of_pause3) -
+					(bogang_sisu_1 + bogang_sisu_2 + bogang_sisu_3) +
+					(num_of_overtime1 + num_of_overtime2 + num_of_overtime3)) as avg_t
+	from		indb.hin001m a,
+				padb.hpa112t b
+	where		a.member_no = b.member_no 
+	and		nation_code = 118 
+	and		a.duty_code = 111	) e
+union
+select	'초빙', 
+			'3', 
+			b.limit_tot, 
+			b.gyosu_tot, 
+			b.gyosu_fe, 
+			c.soonge_cnt, 
+			d.max, 
+			d.min, 
+			d.avg, 
+			e.max_t, 
+			e.min_t, 
+			e.avg_t
+from 
+(	select	sum(decode(schedule_gb, 1, '', '')) as limit_tot,
+				sum(1) as gyosu_tot,
+				sum(decode(substr(jumin_no, 7, 1), 2, 1, '')) as gyosu_fe
+	from		indb.hin001m 
+	where		nation_code = 118 
+	and		duty_code = 112	) b,
+(	select	sum(1) as soonge_cnt
+	from		indb.hin001m
+	where		nation_code = 118 
+	and		LAST_SCHOOL  LIKE '%숭의%' 
+	and		duty_code = 108	) c,
+(	SELECT	max(b.pay_amt + b.retro_amt) as max,
+				min(b.pay_amt + b.retro_amt) as min, 
+				avg(b.pay_amt + b.retro_amt) as avg
+	FROM		indb.hin001m a,
+				padb.HPA005D b,
+				padb.HPA003M c
+	WHERE		b.CODE < '50' 
+	and		nation_code = 118 
+	and		b.code = c.code 
+	and		c.excepte_gbn <> 1
+	and		a.member_no = b.member_no 
+	and		SUBSTR(b.YEAR_MONTH,1,4) = '2001' 
+	and		b.pay_amt <> '0'
+	and		duty_code = 112	) d,
+(	select	max((num_of_general + num_of_middle + num_of_large + num_of_nigeneral + num_of_nimiddle + num_of_nilarge) +
+					(time_of_pause1 + time_of_pause2 + time_of_pause3) -
+					(bogang_sisu_1 + bogang_sisu_2 + bogang_sisu_3) +
+					(num_of_overtime1 + num_of_overtime2 + num_of_overtime3)) as max_t,
+				min((num_of_general + num_of_middle + num_of_large + num_of_nigeneral + num_of_nimiddle + num_of_nilarge) +
+					(time_of_pause1 + time_of_pause2 + time_of_pause3) -
+					(bogang_sisu_1 + bogang_sisu_2 + bogang_sisu_3) +
+					(num_of_overtime1 + num_of_overtime2 + num_of_overtime3)) as min_t,
+				avg((num_of_general + num_of_middle + num_of_large + num_of_nigeneral + num_of_nimiddle + num_of_nilarge) +
+					(time_of_pause1 + time_of_pause2 + time_of_pause3) -
+					(bogang_sisu_1 + bogang_sisu_2 + bogang_sisu_3) +
+					(num_of_overtime1 + num_of_overtime2 + num_of_overtime3)) as avg_t
+	from		indb.hin001m a, padb.hpa112t b
+	where		a.member_no = b.member_no 
+	and		nation_code = 118 
+	and		duty_code = 112	) e
+union
+select	'외국인',
+			'4', 
+			b.limit_tot, 
+			b.gyosu_tot, 
+			b.gyosu_fe, 
+			c.soonge_cnt, 
+			d.max, 
+			d.min, 
+			d.avg, 
+			e.max_t, 
+			e.min_t, 
+			e.avg_t
+from 
+(	select	sum(decode(schedule_gb, 1, '', '')) as limit_tot,
+				sum(1) as gyosu_tot,
+				sum(decode(substr(jumin_no, 7, 1), 2, 1, '')) as gyosu_fe
+	from		indb.hin001m 
+	where		nation_code <> 118	) b,
+(	select	sum(1) as soonge_cnt
+	from		indb.hin001m
+	where		nation_code <> 118 
+	and		LAST_SCHOOL LIKE '%숭의%'	) c,
+(	SELECT	max(b.pay_amt + b.retro_amt) as max,
+				min(b.pay_amt + b.retro_amt) as min, 
+				avg(b.pay_amt + b.retro_amt) as avg
+	FROM		indb.hin001m a, 
+				padb.HPA005D b, 
+				padb.HPA003M c
+	WHERE		b.CODE < '50' 
+	and		nation_code <> 118 
+	and		b.code = c.code 
+	and		c.excepte_gbn <> 1
+	and		a.member_no = b.member_no 
+	and		SUBSTR(b.YEAR_MONTH,1,4) = '2001' 
+	and		b.pay_amt <> '0'	) d,
+(	select	max((num_of_general + num_of_middle + num_of_large + num_of_nigeneral + num_of_nimiddle + num_of_nilarge) +
+					(time_of_pause1 + time_of_pause2 + time_of_pause3) -
+					(bogang_sisu_1 + bogang_sisu_2 + bogang_sisu_3) +
+					(num_of_overtime1 + num_of_overtime2 + num_of_overtime3)) as max_t,
+				min((num_of_general + num_of_middle + num_of_large + num_of_nigeneral + num_of_nimiddle + num_of_nilarge) +
+					(time_of_pause1 + time_of_pause2 + time_of_pause3) -
+					(bogang_sisu_1 + bogang_sisu_2 + bogang_sisu_3) +
+					(num_of_overtime1 + num_of_overtime2 + num_of_overtime3)) as min_t,
+				avg((num_of_general + num_of_middle + num_of_large + num_of_nigeneral + num_of_nimiddle + num_of_nilarge) +
+					(time_of_pause1 + time_of_pause2 + time_of_pause3) -
+					(bogang_sisu_1 + bogang_sisu_2 + bogang_sisu_3) +
+					(num_of_overtime1 + num_of_overtime2 + num_of_overtime3)) as avg_t
+	from		indb.hin001m a, padb.hpa112t b
+	where		a.member_no = b.member_no 
+	and		a.nation_code <> 118	) e
+union
+select	'시간강사',
+			'5', 
+			b.limit_tot, 
+			b.gyosu_tot, 
+			b.gyosu_fe, 
+			c.soonge_cnt, 
+			d.max, 
+			d.min, 
+			d.avg, 
+			e.max_t, 
+			e.min_t, 
+			e.avg_t
+from 
+(	select	sum(decode(schedule_gb, 1, '', '')) as limit_tot,
+				sum(1) as gyosu_tot,
+				sum(decode(substr(jumin_no, 7, 1), 2, 1, '')) as gyosu_fe
+	from		indb.hin001m 
+	where		nation_code = 118 
+	and		duty_code = 301	) b,
+(	select	sum(1) as soonge_cnt
+	from		indb.hin001m
+	where		nation_code = 118 
+	and		LAST_SCHOOL LIKE '%숭의%' 
+	and		duty_code = 301	) c,
+(	SELECT	max(b.pay_amt + b.retro_amt) as max, 
+				min(b.pay_amt + b.retro_amt) as min, 
+				avg(b.pay_amt + b.retro_amt) as avg
+	FROM		indb.hin001m a, padb.HPA005D b, padb.HPA003M c
+	WHERE		b.CODE < '50' 
+	and		nation_code = 118 
+	and		b.code = c.code 
+	and		c.excepte_gbn <> 1
+	and		a.member_no = b.member_no 
+	and		SUBSTR(b.YEAR_MONTH,1,4) = '2001' 
+	and		b.pay_amt <> '0'
+	and		duty_code = 301	) d,
+(	select	max((num_of_general + num_of_middle + num_of_large + num_of_nigeneral + num_of_nimiddle + num_of_nilarge) +
+					(time_of_pause1 + time_of_pause2 + time_of_pause3) -
+					(bogang_sisu_1 + bogang_sisu_2 + bogang_sisu_3) +
+					(num_of_overtime1 + num_of_overtime2 + num_of_overtime3)) as max_t,
+				min((num_of_general + num_of_middle + num_of_large + num_of_nigeneral + num_of_nimiddle + num_of_nilarge) +
+					(time_of_pause1 + time_of_pause2 + time_of_pause3) -
+					(bogang_sisu_1 + bogang_sisu_2 + bogang_sisu_3) +
+					(num_of_overtime1 + num_of_overtime2 + num_of_overtime3)) as min_t,
+				avg((num_of_general + num_of_middle + num_of_large + num_of_nigeneral + num_of_nimiddle + num_of_nilarge) +
+					(time_of_pause1 + time_of_pause2 + time_of_pause3) -
+					(bogang_sisu_1 + bogang_sisu_2 + bogang_sisu_3) +
+					(num_of_overtime1 + num_of_overtime2 + num_of_overtime3)) as avg_t
+	from		indb.hin001m a,
+				padb.hpa112t b
+	where		a.member_no = b.member_no 
+	and		nation_code = 118 
+	and		duty_code = 301	) e
+order by 2,1
+" arguments=(("as_yy", string)) )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="1262" y="92" height="76" width="229" format="[general]" html.valueishtml="0"  name=max visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="1513" y="92" height="76" width="229" format="[general]" html.valueishtml="0"  name=min visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="1765" y="92" height="76" width="229" format="[general]" html.valueishtml="0"  name=avg visible="1" editmask.mask="####" editmask.focusrectangle=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="0" x="2016" y="92" height="76" width="229" format="[general]" html.valueishtml="0"  name=max_t visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="1" tabsequence=32766 border="0" color="0" x="2267" y="92" height="76" width="229" format="[general]" html.valueishtml="0"  name=min_t visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="1" tabsequence=32766 border="0" color="0" x="2519" y="92" height="76" width="229" format="###,###,###,###" html.valueishtml="0"  name=avg_t visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="265" y="92" height="76" width="238" format="[general]" html.valueishtml="0"  name=gyosu_tot visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="507" y="92" height="76" width="238" format="[general]" html.valueishtml="0"  name=gyosu_fe visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="92" height="76" width="251" format="[general]" html.valueishtml="0"  name=limit_tot visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="750" y="92" height="76" width="238" format="[general]" html.valueishtml="0"  name=soonge_cnt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression="soonge_cnt  /  gyosu_tot"border="0" color="0" x="992" y="92" height="76" width="229" format="####" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(gyosu_tot for all)"border="0" color="0" x="265" y="76" height="76" width="238" format="#####" html.valueishtml="0"  name=compute_8 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(gyosu_fe for all)"border="0" color="0" x="507" y="76" height="76" width="238" format="#####" html.valueishtml="0"  name=compute_9 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(soonge_cnt for all) "border="0" color="0" x="750" y="76" height="76" width="238" format="#####" html.valueishtml="0"  name=compute_10 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="0" expression=" compute_10  /  compute_8 "border="0" color="0" x="992" y="76" height="76" width="229" format="####" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

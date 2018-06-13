@@ -1,0 +1,35 @@
+﻿$PBExportHeader$f_childretrieve_filter.srf
+$PBExportComments$차일등 원도우를 만든다,Filter포함
+global type f_childretrieve_filter from function_object
+end type
+
+forward prototypes
+global function integer f_childretrieve_filter (datawindow sdw_dwname, string as_column, string as_type, long al_filter1, long al_filter2)
+end prototypes
+
+global function integer f_childretrieve_filter (datawindow sdw_dwname, string as_column, string as_type, long al_filter1, long al_filter2);/*************************************************************
+* 드롭다운 데이타 원도우사용.                                * 
+* 컬럼을 드롭다운 데이타 원도우로 변경한다.                  *
+* Arg1 : 데이타 원도우의 이름.                               *
+* Arg2 : 컬럼명.                                             *
+* Arg3 : Cddb.Kch001m.Type 의 타입                           * 
+* al_Filter1 : 필트 조건 1                                   *
+* al_Filter2 : 필트 조건 1                                   *
+**************************************************************/
+datawindowchild dwc
+int li_cnt 
+String ls_Filter
+sdw_dwname.Getchild(as_column, dwc)
+dwc.settransobject(sqlca)
+if dwc.retrieve(as_type) < 1 then 
+	li_cnt = 0
+	dwc.insertrow(0)
+else
+	ls_Filter = "code > " + String(al_filter1) + " and code < " + String(al_filter2)
+	dwc.SetFilter(ls_Filter)
+	li_cnt = dwc.Filter()	
+	li_cnt = dwc.FilteredCount ()
+end If
+return li_cnt
+end function
+

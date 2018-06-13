@@ -1,0 +1,42 @@
+﻿$PBExportHeader$f_pro_toggle.srf
+$PBExportComments$한글영문 On/Off
+global type f_pro_toggle from function_object
+end type
+
+forward prototypes
+global subroutine f_pro_toggle (string as_toggle, long al_handle)
+end prototypes
+
+global subroutine f_pro_toggle (string as_toggle, long al_handle);//////////////////////////////////////////////////////////////////////////////////////////
+// 기    능 : 한/영키 변환
+// 작 성 자 : 
+// 작 성 일 : 
+// 함수원형 : f_pro_toggle(String as_Toggle, Long al_Handle) return none
+// 인    수 : as_Toggle - : 한/영 구분
+//									 K : 한글로 바꿈
+//									 E : 영문으로 바꿈
+//				  al_Handle - : 핸들값
+//									 Handle(PARENT) : Object일때
+//									 Handle(THIS)   : Windowd일때
+// 되 돌 림 : 
+//	주의사항 : 
+//////////////////////////////////////////////////////////////////////////////////////////
+Long		ll_Himc
+
+cuo_hangul	lcuo_hangul
+lcuo_hangul = CREATE cuo_hangul
+
+IF UPPER(as_Toggle) = 'K' THEN               	//한글로 전환
+   ll_Himc = lcuo_hangul.immGetContext(al_Handle)
+   lcuo_hangul.immSetConversionStatus(ll_Himc, 7, 0)               
+   lcuo_hangul.immReleaseContext(al_handle, ll_himc)
+ELSEIF UPPER(as_Toggle) = 'E' THEN           	//영문으로 전환
+   ll_Himc = lcuo_hangul.immGetContext(al_handle)
+   lcuo_hangul.immSetConversionStatus(ll_Himc,0,0)               
+   lcuo_hangul.immReleaseContext(al_handle,ll_Himc)
+END IF
+
+DESTROY lcuo_hangul
+
+end subroutine
+

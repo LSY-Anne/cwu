@@ -1,0 +1,72 @@
+﻿$PBExportHeader$f_hangul_zebra.srf
+$PBExportComments$Zebra 한글 출력 한수
+global type f_hangul_zebra from function_object
+end type
+
+forward prototypes
+global function integer f_hangul_zebra (datawindow dw_index, datawindow dw_fnt, integer xpos, integer ypos, string text, integer xsiz, integer ysiz, integer flagtwo, integer iibar)
+end prototypes
+
+global function integer f_hangul_zebra (datawindow dw_index, datawindow dw_fnt, integer xpos, integer ypos, string text, integer xsiz, integer ysiz, integer flagtwo, integer iibar);string    xysiz, print01, temp01, xxxp, yyyp, han_char, index_data, image_data
+integer   flag, hh, i, xxxpos, yyypos
+long      ll_find_row, ll_find_row2
+
+
+xysiz = ',' + Mid(string(xsiz),1, 2) + "," + Mid(string(ysiz),1, 2)
+
+flag = Asc(Left(Char(flagtwo), 1))
+hh = Asc(Right(Char(flagtwo), 1))
+hh = 0
+
+
+For i = 1 To Len(text)
+	If Asc(mid(text, i, 1)) < 128 Then
+		print01 = '^FO' + string(xpos + (i * 10 * xsiz) ) + ',' + string(ypos + (2 * ysiz)) + &
+					 '^ACN,' + string(((ysiz - 1) * 10)) + string((18 * ysiz)) + ',' + string((12 * xsiz)) + '^FD' + mid(text, i, 1) + '^FS'
+		filewrite(iiBar, print01)
+	Else
+		If (flag = 0) Then
+			//읽어들인 텍스트와 같은 문자를 인덱스파일 dw에서 검색한다.
+			han_char = mid(text, i, 2)
+
+			ll_find_row = dw_index.find("file_text like '"+han_char+"%'", 1, dw_index.rowcount())
+
+			if ll_find_row > 0 then 
+				index_data = right(dw_index.getitemstring(ll_find_row, 'file_text'), 4)
+				
+				ll_find_row2 = dw_fnt.find("file_text like '~~DGE:"+index_data+"%'", 1, dw_fnt.rowcount())
+				
+				if ll_find_row2 > 0 then 
+					image_data = dw_fnt.getitemstring(ll_find_row2, 'file_text')
+					
+					image_data = '~~DG'+right(image_data, len(image_data) - 5)
+			
+					filewrite(iiBar, image_data)
+					filewrite(iiBar, '    ') 
+				end if
+
+			end if
+			 
+		End If
+			 
+		If hh = 0 Then
+			//******* Normal Font Routine
+			xxxpos = xpos + (i * 10 * xsiz) 
+			print01 = '^FO' + string(xxxpos)  + ',' + string(ypos - 3) + '^XG' + index_data + xysiz + '^FS'
+			filewrite(iiBar, print01)
+		
+		Else
+			//******* 90' Font Routine
+			print01 = '^FO' + string(xpos - 3) + ',' + string(ypos + (i * 12 * ysiz)) + '^XG' + index_data + xysiz + '^FS'
+			filewrite(iiBar, print01)
+		
+		End If
+		
+		i = i + 1
+	End If
+Next 
+
+return 0
+
+end function
+

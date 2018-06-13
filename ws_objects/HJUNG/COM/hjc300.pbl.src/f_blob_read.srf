@@ -1,0 +1,32 @@
+﻿$PBExportHeader$f_blob_read.srf
+$PBExportComments$Global Function Binary File Read
+global type f_blob_read from function_object
+end type
+
+forward prototypes
+global function blob f_blob_read (string as_filename)
+end prototypes
+
+global function blob f_blob_read (string as_filename);Integer	li_FileOpen, li_FileRead
+Long		ll_FileLen
+Blob		lbo_FileRead, lbo_Tot_FileRead
+
+SetPointer(HourGlass!)
+
+lbo_FileRead = Blob('')
+
+ll_FileLen  = FileLength(as_FileName)
+li_FileOpen = FileOpen(as_FileName, StreamMode!)
+li_FileRead = FileRead(li_FileOpen, lbo_FileRead)
+
+DO UNTIL li_FileRead = -100
+	lbo_Tot_FileRead = lbo_Tot_FileRead + lbo_FileRead
+   li_FileRead = FileRead(li_FileOpen, lbo_FileRead)
+LOOP
+
+FileClose(li_FileOpen)
+
+RETURN lbo_Tot_FileRead
+//////////////////////////////////////////////////////////////////////////////////////////
+end function
+

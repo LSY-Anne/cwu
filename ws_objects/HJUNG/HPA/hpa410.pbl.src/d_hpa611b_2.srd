@@ -1,0 +1,74 @@
+﻿$PBExportHeader$d_hpa611b_2.srd
+$PBExportComments$연말정산 지급조서 자료 생성(전근무지읽기)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=80 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=92 color="536870912" )
+table(column=(type=char(10) update=yes updatewhereclause=yes key=yes name=member_no dbname="hpa017m.member_no" dbalias=".member_no" )
+ column=(type=char(4) update=yes updatewhereclause=yes key=yes name=year dbname="hpa017m.year" dbalias=".year" )
+ column=(type=number update=yes updatewhereclause=yes key=yes name=seq_no dbname="hpa017m.seq_no" dbalias=".seq_no" )
+ column=(type=char(30) update=yes updatewhereclause=yes name=work_place dbname="hpa017m.work_place" dbalias=".work_place" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=register_no dbname="hpa017m.register_no" dbalias=".register_no" )
+ column=(type=char(80) update=yes updatewhereclause=yes name=address dbname="hpa017m.address" dbalias=".address" )
+ column=(type=number update=yes updatewhereclause=yes name=pay_total dbname="hpa017m.pay_total" dbalias=".pay_total" )
+ column=(type=number update=yes updatewhereclause=yes name=bonus_total dbname="hpa017m.bonus_total" dbalias=".bonus_total" )
+ column=(type=number update=yes updatewhereclause=yes name=income_tax dbname="hpa017m.income_tax" dbalias=".income_tax" )
+ column=(type=number update=yes updatewhereclause=yes name=farm_tax dbname="hpa017m.farm_tax" dbalias=".farm_tax" )
+ column=(type=number update=yes updatewhereclause=yes name=resident_tax dbname="hpa017m.resident_tax" dbalias=".resident_tax" )
+ column=(type=decimal(0) updatewhereclause=yes name=nontax_amt dbname="hpa017m.nontax_amt" dbalias=".nontax_amt" )
+ retrieve="  SELECT PADB.HPA017M.MEMBER_NO,   
+         PADB.HPA017M.YEAR,   
+         PADB.HPA017M.SEQ_NO,   
+         PADB.HPA017M.WORK_PLACE,   
+         PADB.HPA017M.REGISTER_NO,   
+         PADB.HPA017M.ADDRESS,   
+         PADB.HPA017M.PAY_TOTAL,   
+         PADB.HPA017M.BONUS_TOTAL,   
+         PADB.HPA017M.INCOME_TAX,   
+         PADB.HPA017M.FARM_TAX,   
+         PADB.HPA017M.RESIDENT_TAX,   
+         PADB.HPA017M.NONTAX_AMT  
+    FROM PADB.HPA017M  
+   WHERE PADB.HPA017M.YEAR = :as_year
+	and	 PADB.HPA017M.MEMBER_NO like :as_member_no||'%'
+  	ORDER BY PADB.HPA017M.MEMBER_NO ASC,   
+         PADB.HPA017M.YEAR ASC,   
+         PADB.HPA017M.SEQ_NO ASC   
+" update="PADB.HPA017M" updatewhere=1 updatekeyinplace=no arguments=(("as_year", string),("as_member_no", string)) )
+text(band=header alignment="2" text="Member No" border="0" color="0" x="9" y="8" height="64" width="187" html.valueishtml="0"  name=member_no_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Year" border="0" color="0" x="206" y="8" height="64" width="165" html.valueishtml="0"  name=year_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Seq No" border="0" color="0" x="379" y="8" height="64" width="233" html.valueishtml="0"  name=seq_no_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Work Place" border="0" color="0" x="622" y="8" height="64" width="850" html.valueishtml="0"  name=work_place_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Register No" border="0" color="0" x="1481" y="8" height="64" width="361" html.valueishtml="0"  name=register_no_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Address" border="0" color="0" x="1851" y="8" height="64" width="1202" html.valueishtml="0"  name=address_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Pay Total" border="0" color="0" x="3063" y="8" height="64" width="329" html.valueishtml="0"  name=pay_total_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Bonus Total" border="0" color="0" x="3401" y="8" height="64" width="329" html.valueishtml="0"  name=bonus_total_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Income Tax" border="0" color="0" x="3739" y="8" height="64" width="329" html.valueishtml="0"  name=income_tax_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Farm Tax" border="0" color="0" x="4078" y="8" height="64" width="329" html.valueishtml="0"  name=farm_tax_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Resident Tax" border="0" color="0" x="4416" y="8" height="64" width="347" html.valueishtml="0"  name=resident_tax_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Nontax Amt" border="0" color="0" x="4773" y="4" height="76" width="402" html.valueishtml="0"  name=nontax_amt_t visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=10 border="0" color="0" x="9" y="8" height="76" width="187" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="0" color="0" x="206" y="8" height="76" width="165" format="[general]" html.valueishtml="0"  name=year visible="1" edit.limit=4 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=30 border="0" color="0" x="379" y="8" height="76" width="233" format="[general]" html.valueishtml="0"  name=seq_no visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=40 border="0" color="0" x="622" y="8" height="76" width="850" format="[general]" html.valueishtml="0"  name=work_place visible="1" edit.limit=30 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=50 border="0" color="0" x="1481" y="8" height="76" width="361" format="[general]" html.valueishtml="0"  name=register_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=60 border="0" color="0" x="1851" y="8" height="76" width="1202" format="[general]" html.valueishtml="0"  name=address visible="1" edit.limit=80 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=70 border="0" color="0" x="3063" y="8" height="76" width="329" format="[general]" html.valueishtml="0"  name=pay_total visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=80 border="0" color="0" x="3401" y="8" height="76" width="329" format="[general]" html.valueishtml="0"  name=bonus_total visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=90 border="0" color="0" x="3739" y="8" height="76" width="329" format="[general]" html.valueishtml="0"  name=income_tax visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=100 border="0" color="0" x="4078" y="8" height="76" width="329" format="[general]" html.valueishtml="0"  name=farm_tax visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="1" tabsequence=110 border="0" color="0" x="4416" y="8" height="76" width="347" format="[general]" html.valueishtml="0"  name=resident_tax visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="4773" y="0" height="64" width="402" format="[general]" html.valueishtml="0"  name=nontax_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

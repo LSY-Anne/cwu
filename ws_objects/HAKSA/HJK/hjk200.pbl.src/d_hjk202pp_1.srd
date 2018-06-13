@@ -1,0 +1,49 @@
+﻿$PBExportHeader$d_hjk202pp_1.srd
+$PBExportComments$[청운대]학적변동자명부
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=140 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=156 color="536870912" )
+table(column=(type=char(15) updatewhereclause=yes name=l_user_id dbname="ll_lendhistory.l_user_id" )
+ column=(type=char(15) updatewhereclause=yes name=l_book_id dbname="ll_lendhistory.l_book_id" )
+ column=(type=char(50) updatewhereclause=yes name=l_title dbname="ll_lendhistory.l_title" )
+ column=(type=char(8) updatewhereclause=yes name=l_lenddate dbname="ll_lendhistory.l_lenddate" )
+ column=(type=char(8) updatewhereclause=yes name=l_returdate dbname="ll_lendhistory.l_returdate" )
+ column=(type=char(6) updatewhereclause=yes name=l_retutime dbname="ll_lendhistory.l_retutime" )
+ column=(type=char(1) updatewhereclause=yes name=l_status dbname="ll_lendhistory.l_status" values="대출중	1/연기중	2/반납	0/" )
+ retrieve="SELECT 	ll_lendhistory.l_user_id,   
+			ll_lendhistory.l_book_id,   
+			ll_lendhistory.l_title,   
+			ll_lendhistory.l_lenddate,   
+			ll_lendhistory.l_returdate,   
+			ll_lendhistory.l_retutime,   
+			ll_lendhistory.l_status  
+FROM 		ll_lendhistory  
+WHERE		ll_lendhistory.l_user_id = :as_hakbun AND
+			ll_lendhistory.l_status IN ('1','2')
+" arguments=(("as_hakbun", string)) )
+text(band=header alignment="2" text="도서명" border="0" color="25058105" x="425" y="4" height="64" width="1600" html.valueishtml="0"  name=l_title_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="도서등록번호" border="0" color="25058105" x="5" y="4" height="64" width="416" html.valueishtml="0"  name=l_book_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="대출일" border="0" color="25058105" x="5" y="72" height="68" width="416" html.valueishtml="0"  name=l_lenddate_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="통제번호" border="0" color="25058105" x="1431" y="72" height="68" width="594" html.valueishtml="0"  name=l_status_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="연체시간" border="0" color="25058105" x="841" y="72" height="68" width="585" html.valueishtml="0"  name=l_retutime_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="반납예정일" border="0" color="25058105" x="421" y="72" height="68" width="416" html.valueishtml="0"  name=l_returdate_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="425" y="4" height="68" width="1600" format="[general]" html.valueishtml="0"  name=l_title visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="5" y="4" height="68" width="416" format="[general]" html.valueishtml="0"  name=l_book_id visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="5" y="80" height="72" width="416" format="[general]" html.valueishtml="0"  name=l_lenddate visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="421" y="80" height="72" width="416" format="[general]" html.valueishtml="0"  name=l_returdate visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="1431" y="80" height="72" width="594" format="[general]" html.valueishtml="0"  name=l_status visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="841" y="80" height="72" width="585" format="[general]" html.valueishtml="0"  name=l_retutime visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

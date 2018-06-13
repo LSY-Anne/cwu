@@ -1,0 +1,36 @@
+﻿$PBExportHeader$d_dhwdr308q_n1.srd
+$PBExportComments$[대학원등록] 교육비 납입증명서-Nested
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=112 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=112 color="536870912" )
+table(column=(type=char(1) updatewhereclause=yes name=hakgi dbname="d_dungrok.hakgi" )
+ column=(type=char(8) updatewhereclause=yes name=dr_ilja dbname="dr_ilja" )
+ column=(type=number updatewhereclause=yes name=dungrok dbname="dungrok" )
+ retrieve="SELECT	HAKGI		AS	HAKGI,
+			MIN(DECODE(DUNG_YN, '1', NAPBU_DATE, '99999999'))	AS	DR_ILJA,
+			NVL(SUM(IPHAK_N), 0) + NVL(SUM(DUNGROK_N), 0)		AS	DUNGROK
+FROM	HAKSA.D_DUNGROK
+WHERE	YEAR		=	:as_year
+AND	HAKBUN	=	:as_hakbun
+GROUP BY HAKGI" arguments=(("as_year", string),("as_hakbun", string)) )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="27" y="24" height="72" width="453" format="[general]" html.valueishtml="0"  name=dr_ilja visible="1~tif( isnull(dungrok) or dungrok = 0 , 0, 1)" editmask.mask="XXXX.XX.XX" editmask.focusrectangle=no  font.face="굴림체" font.height="-11" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="학기" border="0" color="0" x="741" y="24" height="72" width="169" html.valueishtml="0"  name=t_1 visible="1~tif( isnull(dungrok) or dungrok = 0 , 0, 1)"  font.face="굴림체" font.height="-11" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="649" y="24" height="72" width="78" format="[general]" html.valueishtml="0"  name=hakgi visible="1~tif( isnull(dungrok) or dungrok = 0 , 0, 1)" edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-11" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="등 록 금" border="0" color="0" x="1266" y="24" height="72" width="366" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-11" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="1979" y="24" height="72" width="558" format="#,##" html.valueishtml="0"  name=dungrok visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-11" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=summary alignment="2" text="계" border="0" color="0" x="1367" y="24" height="68" width="169" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-11" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="1" expression="sum(dungrok for all)"border="0" color="0" x="1979" y="20" height="72" width="558" format="#,##" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-11" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,50 @@
+﻿$PBExportHeader$f_getpaybontot.srf
+$PBExportComments$현근무지합계자료를 구한다(as_year,as_gubun:return=구분에 따라)
+global type f_getpaybontot from function_object
+end type
+
+forward prototypes
+global function decimal f_getpaybontot (string as_year, string as_gubun)
+end prototypes
+
+global function decimal f_getpaybontot (string as_year, string as_gubun);//	전근무지의 급.상여 등을 추출한다.
+//	구분(1.급여,2.상여,3.소득세,4.주민세)
+Decimal{0}	li_Amt
+
+IF	as_gubun	=	'1'	THEN
+	SELECT 	SUM(A.PAY)  
+	INTO		:li_Amt
+	FROM
+	(SELECT 	NVL(SUM(PAY_AMT),0)  PAY
+	FROM   	PADB.HPA005D
+	WHERE		YEAR_MONTH  LIKE	:as_year || '%'
+	AND		CODE	    < 	  '50'
+	AND		CODE	    <>	  '03'
+	UNION		ALL
+	SELECT 	NVL(SUM(A.MONTH_AMT),0)  PAY
+	FROM  	PADB.HPA116T A
+	WHERE		YEAR  	    = 	  :as_year
+	AND		MONTH	    BETWEEN	 1	AND	12 ) A;		//급여합계
+ELSEIF	as_gubun	=	'2'	THEN
+	SELECT 	NVL(SUM(PAY_AMT),0) 
+	INTO		:li_Amt
+	FROM   	PADB.HPA005D
+	WHERE		YEAR_MONTH  LIKE	  :as_Year || '%'
+	AND		CODE		 =	'03';								//상여합계
+ELSEIF	as_gubun	=	'3'	THEN
+	SELECT 	NVL(SUM(PAY_AMT),0) 
+	INTO		:li_Amt
+	FROM   	PADB.HPA005D
+	WHERE		YEAR_MONTH  LIKE	  :as_Year || '%'
+	AND		CODE		 =	'51';								//소득세
+ELSEIF	as_gubun	=	'4'	THEN
+	SELECT 	NVL(SUM(PAY_AMT),0) 
+	INTO		:li_Amt
+	FROM   	PADB.HPA005D
+	WHERE		YEAR_MONTH  LIKE	  :as_Year || '%'
+	AND		CODE		 =	'52';								//주민세
+END IF
+
+Return li_Amt
+end function
+

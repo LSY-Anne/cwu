@@ -1,0 +1,92 @@
+﻿$PBExportHeader$d_dddw_code.srd
+$PBExportComments$공통코드 list( n_func of_dddw )
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=76 color="536870912" )
+table(column=(type=char(20) updatewhereclause=yes name=cls_cd dbname="kch102d.cls_cd" dbalias="A.cls_cd" )
+ column=(type=char(20) updatewhereclause=yes name=cd dbname="kch102d.cd" dbalias="A.cd" )
+ column=(type=char(60) updatewhereclause=yes name=cd_nm dbname="kch102d.cd_nm" dbalias="A.cd_nm" )
+ column=(type=number updatewhereclause=yes name=seq dbname="seq" )
+ column=(type=char(5) updatewhereclause=yes name=rel_cd dbname="kch101m.rel_cd" dbalias="B.rel_cd" )
+ column=(type=char(60) updatewhereclause=yes name=ename dbname="kch102d.ename" dbalias="A.ename" )
+ column=(type=char(30) updatewhereclause=yes name=ecd1 dbname="kch102d.ecd1" dbalias="A.ecd1" )
+ column=(type=char(30) updatewhereclause=yes name=ecd2 dbname="kch102d.ecd2" dbalias="A.ecd2" )
+ column=(type=char(30) updatewhereclause=yes name=ecd3 dbname="kch102d.ecd3" dbalias="A.ecd3" )
+ column=(type=char(30) updatewhereclause=yes name=ecd4 dbname="kch102d.ecd4" dbalias="A.ecd4" )
+ column=(type=char(30) updatewhereclause=yes name=ecd5 dbname="kch102d.ecd5" dbalias="A.ecd5" )
+ column=(type=number updatewhereclause=yes name=eqty1 dbname="kch102d.eqty1" dbalias="A.eqty1" )
+ column=(type=number updatewhereclause=yes name=eqty2 dbname="kch102d.eqty2" dbalias="A.eqty2" )
+ column=(type=number updatewhereclause=yes name=eamt1 dbname="kch102d.eamt1" dbalias="A.eamt1" )
+ column=(type=number updatewhereclause=yes name=eamt2 dbname="kch102d.eamt2" dbalias="A.eamt2" )
+ retrieve="  SELECT 	A.CODE_GB 						AS CLS_CD,   
+              	A.CODE 							AS CD,   
+              	A.FNAME 						AS CD_NM,
+              	NVL(A.ORDER_SEQ, 9999) 	AS SEQ ,
+				B.AREA_GB						AS REL_CD,
+              	A.ENAME  						AS ENAME,
+				A.ETC_CD1 						AS ECD1,
+				A.ETC_CD2						AS ECD2,
+				A.ETC_CD3 						AS ECD3,
+				A.ETC_CD4						AS ECD4,
+				A.ETC_CD5 						AS ECD5,
+				A.ETC_QTY1					AS EQTY1,
+				A.ETC_QTY2					AS EQTY2,
+				A.ETC_AMT1					AS EAMT1,
+				A.ETC_AMT2 					AS EAMT2
+     FROM 	CDDB.KCH102D A, CDDB.KCH101M B
+  WHERE 	B.CODE_GB = A.CODE_GB
+       AND 	NVL(B.USE_YN,'N') = 'Y' 
+       AND 	NVL(A.USE_YN,'N') = 'Y'
+UNION ALL
+SELECT		'%'								AS CLS_CD,   
+             		NULL 								AS CD,   
+              	NULL								AS CD_NM,
+              	1   								AS SEQ,
+              	''  									AS REL_CD, 
+              	''  									AS ENAME,
+				'' 									AS ECD1,
+				''									AS ECD2,
+				'' 									AS ECD3,
+				''									AS ECD4,
+				'' 									AS ECD5,
+				0									AS EQTY1,
+				0									AS EQTY2,
+				0									AS EAMT1,
+				0 									AS EAMT2
+FROM			DUAL
+UNION ALL
+SELECT		'%'								AS CLS_CD,   
+             		'%' 								AS CD,   
+              	'전체'							AS CD_NM,
+              	1   								AS SEQ,
+              	''  									AS REL_CD, 
+              	''  									AS ENAME,
+				'' 									AS ECD1,
+				''									AS ECD2,
+				'' 									AS ECD3,
+				''									AS ECD4,
+				'' 									AS ECD5,
+				0									AS EQTY1,
+				0									AS EQTY2,
+				0									AS EAMT1,
+				0 									AS EAMT2
+FROM			DUAL
+ORDER BY 1, 4, 2" )
+text(band=header alignment="0" text="Kch102d Cd" border="0" color="0" x="9" y="4" height="56" width="334" html.valueishtml="0"  name=kch102d_cd_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Kch102d Cd Nm" border="0" color="0" x="352" y="4" height="56" width="768" html.valueishtml="0"  name=kch102d_cd_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=0 border="0" color="0" x="14" y="4" height="64" width="329" html.valueishtml="0"  name=cd visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=0 border="0" color="0" x="357" y="4" height="64" width="763" html.valueishtml="0"  name=cd_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

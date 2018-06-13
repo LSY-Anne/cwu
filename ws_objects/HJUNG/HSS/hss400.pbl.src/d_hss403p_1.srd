@@ -1,0 +1,363 @@
+﻿$PBExportHeader$d_hss403p_1.srd
+$PBExportComments$동별보유현황 - 출력
+release 10.5;
+datawindow(units=3 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 635 print.margin.right = 635 print.margin.top = 635 print.margin.bottom = 635 print.paper.source = 0 print.paper.size = 12 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=5741 color="536870912" )
+summary(height=661 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=608 color="536870912" )
+table(column=(type=char(3) updatewhereclause=yes name=buil_no dbname="buil_no" )
+ column=(type=char(20) updatewhereclause=yes name=buil_name dbname="buil_name" )
+ column=(type=char(30) updatewhereclause=yes name=buil_structure dbname="buil_structure" )
+ column=(type=number updatewhereclause=yes name=buil_floor_no dbname="buil_floor_no" )
+ column=(type=decimal(2) updatewhereclause=yes name=buil_area_land dbname="buil_area_land" )
+ column=(type=decimal(2) updatewhereclause=yes name=buil_area_building dbname="buil_area_building" )
+ column=(type=number updatewhereclause=yes name=e1 dbname="e1" )
+ column=(type=number updatewhereclause=yes name=e2 dbname="e2" )
+ column=(type=number updatewhereclause=yes name=e3 dbname="e3" )
+ column=(type=number updatewhereclause=yes name=e4 dbname="e4" )
+ column=(type=number updatewhereclause=yes name=e5 dbname="e5" )
+ column=(type=number updatewhereclause=yes name=e6 dbname="e6" )
+ column=(type=number updatewhereclause=yes name=e7 dbname="e7" )
+ column=(type=number updatewhereclause=yes name=e8 dbname="e8" )
+ column=(type=number updatewhereclause=yes name=r1 dbname="r1" )
+ column=(type=number updatewhereclause=yes name=r2 dbname="r2" )
+ column=(type=number updatewhereclause=yes name=a1 dbname="a1" )
+ column=(type=number updatewhereclause=yes name=a2 dbname="a2" )
+ column=(type=number updatewhereclause=yes name=a3 dbname="a3" )
+ column=(type=number updatewhereclause=yes name=a4 dbname="a4" )
+ column=(type=number updatewhereclause=yes name=a5 dbname="a5" )
+ column=(type=number updatewhereclause=yes name=o1 dbname="o1" )
+ column=(type=char(4) updatewhereclause=yes name=completion dbname="completion" )
+ column=(type=char(1) updatewhereclause=yes name=buil_regist_yn dbname="buil_regist_yn" values="Y	1/N	9/" )
+ column=(type=char(1) updatewhereclause=yes name=buil_safe_rank dbname="buil_safe_rank" )
+ column=(type=char(1) updatewhereclause=yes name=buil_safe_yn dbname="buil_safe_yn" values="Y	1/N	9/" )
+ retrieve="SELECT A.BUIL_NO, A.BUIL_NAME, A.BUIL_STRUCTURE, (A.BUIL_FLOOR_NO + A.BUIL_basement_NO) BUIL_FLOOR_NO , A.BUIL_AREA_LAND, A.BUIL_AREA_BUILDING,
+		B.E1, B.E2, B.E3, B.E4, B.E5, B.E6, B.E7, B.E8, B.R1, B.R2, B.A1, B.A2,
+		B.A3, B.A4, B.A5, B.O1, TO_CHAR(A.BUIL_BUILT_DATE,'YYYY') COMPLETION, A.BUIL_REGIST_YN, 
+		A.BUIL_SAFE_RANK, A.BUIL_SAFE_YN
+FROM STDB.HST240M A,
+(
+	SELECT BUIL_NO, 
+			SUM(DECODE(FACILITY_OPT,11,ROOM_AREA,0)) E1, SUM(DECODE(FACILITY_OPT,21,ROOM_AREA,0)) E2, 
+			SUM(DECODE(FACILITY_OPT,22,ROOM_AREA,0)) E3,	SUM(DECODE(FACILITY_OPT,23,ROOM_AREA,0)) E4, 
+			SUM(DECODE(FACILITY_OPT,24,ROOM_AREA,0)) E5, SUM(DECODE(FACILITY_OPT,25,ROOM_AREA,0)) E6,
+			SUM(DECODE(FACILITY_OPT,26,ROOM_AREA,0)) E7, SUM(DECODE(FACILITY_OPT,27,ROOM_AREA,0)) E8, 
+			SUM(DECODE(FACILITY_OPT,31,ROOM_AREA,0)) R1, SUM(DECODE(FACILITY_OPT,32,ROOM_AREA,0)) R2, 
+			SUM(DECODE(FACILITY_OPT,41,ROOM_AREA,0)) A1, SUM(DECODE(FACILITY_OPT,42,ROOM_AREA,0)) A2,
+			SUM(DECODE(FACILITY_OPT,43,ROOM_AREA,0)) A3, SUM(DECODE(FACILITY_OPT,44,ROOM_AREA,0)) A4,
+			SUM(DECODE(FACILITY_OPT,45,ROOM_AREA,0)) A5, SUM(DECODE(FACILITY_OPT,90,ROOM_AREA,0)) O1
+	FROM STDB.HST242M 
+	GROUP BY BUIL_NO
+) B
+WHERE A.BUIL_NO = B.BUIL_NO" )
+text(band=header alignment="2" text="부
+설
+연
+구
+소" border="0" color="0" x="20134" y="3413" height="1984" width="926" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="특수
+시설" border="0" color="0" x="21219" y="2857" height="740" width="1111" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="도
+
+서
+
+관" border="0" color="0" x="10821" y="3783" height="1984" width="926" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="지    원    시    설" border="0" color="0" x="11297" y="2989" height="396" width="6799" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="기  숙  시  설" border="0" color="0" x="22463" y="2989" height="396" width="3254" html.valueishtml="0"  name=t_9 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학생
+
+
+
+회관" border="0" color="0" x="11985" y="3783" height="1984" width="926" html.valueishtml="0"  name=t_11 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="연구용
+
+
+
+실험실" border="0" color="0" x="18679" y="3413" height="1852" width="1508" html.valueishtml="0"  name=t_12 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="대학
+
+
+
+본부" border="0" color="0" x="13149" y="3783" height="1984" width="926" html.valueishtml="0"  name=t_13 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="계열별
+
+
+부  속
+
+
+시  설" border="0" color="0" x="25849" y="3122" height="2592" width="1111" html.valueishtml="0"  name=t_14 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="기
+
+타
+
+시
+
+설" border="0" color="0" x="27119" y="2619" height="2778" width="820" html.valueishtml="0"  name=t_15 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="준
+
+공
+
+연
+
+도" border="0" color="0" x="28072" y="2619" height="2778" width="926" html.valueishtml="0"  name=t_16 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Ⅳ. 동별 보유현황 (교사, 연구시설 및 부속시설)" border="4" color="0" x="7725" y="132" height="873" width="18415" html.valueishtml="0"  name=t_17 visible="1"  font.face="굴림" font.height="-22" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="건
+
+축
+
+면
+
+적" border="0" color="0" x="7223" y="2592" height="2778" width="820" html.valueishtml="0"  name=t_18 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="층
+
+
+
+
+
+수" border="0" color="0" x="6164" y="2592" height="2778" width="608" html.valueishtml="0"  name=t_19 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="구
+
+
+
+
+
+조" border="0" color="0" x="4683" y="2592" height="2778" width="820" html.valueishtml="0"  name=t_20 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="건
+
+
+물
+
+
+명" border="0" color="0" x="1508" y="2592" height="2778" width="2301" html.valueishtml="0"  name=t_21 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="연
+
+
+면
+
+
+적" border="0" color="0" x="8493" y="2592" height="2778" width="820" html.valueishtml="0"  name=t_22 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="총학장
+
+공  관" border="0" color="0" x="24685" y="4048" height="1111" width="1137" html.valueishtml="0"  name=t_23 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="교  수
+
+아파트" border="0" color="0" x="23521" y="4048" height="1111" width="1137" html.valueishtml="0"  name=t_24 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학  생
+
+기숙사" border="0" color="0" x="22357" y="4048" height="1111" width="1137" html.valueishtml="0"  name=t_25 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="박
+물
+관" border="0" color="0" x="21272" y="4048" height="1190" width="978" html.valueishtml="0"  name=t_26 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="등
+
+기
+
+여
+
+부" border="0" color="0" x="29130" y="2619" height="2778" width="608" html.valueishtml="0"  name=t_27 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="건물안정성
+현      황" border="0" color="0" x="29871" y="1984" height="740" width="1878" html.valueishtml="0"  name=t_28 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="안
+정
+성
+등
+급" border="0" color="0" x="29950" y="3333" height="1984" width="661" html.valueishtml="0"  name=t_29 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="정밀
+안정
+진단
+유무" border="0" color="0" x="30744" y="3439" height="1587" width="978" html.valueishtml="0"  name=t_30 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="비고" border="0" color="0" x="31776" y="3624" height="396" width="1031" html.valueishtml="0"  name=t_31 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="체
+
+육
+
+관" border="0" color="0" x="14313" y="3783" height="1984" width="926" html.valueishtml="0"  name=t_32 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="강
+
+
+
+당" border="0" color="0" x="15478" y="3783" height="1984" width="926" html.valueishtml="0"  name=t_33 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="실습
+
+
+
+공장" border="0" color="0" x="17700" y="3783" height="1984" width="1137" html.valueishtml="0"  name=t_34 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="전  자
+
+
+
+계산소" border="0" color="0" x="16536" y="3783" height="1852" width="1137" html.valueishtml="0"  name=t_35 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="대 학 명 :  청운대학교" border="0" color="0" x="238" y="1402" height="476" width="7408" html.valueishtml="0"  name=t_36 visible="1"  font.face="굴림체" font.height="-12" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="부    속    시    설" border="0" color="0" x="21272" y="2143" height="396" width="5635" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="교         사         시         설" border="0" color="0" x="9763" y="2143" height="396" width="8863" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="연구시설" border="0" color="0" x="18997" y="2143" height="396" width="2037" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="건물
+
+
+
+
+
+번호" border="0" color="0" x="238" y="2592" height="2778" width="820" html.valueishtml="0"  name=buil_no_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="(단위: ㎡)" border="0" color="0" x="29659" y="1481" height="396" width="3148" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="교육
+
+기본
+
+시설" border="0" color="0" x="9657" y="3413" height="1984" width="926" html.valueishtml="0"  name=t_10 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="9551" y1="2751" x2="26987" y2="2751"  name=l_1 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="536870912" )
+line(band=header x1="10689" y1="3598" x2="18838" y2="3598"  name=l_2 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="536870912" )
+line(band=header x1="21166" y1="3598" x2="25823" y2="3598"  name=l_3 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="536870912" )
+line(band=header x1="29845" y1="2751" x2="31750" y2="2751"  name=l_4 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="536870912" )
+line(band=header x1="238" y1="1905" x2="32781" y2="1905"  name=l_5 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="238" y1="5715" x2="32808" y2="5715"  name=l_33 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="10689" y1="2751" x2="10689" y2="6482"  name=l_12 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="211" y1="1905" x2="211" y2="6508"  name=l_57 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="8255" y1="1905" x2="8255" y2="6508"  name=l_10 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="9525" y1="1905" x2="9525" y2="6508"  name=l_11 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="1058" y1="1905" x2="1058" y2="6508"  name=l_6 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="4233" y1="1905" x2="4233" y2="6508"  name=l_7 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="5926" y1="1905" x2="5926" y2="6508"  name=l_8 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="6985" y1="1905" x2="6985" y2="6508"  name=l_9 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="11853" y1="3598" x2="11853" y2="6508"  name=l_13 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="13017" y1="3598" x2="13017" y2="6508"  name=l_14 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="14181" y1="3598" x2="14181" y2="6508"  name=l_15 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="15345" y1="3598" x2="15345" y2="6508"  name=l_16 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="16510" y1="3598" x2="16510" y2="6508"  name=l_17 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="17674" y1="3598" x2="17674" y2="6508"  name=l_18 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="18838" y1="1905" x2="18838" y2="6455"  name=l_19 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="21166" y1="1905" x2="21166" y2="6455"  name=l_21 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="20002" y1="2751" x2="20002" y2="6376"  name=l_20 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="22330" y1="2751" x2="22330" y2="6402"  name=l_22 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="26987" y1="1905" x2="26987" y2="6376"  name=l_26 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="28045" y1="1905" x2="28045" y2="6376"  name=l_27 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="28998" y1="1905" x2="28998" y2="6376"  name=l_28 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="29845" y1="1905" x2="29845" y2="6376"  name=l_29 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="31750" y1="1905" x2="31750" y2="6376"  name=l_31 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="32808" y1="1905" x2="32808" y2="6376"  name=l_32 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="23495" y1="3624" x2="23495" y2="6402"  name=l_23 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="24659" y1="3624" x2="24659" y2="6402"  name=l_24 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="25823" y1="2751" x2="25823" y2="6429"  name=l_25 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="30691" y1="2751" x2="30691" y2="6350"  name=l_30 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="291" y="26" height="502" width="714" format="[general]" html.valueishtml="0"  name=buil_no visible="1" edit.limit=3 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="211" y1="0" x2="211" y2="926"  name=l_34 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="1058" y1="0" x2="1058" y2="926"  name=l_35 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="5926" y1="0" x2="5926" y2="926"  name=l_37 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="6985" y1="0" x2="6985" y2="926"  name=l_38 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="8255" y1="0" x2="8255" y2="926"  name=l_39 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="9525" y1="0" x2="9525" y2="926"  name=l_40 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="10689" y1="0" x2="10689" y2="926"  name=l_41 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="11853" y1="0" x2="11853" y2="926"  name=l_42 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="13017" y1="0" x2="13017" y2="926"  name=l_43 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="13017" y1="0" x2="13017" y2="926"  name=l_44 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="13017" y1="0" x2="13017" y2="926"  name=l_45 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="14181" y1="0" x2="14181" y2="926"  name=l_46 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="15345" y1="0" x2="15345" y2="926"  name=l_47 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="13017" y1="0" x2="13017" y2="926"  name=l_49 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="13017" y1="0" x2="13017" y2="926"  name=l_50 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="16510" y1="0" x2="16510" y2="926"  name=l_48 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="17674" y1="0" x2="17674" y2="926"  name=l_51 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="18838" y1="0" x2="18838" y2="926"  name=l_52 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="20002" y1="0" x2="20002" y2="926"  name=l_53 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="21166" y1="0" x2="21166" y2="926"  name=l_54 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="26987" y1="0" x2="26987" y2="926"  name=l_60 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="25823" y1="0" x2="25823" y2="926"  name=l_59 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="24659" y1="0" x2="24659" y2="926"  name=l_58 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="23495" y1="0" x2="23495" y2="926"  name=l_56 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="22330" y1="0" x2="22330" y2="926"  name=l_55 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="28045" y1="0" x2="28045" y2="926"  name=l_61 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="28998" y1="0" x2="28998" y2="926"  name=l_62 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="29845" y1="0" x2="29845" y2="926"  name=l_63 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="30691" y1="0" x2="30691" y2="926"  name=l_64 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="31750" y1="0" x2="31750" y2="926"  name=l_65 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="32808" y1="0" x2="32808" y2="926"  name=l_67 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="13017" y1="0" x2="13017" y2="926"  name=l_77 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="13017" y1="0" x2="13017" y2="926"  name=l_78 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="13017" y1="0" x2="13017" y2="926"  name=l_79 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="13017" y1="0" x2="13017" y2="926"  name=l_82 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="238" y1="582" x2="32808" y2="582"  name=l_66 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="1137" y="26" height="502" width="3042" format="[general]" html.valueishtml="0"  name=buil_name visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="4233" y1="0" x2="4233" y2="926"  name=l_36 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="4312" y="26" height="502" width="1561" format="[general]" html.valueishtml="0"  name=buil_structure visible="1" edit.limit=30 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="6006" y="26" height="502" width="926" format="[general]" html.valueishtml="0"  name=buil_floor_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="7064" y="26" height="502" width="1137" format="#,##0" html.valueishtml="0"  name=buil_area_building visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="8334" y="26" height="502" width="1137" format="#,##0" html.valueishtml="0"  name=buil_area_land visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="9604" y="26" height="502" width="1031" format="#,##0" html.valueishtml="0"  name=e1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="10768" y="26" height="502" width="1031" format="#,##0" html.valueishtml="0"  name=e2 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="11932" y="26" height="502" width="1031" format="#,##0" html.valueishtml="0"  name=e3 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="0" x="13096" y="26" height="502" width="1031" format="#,##0" html.valueishtml="0"  name=e4 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="1" tabsequence=32766 border="0" color="0" x="14261" y="26" height="502" width="1031" format="#,##0" html.valueishtml="0"  name=e5 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="1" tabsequence=32766 border="0" color="0" x="15425" y="26" height="502" width="1031" format="#,##0" html.valueishtml="0"  name=e6 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="1" tabsequence=32766 border="0" color="0" x="16589" y="26" height="502" width="1031" format="#,##0" html.valueishtml="0"  name=e7 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="1" tabsequence=32766 border="0" color="0" x="17753" y="26" height="502" width="1031" format="#,##0" html.valueishtml="0"  name=e8 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="1" tabsequence=32766 border="0" color="0" x="18917" y="26" height="502" width="1031" format="#,##0" html.valueishtml="0"  name=r1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="1" tabsequence=32766 border="0" color="0" x="20081" y="26" height="502" width="1031" format="#,##0" html.valueishtml="0"  name=r2 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="1" tabsequence=32766 border="0" color="0" x="21246" y="26" height="502" width="1031" format="#,##0" html.valueishtml="0"  name=a1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=18 alignment="1" tabsequence=32766 border="0" color="0" x="22410" y="26" height="502" width="1031" format="#,##0" html.valueishtml="0"  name=a2 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=19 alignment="1" tabsequence=32766 border="0" color="0" x="23574" y="26" height="502" width="1031" format="#,##0" html.valueishtml="0"  name=a3 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=20 alignment="1" tabsequence=32766 border="0" color="0" x="24738" y="26" height="502" width="1031" format="#,##0" html.valueishtml="0"  name=a4 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=21 alignment="1" tabsequence=32766 border="0" color="0" x="25902" y="26" height="502" width="1031" format="#,##0" html.valueishtml="0"  name=a5 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=22 alignment="1" tabsequence=32766 border="0" color="0" x="27066" y="26" height="502" width="926" format="#,##0" html.valueishtml="0"  name=o1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=23 alignment="2" tabsequence=32766 border="0" color="0" x="28125" y="26" height="502" width="820" format="[general]" html.valueishtml="0"  name=completion visible="1" edit.limit=4 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=24 alignment="2" tabsequence=32766 border="0" color="0" x="29077" y="26" height="502" width="714" format="[general]" html.valueishtml="0"  name=buil_regist_yn visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=25 alignment="2" tabsequence=32766 border="0" color="0" x="29924" y="26" height="502" width="714" format="[general]" html.valueishtml="0"  name=buil_safe_rank visible="1" edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=26 alignment="2" tabsequence=32766 border="0" color="0" x="30771" y="26" height="502" width="926" format="[general]" html.valueishtml="0"  name=buil_safe_yn visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=summary alignment="2" text="합         계" border="0" color="0" x="1137" y="133" height="396" width="3042" html.valueishtml="0"  name=t_37 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=summary x1="32808" y1="0" x2="32808" y2="635"  name=l_99 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="8255" y1="0" x2="8255" y2="635"  name=l_73 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="9525" y1="0" x2="9525" y2="635"  name=l_74 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="10689" y1="0" x2="10689" y2="635"  name=l_75 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="11853" y1="0" x2="11853" y2="635"  name=l_76 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="13017" y1="0" x2="13017" y2="635"  name=l_83 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="14181" y1="0" x2="14181" y2="635"  name=l_80 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="15345" y1="0" x2="15345" y2="635"  name=l_81 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="16510" y1="0" x2="16510" y2="635"  name=l_84 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="17674" y1="0" x2="17674" y2="635"  name=l_85 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="18838" y1="0" x2="18838" y2="635"  name=l_86 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="20002" y1="0" x2="20002" y2="635"  name=l_87 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="21166" y1="0" x2="21166" y2="635"  name=l_88 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="22330" y1="0" x2="22330" y2="635"  name=l_93 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="23495" y1="0" x2="23495" y2="635"  name=l_92 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="24659" y1="0" x2="24659" y2="635"  name=l_91 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="25823" y1="0" x2="25823" y2="635"  name=l_90 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="26987" y1="0" x2="26987" y2="635"  name=l_89 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="28045" y1="0" x2="28045" y2="635"  name=l_94 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="28998" y1="0" x2="28998" y2="635"  name=l_95 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="29845" y1="0" x2="29845" y2="635"  name=l_96 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="30691" y1="0" x2="30691" y2="635"  name=l_97 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="31750" y1="0" x2="31750" y2="635"  name=l_98 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="211" y1="0" x2="211" y2="635"  name=l_68 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="1058" y1="0" x2="1058" y2="635"  name=l_69 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="4233" y1="0" x2="4233" y2="635"  name=l_70 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="5926" y1="0" x2="5926" y2="635"  name=l_71 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="6985" y1="0" x2="6985" y2="635"  name=l_72 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="238" y1="609" x2="32808" y2="609"  name=l_100 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum(  buil_area_building  for all )"border="0" color="0" x="7064" y="133" height="396" width="1137" format="#,##0" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  buil_area_land  for all )"border="0" color="0" x="8334" y="133" height="396" width="1137" format="#,##0" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  e1  for all )  "border="0" color="0" x="9604" y="133" height="396" width="1031" format="#,##0" html.valueishtml="0"  name=compute_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  e2  for all )  "border="0" color="0" x="10768" y="133" height="396" width="1031" format="#,##0" html.valueishtml="0"  name=compute_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  e3  for all )  "border="0" color="0" x="11932" y="133" height="396" width="1031" format="#,##0" html.valueishtml="0"  name=compute_5 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  e4  for all )  "border="0" color="0" x="13096" y="133" height="396" width="1031" format="#,##0" html.valueishtml="0"  name=compute_6 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  e5  for all )  "border="0" color="0" x="14261" y="133" height="396" width="1031" format="#,##0" html.valueishtml="0"  name=compute_7 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  e6  for all )  "border="0" color="0" x="15425" y="133" height="396" width="1031" format="#,##0" html.valueishtml="0"  name=compute_8 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  e7  for all )  "border="0" color="0" x="16589" y="133" height="396" width="1031" format="#,##0" html.valueishtml="0"  name=compute_9 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  a5  for all )  "border="0" color="0" x="25902" y="133" height="396" width="1031" format="#,##0" html.valueishtml="0"  name=compute_17 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  o1 for all )  "border="0" color="0" x="27066" y="133" height="396" width="926" format="#,##0" html.valueishtml="0"  name=compute_18 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  e8  for all )  "border="0" color="0" x="17753" y="133" height="396" width="1031" format="#,##0" html.valueishtml="0"  name=compute_10 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  r1  for all )  "border="0" color="0" x="18917" y="133" height="396" width="1031" format="#,##0" html.valueishtml="0"  name=compute_11 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  r2  for all )  "border="0" color="0" x="20081" y="133" height="396" width="1031" format="#,##0" html.valueishtml="0"  name=compute_12 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  a1  for all )  "border="0" color="0" x="21246" y="133" height="396" width="1031" format="#,##0" html.valueishtml="0"  name=compute_13 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  a2  for all )  "border="0" color="0" x="22410" y="133" height="396" width="1031" format="#,##0" html.valueishtml="0"  name=compute_14 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  a3  for all )  "border="0" color="0" x="23574" y="133" height="396" width="1031" format="#,##0" html.valueishtml="0"  name=compute_15 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  a4  for all )  "border="0" color="0" x="24738" y="133" height="396" width="1031" format="#,##0" html.valueishtml="0"  name=compute_16 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

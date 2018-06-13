@@ -1,0 +1,58 @@
+﻿$PBExportHeader$d_hpa204a_3.srd
+$PBExportComments$고용보험마스터
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=80 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=92 color="536870912" )
+table(column=(type=char(4) updatewhereclause=yes name=year dbname="hpa116t.year" )
+ column=(type=char(1) updatewhereclause=yes name=hakgi dbname="hpa116t.hakgi" )
+ column=(type=decimal(0) updatewhereclause=yes name=month dbname="hpa116t.month" )
+ column=(type=char(10) updatewhereclause=yes name=member_no dbname="hpa116t.member_no" )
+ column=(type=decimal(0) updatewhereclause=yes name=pay_amt dbname="hpa116t.pay_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=month_amt dbname="hpa116t.month_amt" )
+ column=(type=char(40) updatewhereclause=yes name=name dbname="hpa116t.name" )
+ column=(type=char(4) updatewhereclause=yes name=gwa dbname="hpa116t.gwa" )
+ retrieve="SELECT A.YEAR,   
+	A.HAKGI,   
+	A.MONTH,   
+	A.MEMBER_NO,   
+	A.PAY_AMT,   
+	A.MONTH_AMT,
+	B.NAME,
+	B.GWA  
+FROM PADB.HPA116T  A, INDB.HIN001M B
+WHERE A.MEMBER_NO = B.MEMBER_NO
+AND	B.GOYONG_OPT = '1'
+AND	A.YEAR  = :AS_YEAR
+AND   A.HAKGI = :AS_HAKGI
+AND   A.MONTH = :AI_MONTH
+order by A.MEMBER_NO" arguments=(("as_year", string),("as_hakgi", string),("ai_month", number)) )
+text(band=header alignment="2" text="Year" border="0" color="0" x="9" y="8" height="64" width="183" html.valueishtml="0"  name=year_t visible="1"  font.face="System" font.height="-12" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Hakgi" border="0" color="0" x="201" y="8" height="64" width="183" html.valueishtml="0"  name=hakgi_t visible="1"  font.face="System" font.height="-12" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Month" border="0" color="0" x="393" y="8" height="64" width="439" html.valueishtml="0"  name=month_t visible="1"  font.face="System" font.height="-12" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Member No" border="0" color="0" x="1239" y="8" height="64" width="402" html.valueishtml="0"  name=member_no_t visible="1"  font.face="System" font.height="-12" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Pay Amt" border="0" color="0" x="2117" y="8" height="64" width="439" html.valueishtml="0"  name=pay_amt_t visible="1"  font.face="System" font.height="-12" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Month Amt" border="0" color="0" x="2565" y="8" height="64" width="439" html.valueishtml="0"  name=month_amt_t visible="1"  font.face="System" font.height="-12" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Name" border="0" color="0" x="841" y="8" height="76" width="389" html.valueishtml="0"  name=name_t visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Gwa" border="0" color="0" x="1650" y="8" height="76" width="457" html.valueishtml="0"  name=hin001m_gwa_t visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="9" y="8" height="76" width="183" format="[general]" html.valueishtml="0"  name=year visible="1" edit.limit=4 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="System" font.height="-12" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="201" y="8" height="76" width="183" format="[general]" html.valueishtml="0"  name=hakgi visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="System" font.height="-12" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="33554432" x="393" y="8" height="76" width="439" format="[general]" html.valueishtml="0"  name=month visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="System" font.height="-12" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="1239" y="8" height="76" width="402" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="System" font.height="-12" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="33554432" x="2117" y="8" height="76" width="439" format="[general]" html.valueishtml="0"  name=pay_amt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="System" font.height="-12" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="33554432" x="2565" y="8" height="76" width="439" format="[general]" html.valueishtml="0"  name=month_amt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="System" font.height="-12" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="841" y="8" height="76" width="389" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="System" font.height="-12" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="1650" y="8" height="76" width="457" format="[general]" html.valueishtml="0"  name=gwa visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="System" font.height="-12" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,64 @@
+﻿$PBExportHeader$gf_arraytostring.srf
+global type gf_arraytostring from function_object
+end type
+
+forward prototypes
+global function long gf_arraytostring (string as_source[], string as_delimiter, boolean ab_processempty, ref string as_ref_string)
+end prototypes
+
+global function long gf_arraytostring (string as_source[], string as_delimiter, boolean ab_processempty, ref string as_ref_string);//////////////////////////////////////////////////////////////////////////////
+//	Function:  gf_ArrayToString
+//	Access:  public
+//	Arguments:
+//	as_source[]		 The array of string to be moved into a single string.
+//	as_Delimiter	 The delimeter string.
+//	ab_processempty Whether to process empty string as_source members.
+//	as_ref_string	 The string to be filled with the array of strings,
+//						 passed by reference.
+//	Returns:  		long
+//						1 for a successful transfer.
+//						-1 if a problem was found.
+//	Description:  	Create a single string from an array of strings separated by
+//						the passed delimeter.
+//////////////////////////////////////////////////////////////////////////////
+long		ll_Count, ll_ArrayUpBound
+
+//Get the array size
+ll_ArrayUpBound = UpperBound(as_source[])
+
+//Check parameters
+IF IsNull(as_delimiter) or (Not ll_ArrayUpBound>0) Then
+	Return -1
+End If
+
+//Reset the Reference string
+as_ref_string = ''
+
+If Not ab_processempty Then
+	For ll_Count = 1 to ll_ArrayUpBound
+		// Do not include any entries that match an empty string 
+		If as_source[ll_Count] <> '' Then
+			If Len(as_ref_string) = 0 Then
+				//Initialize string
+				as_ref_string = as_source[ll_Count]
+			else
+				//Concatenate to string
+				as_ref_string = as_ref_string + as_delimiter + as_source[ll_Count]
+			End If
+		End If
+	Next 
+Else
+	For ll_Count = 1 to ll_ArrayUpBound
+		// Include any entries that match an empty string 
+		If ll_Count = 1 Then
+			//Initialize string
+			as_ref_string = as_source[ll_Count]
+		else
+			//Concatenate to string
+			as_ref_string = as_ref_string + as_delimiter + as_source[ll_Count]
+		End If
+	Next 
+End If
+return 1
+end function
+

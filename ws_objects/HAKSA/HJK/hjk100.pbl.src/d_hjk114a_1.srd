@@ -1,0 +1,77 @@
+﻿$PBExportHeader$d_hjk114a_1.srd
+$PBExportComments$[청운대]학점교류학생관리
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=96 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(1) update=yes updatewhereclause=yes key=yes name=isu_gb dbname="hakjum_exchange.isu_gb" initial="1" )
+ column=(type=char(4) update=yes updatewhereclause=yes key=yes name=year dbname="hakjum_exchange.year" )
+ column=(type=char(1) update=yes updatewhereclause=yes key=yes name=hakgi dbname="hakjum_exchange.hakgi" values="1	1/2	2/" )
+ column=(type=char(9) update=yes updatewhereclause=yes key=yes name=hakbun dbname="hakjum_exchange.hakbun" )
+ column=(type=char(20) updatewhereclause=yes name=hname dbname="jaehak_hakjuk.hname" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=exchange_uni dbname="hakjum_exchange.exchange_uni" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=isu_course dbname="hakjum_exchange.isu_course" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=isu_hakjum dbname="hakjum_exchange.isu_hakjum" initial="0" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=isu_yn dbname="hakjum_exchange.isu_yn" initial="0" values="이수중	0/이수완료	1/이수포기	9/" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=remark dbname="hakjum_exchange.remark" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=worker dbname="hakjum_exchange.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hakjum_exchange.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hakjum_exchange.work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_uid dbname="hakjum_exchange.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hakjum_exchange.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hakjum_exchange.job_date" )
+ retrieve="  SELECT A.ISU_GB
+		   , A.YEAR
+		   , A.HAKGI
+		   , A.HAKBUN
+            , B.HNAME
+		   , A.EXCHANGE_UNI
+		   , A.ISU_COURSE
+		   , A.ISU_HAKJUM
+		   , A.ISU_YN
+		   , A.REMARK
+		   , A.WORKER
+		   , A.IPADDR
+		   , A.WORK_DATE
+		   , A.JOB_UID
+		   , A.JOB_ADD
+		   , A.JOB_DATE  
+    FROM HAKSA.HAKJUM_EXCHANGE   A
+           , HAKSA.JAEHAK_HAKJUK         B
+  WHERE A.HAKBUN = B.HAKBUN
+       AND A.ISU_GB  = :AS_ISU_GB
+       AND A.HAKBUN LIKE :AS_HAKBUN || '%'
+" update="HAKSA.HAKJUM_EXCHANGE" updatewhere=0 updatekeyinplace=no arguments=(("AS_ISU_GB", string),("AS_HAKBUN", string)) )
+text(band=header alignment="2" text="이수대상구분" border="0" color="33554432" x="9" y="8" height="80" width="558" html.valueishtml="0"  name=isu_gb_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="년도" border="0" color="33554432" x="576" y="8" height="80" width="210" html.valueishtml="0"  name=year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학기" border="0" color="33554432" x="795" y="8" height="80" width="183" html.valueishtml="0"  name=hakgi_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="자매대학" border="0" color="33554432" x="1792" y="8" height="80" width="933" html.valueishtml="0"  name=exchange_uni_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="이수과정" border="0" color="33554432" x="2734" y="8" height="80" width="334" html.valueishtml="0"  name=isu_course_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="이수학점" border="0" color="33554432" x="3077" y="8" height="80" width="279" html.valueishtml="0"  name=isu_hakjum_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="이수여부" border="0" color="33554432" x="3365" y="8" height="80" width="274" html.valueishtml="0"  name=isu_yn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="적 요" border="0" color="33554432" x="3648" y="8" height="80" width="1189" html.valueishtml="0"  name=remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학번" border="0" color="33554432" x="987" y="8" height="80" width="471" html.valueishtml="0"  name=hakbun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성명" border="0" color="0" x="1467" y="8" height="80" width="315" html.valueishtml="0"  name=hname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=10 border="0" color="33554432" x="9" y="4" height="76" width="558" format="[general]" html.valueishtml="0"  name=isu_gb visible="1" dddw.name=d_dddw_code dddw.displaycolumn=cd_nm dddw.datacolumn=cd dddw.percentwidth=150 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=50 border="0" color="33554432" x="1792" y="4" height="76" width="933" format="[general]" html.valueishtml="0"  name=exchange_uni  tag="NOTNULL(자매대학)" visible="1" dddw.name=d_dddw_code dddw.displaycolumn=cd_nm dddw.datacolumn=cd dddw.percentwidth=100 dddw.lines=10 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=60 border="0" color="33554432" x="2734" y="4" height="76" width="334" format="[general]" html.valueishtml="0"  name=isu_course  tag="NOTNULL(이수과정)" visible="1" dddw.name=d_dddw_code dddw.displaycolumn=cd_nm dddw.datacolumn=cd dddw.percentwidth=200 dddw.lines=10 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=70 border="0" color="33554432" x="3081" y="4" height="76" width="274" format="[general]" html.valueishtml="0"  name=isu_hakjum  tag="NOTNULL(이수학점)" visible="1" editmask.mask="###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="2" tabsequence=80 border="0" color="33554432" x="3365" y="4" height="76" width="274" format="[general]" html.valueishtml="0"  name=isu_yn visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=90 border="0" color="33554432" x="3648" y="4" height="76" width="1189" format="[general]" html.valueishtml="0"  name=remark  tag="KOR" visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=20 border="0" color="33554432" x="576" y="4" height="76" width="210" format="[general]" html.valueishtml="0"  name=year  tag="NOTNULL(년도)" visible="1" edit.limit=4 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=30 border="0" color="33554432" x="795" y="4" height="76" width="183" format="[general]" html.valueishtml="0"  name=hakgi  tag="NOTNULL(학기)" visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any ddlb.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=40 border="0" color="33554432" x="987" y="4" height="76" width="471" format="[general]" html.valueishtml="0"  name=hakbun  tag="NOTNULL(학번)" visible="1" edit.limit=9 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="33554432" x="1467" y="4" height="76" width="315" format="[general]" html.valueishtml="0"  name=hname visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

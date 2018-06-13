@@ -1,0 +1,71 @@
+﻿$PBExportHeader$d_hfn500t_001.srd
+$PBExportComments$temp
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 grid.columnmove=no selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(8) updatewhereclause=yes name=hfn201m_slip_date dbname="hfn201m.slip_date" )
+ column=(type=number updatewhereclause=yes name=hfn201m_slip_no dbname="hfn201m.slip_no" )
+ column=(type=number updatewhereclause=yes name=hfn202m_slip_seq dbname="hfn201m.slip_seq" )
+ column=(type=char(90) updatewhereclause=yes name=compute_0004 dbname="compute_0004" )
+ column=(type=char(4) updatewhereclause=yes name=hfn201m_slip_gwa dbname="hfn201m.slip_gwa" )
+ column=(type=char(100) updatewhereclause=yes name=hfn201m_remark dbname="hfn201m.remark" )
+ column=(type=char(49) updatewhereclause=yes name=compute_0007 dbname="compute_0007" )
+ column=(type=char(6) updatewhereclause=yes name=hfn202m_acct_code dbname="hfn201m.acct_code" )
+ column=(type=char(30) updatewhereclause=yes name=hac001m_acct_name dbname="hfn201m.acct_name" )
+ column=(type=char(1) updatewhereclause=yes name=hfn202m_drcr_class dbname="hfn201m.drcr_class" )
+ column=(type=decimal(0) updatewhereclause=yes name=hfn202m_slip_amt dbname="hfn201m.slip_amt" )
+ column=(type=char(100) updatewhereclause=yes name=hfn202m_remark dbname="hfn201m.remark" )
+ retrieve="select 	a.slip_date, a.slip_no, c.slip_seq, a.slip_date||'-'||a.slip_no||'-'||c.slip_seq, 
+			b.slip_gwa, b.remark, b.acct_date||'-'||b.acct_no, c.acct_code, d.acct_name, c.drcr_class, c.slip_amt, c.remark
+from 	(
+			select a.acct_class, a.slip_date, a.slip_no
+			from 	fndb.hfn201m a, fndb.hfn202m b 
+			where a.slip_date 	= b.slip_date
+			and	a.slip_no		= b.slip_no
+			and	a.slip_class	= 3
+			and 	b.acct_code 	= '311301'
+			and	a.step_opt 		= 5 
+		) a, fndb.hfn201m b, fndb.hfn202m c, acdb.hac001m d
+where a.acct_class 	= 	b.acct_class
+and	a.slip_date 	=	b.slip_date
+and	a.slip_no 		= 	b.slip_no
+and 	a.acct_class 	= 	c.acct_class
+and	a.slip_date 	= 	c.slip_date
+and	a.slip_no	 	= 	c.slip_no
+and	c.acct_code		=	d.acct_code
+and	b.acct_date 	between '20030301' and '20040229'
+order by c.acct_code, a.slip_date, a.slip_no, c.slip_seq
+" )
+group(level=1 header.height=0 trailer.height=84 by=("hfn202m_acct_code" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text="전표번호" border="0" color="0" x="9" y="12" height="56" width="439" html.valueishtml="0"  name=compute_0004_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="계정과목" border="0" color="0" x="457" y="12" height="56" width="242" html.valueishtml="0"  name=hfn202m_acct_code_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="적요" border="0" color="0" x="2341" y="12" height="56" width="576" html.valueishtml="0"  name=hfn201m_remark_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="회계번호" border="0" color="0" x="3790" y="12" height="56" width="347" html.valueishtml="0"  name=compute_0007_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="계정명" border="0" color="33554432" x="709" y="12" height="56" width="782" html.valueishtml="0"  name=hac001m_acct_name_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="적요" border="0" color="0" x="2926" y="12" height="56" width="855" html.valueishtml="0"  name=hfn202m_remark_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="차변금액" border="0" color="0" x="1499" y="12" height="56" width="407" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="대변금액" border="0" color="0" x="1915" y="12" height="56" width="416" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="9" y="4" height="56" width="439" format="[general]" html.valueishtml="0"  name=compute_0004 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="457" y="4" height="56" width="242" format="[general]" html.valueishtml="0"  name=hfn202m_acct_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="33554432" x="2341" y="4" height="56" width="576" format="[general]" html.valueishtml="0"  name=hfn201m_remark visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="3790" y="4" height="56" width="347" format="[general]" html.valueishtml="0"  name=compute_0007 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="33554432" x="709" y="4" height="56" width="782" format="[general]" html.valueishtml="0"  name=hac001m_acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="33554432" x="2926" y="4" height="56" width="855" format="[general]" html.valueishtml="0"  name=hfn202m_remark visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression="if (  hfn202m_drcr_class = 'C' ,  hfn202m_slip_amt , 0 )"border="0" color="33554432" x="1915" y="4" height="56" width="416" format="#,###" html.valueishtml="0"  name=c_amt visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression="if (  hfn202m_drcr_class = 'D' ,  hfn202m_slip_amt , 0 )"border="0" color="33554432" x="1499" y="4" height="56" width="407" format="#,###" html.valueishtml="0"  name=d_amt visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(  d_amt  for group 1 )"border="0" color="16711680" x="1499" y="8" height="56" width="407" format="#,###" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(  c_amt  for group 1 )"border="0" color="16711680" x="1915" y="8" height="56" width="416" format="#,###" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

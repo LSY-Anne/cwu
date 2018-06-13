@@ -1,0 +1,104 @@
+﻿$PBExportHeader$uf_dungrok_foreigner.srf
+$PBExportComments$[대학원등록] 등록금계산 - 정정이 일어날 경우(외국인일 경우)
+global type uf_dungrok_foreigner from function_object
+end type
+
+forward prototypes
+global function integer uf_dungrok_foreigner (string as_year, string as_hakgi, string as_hakbun, string as_gwajung, string as_hakgwa, string as_jungong, string as_chk)
+end prototypes
+
+global function integer uf_dungrok_foreigner (string as_year, string as_hakgi, string as_hakbun, string as_gwajung, string as_hakgwa, string as_jungong, string as_chk);//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//	추가생성 - 외국인일 경우
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+string	ls_gwajung, ls_hakgwa, ls_jungong, ls_janghak
+string	ls_chuga, ls_hwan
+long		ll_iphak_m, ll_dungrok_m, ll_wonwoo_m, ll_dungrok, ll_janghak, ll_dugnrok_before, ll_janghak_before
+long		ll_hakjum,	ll_hakjum_before, ll_hakjum_sugang, ll_chasu
+
+//등록금모델 가져오기
+SELECT	IPHAK,
+			DUNGROK,
+			WONWOO
+INTO	:ll_iphak_m,
+		:ll_dungrok_m,
+		:ll_wonwoo_m
+FROM	HAKSA.D_DUNGROK_MODEL
+WHERE	YEAR			=	:as_year
+AND	HAKGI			=	:as_hakgi
+AND	GWA_ID		=	:as_hakgwa
+AND	JUNGONG_ID	=	:as_jungong	
+USING SQLCA ;
+
+if sqlca.sqlcode <> 0 then
+	messagebox("오류","등록금모델 적용중 오류발생(uf_dungrok_foreigner)~r~n" + sqlca.sqlerrtext)
+	return 2
+end if
+
+//수강학점 가져오기
+SELECT	SUM(HAKJUM)
+INTO	:ll_hakjum_sugang
+FROM	HAKSA.D_SUGANG_TRANS
+WHERE	HAKBUN	=	:as_hakbun
+AND	YEAR		=	:as_year	
+AND	HAKGI		=	:as_hakgi
+USING SQLCA ;
+
+if sqlca.sqlcode = 100 then
+	return 1
+//	ll_hakjum_sugang = 0
+	
+elseif sqlca.sqlcode = -1 then
+	messagebox("오류","수강신청학점 계산중 오류발생(uf_dungrok_foreigner)~r~n" + sqlca.sqlerrtext)
+	return 2
+end if
+
+SELECT	NVL(SUM(HAKJUM), 0),
+			NVL(SUM(DUNGROK), 0),
+			NVL(SUM(D_JANGHAK), 0)
+INTO	:ll_hakjum_before,
+		:ll_dugnrok_before,
+		:ll_janghak_before
+FROM	HAKSA.D_DUNGROK
+WHERE	HAKBUN	=	:as_hakbun
+AND	YEAR		=	:as_year	
+AND	HAKGI		=	:as_hakgi
+USING SQLCA ;
+
+if sqlca.sqlcode <> 0 then
+	messagebox("오류","이전 수강신청학점 계산중 오류발생(uf_dungrok_foreigner)~r~n" + sqlca.sqlerrtext)
+	return 2
+end if
+
+if as_chk	=	'1' then 		//2006학번 이상인자(학기제)
+	ll_hakjum = 0
+elseif as_chk	=	'0'	then	//2005학번 이하인자(학점제)		
+	ll_hakjum = ll_hakjum_sugang - ll_hakjum_before
+end if
+
+if ll_hakjum = 0 then
+	return 1
+	
+elseif ll_hakjum > 0 then			//추가신청이 이루어진 경우
+	ll_hakjum = ll_hakjum_sugang - ll_hakjum_before
+	
+	ll_dungrok = ll_dungrok_m * ll_hakjum
+end if
+ll_chasu	=	uf_chasu(as_year, as_hakgi, as_hakbun)
+
+//Table Insert
+INSERT INTO	HAKSA.D_DUNGROK
+		(	HAKBUN,		YEAR,				HAKGI,		CHASU,		HAKJUM,
+			IPHAK,		DUNGROK,			WONWOO,		I_JANGHAK,	D_JANGHAK,	BANK_ID,
+			WAN_YN,		DUNG_YN,			BUN_YN,		CHU_YN,		HWAN_YN			)
+VALUES(	:as_hakbun,	:as_year,		:as_hakgi,	:ll_chasu,	:ll_hakjum,
+			null,			:ll_dungrok,	NULL,			NULL,			:ll_dungrok,
+			'0',			'0',				'0',			:ll_iphak_m,	 :ls_hwan		)	USING SQLCA ;
+
+if sqlca.sqlcode = 0 then
+	return 0
+else
+	messagebox("오류","등록내역 생성중 오류발생(uf_dungrok_foreigner)~r~n" + sqlca.sqlerrtext)
+	return 2
+end if
+end function
+

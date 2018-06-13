@@ -1,0 +1,53 @@
+﻿$PBExportHeader$d_dhwsu101_5.srd
+$PBExportComments$[대학원수업] 코드 - 대체과목
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=92 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=92 color="536870912" )
+table(column=(type=char(6) update=yes updatewhereclause=yes key=yes name=gwamok_id_before dbname="d_daeche_gwamok.gwamok_id_before" )
+ column=(type=char(6) update=yes updatewhereclause=yes key=yes name=gwamok_id_after dbname="d_daeche_gwamok.gwamok_id_after" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=daeche_year dbname="d_daeche_gwamok.daeche_year" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=daeche_hakgi dbname="d_daeche_gwamok.daeche_hakgi" values="1	1/2	2/" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=worker dbname="d_daeche_gwamok.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="d_daeche_gwamok.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="d_daeche_gwamok.work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_uid dbname="d_daeche_gwamok.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="d_daeche_gwamok.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="d_daeche_gwamok.job_date" )
+ retrieve="  SELECT GWAMOK_ID_BEFORE
+            , GWAMOK_ID_AFTER
+            , DAECHE_YEAR
+            , DAECHE_HAKGI
+            , WORKER
+            , IPADDR
+            , WORK_DATE
+            , JOB_UID
+            , JOB_ADD
+            , JOB_DATE  
+    FROM HAKSA.D_DAECHE_GWAMOK
+  WHERE GWAMOK_ID_BEFORE LIKE :AS_B_GWAMOK || '%'
+       AND GWAMOK_ID_AFTER  LIKE :AS_A_GWAMOK || '%'
+       AND DAECHE_YEAR LIKE :AS_YEAR || '%'
+       AND DAECHE_HAKGI LIKE :AS_HAKGI || '%'
+" update="HAKSA.D_DAECHE_GWAMOK" updatewhere=1 updatekeyinplace=no arguments=(("AS_B_GWAMOK", string),("AS_A_GWAMOK", string),("AS_YEAR", string),("AS_HAKGI", string)) )
+text(band=header alignment="2" text="대체학기" border="0" color="33554432" x="2537" y="8" height="80" width="343" html.valueishtml="0"  name=daeche_hakgi_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="대체년도" border="0" color="33554432" x="2103" y="8" height="80" width="421" html.valueishtml="0"  name=daeche_year_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="대체후과목" border="0" color="33554432" x="1074" y="8" height="80" width="1015" html.valueishtml="0"  name=gwamok_id_after_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="대체전과목" border="0" color="33554432" x="14" y="8" height="80" width="1047" html.valueishtml="0"  name=gwamok_id_before_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=10 border="0" color="33554432" x="14" y="8" height="76" width="1047" format="[general]" html.valueishtml="0"  name=gwamok_id_before  tag="NOTNULL(대체전과목)_KOR" visible="1" dddw.name=d_dddw_d_gwamok dddw.displaycolumn=gwamok_gubun dddw.datacolumn=gwamok_id dddw.percentwidth=140 dddw.lines=10 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="0" color="33554432" x="1074" y="8" height="76" width="1015" format="[general]" html.valueishtml="0"  name=gwamok_id_after  tag="NOTNULL(대체후과목)_KOR" visible="1" dddw.name=d_dddw_d_gwamok dddw.displaycolumn=gwamok_gubun dddw.datacolumn=gwamok_id dddw.percentwidth=140 dddw.lines=10 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=30 border="0" color="33554432" x="2103" y="8" height="76" width="421" format="[general]" html.valueishtml="0"  name=daeche_year  tag="NOTNULL(대체년도)" visible="1" edit.limit=4 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=40 border="0" color="33554432" x="2537" y="8" height="76" width="343" format="[general]" html.valueishtml="0"  name=daeche_hakgi  tag="NOTNULL(대체학기)" visible="1" ddlb.limit=0 ddlb.allowedit=yes ddlb.case=any ddlb.vscrollbar=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,43 @@
+﻿$PBExportHeader$gf_dwsetdate.srf
+global type gf_dwsetdate from function_object
+end type
+
+forward prototypes
+global function boolean gf_dwsetdate (datawindow obj, string dwoname, ref string as_date)
+end prototypes
+
+global function boolean gf_dwsetdate (datawindow obj, string dwoname, ref string as_date);Vector			vc
+Boolean			lb_rtn
+String	 		ls_tmp
+Long				ll_y
+Date				ldt_date
+vc = Create Vector
+
+ls_tmp = obj.Describe(dwoname + ".x")
+IF ls_tmp = "!" OR ls_tmp = "?" THEN Return lb_rtn
+vc.setproperty('x', String(obj.pointerx() - Long(ls_tmp)))
+
+ls_tmp = obj.Describe(dwoname + ".y")
+IF ls_tmp = "!" OR ls_tmp = "?" THEN Return lb_rtn
+ll_y =  obj.pointery() - Long(ls_tmp)
+
+ls_tmp = obj.Describe(dwoname + ".height")
+IF ls_tmp = "!" OR ls_tmp = "?" THEN Return lb_rtn
+vc.setproperty('height', ls_tmp)
+
+vc.setproperty('y', String(Long(ls_tmp) * obj.getrow() - ll_y))
+
+IF Len(as_date) > 0 THEN
+	vc.setproperty('date', as_date)
+END IF
+
+lb_rtn = gf_setopencontrol('w_calendar', obj, vc)
+
+IF lb_rtn THEN
+	as_date = vc.getproperty("curdate")
+END IF
+
+Return lb_rtn
+
+end function
+

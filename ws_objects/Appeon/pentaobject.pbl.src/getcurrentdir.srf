@@ -1,0 +1,57 @@
+﻿$PBExportHeader$getcurrentdir.srf
+global type getcurrentdir from function_object
+end type
+
+forward prototypes
+global function string getcurrentdir ()
+end prototypes
+
+global function string getcurrentdir ();String		ls_tmp, path
+Integer	li_rtn
+
+IF appeongetclienttype() = 'PB' THEN
+	path = getCurrentDirectory()
+ELSE
+	//Appeon5 ==============================
+	/*
+	environment env
+	GetEnvironment(env)
+	IF env.OSType =  windowsnt! THEN
+		CHOOSE CASE env.OSMajorRevision
+			CASE 5   //2000, xp
+				li_rtn = RegistryGet("HKEY_CURRENT_USER\Volatile Environment", "HOMEDRIVE", RegString!, ls_tmp)
+				IF li_rtn = 1 THEN
+					ls_tmp 	= ls_tmp + "\Documents and Settings"
+					li_rtn 		= RegistryGet("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders", "AppData", RegExpandString!, path)
+					IF li_rtn = 1 THEN
+						path = ls_tmp + path
+						ls_tmp = ''
+						IF RegistryGet("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "Logon User Name", RegString!, ls_tmp) = -1 THEN
+							li_Rtn = -1
+						END IF
+						
+						replaceall(path, "%USERPROFILE%", "\" + ls_tmp)
+						path += "\appeon\" + gvc_val.getproperty('webhostname') + "_" + gvc_val.getproperty('profilename')
+					END IF
+				END IF
+			CASE 6  //vista
+				li_rtn = RegistryGet("HKEY_CURRENT_USER\Volatile Environment", "USERPROFILE", RegString!, ls_tmp)
+				IF li_rtn = 1 THEN
+					li_rtn 		= RegistryGet("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders", "AppData", RegExpandString!, path)
+					IF li_rtn = 1 THEN
+						replaceall(path, "%USERPROFILE%", ls_tmp)
+						path += "\appeon\" + gvc_val.getproperty('webhostname') + "_" + gvc_val.getproperty('profilename')
+					END IF
+				END IF
+		END CHOOSE
+	END IF
+	//=================================
+	*/
+	//Appeon6 ===========================
+	path = appeongetcachedir()
+	//=================================
+END IF
+
+Return Path
+end function
+

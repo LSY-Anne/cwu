@@ -1,0 +1,39 @@
+﻿$PBExportHeader$f_get_token.srf
+$PBExportComments$윈도우간에 여러개 값 전달
+global type f_get_token from function_object
+end type
+
+forward prototypes
+global function string f_get_token (ref string source, string separator)
+end prototypes
+
+global function string f_get_token (ref string source, string separator);// 윈도우간의 전달 값이 스트링으로 여러개일 경우 사용하는 함수 
+//
+// 값을 보내는 윈도우에서
+// string  arg_string, arg_temp1, arg_temp2, arg_temp3, ......
+//
+// arg_string = arg_temp1 + "~t" + arg_temp2 + "~t" + arg_temp3 + "~t" + ......
+// openwithparm(Window B, arg_string)
+//
+// 값을 받는 윈도우에서
+// string string1, string2, string3, ......
+//
+// string1 = gf_get_token(arg_string, "~t")
+// string2 = gf_get_token(arg_string, "~t")
+
+int  li_p
+string ls_ret
+
+li_p = Pos(source, separator)
+
+If li_p = 0 then
+   ls_ret = source
+   source = ""
+else
+   ls_ret = Mid(source, 1, li_p - 1)
+   source = Right(source, Len(source) - li_p)
+end if                                          
+
+return ls_ret
+end function
+

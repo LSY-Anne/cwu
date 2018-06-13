@@ -1,0 +1,103 @@
+﻿$PBExportHeader$uf_gaesul_sigan.srf
+$PBExportComments$[청운대]개설과목 시간입력
+global type uf_gaesul_sigan from function_object
+end type
+
+forward prototypes
+global function integer uf_gaesul_sigan (string as_year, string as_hakgi, string as_gwa, string as_hakyun, string as_ban, string as_gwamok_id, long al_gwamok_seq, string as_bunban)
+end prototypes
+
+global function integer uf_gaesul_sigan (string as_year, string as_hakgi, string as_gwa, string as_hakyun, string as_ban, string as_gwamok_id, long al_gwamok_seq, string as_bunban);string ls_yoil, ls_sigan, ls_set, ls_yoil_before, ls_hosil, ls_hosil_name, ls_room, ls_before_hosil
+long ll_count
+
+DECLARE	CUR_SIGAN	 CURSOR FOR
+SELECT	YOIL, SIGAN, HOSIL_CODE
+FROM		HAKSA.SIGANPYO
+WHERE		YEAR			=	:as_year
+AND		HAKGI			=	:as_hakgi
+AND		GWA			=	:as_gwa
+AND		HAKYUN		=	:as_hakyun
+AND		BAN			=	:as_ban
+AND		GWAMOK_ID	=	:as_gwamok_id
+AND		GWAMOK_SEQ	=	:al_gwamok_seq
+AND		BUNBAN		=	:as_bunban
+ORDER BY YOIL, SIGAN ;
+
+OPEN CUR_SIGAN ;  		
+DO
+	FETCH CUR_SIGAN INTO :ls_yoil, :ls_sigan, :ls_hosil ;
+	
+	IF SQLCA.SQLCODE <> 0 THEN EXIT
+	
+	choose case ls_yoil
+		case 'a'
+			ls_yoil = '월'
+		case 'b'
+			ls_yoil = '화'
+		case 'c'
+			ls_yoil = '수'
+		case 'd'
+			ls_yoil = '목'
+		case 'e'
+			ls_yoil = '금'
+		case 'f'
+			ls_yoil = '토'
+	end choose
+
+		//수업시간을 '월6,7 화3'의 형식으로 보이게 하기위한 스크립트
+		
+		if ll_count = 0 then
+			ls_yoil_before = ls_yoil
+			ls_set = ls_yoil + string(long(ls_sigan))
+		else
+			if ls_yoil_before = ls_yoil then
+				ls_set = ls_set + ',' + string(long(ls_sigan))
+			else
+				ls_set = ls_set + ' ' + ls_yoil + string(long(ls_sigan))
+				ls_yoil_before = ls_yoil
+			end if
+		end if
+		
+	//강의실 맹글기
+	SELECT  HST242M.ROOM_NAME     
+	INTO		:ls_hosil_name
+	FROM 		STDB.HST242M 
+	WHERE	HST242M.ROOM_CODE	=	:ls_hosil	; 	
+	
+	if ll_count = 0 then
+		ls_room = ls_hosil_name
+	else
+		if ls_before_hosil <> ls_hosil then
+			ls_room = ls_room + ',' +ls_hosil_name
+		end if
+	end if
+	
+	ls_before_hosil = ls_hosil
+	
+	ll_count = ll_count + 1 
+	
+
+LOOP WHILE TRUE
+CLOSE CUR_SIGAN ;
+
+ls_set	=	ls_set + '/' + ls_room
+
+UPDATE	HAKSA.GAESUL_GWAMOK
+SET	SIGAN	=	:ls_set
+WHERE	YEAR			=	:as_year
+AND	HAKGI			=	:as_hakgi
+AND	GWA			=	:as_gwa
+AND	HAKYUN		=	:as_hakyun
+AND	BAN			=	:as_ban
+AND	GWAMOK_ID	=	:as_gwamok_id
+AND	GWAMOK_SEQ	=	:al_gwamok_seq
+AND	BUNBAN		=	:as_bunban		;
+
+IF SQLCA.SQLCODE = 0 THEN
+	RETURN 1
+ELSE
+	RETURN -1
+END IF
+
+end function
+

@@ -1,0 +1,73 @@
+﻿$PBExportHeader$d_hpa412a_9.srd
+$PBExportComments$연말정산-공제내역
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=char(4) update=yes updatewhereclause=yes key=yes name=p41yar dbname="hpap41d.p41yar" )
+ column=(type=char(4) update=yes updatewhereclause=yes key=yes name=p41dcd dbname="hpap41d.p41dcd" values="기본공제	1100/추가공제	1200/연금보험료공제	2100/보험료특별공제	3100/의료비특별공제	3200/교육비특별공제	3300/주택자금특별공제	3400/기부금특별공제	3500/결혼//이사//장례비특별공제	3600/연금저축기타소득공제	4100/투자조합출자기타소득공제	4200/신용카드기타소득공제	4300/우리사주기타소득공제	4400/세액공제	4500/기타공제	4600/펀드소득공제	4700/" )
+ column=(type=char(4) update=yes updatewhereclause=yes key=yes name=p41dgb dbname="hpap41d.p41dgb" )
+ column=(type=char(100) updatewhereclause=yes name=p40dnm dbname="hpap40m.p40dnm" )
+ column=(type=char(8) update=yes updatewhereclause=yes key=yes name=p41nno dbname="hpap41d.p41nno" )
+ column=(type=char(20) update=yes updatewhereclause=yes key=yes name=p41ajg dbname="hpap41d.p41ajg" )
+ column=(type=decimal(4) update=yes updatewhereclause=yes name=p41sam dbname="hpap41d.p41sam" )
+ column=(type=decimal(4) update=yes updatewhereclause=yes name=p41dem dbname="hpap41d.p41dem" )
+ column=(type=decimal(4) update=yes updatewhereclause=yes name=p41pcn dbname="hpap41d.p41pcn" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=p41rmk dbname="hpap41d.p41rmk" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hpap41d.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipadd dbname="hpap41d.ipadd" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hpap41d.work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hpap41d.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hpap41d.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hpap41d.job_date" )
+ retrieve="  SELECT A.P41YAR,   
+         A.P41DCD,   
+         A.P41DGB,   
+         B.P40DNM ,
+         A.P41NNO ,   
+         A.P41AJG,   
+         A.P41SAM,   
+         A.P41DEM,   
+         A.P41PCN,   
+         A.P41RMK,   
+         A.WORKER                  
+       ,A.IPADD                  
+       ,A.WORK_DATE               
+       ,A.JOB_UID                 
+       ,A.JOB_ADD                 
+       ,A.JOB_DATE         
+    FROM PADB.HPAP41D A,   
+         PADB.HPAP40M  B
+   WHERE ( A.P41YAR = B.P40YAR ) and  
+         ( A.P41DCD = B.P40DCD ) and  
+         ( A.P41DGB = B.P40DGB ) and  
+         ( ( A.P41YAR = :as_year ) AND  
+         ( A.P41NNO = :as_p41nno ) AND  
+         ( B.P40PCG like :as_hz8pcg ) AND  
+         ( A.P41AJG = :as_gu ) )    
+" update="PADB.HPAP41D" updatewhere=0 updatekeyinplace=no arguments=(("as_year", string),("as_p41nno", string),("as_hz8pcg", string),("as_gu", string))  sort="p41dcd A p41dgb A " )
+text(band=header alignment="2" text="대상액" border="0" color="33554432" x="1673" y="8" height="56" width="498" html.valueishtml="0"  name=p41sam_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="공제액" border="0" color="33554432" x="2181" y="8" height="56" width="466" html.valueishtml="0"  name=p41dem_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="대상인원수" border="0" color="33554432" x="2656" y="8" height="56" width="329" html.valueishtml="0"  name=p41pcn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="비고" border="0" color="33554432" x="2994" y="8" height="56" width="1010" html.valueishtml="0"  name=p41rmk_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="공제항목" border="0" color="33554432" x="9" y="8" height="56" width="512" html.valueishtml="0"  name=p41dcd_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="공제구분" border="0" color="33554432" x="530" y="8" height="56" width="1129" html.valueishtml="0"  name=p40dnm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="33554432" x="2661" y="4" height="72" width="325" format="#0" html.valueishtml="0"  name=p41pcn visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="33554432" x="2994" y="4" height="72" width="1010" format="[general]" html.valueishtml="0"  name=p41rmk visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="9" y="4" height="72" width="512" format="[general]" html.valueishtml="0"  name=p41dcd  tag="" visible="1" ddlb.limit=0 ddlb.sorted=yes ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="530" y="4" height="72" width="1129" format="[general]" html.valueishtml="0"  name=p40dnm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="33554432" x="2181" y="4" height="72" width="466" format="#,##0" html.valueishtml="0"  name=p41dem visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="33554432" x="1673" y="4" height="72" width="498" format="#,##0" html.valueishtml="0"  name=p41sam visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,19 @@
+﻿$PBExportHeader$postsendurl.srf
+global type postsendurl from function_object
+end type
+
+forward prototypes
+global function integer postsendurl (parameters astparm, ref string as_rtnmsg)
+end prototypes
+
+global function integer postsendurl (parameters astparm, ref string as_rtnmsg);nvo_inet		ln_inet
+Integer		li_rtn
+
+ln_inet = Create nvo_inet
+li_rtn = ln_inet.of_sendRUL(astparm, as_rtnmsg)
+
+Destroy ln_inet
+
+return li_rtn 
+end function
+

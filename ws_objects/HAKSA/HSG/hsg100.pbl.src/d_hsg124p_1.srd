@@ -1,0 +1,121 @@
+﻿$PBExportHeader$d_hsg124p_1.srd
+$PBExportComments$남여별상담횟수별통계
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=648 color="536870912" )
+summary(height=72 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=char(2) updatewhereclause=yes name=sex dbname="sex" )
+ column=(type=number updatewhereclause=yes name=cnt dbname="cnt" )
+ column=(type=number updatewhereclause=yes name=cnt1 dbname="cnt1" )
+ column=(type=number updatewhereclause=yes name=cnt2 dbname="cnt2" )
+ column=(type=number updatewhereclause=yes name=cnt3 dbname="cnt3" )
+ column=(type=char(60) updatewhereclause=yes name=purpose dbname="purpose" )
+ column=(type=char(60) updatewhereclause=yes name=tp dbname="tp" )
+ column=(type=char(60) updatewhereclause=yes name=hakgi dbname="hakgi" )
+ retrieve="SELECT (case when SEX = 1 then '남'
+                   when SEX = 2 then '여'
+                   end) as SEX,
+SUM(CNT1+CNT2+CNT3) AS CNT,
+SUM(CNT1) AS CNT1,
+SUM(CNT2) AS CNT2,
+SUM(CNT3) AS CNT3,
+MAX((case when :as_purpose  = '%' then '전체'
+	 else (SELECT FNAME FROM CDDB.KCH102D WHERE CODE_GB = 'SUM02' AND CODE = :as_purpose)
+ end)) as purpose,
+MAX((case when :as_case_tp = '%' then '전체'
+     else (SELECT FNAME FROM CDDB.KCH102D WHERE CODE_GB = 'SUM05' AND CODE = :as_case_tp) 
+	  end)) as tp,
+MAX((SELECT FNAME FROM CDDB.KCH102D WHERE CODE_GB = 'HSG01' AND CODE = :as_hakgi))
+	AS hakgi
+FROM 
+		(SELECT HAKBUN, SEX, 
+		COUNT(DISTINCT HAKBUN) AS CNT1,
+		0 AS CNT2,
+		0 AS CNT3 
+		FROM HAKSA.SUM140TL
+		WHERE YEAR = :AS_YEAR
+		AND HAKGI = :AS_HAKGI
+		AND (:AS_PURPOSE = '%' OR PURPOSE = :AS_PURPOSE)
+		AND (:as_case_tp = '%' OR COUNSEL_TP = :as_case_tp)
+		AND SEX IS NOT NULL
+		GROUP BY HAKBUN, SEX
+		HAVING COUNT(*) = 1
+		UNION ALL
+		SELECT HAKBUN, SEX, 
+		0 AS CNT1,
+		COUNT(DISTINCT HAKBUN) AS CNT2,
+		0 AS CNT3 
+		FROM HAKSA.SUM140TL
+		WHERE YEAR = :AS_YEAR
+		AND HAKGI = :AS_HAKGI
+		AND (:AS_PURPOSE = '%' OR PURPOSE = :AS_PURPOSE)
+		AND (:as_case_tp = '%' OR COUNSEL_TP = :as_case_tp)
+		AND SEX IS NOT NULL
+		GROUP BY HAKBUN, SEX
+		HAVING COUNT(*) BETWEEN 2 AND 5
+		UNION ALL
+		SELECT HAKBUN, SEX, 
+		0 AS CNT1,
+		0 AS CNT2,
+		COUNT(DISTINCT HAKBUN) AS CNT3 
+		FROM HAKSA.SUM140TL
+		WHERE YEAR = :AS_YEAR
+		AND HAKGI = :AS_HAKGI
+		AND (:AS_PURPOSE = '%' OR PURPOSE = :AS_PURPOSE)
+		AND (:as_case_tp = '%' OR COUNSEL_TP = :as_case_tp)
+		AND SEX IS NOT NULL
+		GROUP BY HAKBUN, SEX
+		HAVING COUNT(*) > 5) A
+GROUP BY SEX" arguments=(("as_year", string),("as_hakgi", string),("as_purpose", string),("as_case_tp", string)) )
+compute(band=header alignment="1" expression="as_year"border="0" color="33554432" x="37" y="468" height="56" width="183" format="[GENERAL]" html.valueishtml="0"  name=compute_5 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학년도" border="0" color="33554432" x="238" y="468" height="56" width="165" html.valueishtml="0"  name=t_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="찾은목적 :" border="0" color="33554432" x="2254" y="448" height="56" width="256" html.valueishtml="0"  name=purpose_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="상담구분 :" border="0" color="33554432" x="2254" y="360" height="56" width="256" html.valueishtml="0"  name=tp_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=header x1="1243" y1="560" x2="1243" y2="704"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="134217747" )
+line(band=header x1="1966" y1="560" x2="1966" y2="704"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="134217747" )
+line(band=header x1="2688" y1="560" x2="2688" y2="704"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="134217747" )
+line(band=header x1="512" y1="560" x2="512" y2="704"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="134217747" )
+column(band=header id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="475" y="468" height="56" width="791" format="[general]" html.valueishtml="0"  name=hakgi visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="2533" y="448" height="68" width="869" format="[general]" html.valueishtml="0"  name=tp visible="1" edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=6 alignment="0" tabsequence=32766 border="0" color="33554432" x="2533" y="360" height="68" width="864" format="[general]" html.valueishtml="0"  name=purpose visible="1" edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="남여별상담횟수별통계" border="0" color="0" x="0" y="88" height="92" width="3387" html.valueishtml="0"  name=t_2 visible="1"  font.face="Tahoma" font.height="-14" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=header x1="3401" y1="560" x2="0" y2="560"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3401" y1="640" x2="9" y2="640"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="성별" border="0" color="33554432" x="9" y="572" height="60" width="498" html.valueishtml="0"  name=sex_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="합계" border="0" color="33554432" x="526" y="572" height="56" width="709" html.valueishtml="0"  name=cnt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="1회" border="0" color="33554432" x="1253" y="572" height="56" width="709" html.valueishtml="0"  name=cnt1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="2~~5회" border="0" color="33554432" x="1975" y="572" height="56" width="709" html.valueishtml="0"  name=cnt2_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="6회이상" border="0" color="33554432" x="2697" y="572" height="56" width="704" html.valueishtml="0"  name=cnt3_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="1243" y1="0" x2="1243" y2="116"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="512" y1="0" x2="512" y2="116"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1966" y1="0" x2="1966" y2="116"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2688" y1="0" x2="2688" y2="116"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="526" y="4" height="56" width="709" format="###,##0" html.valueishtml="0"  name=cnt visible="1" editmask.mask="###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="33554432" x="1253" y="4" height="68" width="709" format="###,##0" html.valueishtml="0"  name=cnt1 visible="1" editmask.mask="###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="33554432" x="1970" y="0" height="68" width="709" format="###,##0" html.valueishtml="0"  name=cnt2 visible="1" editmask.mask="###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="33554432" x="14" y="0" height="56" width="494" format="[general]" html.valueishtml="0"  name=sex visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="33554432" x="2697" y="4" height="68" width="699" format="###,##0" html.valueishtml="0"  name=cnt3 visible="1" editmask.mask="###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="3401" y1="68" x2="9" y2="68"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=summary alignment="2" text="합계" border="0" color="0" x="9" y="0" height="64" width="498" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=summary x1="512" y1="0" x2="512" y2="80"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="1243" y1="0" x2="1243" y2="80"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="1966" y1="0" x2="1966" y2="80"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="2688" y1="0" x2="2688" y2="80"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="sum(cnt for all)"border="0" color="33554432" x="526" y="8" height="56" width="709" format="###,##0" html.valueishtml="0"  name=compute_4 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(cnt1 for all)"border="0" color="33554432" x="1253" y="8" height="68" width="709" format="###,##0" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(cnt2 for all)"border="0" color="33554432" x="1975" y="8" height="68" width="709" format="###,##0" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(cnt3 for all)"border="0" color="33554432" x="2697" y="8" height="68" width="699" format="###,##0" html.valueishtml="0"  name=compute_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=summary x1="3401" y1="68" x2="9" y2="68"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

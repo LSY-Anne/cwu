@@ -1,0 +1,41 @@
+﻿$PBExportHeader$f_getpaybon.srf
+$PBExportComments$현근무지자료를 구한다(as_year,as_member,as_gubun:return=구분에 따라)
+global type f_getpaybon from function_object
+end type
+
+forward prototypes
+global function decimal f_getpaybon (string as_year, string as_memberno, string as_gubun)
+end prototypes
+
+global function decimal f_getpaybon (string as_year, string as_memberno, string as_gubun);//	전근무지의 급.상여 등을 추출한다.
+//	구분(1.급여,2.상여)
+Decimal{0}	li_Amt
+
+IF	as_gubun	=	'1'	THEN
+	SELECT 	SUM(A.PAY)  
+	INTO		:li_Amt
+	FROM
+	(SELECT 	NVL(SUM(PAY_AMT),0)  PAY
+	FROM   	PADB.HPA005D
+	WHERE  	MEMBER_NO   =     :as_MemberNo
+	AND  		YEAR_MONTH  LIKE	:as_year || '%'
+	AND		CODE	    < 	  '50'
+	AND		CODE	    <>	  '03'
+	UNION		ALL
+	SELECT 	NVL(SUM(A.MONTH_AMT),0)  PAY
+	FROM  	PADB.HPA116T A
+	WHERE  	MEMBER_NO    = 	  :as_MemberNo
+	AND  		YEAR  	    = 	  :as_year
+	AND		MONTH	    BETWEEN	 1	AND	12 ) A;
+ELSE
+	SELECT 	NVL(SUM(PAY_AMT),0) 
+	INTO		:li_Amt
+	FROM   	PADB.HPA005D
+	WHERE  	MEMBER_NO = :as_MemberNo
+	AND  		YEAR_MONTH  LIKE	  :as_Year || '%'
+	AND		CODE		 =	'03';
+END IF
+
+return li_amt
+end function
+

@@ -1,0 +1,40 @@
+﻿$PBExportHeader$f_chk_jumin.srf
+$PBExportComments$주민등록번호체크 (as_juminno)
+global type f_chk_jumin from function_object
+end type
+
+forward prototypes
+global function boolean f_chk_jumin (string as_juminno)
+end prototypes
+
+global function boolean f_chk_jumin (string as_juminno);//////////////////////////////////////////////////////////////////////////////////////////
+// 기    능 : 주민번호 CHECK( 수정 처리된 내용)
+// 작 성 자 : 이현수
+// 작 성 일 : 2002.10
+// 함수원형 : f_chk_jumin( string as_JuminNo ) return boolean
+// 인    수 : as_JuminNo - 주민번호
+// 되 돌 림 : TRUE  - 정상
+//				  FALSE - 오류
+//	주의사항 : 
+//////////////////////////////////////////////////////////////////////////////////////////
+Integer    li_idx1,   li_idx2 = 2
+Integer    li_Sum,    li_Chk, li_Chk1
+
+IF LEN(as_JuminNo) < 13 THEN RETURN FALSE
+
+FOR li_idx1 = 1 TO 12
+    li_Sum = li_Sum + (INTEGER(MID(as_JuminNo,li_idx1,1)) * li_idx2)
+    li_idx2 = li_idx2 + 1
+    IF li_idx2 = 10 THEN
+       li_idx2 = 2
+    END IF;
+NEXT
+
+li_Chk  = 11 - MOD(li_Sum,11)
+li_Chk1 = MOD(li_Chk,10)
+
+IF INTEGER(MID(as_JuminNo,13,1)) - li_Chk1 = 0 THEN RETURN TRUE
+RETURN FALSE
+
+end function
+

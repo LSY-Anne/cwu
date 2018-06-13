@@ -1,0 +1,75 @@
+﻿$PBExportHeader$d_hfn402b_1.srd
+$PBExportComments$년마감관리_마감생성자료
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 grid.columnmove=no selected.mouse=no )
+header(height=76 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=84 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=decimal(0) updatewhereclause=yes name=com_acct_class dbname="hfn501h.com_acct_class" )
+ column=(type=char(4000) updatewhereclause=yes name=com_acct_class_nm dbname="com_acct_class_nm" )
+ column=(type=char(11) updatewhereclause=yes name=com_acct_code dbname="com_acct_code" )
+ column=(type=char(30) updatewhereclause=yes name=com_acct_name dbname="hfn501h.com_acct_name" )
+ column=(type=char(1) updatewhereclause=yes name=com_drcr_class dbname="com_drcr_class" )
+ column=(type=decimal(0) updatewhereclause=yes name=com_mana_code dbname="hfn501h.com_mana_code" )
+ column=(type=char(20) updatewhereclause=yes name=com_mana_data dbname="hfn501h.com_mana_data" )
+ column=(type=number updatewhereclause=yes name=com_dr_alt_amt dbname="com_dr_alt_amt" )
+ column=(type=number updatewhereclause=yes name=com_dr_cash_amt dbname="com_dr_cash_amt" )
+ column=(type=number updatewhereclause=yes name=com_cr_alt_amt dbname="com_cr_alt_amt" )
+ column=(type=number updatewhereclause=yes name=com_cr_cash_amt dbname="com_cr_cash_amt" )
+ retrieve="SELECT	A.ACCT_CLASS													COM_ACCT_CLASS,
+			FU_CODE_NM('HAENG','ACCT_CLASS',A.ACCT_CLASS,'K')	COM_ACCT_CLASS_NM,
+					DECODE(SUBSTR(A.ACCT_CODE,1,1),'7','1'||SUBSTR(A.ACCT_CODE,2,5),A.ACCT_CODE)
+																				COM_ACCT_CODE,
+			B.ACCT_NAME														COM_ACCT_NAME,
+					DECODE(SUBSTR(A.ACCT_CODE,1,1),'7',DECODE(B.DRCR_CLASS,'C','D','D','C'),B.DRCR_CLASS)
+																				COM_DRCR_CLASS,
+			A.MANA_CODE														COM_MANA_CODE,
+			A.MANA_DATA														COM_MANA_DATA,
+			NVL(SUM(A.DR_ALT_AMT),0)									COM_DR_ALT_AMT,
+			NVL(SUM(A.DR_CASH_AMT),0)									COM_DR_CASH_AMT,
+			NVL(SUM(A.CR_ALT_AMT),0)									COM_CR_ALT_AMT,
+			NVL(SUM(A.CR_CASH_AMT),0)									COM_CR_CASH_AMT
+FROM		FNDB.HFN501H A, ACDB.HAC001M B
+WHERE		A.ACCT_CODE  				= 	B.ACCT_CODE (+)
+AND		A.ACCT_CLASS 				= 	:AI_ACCT_CLASS
+AND		A.BDGT_YEAR  				= 	:AS_BDGT_YEAR
+AND		SUBSTR(A.ACCT_CODE,1,1) IN ('1', '2', '3', '7')
+GROUP BY	A.ACCT_CLASS, 
+			DECODE(SUBSTR(A.ACCT_CODE,1,1),'7','1'||SUBSTR(A.ACCT_CODE,2,5),A.ACCT_CODE),
+			B.ACCT_NAME, 
+			DECODE(SUBSTR(A.ACCT_CODE,1,1),'7',DECODE(B.DRCR_CLASS,'C','D','D','C'),B.DRCR_CLASS),
+			A.MANA_CODE, 
+			A.MANA_DATA
+HAVING	NVL(SUM(A.DR_ALT_AMT),0) 	<> 0
+OR			NVL(SUM(A.DR_CASH_AMT),0) 	<> 0
+OR			NVL(SUM(A.CR_ALT_AMT),0) 	<> 0
+OR			NVL(SUM(A.CR_CASH_AMT),0) 	<> 0" arguments=(("ai_acct_class", number),("as_bdgt_year", string))  sort="com_acct_class A com_acct_code A com_mana_data A " )
+text(band=header alignment="2" text="계정코드" border="0" color="0" x="274" y="8" height="56" width="279" html.valueishtml="0"  name=com_acct_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계  정  명" border="0" color="0" x="562" y="8" height="56" width="677" html.valueishtml="0"  name=com_acct_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="회계단위" border="0" color="0" x="9" y="8" height="56" width="256" html.valueishtml="0"  name=com_acct_class_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="관리항목DATA" border="0" color="0" x="1248" y="8" height="56" width="727" html.valueishtml="0"  name=com_mana_data_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="차변금액" border="0" color="0" x="1984" y="8" height="56" width="539" html.valueishtml="0"  name=com_dr_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="대변금액" border="0" color="0" x="2533" y="8" height="56" width="544" html.valueishtml="0"  name=com_cr_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="잔    액" border="0" color="0" x="3086" y="8" height="56" width="594" html.valueishtml="0"  name=com_trans_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=footer alignment="1" expression="sum( com_dr_alt_amt  +  com_dr_cash_amt  for all)"border="0" color="0" x="1984" y="4" height="60" width="539" format="###,###,###,###" html.valueishtml="0"  name=com_dr_amt_tot visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=footer alignment="1" expression="sum( com_cr_alt_amt  +  com_cr_cash_amt  for all)"border="0" color="0" x="2533" y="4" height="60" width="544" format="###,###,###,###" html.valueishtml="0"  name=com_cr_amt_tot visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=footer alignment="2" text="합      계" border="0" color="0" x="1248" y="4" height="56" width="727" html.valueishtml="0"  name=t_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=footer alignment="1" expression="sum(if( com_drcr_class = 'D',  com_dr_alt_amt  +  com_dr_cash_amt  -  com_cr_alt_amt  -  com_cr_cash_amt , com_cr_alt_amt  +  com_cr_cash_amt  -  com_dr_alt_amt  -  com_dr_cash_amt ) for all)"border="0" color="0" x="3086" y="4" height="60" width="594" format="#,###" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="8" height="68" width="256" format="[general]" html.valueishtml="0"  name=com_acct_class_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="274" y="8" height="68" width="279" format="@@@@-@@" html.valueishtml="0"  name=com_acct_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="562" y="8" height="68" width="677" format="[general]" html.valueishtml="0"  name=com_acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="1" expression=" com_cr_alt_amt  +  com_cr_cash_amt "border="0" color="0" x="2533" y="8" height="68" width="544" format="###,###,###,###" html.valueishtml="0"  name=com_cr_amt visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="1" expression=" com_dr_alt_amt  +  com_dr_cash_amt "border="0" color="0" x="1984" y="8" height="68" width="539" format="###,###,###,###" html.valueishtml="0"  name=com_dr_amt visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="1248" y="8" height="68" width="727" format="[general]" html.valueishtml="0"  name=com_mana_data visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="1" expression="if( com_drcr_class = 'D',  com_dr_alt_amt  +  com_dr_cash_amt  -  com_cr_alt_amt  -  com_cr_cash_amt , com_cr_alt_amt  +  com_cr_cash_amt  -  com_dr_alt_amt  -  com_dr_cash_amt )"border="0" color="0" x="3086" y="8" height="68" width="594" format="#,###" html.valueishtml="0"  name=com_trans_amt visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

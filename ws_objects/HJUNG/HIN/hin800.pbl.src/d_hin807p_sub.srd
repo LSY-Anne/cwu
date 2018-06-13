@@ -1,0 +1,80 @@
+﻿$PBExportHeader$d_hin807p_sub.srd
+$PBExportComments$최근 5년간 교수채용 현황 dw sub
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=156 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=116 color="536870912" )
+table(column=(type=char(8) updatewhereclause=yes name=year dbname="year" )
+ column=(type=number updatewhereclause=yes name=in1 dbname="in1" )
+ column=(type=number updatewhereclause=yes name=in2 dbname="in2" )
+ column=(type=number updatewhereclause=yes name=ja1 dbname="ja1" )
+ column=(type=number updatewhereclause=yes name=ja2 dbname="ja2" )
+ column=(type=number updatewhereclause=yes name=gong1 dbname="gong1" )
+ column=(type=number updatewhereclause=yes name=gong2 dbname="gong2" )
+ column=(type=number updatewhereclause=yes name=ye1 dbname="ye1" )
+ column=(type=number updatewhereclause=yes name=ye2 dbname="ye2" )
+ column=(type=number updatewhereclause=yes name=tot1 dbname="tot1" )
+ column=(type=number updatewhereclause=yes name=tot2 dbname="tot2" )
+ column=(type=number updatewhereclause=yes name=total dbname="total" )
+ retrieve="select b.year, b.in1, b.in2, b.ja1, b.ja2, b.gong1, b.gong2, b.ye1, b.ye2, b.tot1, b.tot2, b.total
+from 
+(select a.year as year, a.in1 as in1, a.in2 as in2, a.ja1 as ja1, a.ja2 as ja2, a.gong1 as gong1, a.gong2 as gong2, a.ye1 as ye1, a.ye2 as ye2, a.tot1 as tot1, a.tot2 as tot2, a.total as total
+from(
+select substr(a.firsthire_date, 1, 4) as year,
+       sum(decode(b.group12_code, 1, decode(a.LAST_SCHOOL_CODE, 1, 0, 1), 0)) as in1,
+       sum(decode(b.group12_code, 1, decode(a.LAST_SCHOOL_CODE, 1, 1, 0), 0)) as in2,
+       sum(decode(b.group12_code, 2, decode(a.LAST_SCHOOL_CODE, 1, 0, 1), 0)) as ja1,
+       sum(decode(b.group12_code, 2, decode(a.LAST_SCHOOL_CODE, 1, 1, 0), 0)) as ja2,
+       sum(decode(b.group12_code, 3, decode(a.LAST_SCHOOL_CODE, 1, 0, 1), 0)) as gong1,
+       sum(decode(b.group12_code, 3, decode(a.LAST_SCHOOL_CODE, 1, 1, 0), 0)) as gong2,
+       sum(decode(b.group12_code, 5, decode(a.LAST_SCHOOL_CODE, 1, 0, 1), 0)) as ye1,
+       sum(decode(b.group12_code, 5, decode(a.LAST_SCHOOL_CODE, 1, 1, 0), 0)) as ye2,
+       sum(decode(a.LAST_SCHOOL_CODE, 1, 0, 1)) as tot1,
+       sum(decode(a.LAST_SCHOOL_CODE, 1, 1, 0)) as tot2,
+       sum(1) as total
+  from indb.hin001m a, cddb.kch003m b
+ where a.gwa = b.gwa||'  ' 
+ and use_gubun = 'Y' 
+ and group12_code > 0 
+ and a.duty_code like '1%' 
+ and substr(a.firsthire_date, 1, 4) is not null
+ group by substr(a.firsthire_date, 1, 4)
+ order by year desc ) a
+where rownum < 6) b
+order by b.year" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="5" y="20" height="76" width="206" format="[general]" html.valueishtml="0"  name=year visible="1" edit.limit=8 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="274" y="20" height="76" width="165" format="[general]" html.valueishtml="0"  name=in1 visible="1" editmask.mask="#####" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="530" y="20" height="76" width="165" format="[general]" html.valueishtml="0"  name=in2 visible="1" editmask.mask="#####" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="786" y="20" height="76" width="165" format="[general]" html.valueishtml="0"  name=ja1 visible="1" editmask.mask="#####" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="1042" y="20" height="76" width="165" format="[general]" html.valueishtml="0"  name=ja2 visible="1" editmask.mask="#####" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="1312" y="20" height="76" width="165" format="[general]" html.valueishtml="0"  name=gong1 visible="1" editmask.mask="#####" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="1568" y="20" height="76" width="165" format="[general]" html.valueishtml="0"  name=gong2 visible="1" editmask.mask="#####" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="1838" y="20" height="76" width="165" format="[general]" html.valueishtml="0"  name=ye1 visible="1" editmask.mask="#####" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="0" x="2094" y="20" height="76" width="165" format="[general]" html.valueishtml="0"  name=ye2 visible="1" editmask.mask="#####" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="0" x="2354" y="20" height="76" width="165" format="[general]" html.valueishtml="0"  name=tot1 visible="1" editmask.mask="#####" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="0" x="2619" y="20" height="76" width="165" format="[general]" html.valueishtml="0"  name=tot2 visible="1" editmask.mask="#####" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="2" tabsequence=32766 border="0" color="0" x="2866" y="20" height="76" width="165" format="[general]" html.valueishtml="0"  name=total visible="1" editmask.mask="#####" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(in1 for all)"border="0" color="0" x="274" y="20" height="76" width="165" format="####" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(in2 for all)"border="0" color="0" x="530" y="20" height="76" width="165" format="####" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(ja1 for all)"border="0" color="0" x="786" y="20" height="76" width="165" format="####" html.valueishtml="0"  name=compute_3 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(ja2 for all)"border="0" color="0" x="1042" y="20" height="76" width="165" format="####" html.valueishtml="0"  name=compute_4 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(gong1 for all)"border="0" color="0" x="1312" y="20" height="76" width="165" format="####" html.valueishtml="0"  name=compute_5 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(gong2 for all)"border="0" color="0" x="1568" y="20" height="76" width="165" format="####" html.valueishtml="0"  name=compute_6 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(ye1 for all)"border="0" color="0" x="1838" y="20" height="76" width="165" format="####" html.valueishtml="0"  name=compute_7 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(ye2 for all)"border="0" color="0" x="2094" y="20" height="76" width="165" format="####" html.valueishtml="0"  name=compute_8 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(tot1 for all)"border="0" color="0" x="2354" y="20" height="76" width="165" format="####" html.valueishtml="0"  name=compute_9 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(tot2 for all)"border="0" color="0" x="2619" y="20" height="76" width="165" format="####" html.valueishtml="0"  name=compute_10 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(total for all)"border="0" color="0" x="2866" y="20" height="76" width="165" format="####" html.valueishtml="0"  name=compute_11 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

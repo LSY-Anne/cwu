@@ -1,0 +1,107 @@
+﻿$PBExportHeader$f_getsangyeomonth.srf
+$PBExportComments$상여근무월수를 구한다(A:member_no,R:num_of_bonwork)
+global type f_getsangyeomonth from function_object
+end type
+
+forward prototypes
+global function integer f_getsangyeomonth (string as_member_no, string as_yearmonth, string as_first_date, string as_retire_date, string as_today)
+end prototypes
+
+global function integer f_getsangyeomonth (string as_member_no, string as_yearmonth, string as_first_date, string as_retire_date, string as_today);// ==========================================================================================
+// 기    능 : 	상여근무월을 구한다.
+// 작 성 인 : 	안금옥
+// 작성일자 : 	2002.04
+// 함수원형 : 	f_getsangyeomonth(string as_member_no, string as_yearmonth, string as_first_date, string as_retire_date, string as_today)
+//					return	integer
+// 인    수 :	as_member_no 	- 	개인번호
+//					as_yearmont		- 	지급년월
+//					as_first_date	-	최초임용일자
+//					as_retire_date	-	퇴직일자
+//					as_today			- 	근무년수계산기준일자
+// 되 돌 림 :	상여근무월
+// 주의사항 :
+// 수정사항 :
+// ==========================================================================================
+
+integer	li_month, li_day				// 상여근무월수
+integer	li_curr_month					// 지급월
+integer	li_month_cnt, li_num
+string	ls_month_gbn
+string	ls_last_date
+
+if isnull(as_member_no) or trim(as_member_no) = '' then	return	0
+
+li_curr_month	=	integer(right(as_yearmonth, 2))
+
+li_month	=	0
+li_day	=	0
+
+// 개인의 근무월을 구한다.(임용일자부터 퇴직일자까지)
+// 퇴직일자가 없는 사람은 근무년수계산기준일자까지를 구한다.
+if isnull(as_retire_date) or trim(as_retire_date) = '' then
+	ls_last_date	=	as_today
+	li_num			=	2
+else
+	ls_last_date	=	as_retire_date
+	li_num			=	2
+end if
+
+// 근무개월수를 구한다.
+select	trunc(months_between(to_date(:ls_last_date, 'yyyymmdd'), to_date(:as_first_date, 'yyyymmdd')), 0) month,
+			case	
+				when		substr(:ls_last_date, 7, 2) < substr(:as_first_date, 7, 2)
+					then	to_number(substr(:ls_last_date, 7, 2)) - to_number(substr(:as_first_date, 7, 2)) +
+							to_number(substr(last_day(to_date(:as_first_date, 'yyyymmdd')), 7, 2))
+				else		to_number(substr(:ls_last_date, 7, 2)) - to_number(substr(:as_first_date, 7, 2))
+			end day
+into		:li_month, :li_day
+from		dual	;
+
+if li_day	>=	15 then	li_month ++
+
+// 상여항목의 정보들
+select	substr(pay_month, :li_curr_month, 1), item_gbn2
+into		:ls_month_gbn, :li_month_cnt
+from		padb.hpa003m
+where		code	=	'03'	;
+
+// 해당월이 상여달인경우는 모두 개월수를 체크한다.
+// 퇴직예정자는 상여달이 아니더라고 개월수를 체크한다.
+if ls_month_gbn <> '1' and	trim(as_retire_date) = '' then
+	li_month	=	0
+else
+//	// 개월수를 구한다.
+//	select	(months_between(to_date(substr(:ls_last_date, 1, 6), 'yyyymm'), 
+//					to_date(to_char(add_months(to_date(substr(:as_yearmonth, 1, 6), 'yyyymm'), - (:li_month_cnt)), 'yyyymm'), 'yyyymm'))) - 1
+//	into		:li_month
+//	from		dual	;
+
+//	// 재직인 자는 3개월로 처리한다.
+//	if isnull(as_retire_date) or trim(as_retire_date) = '' then
+//		li_month	=	li_month_cnt
+	
+	
+		
+	select	months_between(
+					to_date(substr(:ls_last_date, 1, 6), 'yyyymm'), 
+					to_date(
+							decode(instr(pay_month, '1', - (12 - to_number(substr(:ls_last_date, 5, 2)) + :li_num), 1), 0,
+								to_char(to_number(substr(:as_yearmonth, 1, 4)) - 1) || trim(to_char(instr(pay_month, '1', -1, 1), '00')), 
+								substr(:as_yearmonth, 1, 4) || trim(to_char(instr(pay_month, '1', - (12 - to_number(substr(:ls_last_date, 5, :li_num)) + 2), 1), '00')))
+						, 'yyyymm')) month
+	into		:li_month
+	from		padb.hpa003m
+	where		code	=	'03'	;
+
+end if
+
+//if (ls_month_gbn = '1') or (trim(as_retire_date) <> '')  then
+//	if li_month > li_month_cnt then	li_month	=	li_month_cnt
+//else
+//	li_month	=	0
+//end if
+
+return	li_month
+
+end function
+

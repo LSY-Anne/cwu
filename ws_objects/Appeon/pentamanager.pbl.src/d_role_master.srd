@@ -1,0 +1,69 @@
+﻿$PBExportHeader$d_role_master.srd
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=80 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=76 color="536870912" )
+table(column=(type=char(5) update=yes updatewhereclause=yes key=yes name=role_no dbname="pf_role.role_no" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=role_cat_code dbname="pf_role.role_cat_code" values="사용자	01/실제조직	02/가상조직	03/" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=role_name dbname="pf_role.role_name" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=dept_code dbname="pf_role.dept_code" )
+ column=(type=char(20) updatewhereclause=yes name=dept_name dbname="pf_department.dept_name" )
+ column=(type=char(12) update=yes updatewhereclause=yes name=emp_code dbname="pf_role.emp_code" )
+ column=(type=char(20) updatewhereclause=yes name=emp_name dbname="pf_employee.emp_name" )
+ retrieve="select	 a.role_no 				as role_no
+		  	,a.role_cat_code		as role_cat_code
+			,a.role_name			as role_name
+			,a.dept_code			as dept_code
+			,''							as dept_name
+			,a.emp_code			as emp_code
+			,b.emp_name 			as emp_name
+  from 	 cddb.pf_role						a
+		 	,cddb.pf_employee				b
+where	a.emp_code		= b.emp_code
+union
+select	 a.role_no 				as role_no
+		  	,a.role_cat_code		as role_cat_code
+			,a.role_name			as role_name
+			,a.dept_code			as dept_code
+			,c.dept_name			as dept_name
+			,a.emp_code			as emp_code
+			,'' 							as emp_name
+  from 	 cddb.pf_role						a
+			,cddb.pf_department				c
+where	a.dept_code  	= c.dept_code
+union
+select	 a.role_no 				as role_no
+		  	,a.role_cat_code		as role_cat_code
+			,a.role_name			as role_name
+			,a.dept_code			as dept_code
+			,''							as dept_name
+			,a.emp_code			as emp_code
+			,'' 							as emp_name
+  from 	 cddb.pf_role						a
+ where 	(a.emp_code		= ''
+	 and 	a.dept_code		= '')
+	 or	(a.emp_code		is null
+	 and a.dept_code		is null)
+" update="cddb.pf_role" updatewhere=0 updatekeyinplace=yes  sort="role_no D " )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="24276589" x="1353" y="8" height="64" width="361" format="[general]" html.valueishtml="0"  name=emp_name visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="24276589" x="14" y="8" height="64" width="242" format="[general]" html.valueishtml="0"  name=role_no visible="1" edit.limit=5 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="24276589" x="549" y="8" height="64" width="402" format="[general]" html.valueishtml="0"  name=role_name visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="24276589" x="969" y="8" height="64" width="366" format="[general]" html.valueishtml="0"  name=dept_name visible="1" edit.limit=40 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="24276589" x="270" y="8" height="64" width="265" format="[general]" html.valueishtml="0"  name=role_cat_code visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Role No" border="0" color="25058105" x="14" y="12" height="64" width="242" html.valueishtml="0"  name=role_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="사원" border="0" color="25058105" x="1353" y="12" height="64" width="361" html.valueishtml="0"  name=emp_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Role 명" border="0" color="25058105" x="549" y="12" height="64" width="402" html.valueishtml="0"  name=role_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="부서" border="0" color="25058105" x="969" y="12" height="64" width="366" html.valueishtml="0"  name=dept_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="구분코드" border="0" color="25058105" x="270" y="12" height="64" width="265" html.valueishtml="0"  name=role_cat_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

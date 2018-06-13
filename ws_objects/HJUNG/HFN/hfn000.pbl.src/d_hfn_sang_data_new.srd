@@ -1,0 +1,72 @@
+﻿$PBExportHeader$d_hfn_sang_data_new.srd
+$PBExportComments$상계 Data 조회 (new)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 grid.columnmove=no selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(6) updatewhereclause=yes name=acct_code dbname="acct_code" )
+ column=(type=char(30) updatewhereclause=yes name=acct_name dbname="acct_name" )
+ column=(type=decimal(0) updatewhereclause=yes name=mana_code dbname="mana_code" )
+ column=(type=char(20) updatewhereclause=yes name=mana_data dbname="mana_data" )
+ column=(type=number updatewhereclause=yes name=bal_amt dbname="bal_amt" )
+ column=(type=number updatewhereclause=yes name=sang_amt dbname="sang_amt" )
+ column=(type=number updatewhereclause=yes name=com_jan_amt dbname="com_jan_amt" )
+ retrieve="select 	acct_code, 
+			acct_name, 
+			mana_code, 
+			mana_data, 
+			sum(bal_amt) 	bal_amt, 
+			sum(sang_amt) 	sang_amt,
+			sum(bal_amt) - sum(sang_amt)	com_jan_amt
+from
+		(
+			select 	a.acct_code			acct_code,
+						c.acct_name			acct_name, 
+						a.mana_code1		mana_code, 
+						a.mana_data1		mana_data, 
+						sum(decode(a.drcr_class, 'C', a.slip_amt, 0)) bal_amt, 
+						sum(decode(a.drcr_class, 'D', a.slip_amt, 0)) sang_amt
+			from 		fndb.hfn202m a, fndb.hfn201m b, acdb.hac001m c
+			where 	a.slip_date 	= b.slip_date
+			and 		a.slip_no 		= b.slip_no
+			and 		a.acct_code		= c.acct_code
+			and		b.step_opt 		= '5'
+			and		a.acct_class	= :ai_acct_class
+			and 		a.acct_code 	= :as_acct_code
+			group by a.acct_code, c.acct_name, a.mana_code1, a.mana_data1, a.drcr_class
+		)
+group by acct_code, 
+			acct_name, 
+			mana_code, 
+			mana_data
+having	sum(bal_amt) - sum(sang_amt) <> 0
+
+" arguments=(("ai_acct_class", number),("as_acct_code", string)) )
+text(band=header alignment="2" text="계정코드" border="0" color="33554432" x="9" y="12" height="56" width="270" html.valueishtml="0"  name=acct_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계정명" border="0" color="33554432" x="288" y="12" height="56" width="690" html.valueishtml="0"  name=acct_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="관리항목" border="0" color="33554432" x="987" y="12" height="56" width="347" html.valueishtml="0"  name=mana_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="관리 Data" border="0" color="0" x="1344" y="12" height="56" width="1047" html.valueishtml="0"  name=compute_1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="발생금액" border="0" color="0" x="2400" y="12" height="56" width="512" html.valueishtml="0"  name=bal_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="상계금액" border="0" color="0" x="2921" y="12" height="56" width="507" html.valueishtml="0"  name=sang_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="잔액" border="0" color="0" x="3438" y="12" height="56" width="512" html.valueishtml="0"  name=com_jan_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="9" y="8" height="60" width="270" format="@@@@-@@" html.valueishtml="0"  name=acct_code visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="288" y="8" height="60" width="690" format="[general]" html.valueishtml="0"  name=acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="33554432" x="2400" y="8" height="60" width="512" format="#,##0" html.valueishtml="0"  name=bal_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="33554432" x="3438" y="8" height="60" width="512" format="#,##0" html.valueishtml="0"  name=com_jan_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="987" y="8" height="60" width="347" format="[general]" html.valueishtml="0"  name=mana_code visible="1" dddw.name=dddw_mana_code dddw.displaycolumn=mana_name dddw.datacolumn=mana_code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="33554432" x="2921" y="8" height="60" width="507" format="#,##0" html.valueishtml="0"  name=sang_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression=" mana_data + if( f_mana_data_name_proc( mana_code ,  mana_data ) = '', '', '(' + trim( f_mana_data_name_proc( mana_code ,  mana_data ) ) + ')' )"border="0" color="33554432" x="1344" y="8" height="60" width="1047" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+
+sparse(names="acct_code	acct_name	mana_code")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

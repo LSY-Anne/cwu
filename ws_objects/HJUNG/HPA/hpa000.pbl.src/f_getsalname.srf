@@ -1,0 +1,35 @@
+﻿$PBExportHeader$f_getsalname.srf
+$PBExportComments$호봉명칭을 구한다(A:duty_code, sal_class, ann_opt, R:sal_nm)
+global type f_getsalname from function_object
+end type
+
+forward prototypes
+global function string f_getsalname (string as_duty_code, string as_sal_class, integer ai_ann_opt)
+end prototypes
+
+global function string f_getsalname (string as_duty_code, string as_sal_class, integer ai_ann_opt);// ==========================================================================================
+// 기    능 : 	호봉명칭을 구한다.
+// 작 성 인 : 	안금옥
+// 작성일자 : 	2002.04
+// 함수원형 : 	f_getsalname(String as_duty_code, String as_sal_class, integer ai_ann_opt)	return	decimal
+// 인    수 :	as_duty_code	-	직급코드
+//					as_sal_class	-	호봉코드
+//					ai_ann_opt		-	연봉자구분(1:정상급여, 2:연봉자)
+// 되 돌 림 :	호봉명칭
+// 주의사항 :
+// 수정사항 :
+// ==========================================================================================
+
+string	ls_sal_class_nm
+
+select	nvl(sal_class_nm, :as_sal_class)
+into		:ls_sal_class_nm
+from		indb.hin004m
+where		duty_code	=	decode(:ai_ann_opt, 2, '901', decode(substr(:as_duty_code, 1, 1), '1', '100', :as_duty_code))
+and		sal_class	=	:as_sal_class	;
+
+if sqlca.sqlcode <> 0	then	ls_sal_class_nm = as_sal_class
+
+return	ls_sal_class_nm
+end function
+

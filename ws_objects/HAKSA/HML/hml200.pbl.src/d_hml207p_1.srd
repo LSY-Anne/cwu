@@ -1,0 +1,69 @@
+﻿$PBExportHeader$d_hml207p_1.srd
+$PBExportComments$부처,학생지급장학현황표
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=84 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(20) updatewhereclause=yes name=jaehak_hakjuk_hname dbname="jaehak_hakjuk.hname" dbalias="A.hname" )
+ column=(type=char(60) updatewhereclause=yes name=juya_gubun dbname="juya_gubun" )
+ column=(type=char(1) updatewhereclause=yes name=sex dbname="jaehak_hakjuk.sex" dbalias="A.sex" values="남	1/여	2/" )
+ column=(type=char(1) updatewhereclause=yes name=su_hakyun dbname="jaehak_hakjuk.su_hakyun" dbalias="A.su_hakyun" )
+ column=(type=char(4) updatewhereclause=yes name=benefit_year dbname="point_benefit.benefit_year" dbalias="B.benefit_year" )
+ column=(type=char(4) updatewhereclause=yes name=gwa dbname="jaehak_hakjuk.gwa" dbalias="A.gwa" )
+ column=(type=char(50) updatewhereclause=yes name=gwa_nm dbname="gwa_nm" )
+ column=(type=char(10) updatewhereclause=yes name=hakbun dbname="point_benefit.hakbun" dbalias="B.hakbun" )
+ column=(type=decimal(0) updatewhereclause=yes name=benefit_point dbname="point_benefit.benefit_point" dbalias="B.benefit_point" )
+ column=(type=decimal(0) updatewhereclause=yes name=remaind_point dbname="point_benefit.remaind_point" dbalias="B.remaind_point" )
+ retrieve="  SELECT A.HNAME,   
+ (SELECT FNAME FROM CDDB.KCH102D WHERE UPPER(CODE_GB) = 'SYS02' AND  CODE = A.JUYA_GUBUN  ) as JUYA_GUBUN,
+A.SEX,
+        A.SU_HAKYUN,   
+        B.BENEFIT_YEAR,   
+        A.GWA AS GWA,   
+    (SELECT FNAME FROM CDDB.KCH003M WHERE TRIM(GWA) = TRIM(A.GWA)) AS GWA_nm,   
+        B.HAKBUN,   
+        B.BENEFIT_POINT, 
+ B.REMAIND_POINT
+    FROM HAKSA.JAEHAK_HAKJUK A,   
+         HAKSA.POINT_BENEFIT B
+   WHERE (A.HAKBUN =B.HAKBUN ) and  
+B.BENEFIT_YEAR = :as_year AND 
+B.HAKGI = :as_hakgi  AND
+(:as_hakyun = '%' Or A.SU_HAKYUN = :as_hakyun)
+
+     " arguments=(("as_year", string),("as_hakgi", string),("as_hakyun", string))  sort="gwa A " )
+text(band=header alignment="2" text="학년" border="0" color="33554432" x="1655" y="8" height="56" width="224" html.valueishtml="0"  name=su_hakyun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="주/야" border="0" color="33554432" x="1198" y="8" height="56" width="448" html.valueishtml="0"  name=juya_gubun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성별" border="0" color="33554432" x="1888" y="8" height="56" width="297" html.valueishtml="0"  name=sex_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="이름" border="0" color="33554432" x="2697" y="8" height="56" width="434" html.valueishtml="0"  name=hname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학번" border="0" color="0" x="2194" y="8" height="56" width="494" html.valueishtml="0"  name=hakbun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="지급장학금" border="0" color="0" x="3141" y="8" height="56" width="635" html.valueishtml="0"  name=benefit_point_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="잔여마일리지" border="0" color="0" x="3785" y="8" height="56" width="585" html.valueishtml="0"  name=remaind_point_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="소속학과" border="0" color="0" x="197" y="8" height="56" width="992" html.valueishtml="0"  name=gwa_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="순번" border="0" color="0" x="9" y="8" height="56" width="178" html.valueishtml="0"  name=no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="1198" y="8" height="68" width="448" format="[general]" html.valueishtml="0"  name=juya_gubun visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="33554432" x="1655" y="8" height="68" width="224" format="[general]" html.valueishtml="0"  name=su_hakyun visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="33554432" x="2697" y="8" height="68" width="434" format="[general]" html.valueishtml="0"  name=hname visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="33554432" x="1888" y="8" height="68" width="297" format="[general]" html.valueishtml="0"  name=sex visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="33554432" x="2194" y="8" height="68" width="494" format="[general]" html.valueishtml="0"  name=hakbun visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="197" y="8" height="68" width="992" format="[general]" html.valueishtml="0"  name=gwa_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="GETROW()"border="0" color="33554432" x="9" y="8" height="68" width="178" format="[GENERAL]" html.valueishtml="0"  name=no visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="33554432" x="3141" y="8" height="68" width="635" format="#,##0" html.valueishtml="0"  name=benefit_point visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="33554432" x="3785" y="8" height="68" width="585" format="#,##0" html.valueishtml="0"  name=remaind_point visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="count(hakbun for all)"border="0" color="33554432" x="2194" y="8" height="68" width="494" format="[general]" html.valueishtml="0"  name=compute_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(benefit_point for all)"border="0" color="33554432" x="3141" y="8" height="68" width="635" format="#,##0" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(remaind_point for all)"border="0" color="33554432" x="3785" y="8" height="68" width="585" format="#,##0" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=summary alignment="0" text="건" border="0" color="0" x="2697" y="8" height="56" width="434" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

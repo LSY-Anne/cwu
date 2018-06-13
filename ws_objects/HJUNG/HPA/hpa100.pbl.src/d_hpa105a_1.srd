@@ -1,0 +1,56 @@
+﻿$PBExportHeader$d_hpa105a_1.srd
+$PBExportComments$이체 은행계좌 리스트
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(5) update=yes updatewhereclause=yes name=member_no dbname="member_no" )
+ column=(type=char(40) updatewhereclause=yes name=name dbname="name" )
+ column=(type=char(3) updatewhereclause=yes name=hin001m_duty_code dbname="hin001m.duty_code" )
+ column=(type=decimal(0) updatewhereclause=yes name=hin003m_02v_jikjong_code dbname="hin001m.jikjong_code" )
+ column=(type=char(20) updatewhereclause=yes name=duty_name dbname="duty_name" )
+ column=(type=char(1) updatewhereclause=yes name=gubun dbname="gubun" values="Y	Y/	N/" )
+ column=(type=char(4) updatewhereclause=yes name=hin001m_gwa dbname="hin001m.gwa" )
+ retrieve="	
+	select	rtrim(a.member_no) 	member_no,
+				rtrim(a.name)			name,
+				a.duty_code,
+				b.jikjong_code,
+				rtrim(b.duty_name)	duty_name,
+				decode(c.member_no, null, 'N', 'Y') gubun,
+				a.gwa
+	from		indb.hin001m a, indb.V_HIN003M_1 b, padb.hpa020m c
+	where		b.jikjong_code	>=	:ai_str_jikjong
+	and		b.jikjong_code <=	:ai_end_jikjong
+	and		a.jaejik_opt	in	(1, 2)
+	and		a.duty_code		=	b.duty_code (+)
+	and		a.member_no		=	c.member_no	(+)
+	group by a.member_no,
+				a.name,
+				a.duty_code,
+				b.jikjong_code,
+				b.duty_name,
+				c.member_no,
+				a.gwa
+	order by a.name,a.gwa,a.duty_code" arguments=(("ai_str_jikjong", number),("ai_end_jikjong", number))  sort="hin001m_duty_code A member_no A " )
+text(band=header alignment="2" text="성 명" border="0" color="0" x="361" y="12" height="56" width="453" html.valueishtml="0"  name=name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="개인번호" border="0" color="0" x="9" y="12" height="56" width="343" html.valueishtml="0"  name=member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직 급 명" border="0" color="0" x="823" y="12" height="56" width="576" html.valueishtml="0"  name=duty_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="생성" border="0" color="0" x="1408" y="12" height="56" width="151" html.valueishtml="0"  name=gubun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="343" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="361" y="4" height="72" width="453" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="823" y="4" height="72" width="576" format="[general]" html.valueishtml="0"  name=duty_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="1408" y="4" height="72" width="151" format="[general]" html.valueishtml="0"  name=gubun visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

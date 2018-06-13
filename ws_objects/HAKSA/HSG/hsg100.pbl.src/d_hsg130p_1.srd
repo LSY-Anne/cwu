@@ -1,0 +1,142 @@
+﻿$PBExportHeader$d_hsg130p_1.srd
+$PBExportComments$학생 환경기록카드 출력
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=2544 color="536870912" height.autosize=yes )
+table(column=(type=char(6) updatewhereclause=yes name=sum220tl_gwa dbname="sum220tl.gwa" )
+ column=(type=char(20) updatewhereclause=yes name=hname dbname="sum220tl.hname" )
+ column=(type=char(10) updatewhereclause=yes name=hakbun dbname="sum220tl.hakbun" )
+ column=(type=char(13) updatewhereclause=yes name=jumin_no dbname="sum220tl.jumin_no" )
+ column=(type=char(60) updatewhereclause=yes name=mil_tp dbname="mil_tp" )
+ column=(type=char(2) updatewhereclause=yes name=iphak_gubun dbname="jaehak_hakjuk.iphak_gubun" )
+ column=(type=char(100) updatewhereclause=yes name=high_name dbname="jaehak_hakjuk.high_name" )
+ column=(type=char(40) updatewhereclause=yes name=supp_cause dbname="sum220tl.supp_cause" )
+ column=(type=char(1000) updatewhereclause=yes name=photo_path dbname="sum220tl.photo_path" )
+ column=(type=char(20) updatewhereclause=yes name=tel dbname="sum220tl.tel" )
+ column=(type=char(20) updatewhereclause=yes name=hp dbname="sum220tl.hp" )
+ column=(type=char(100) updatewhereclause=yes name=email dbname="sum220tl.email" )
+ column=(type=char(40) updatewhereclause=yes name=hope dbname="sum220tl.hope" )
+ column=(type=char(60) updatewhereclause=yes name=blood dbname="blood" )
+ column=(type=char(60) updatewhereclause=yes name=reglion dbname="reglion" )
+ column=(type=char(100) updatewhereclause=yes name=fa_skill dbname="sum220tl.fa_skill" )
+ column=(type=char(100) updatewhereclause=yes name=special dbname="sum220tl.special" )
+ column=(type=char(6) updatewhereclause=yes name=house_zip_code dbname="sum220tl.house_zip_code" )
+ column=(type=char(100) updatewhereclause=yes name=house_zip_addr dbname="sum220tl.house_zip_addr" )
+ column=(type=char(60) updatewhereclause=yes name=house_form dbname="house_form" )
+ retrieve="SELECT A.GWA,   
+         A.HNAME,   
+         A.HAKBUN,   
+         A.JUMIN_NO,
+         (select nvl(fname,A.MIL_TP) from cddb.kch102d where code_gb = 'SUM27' and code = A.MIL_TP) as MIL_TP,
+         B.IPHAK_GUBUN,
+         B.HIGH_NAME,   
+         A.SUPP_CAUSE,
+		 A.PHOTO_PATH,   
+         A.TEL,   
+         A.HP,   
+         A.EMAIL,   
+         A.HOPE,   
+         (select fname from cddb.kch102d where code_gb = 'SUM19' and code = to_number(A.BLOOD)) as BLOOD,   
+         (select fname from cddb.kch102d where code_gb = 'SUM25' and code = to_number(A.REGLION)) AS REGLION,   
+         A.FA_SKILL,
+	    A.SPECIAL,    
+         A.HOUSE_ZIP_CODE,   
+         A.HOUSE_ZIP_ADDR,   
+         (select fname from cddb.kch102d where code_gb = 'house_gbn_code' and code =A.HOUSE_FORM) AS HOUSE_FORM
+  FROM HAKSA.SUM220TL A,   
+         HAKSA.JAEHAK_HAKJUK B  
+   WHERE A.HAKBUN = B.HAKBUN
+        AND A.HAKBUN = :as_hakbun" arguments=(("as_hakbun", string)) )
+text(band=detail alignment="2" text="학 생 환 경 기 록 카 드" border="0" color="0" x="1399" y="132" height="140" width="2025" html.valueishtml="0"  name=t_55 visible="1"  font.face="Tahoma" font.height="-22" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="학과지원동기" border="0" color="0" x="1577" y="692" height="56" width="375" html.valueishtml="0"  name=supp_cause_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="197" y1="416" x2="4713" y2="416"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="631" y="440" height="64" width="901" format="[general]" html.valueishtml="0"  name=gwa visible="1" dddw.name=d_dddw_hakgwa dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=170 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="197" y1="528" x2="4713" y2="528"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="197" y1="644" x2="4187" y2="644"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="197" y1="416" x2="197" y2="2536"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="33554432" x="631" y="552" height="68" width="896" format="@@@@@@-@@@@@@@" html.valueishtml="0"  name=jumin_no visible="1" edit.limit=13 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="197" y1="764" x2="4187" y2="764"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="197" y1="880" x2="4187" y2="880"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="197" y1="1012" x2="4187" y2="1012"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="1984" y="448" height="68" width="946" format="[general]" html.valueishtml="0"  name=hname visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="33554432" x="631" y="672" height="68" width="896" format="[general]" html.valueishtml="0"  name=high_name visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="33554432" x="498" y="796" height="68" width="416" format="[general]" html.valueishtml="0"  name=tel visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="33554432" x="1138" y="796" height="68" width="421" format="[general]" html.valueishtml="0"  name=hp visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="33554432" x="1984" y="796" height="68" width="1399" format="[general]" html.valueishtml="0"  name=email visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="메신저 주소" border="0" color="0" x="3429" y="800" height="56" width="347" html.valueishtml="0"  name=t_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="33554432" x="1157" y="912" height="68" width="2222" format="[general]" html.valueishtml="0"  name=hope visible="1" edit.limit=40 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="2" tabsequence=32766 border="0" color="33554432" x="3817" y="920" height="68" width="352" format="[general]" html.valueishtml="0"  name=blood visible="1" dddw.name=none dddw.displaycolumn=none dddw.datacolumn=none dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="599" y1="420" x2="599" y2="764"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="599" y1="1012" x2="599" y2="2532"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="197" y1="2528" x2="4713" y2="2528"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="197" y1="1484" x2="4713" y2="1484"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=15 alignment="2" tabsequence=32766 border="0" color="33554432" x="3817" y="1044" height="68" width="352" format="[general]" html.valueishtml="0"  name=reglion visible="1" edit.limit=2 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="2" tabsequence=32766 border="0" color="33554432" x="3817" y="1160" height="68" width="887" format="[general]" html.valueishtml="0"  name=fa_skill visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="2" tabsequence=32766 border="0" color="33554432" x="3817" y="1276" height="68" width="882" format="[general]" html.valueishtml="0"  name=special visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=20 alignment="2" tabsequence=32766 border="0" color="33554432" x="3817" y="1396" height="68" width="869" format="[general]" html.valueishtml="0"  name=house_form visible="0" edit.limit=6 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="0" color="33554432" x="635" y="1400" height="68" width="302" format="[general]" html.valueishtml="0"  name=house_zip_code visible="1" edit.limit=6 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=19 alignment="0" tabsequence=32766 border="0" color="33554432" x="969" y="1400" height="68" width="2414" format="[general]" html.valueishtml="0"  name=house_zip_addr visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="1568" y1="420" x2="1568" y2="884"  name=l_17 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1957" y1="420" x2="1957" y2="884"  name=l_18 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2939" y1="420" x2="2939" y2="648"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="4709" y1="416" x2="4709" y2="2536"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="33554432" x="4192" y="536" height="580" width="507" format="[general]" html.valueishtml="0"  name=photo_path visible="1" bitmapname=yes edit.limit=1000 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="4183" y1="420" x2="4183" y2="1132"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="33554432" x="3438" y="444" height="68" width="736" format="[general]" html.valueishtml="0"  name=hakbun visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="1984" y="684" height="68" width="2181" format="[general]" html.valueishtml="0"  name=supp_cause visible="1" edit.limit=40 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="3410" y1="420" x2="3410" y2="648"  name=l_20 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="480" y1="768" x2="480" y2="884"  name=l_21 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="923" y1="768" x2="923" y2="884"  name=l_22 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3410" y1="768" x2="3410" y2="1488"  name=l_24 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3790" y1="768" x2="3790" y2="1488"  name=l_25 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="197" y1="1952" x2="4713" y2="1952"  name=l_27 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+report(band=detail dataobject="d_hsg130p_2" x="613" y="1488" height="476" width="2043" border="0"  height.autosize=yes criteria="" nest_arguments=((" hakbun ")) trail_footer = yes  name=dw_1 visible="1"  slideup=directlyabove )
+report(band=detail dataobject="d_hsg130p_3" x="2665" y="1488" height="476" width="2043" border="0"  height.autosize=yes criteria="" nest_arguments=((" hakbun ")) trail_footer = yes  name=dw_2 visible="1"  slideup=directlyabove )
+line(band=detail x1="2651" y1="1492" x2="2651" y2="1948"  name=l_28 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="201" y1="1364" x2="4718" y2="1364"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1129" y1="768" x2="1129" y2="1368"  name=l_23 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1961" y1="1012" x2="1961" y2="1368"  name=l_26 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="599" y1="1128" x2="4713" y2="1128"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="599" y1="1248" x2="4713" y2="1248"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+report(band=detail dataobject="d_hsg130p_4" x="599" y="1132" height="236" width="2779" border="0"  height.autosize=yes criteria="" nest_arguments=((" hakbun ")) trail_footer = yes  name=dw_3 visible="1"  slideup=directlyabove )
+report(band=detail dataobject="d_hsg130p_5" x="603" y="1956" height="136" width="4110" border="0"  height.autosize=yes criteria="" nest_arguments=((" hakbun ")) trail_footer = yes  name=dw_4 visible="1"  slideup=directlyabove )
+text(band=detail alignment="2" text="장 래 희 망" border="0" color="33554432" x="215" y="912" height="56" width="910" html.valueishtml="0"  name=hope_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="가 족 관 계" border="0" color="0" x="242" y="2176" height="56" width="311" html.valueishtml="0"  name=t_5 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="학    번" border="0" color="0" x="2967" y="448" height="56" width="421" html.valueishtml="0"  name=hakbun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="혈 액 형" border="0" color="33554432" x="3429" y="924" height="56" width="347" html.valueishtml="0"  name=blood_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="종     교" border="0" color="33554432" x="3429" y="1044" height="56" width="347" html.valueishtml="0"  name=reglion_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="취     미" border="0" color="33554432" x="3429" y="1160" height="56" width="347" html.valueishtml="0"  name=fa_skill_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="특     기" border="0" color="33554432" x="3429" y="1280" height="56" width="347" html.valueishtml="0"  name=special_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="숙 소 형 태" border="0" color="33554432" x="3429" y="1400" height="56" width="347" html.valueishtml="0"  name=house_form_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="사    진" border="0" color="33554432" x="4201" y="436" height="56" width="411" html.valueishtml="0"  name=photo_path_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="단 체 활 동" border="0" color="33554432" x="210" y="1144" height="56" width="375" html.valueishtml="0"  name=club_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="현  주  소" border="0" color="33554432" x="215" y="1404" height="56" width="370" html.valueishtml="0"  name=house_zip_addr_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="친 구 관 계" border="0" color="33554432" x="215" y="1656" height="56" width="370" html.valueishtml="0"  name=t_4 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="내            용" border="0" color="33554432" x="1984" y="1044" height="56" width="1417" html.valueishtml="0"  name=club_t3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="교내외구분" border="0" color="33554432" x="617" y="1040" height="56" width="498" html.valueishtml="0"  name=club_t1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="활 동 명" border="0" color="33554432" x="1147" y="1044" height="56" width="800" html.valueishtml="0"  name=club_t2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="E-mail   주소" border="0" color="33554432" x="1586" y="796" height="56" width="366" html.valueishtml="0"  name=email_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="성       명" border="0" color="0" x="1591" y="456" height="56" width="347" html.valueishtml="0"  name=hname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="핸드폰" border="0" color="33554432" x="933" y="800" height="56" width="187" html.valueishtml="0"  name=hp_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="자택전화" border="0" color="33554432" x="206" y="796" height="56" width="265" html.valueishtml="0"  name=tel_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="출 신 고 교" border="0" color="33554432" x="219" y="680" height="56" width="366" html.valueishtml="0"  name=high_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="학        과" border="0" color="0" x="210" y="444" height="56" width="379" html.valueishtml="0"  name=gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="주민등록번호" border="0" color="33554432" x="219" y="560" height="56" width="357" html.valueishtml="0"  name=jumin_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="군 필 여 부" border="0" color="0" x="1582" y="576" height="56" width="366" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="입 학 구 분" border="0" color="0" x="2958" y="564" height="56" width="439" html.valueishtml="0"  name=t_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="1975" y="564" height="60" width="946" format="[general]" html.valueishtml="0"  name=mil_tp visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="3429" y="564" height="60" width="741" format="[general]" html.valueishtml="0"  name=iphak_gubun visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

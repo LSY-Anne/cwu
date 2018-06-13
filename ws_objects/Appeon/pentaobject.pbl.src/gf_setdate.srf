@@ -1,0 +1,26 @@
+﻿$PBExportHeader$gf_setdate.srf
+global type gf_setdate from function_object
+end type
+
+forward prototypes
+global function boolean gf_setdate (dragobject obj, ref string as_date)
+end prototypes
+
+global function boolean gf_setdate (dragobject obj, ref string as_date);Vector	vc
+Boolean	lb_rtn
+vc = Create Vector
+
+IF Len(as_date) > 0 THEN
+	vc.setproperty('date', as_date)
+END IF
+
+lb_rtn = gf_setopencontrol('w_calendar', obj, vc)
+
+IF lb_rtn THEN
+	as_date = vc.getproperty("curdate")
+END IF
+
+Return lb_rtn
+
+end function
+

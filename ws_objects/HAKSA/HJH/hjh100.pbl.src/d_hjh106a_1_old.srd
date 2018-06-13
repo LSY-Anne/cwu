@@ -1,0 +1,124 @@
+﻿$PBExportHeader$d_hjh106a_1_old.srd
+$PBExportComments$[청운대]대출학생자료생성_대학원
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=char(27) updatewhereclause=yes name=ll_napip_date dbname="compute_0001" )
+ column=(type=char(27) updatewhereclause=yes name=compute_0002 dbname="compute_0002" )
+ column=(type=char(25) updatewhereclause=yes name=compute_0003 dbname="compute_0003" )
+ column=(type=char(41) updatewhereclause=yes name=compute_0004 dbname="compute_0004" )
+ column=(type=char(11) updatewhereclause=yes name=compute_0005 dbname="compute_0005" )
+ column=(type=char(1) updatewhereclause=yes name=compute_0006 dbname="compute_0006" )
+ column=(type=char(3) updatewhereclause=yes name=compute_0007 dbname="compute_0007" )
+ column=(type=char(2) updatewhereclause=yes name=compute_0008 dbname="compute_0008" )
+ column=(type=char(7) updatewhereclause=yes name=compute_0009 dbname="compute_0009" )
+ column=(type=char(3) updatewhereclause=yes name=compute_0010 dbname="compute_0010" )
+ column=(type=char(3) updatewhereclause=yes name=compute_0011 dbname="compute_0011" )
+ column=(type=char(3) updatewhereclause=yes name=compute_0012 dbname="compute_0012" )
+ column=(type=char(21) updatewhereclause=yes name=compute_0013 dbname="compute_0013" )
+ column=(type=char(8) updatewhereclause=yes name=napip_date dbname="napip_date" )
+ retrieve="SELECT	RPAD(A.SERIAL, 13, ' '),
+			RPAD(A.JUMIN_NO, 13, ' '),
+			RPAD(A.HAKBUN, 12, ' '),
+			RPAD(A.HNAME, 20, ' '),
+			LPAD(A.GWA, 5, '0'),
+			NVL((	SELECT	DECODE(C.WAN_YN, '1', '2', '0', '1', '1')
+					FROM		HAKSA.D_DUNGROK C
+					WHERE		A.YEAR	=	C.YEAR
+					AND		A.HAKGI	=	C.HAKGI
+					AND		A.HAKBUN	=	C.HAKBUN
+					AND		C.CHASU	=	(	SELECT 	MAX(CHASU) 
+													FROM 		HAKSA.D_DUNGROK D
+													WHERE		C.YEAR	=	D.YEAR
+													AND		C.HAKGI	=	D.HAKGI
+													AND		C.HAKBUN	=	D.HAKBUN)), '2')			,
+			RPAD(	DECODE((	SELECT	C.S_HAKGICHA
+								FROM 		HAKSA.D_HAKJUK C
+								WHERE		C.HAKBUN		=	A.HAKBUN
+								AND		C.JUMIN_NO	=	A.JUMIN_NO), '', '1', '1', '1', '2', '1', '2'), 1, ' ')	,			
+			'99',
+			(	SELECT 	DECODE(Z.SANGTAE_ID, '01', 
+							LPAD(NVL((	SELECT	ROUND(((((C.PYENGJUM_AVG * 100)  - 100) * 0.11428571) + 60), 0)
+														FROM		HAKSA.D_SUNGJUKGYE	C
+														WHERE		A.HAKBUN				=	C.HAKBUN
+														AND		C.YEAR				=	DECODE(A.HAKGI, '2', A.YEAR, TO_CHAR(TO_NUMBER(A.YEAR) - 1))
+														AND		C.HAKGI				=	DECODE(A.HAKGI, '2', '1', '2')
+														AND		C.SUNGJUK_INJUNG	=	'1'), 0 ), 3, ' ') ,
+							LPAD(NVL((	SELECT	ROUND(((((C.PYENGJUM_AVG * 100)  - 100) * 0.11428571) + 60), 0)
+											FROM		HAKSA.D_SUNGJUKGYE	C
+											WHERE		A.HAKBUN				=	C.HAKBUN
+											AND		C.YEAR||C.HAKGI	=	(	
+																						SELECT 	MAX(D.YEAR||D.HAKGI)
+																						FROM 		HAKSA.D_SUNGJUKGYE	D
+																						WHERE		D.HAKBUN		=	C.HAKBUN
+																						AND		D.SUNGJUK_INJUNG	=	'1'
+																					)
+											AND		C.SUNGJUK_INJUNG	=	'1'), 0 ), 3, ' '))	
+				FROM 		HAKSA.D_HAKJUK Z
+				WHERE		A.HAKBUN				=	Z.HAKBUN
+
+				UNION
+
+				SELECT 	LPAD(NVL(ROUND(Z.JUMSU, 0), 0 ), 3, ' ')
+				FROM 		DIPSI.DI_WONSEO Z
+				WHERE		Z.SUHUM_NO				=	A.HAKBUN
+				AND		Z.YEAR 	=	:as_year
+				AND		Z.HAKGI 	=	:as_hakgi
+
+			),
+			'  0',
+			'  0',
+			'  0',
+			LPAD(NVL((	SELECT	NVL(C.DUNGROK, 0)  - NVL(C.D_JANGHAK, 0)
+							FROM		HAKSA.D_DUNGROK C
+							WHERE		A.YEAR	=	C.YEAR
+							AND		A.HAKGI	=	C.HAKGI
+							AND		A.HAKBUN	=	C.HAKBUN
+							AND		NVL(C.HAKJUM, 0) > 0
+							
+							UNION
+			
+							SELECT	(NVL(C.IPHAK, 0) +  NVL(C.DUNGROK, 0))  - NVL(C.D_JANGHAK, 0)
+							FROM		DIPSI.DI_DUNGROK C
+							WHERE		A.YEAR	=	C.YEAR
+							AND		A.HAKGI	=	C.HAKGI
+							AND		A.HAKBUN	=	C.SUHUM_NO
+
+						), 0 ), 10, ' '),
+			to_char(to_date(:as_napip_date), 'YYYYMMDD') napip_date
+FROM		HAKSA.DAICHUL_GWANRI	A
+WHERE		A.YEAR		=	:as_year
+AND		A.HAKGI		=	:as_hakgi
+AND		to_char(A.WORK_DATE, 'yyyymmdd') like 	:as_ilja 
+AND		SUBSTR(A.HAKBUN, 1, 2) IN 'AM'
+
+
+" arguments=(("as_year", string),("as_hakgi", string),("as_ilja", string),("as_napip_date", string)) )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="76" width="864" format="[general]" html.valueishtml="0"  name=compute_0001 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="873" y="4" height="76" width="864" format="[general]" html.valueishtml="0"  name=compute_0002 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1737" y="4" height="76" width="800" format="[general]" html.valueishtml="0"  name=compute_0003 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="2537" y="4" height="76" width="1038" format="[general]" html.valueishtml="0"  name=compute_0004 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="3579" y="4" height="76" width="302" format="[general]" html.valueishtml="0"  name=compute_0005 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="3881" y="4" height="76" width="1344" format="[general]" html.valueishtml="0"  name=compute_0006 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="5225" y="4" height="76" width="64" format="[general]" html.valueishtml="0"  name=compute_0007 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="5289" y="4" height="76" width="64" format="[general]" html.valueishtml="0"  name=compute_0008 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="5353" y="4" height="76" width="2592" format="[general]" html.valueishtml="0"  name=compute_0009 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="7945" y="4" height="76" width="96" format="[general]" html.valueishtml="0"  name=compute_0010 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="8041" y="4" height="76" width="160" format="[general]" html.valueishtml="0"  name=compute_0011 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="8201" y="4" height="76" width="224" format="[general]" html.valueishtml="0"  name=compute_0012 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="0" x="8425" y="4" height="76" width="562" format="[general]" html.valueishtml="0"  name=compute_0013 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="8987" y="0" height="76" width="256" format="[general]" html.valueishtml="0"  name=napip_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=footer id=1 alignment="1" tabsequence=10 border="0" color="0" x="1829" y="488" height="60" width="544" format="#,##0" html.valueishtml="0"  name=old_jae visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

@@ -1,0 +1,52 @@
+﻿$PBExportHeader$d_sch405p_2.srd
+$PBExportComments$퇴사자 분석통계표
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=4 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 174 print.margin.right = 174 print.margin.top = 376 print.margin.bottom = 228 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no  crosstab.dynamic = yes grid.lines=0 grid.columnmove=no selected.mouse=no )
+header[1](height=0 color="536870912" )
+header[2](height=76 color="32299726" )
+summary(height=84 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(20) updatewhereclause=yes name=saz220t_hakyun dbname="saz220t_hakyun" )
+ column=(type=number updatewhereclause=yes name=cnt dbname="cnt" )
+ retrieve="SELECT    A.HAKYUN,
+          MAX((SELECT FNAME FROM CDDB.KCH102D WHERE CODE_GB = 'SAZ34' AND CODE = B.RETIRE_GB)) AS RETIRE_GB,
+          (COUNT(*)/MAX((SELECT COUNT(*) 
+								FROM 	SCH.SAZ220T A,
+											SCH.SAZ270T B
+								WHERE     A.HAKBUN =  B.HAKBUN
+								AND       A.HOUSE_GB = B.HOUSE_GB
+								AND       A.STD_YEAR = B.STD_YEAR
+								AND       B.HOUSE_GB = :as_house_gb
+								AND       B.STD_YEAR = :as_std_year))) AS CNT
+FROM      SCH.SAZ220T A,
+          SCH.SAZ270T B
+WHERE     A.HAKBUN =  B.HAKBUN
+AND       A.HOUSE_GB = B.HOUSE_GB
+AND       A.STD_YEAR = B.STD_YEAR
+AND       B.HOUSE_GB = :as_house_gb
+AND       B.STD_YEAR = :as_std_year
+GROUP BY A.HAKYUN" arguments=(("as_house_gb", string),("as_std_year", string))  sort="saz220t_hakyun A " )
+text(band=header[1] alignment="2" text="Sum Of Cnt" border="0" color="33554432" x="9" y="4" height="56" width="512" html.valueishtml="0"  name=t_1 visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header[1] alignment="2" text="Retire Gb" border="0" color="33554432" x="530" y="4" height="112" width="503" html.valueishtml="0"  name=t_2 visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header[2] alignment="2" text="구분" border="0" color="33554432" x="9" y="8" height="56" width="512" html.valueishtml="0"  name=saz220t_hakyun_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header[2] alignment="2" text="@retire_gb" border="0" color="33554432" x="530" y="8" height="112" width="503" html.valueishtml="0"  name=cnt_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header[2] alignment="2" text="계" border="0" color="33554432" x="1042" y="8" height="56" width="512" html.valueishtml="0"  name=grand_sum_cnt_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="33554432" x="9" y="12" height="68" width="512" format="[general]" html.valueishtml="0"  name=saz220t_hakyun visible="1" editmask.mask="#학년" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="535" y="12" height="68" width="498" format="[general]" html.valueishtml="0"  name=cnt visible="1" editmask.mask="##0.0%" editmask.focusrectangle=no crosstab.repeat=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="crosstabsum(1)"border="0" color="33554432" x="1042" y="12" height="68" width="512" format="##0.0%" html.valueishtml="0"  name=grand_sum_cnt visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="~"계~""border="0" color="33554432" x="9" y="8" height="112" width="512" format="[general]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="tahoma" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="32299726" )
+compute(band=summary alignment="2" expression="sum(cnt for all )"border="0" color="33554432" x="530" y="8" height="112" width="503" format="##0.0%" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(grand_sum_cnt for all )"border="0" color="33554432" x="1042" y="8" height="112" width="512" format="##0.0%" html.valueishtml="0"  name=compute_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+ crosstab(band = foreground  crosstabonly = yes 
+ columns = "retire_gb" rows = "saz220t_hakyun" values = "sum(cnt for crosstab)" sourcenames = "saz220t_hakyun, retire_gb, cnt")htmltable(border="0" cellpadding="1" cellspacing="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

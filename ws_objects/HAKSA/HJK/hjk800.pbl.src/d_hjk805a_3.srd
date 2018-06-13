@@ -1,0 +1,73 @@
+﻿$PBExportHeader$d_hjk805a_3.srd
+$PBExportComments$[청운대]병무청파일생성(대학원-신입생)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(17) updatewhereclause=yes name=compute_0001 dbname="compute_0001" )
+ column=(type=char(13) updatewhereclause=yes name=jumin_no dbname="jumin_no" )
+ column=(type=char(8) updatewhereclause=yes name=compute_0003 dbname="compute_0003" )
+ column=(type=char(21) updatewhereclause=yes name=compute_0004 dbname="compute_0004" )
+ column=(type=char(9) updatewhereclause=yes name=compute_0005 dbname="compute_0005" )
+ column=(type=char(1) updatewhereclause=yes name=compute_0006 dbname="compute_0006" )
+ column=(type=char(1) updatewhereclause=yes name=compute_0007 dbname="compute_0007" )
+ column=(type=char(1) updatewhereclause=yes name=s_hakgicha dbname="s_hakgicha" )
+ column=(type=char(8) updatewhereclause=yes name=compute_0009 dbname="compute_0009" )
+ column=(type=char(40) updatewhereclause=yes name=compute_0010 dbname="compute_0010" )
+ column=(type=char(1) updatewhereclause=yes name=compute_0011 dbname="compute_0011" )
+ column=(type=char(1) updatewhereclause=yes name=compute_0012 dbname="compute_0012" )
+ column=(type=char(4) updatewhereclause=yes name=compute_0013 dbname="compute_0013" )
+ column=(type=char(81) updatewhereclause=yes name=compute_0014 dbname="compute_0014" )
+ retrieve="SELECT	RPAD(B.HNAME, 8, ' '),
+			B.JUMIN_NO,
+			'63410601',
+			RPAD(B.HAKBUN, 10, ' '),
+			RPAD(DECODE(	B.JUNGONG_ID,	  'AMA1', 'F987', 'AMA2', '5284', 'AMB1', '7492', 'AMB2', '6184', 'AMB5', '9559',
+			'AME3', '2224', 'AMD1', '0268', 'AMD2', '7604', 'AMD3', '4276', 'AMD4', 'F988', 'AMC3', '0508', 'AMC2', '2304',
+			'AMC1', '8164', 'AMC4', 'F224', 'AMC5', '9667', 'AMC6', 'A351', 'AME1', 'C650', 'AME6', 'D298', 'AME4', '4640',
+			'AME5', '2576', '    '), 4, ' '),
+			' ',
+			'5',
+			B.S_HAKGICHA,
+			SUBSTR(B.IPHAK_DATE,1,4),
+			TO_CHAR(TO_NUMBER(SUBSTR(B.IPHAK_DATE,1,4)) + 3) ,
+			DECODE(B.IPHAK_GUBUN, '3', '1', ' '),
+			'2',
+			DECODE(SUBSTR(B.JUMIN_NO , 7, 1), '6', '재외','    '),
+			RPAD(NVL(B.EMAIL, ' '), 40, ' ')	
+FROM		HAKSA.D_HAKJUK	B,
+			(	SELECT 	A.HAKBUN,
+							SUBSTR(to_char(SYSDATE,'YYYYMMDD'), 1, 4) - (SUBSTR(A.JUMIN_NO, 1, 2) + 1900) AGE
+				FROM 	 	HAKSA.D_HAKJUK	A) A
+WHERE		A.HAKBUN	=	B.HAKBUN
+AND		A.AGE <= 40 
+AND		B.SANGTAE_ID IN ('01', '02')
+AND	   B.SEX = '1'
+AND		SUBSTR(B.IPHAK_DATE,1,4) = SUBSTR(to_char(SYSDATE,'YYYYMMDD'), 1, 4)" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="0" y="0" height="76" width="544" format="[general]" html.valueishtml="0"  name=compute_0001 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="544" y="0" height="76" width="416" format="[general]" html.valueishtml="0"  name=jumin_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="960" y="0" height="76" width="256" format="[general]" html.valueishtml="0"  name=compute_0003 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1216" y="0" height="76" width="672" format="[general]" html.valueishtml="0"  name=compute_0004 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="1888" y="0" height="76" width="288" format="[general]" html.valueishtml="0"  name=compute_0005 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="2176" y="0" height="76" width="32" format="[general]" html.valueishtml="0"  name=compute_0006 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="2208" y="0" height="76" width="32" format="[general]" html.valueishtml="0"  name=compute_0007 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="2240" y="0" height="76" width="32" format="[general]" html.valueishtml="0"  name=s_hakgicha visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="2272" y="0" height="76" width="256" format="[general]" html.valueishtml="0"  name=compute_0009 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="2528" y="0" height="76" width="1280" format="[general]" html.valueishtml="0"  name=compute_0010 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="3808" y="0" height="76" width="32" format="[general]" html.valueishtml="0"  name=compute_0011 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="3840" y="0" height="76" width="32" format="[general]" html.valueishtml="0"  name=compute_0012 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="0" x="3872" y="0" height="76" width="128" format="[general]" html.valueishtml="0"  name=compute_0013 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="4000" y="0" height="76" width="2592" format="[general]" html.valueishtml="0"  name=compute_0014 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

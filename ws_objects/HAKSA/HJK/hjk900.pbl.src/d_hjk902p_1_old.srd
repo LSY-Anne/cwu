@@ -1,0 +1,85 @@
+﻿$PBExportHeader$d_hjk902p_1_old.srd
+$PBExportComments$군장학생협약체격을위한신청서[기획처]
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=344 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=112 color="536870912" )
+table(column=(type=char(1) updatewhereclause=yes name=su_hakyun dbname="su_hakyun" )
+ column=(type=number updatewhereclause=yes name=h1 dbname="h1" )
+ column=(type=number updatewhereclause=yes name=h2 dbname="h2" )
+ column=(type=number updatewhereclause=yes name=h3 dbname="h3" )
+ column=(type=number updatewhereclause=yes name=h4 dbname="h4" )
+ column=(type=number updatewhereclause=yes name=m1m dbname="m1m" )
+ column=(type=number updatewhereclause=yes name=m1g dbname="m1g" )
+ column=(type=number updatewhereclause=yes name=m1w dbname="m1w" )
+ column=(type=number updatewhereclause=yes name=m2m dbname="m2m" )
+ column=(type=number updatewhereclause=yes name=m2g dbname="m2g" )
+ column=(type=number updatewhereclause=yes name=m2w dbname="m2w" )
+ retrieve="SELECT	Z.SU_HAKYUN,
+			Z.H1,
+			Z.H2,
+			Z.H3,
+			Z.H4,
+			Y.M1M,
+			Y.M1G,
+			Y.M1W,
+			Y.M2M,
+			Y.M2G,
+			Y.M2W
+FROM 
+(SELECT	A.SU_HAKYUN,
+			SUM(DECODE( A.SU_HAKYUN, '1', DECODE( A.SANGTAE, '01', 1 ,0),0)) H1,
+			SUM(DECODE( A.SU_HAKYUN, '2', DECODE( A.SANGTAE, '01', 1 ,0),0)) H2,
+			SUM(DECODE( A.SU_HAKYUN, '3', DECODE( A.SANGTAE, '01', 1 ,0),0)) H3,
+			SUM(DECODE( A.SU_HAKYUN, '4', DECODE( A.SANGTAE, '01', 1 ,0),0)) H4
+FROM		HAKSA.JAEHAK_HAKJUK A
+GROUP BY A.SU_HAKYUN) Z,
+
+(SELECT	A.SU_HAKYUN,
+			SUM(DECODE( SUBSTR(A.HAKBUN, 1, 4), '2003', DECODE( A.SEX, '1', DECODE( NVL(A.YUKJONG_ID, '01'), '01', DECODE( A.IPHAK_GUBUN, '01', 1, '02', 1, '03', 1, 0), 0),0),0)) M1M,
+			SUM(DECODE( SUBSTR(A.HAKBUN, 1, 4), '2003', DECODE( A.SEX, '1', DECODE( NVL(A.YUKJONG_ID, '01'), '02', DECODE( A.IPHAK_GUBUN, '01', 1, '02', 1, '03', 1, 0), '03', DECODE( A.IPHAK_GUBUN, '01', 1, '02', 1, '03', 1, 0), 0),0),0)) M1G,
+			SUM(DECODE( SUBSTR(A.HAKBUN, 1, 4), '2003', DECODE( A.SEX, '2', DECODE( NVL(A.YUKJONG_ID, '04'), '04', DECODE( A.IPHAK_GUBUN, '01', 1, '02', 1, '03', 1, 0), 0),0),0)) M1W,
+			SUM(DECODE( SUBSTR(A.HAKBUN, 1, 4), '2002', DECODE( A.SEX, '1', DECODE( NVL(A.YUKJONG_ID, '01'), '01', DECODE( A.IPHAK_GUBUN, '01', 1, '02', 1, '03', 1, 0), 0),0),0)) M2M,
+			SUM(DECODE( SUBSTR(A.HAKBUN, 1, 4), '2002', DECODE( A.SEX, '1', DECODE( NVL(A.YUKJONG_ID, '01'), '02', DECODE( A.IPHAK_GUBUN, '01', 1, '02', 1, '03', 1, 0), '03', DECODE( A.IPHAK_GUBUN, '01', 1, '02', 1, '03', 1, 0), 0),0),0)) M2G,
+			SUM(DECODE( SUBSTR(A.HAKBUN, 1, 4), '2002', DECODE( A.SEX, '2', DECODE( NVL(A.YUKJONG_ID, '04'), '04', DECODE( A.IPHAK_GUBUN, '01', 1, '02', 1, '03', 1, 0), 0),0),0)) M2W
+FROM		HAKSA.JAEHAK_HAKJUK A
+GROUP BY A.SU_HAKYUN) Y
+
+WHERE Z.SU_HAKYUN = Y.SU_HAKYUN
+
+" )
+text(band=header alignment="2" text="H1" border="0" color="0" x="357" y="8" height="76" width="384" html.valueishtml="0"  name=h1_t visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="H2" border="0" color="0" x="750" y="8" height="76" width="384" html.valueishtml="0"  name=h2_t visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="H3" border="0" color="0" x="1143" y="8" height="76" width="384" html.valueishtml="0"  name=h3_t visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="H4" border="0" color="0" x="1536" y="8" height="76" width="384" html.valueishtml="0"  name=h4_t visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="M1m" border="0" color="0" x="1929" y="8" height="76" width="384" html.valueishtml="0"  name=m1m_t visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="M1g" border="0" color="0" x="2322" y="8" height="76" width="361" html.valueishtml="0"  name=m1g_t visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="M1w" border="0" color="0" x="2693" y="8" height="76" width="384" html.valueishtml="0"  name=m1w_t visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="M2m" border="0" color="0" x="3086" y="8" height="76" width="384" html.valueishtml="0"  name=m2m_t visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="M2g" border="0" color="0" x="3479" y="8" height="76" width="384" html.valueishtml="0"  name=m2g_t visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="M2w" border="0" color="0" x="3872" y="8" height="76" width="384" html.valueishtml="0"  name=m2w_t visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Su Hakyun" border="0" color="0" x="9" y="8" height="76" width="338" html.valueishtml="0"  name=su_hakyun_t visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="750" y="8" height="88" width="384" format="[general]" html.valueishtml="0"  name=h2 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="1143" y="8" height="88" width="384" format="[general]" html.valueishtml="0"  name=h3 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="1536" y="8" height="88" width="384" format="[general]" html.valueishtml="0"  name=h4 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="1929" y="8" height="88" width="384" format="[general]" html.valueishtml="0"  name=m1m visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="2322" y="8" height="88" width="361" format="[general]" html.valueishtml="0"  name=m1g visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="2693" y="8" height="88" width="384" format="[general]" html.valueishtml="0"  name=m1w visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="3086" y="8" height="88" width="384" format="[general]" html.valueishtml="0"  name=m2m visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="0" x="3479" y="8" height="88" width="384" format="[general]" html.valueishtml="0"  name=m2g visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="1" tabsequence=32766 border="0" color="0" x="3872" y="8" height="88" width="384" format="[general]" html.valueishtml="0"  name=m2w visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="357" y="8" height="88" width="384" format="[general]" html.valueishtml="0"  name=h1 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="8" height="88" width="338" format="[general]" html.valueishtml="0"  name=su_hakyun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

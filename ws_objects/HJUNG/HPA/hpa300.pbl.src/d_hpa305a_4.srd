@@ -1,0 +1,60 @@
+﻿$PBExportHeader$d_hpa305a_4.srd
+$PBExportComments$개인별 급여지급 조회(개인별 월급여내역)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=80269524 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=104 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(3) updatewhereclause=yes name=code dbname="hpa005d.code" )
+ column=(type=number updatewhereclause=yes name=pay_amt dbname="hpa005d.pay_amt" )
+ column=(type=number updatewhereclause=yes name=excepte_gbn dbname="hpa005d.excepte_gbn" )
+ column=(type=number updatewhereclause=yes name=sort dbname="hpa005d.sort" )
+ column=(type=char(30) updatewhereclause=yes name=item_name dbname="hpa005d.item_name" )
+ column=(type=number updatewhereclause=yes name=sort_code dbname="sort_code" )
+ retrieve="
+select	a.code, a.pay_amt, a.excepte_gbn, b.sort, b.item_name,
+			decode(a.code, '51', 1, '52', 2, decode(b.sort, 0, 999, b.sort + 10)) sort_code
+from		padb.hpa005d a, padb.hpa003m b
+where		a.year_month		=	:as_yearmonth
+and		a.member_no			=	:as_member_no
+and		b.pay_opt			=	:as_pay_opt
+and		a.pay_amt			<>	0
+and		a.code				=	b.code (+)
+
+union
+
+select	'999', decode(:as_pay_opt, '1', 
+						nvl(	sudang_1 + sudang_2 + sudang_3 + sudang_4 + sudang_5 +
+								sudang_6 + sudang_7 + sudang_8 + sudang_9 + sudang_10 +
+								sudang_11 + sudang_12 + sudang_13 + sudang_14 + sudang_15 +
+								sudang_16 + sudang_17 + sudang_18, 0),
+						0) pay_amt,
+			0, 999, 
+			decode(:as_pay_opt, '1', '소  급  금', '') as item_name,
+			999 sort_code
+from		padb.hpa015h
+where		year_month	=	:as_yearmonth
+and		member_no	=	:as_member_no
+" arguments=(("as_yearmonth", string),("as_member_no", string),("as_pay_opt", string)) )
+compute(band=header alignment="1" expression="sum ( pay_amt )"border="5" color="8388608" x="503" y="16" height="56" width="535" format="#,##0" html.valueishtml="0"  name=sum_amt visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="80269524" )
+line(band=header x1="0" y1="96" x2="2272" y2="96"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="8388608"  background.mode="2" background.color="16777215" )
+compute(band=header alignment="1" expression="if (  as_pay_opt = '1', '지급  합계', '공제  합계')"border="0" color="8388608" x="18" y="16" height="56" width="453" format="[GENERAL]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="23" y1="0" x2="1019" y2="0"  name=l_1 visible="1~t0" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="23" y1="88" x2="1019" y2="88"  name=l_2 visible="1~t0" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="82" y="272" height="76" width="343" format="[general]" html.valueishtml="0"  name=sort_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="681" y="256" height="76" width="247" format="[general]" html.valueishtml="0"  name=sort visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="590" y="136" height="56" width="242" format="[general]" html.valueishtml="0"  name=code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="5" color="0" x="503" y="16" height="56" width="535" format="#,##0" html.valueishtml="0"  name=pay_amt visible="1~tif ( trim ( item_name ) = '' or isnull ( item_name ), 0, 1)" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="18" y="16" height="56" width="453" format="[general]" html.valueishtml="0"  name=item_name visible="1" edit.limit=30 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

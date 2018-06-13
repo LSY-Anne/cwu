@@ -1,0 +1,78 @@
+﻿$PBExportHeader$d_hpa412a_7.srd
+$PBExportComments$연말정산-의료비
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=84 color="29738437" )
+detail(height=84 color="536870912" )
+table(column=(type=char(4) update=yes updatewhereclause=yes key=yes name=p44yar dbname="hpap44t.p44yar" )
+ column=(type=char(8) update=yes updatewhereclause=yes key=yes name=p44nno dbname="hpap44t.p44nno" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=p44seq dbname="hpap44t.p44seq" )
+ column=(type=char(10) update=yes updatewhereclause=yes key=yes name=p44bno dbname="hpap44t.p44bno" )
+ column=(type=char(13) update=yes updatewhereclause=yes key=yes name=p44rno dbname="hpap44t.p44rno" )
+ column=(type=char(50) update=yes updatewhereclause=yes name=p44bnm dbname="hpap44t.p44bnm" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=p44cnt dbname="hpap44t.p44cnt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=p44ptl dbname="hpap44t.p44ptl" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p44rls dbname="hpap44t.p44rls" values="본인	0/직계존속	1/배우자직계존속	2/배우자	3/직계비속	4/형제자매	5/기타	6/" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p44gbn dbname="hpap44t.p44gbn" initial="N" values="O	Y/X	N/" )
+ column=(type=char(30) update=yes updatewhereclause=yes name=p44hnm dbname="hpap44t.p44hnm" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p44frg dbname="hpap44t.p44frg" initial="N" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=p44hsg dbname="hpap44t.p44hsg" values="국세청장이 제공하는 의료비 자료	1/국민건강보험공단의 의료비부담명세서	2/진료비계산서, 약제비계산서	3/장기요양급여비용 명세서	4/기타의료비영수증	5/" )
+ column=(type=char(5) updatewhereclause=yes name=worker dbname="hpap44t.worker" )
+ column=(type=char(20) updatewhereclause=yes name=ipadd dbname="hpap44t.ipadd" )
+ column=(type=datetime updatewhereclause=yes name=work_date dbname="hpap44t.work_date" )
+ column=(type=char(5) updatewhereclause=yes name=job_uid dbname="hpap44t.job_uid" )
+ column=(type=char(20) updatewhereclause=yes name=job_add dbname="hpap44t.job_add" )
+ column=(type=datetime updatewhereclause=yes name=job_date dbname="hpap44t.job_date" )
+ retrieve="  SELECT  P44YAR ,        
+   P44NNO ,       
+    P44SEQ ,      
+     P44BNO ,      
+     P44RNO ,        
+   P44BNM ,         
+  P44CNT ,       
+    P44PTL ,       
+    P44RLS ,       
+    P44GBN ,     
+          P44HNM ,   
+       P44FRG ,   
+        P44HSG ,
+ WORKER                  
+       ,IPADD                  
+       ,WORK_DATE               
+       ,JOB_UID                 
+       ,JOB_ADD                 
+       ,JOB_DATE         
+    FROM PADB.HPAP44T     
+ WHERE ( P44YAR = :as_year )
+ and          ( P44NNO = :as_p44nno ) 
+and          ( P44RNO = :as_p44rno )   " update="PADB.HPAP44T" updatewhere=1 updatekeyinplace=no arguments=(("as_year", string),("as_p44nno", string),("as_p44rno", string)) )
+text(band=header alignment="2" text="순번" border="0" color="33554432" x="9" y="8" height="52" width="192" html.valueishtml="0"  name=no_t visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="사업자번호" border="0" color="33554432" x="1824" y="8" height="52" width="617" html.valueishtml="0"  name=p44bno_t  tag="ess" visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="상호" border="0" color="33554432" x="2450" y="8" height="52" width="891" html.valueishtml="0"  name=p44bnm_t  tag="" visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="금액" border="0" color="33554432" x="3639" y="8" height="52" width="562" html.valueishtml="0"  name=p44ptl_t visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="건수" border="0" color="33554432" x="3351" y="8" height="52" width="279" html.valueishtml="0"  name=p44cnt_t visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="본인/장애/경로" border="0" color="33554432" x="1394" y="8" height="52" width="421" html.valueishtml="0"  name=p44gbn_t  tag="ess" visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="의료증빙코드" border="0" color="33554432" x="210" y="8" height="52" width="1175" html.valueishtml="0"  name=p44hsg_t visible="1"  font.face="Tahoma" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=50 border="0" color="33554432" x="3351" y="4" height="72" width="279" format="[general]" html.valueishtml="0" protect="0~tif( p44hsg = '1', 1, 0)"  name=p44cnt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=60 border="0" color="33554432" x="3639" y="4" height="72" width="562" format="#,##0" html.valueishtml="0"  name=p44ptl visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="getrow()"border="0" color="33554432" x="9" y="4" height="72" width="192" format="[GENERAL]" html.valueishtml="0"  name=no visible="1"  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=10 border="0" color="33554432" x="210" y="4" height="72" width="1175" format="[general]" html.valueishtml="0"  name=p44hsg visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any ddlb.vscrollbar=yes  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="2" tabsequence=20 border="0" color="33554432" x="1394" y="4" height="72" width="421" format="[general]" html.valueishtml="0"  name=p44gbn visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=30 border="0" color="33554432" x="1829" y="4" height="72" width="613" format="[general]" html.valueishtml="0" protect="0~tif( p44hsg = '1', 1, 0)"  name=p44bno  tag="NOTNULL(사업자번호)" visible="1" editmask.mask="###-##-#####" editmask.focusrectangle=no  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=40 border="0" color="33554432" x="2450" y="4" height="72" width="891" format="[general]" html.valueishtml="0" protect="0~tif( p44hsg = '1', 1, 0)"  name=p44bnm visible="1" edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=footer alignment="1" expression="sum(p44ptl for all)"border="0" color="33554432" x="3639" y="4" height="72" width="562" format="#,##0" html.valueishtml="0"  name=p44ptl_sum visible="1"  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=footer alignment="0" expression="sum(if( p44hsg = '1', p44ptl, 0))"border="0" color="33554432" x="210" y="8" height="56" width="1175" format="[GENERAL]" html.valueishtml="0"  name=p44hgs1_sum visible="0"  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=footer alignment="0" expression="sum(if(p44hsg <> '1', p44ptl, 0))"border="0" color="33554432" x="2450" y="12" height="56" width="891" format="[GENERAL]" html.valueishtml="0"  name=p44hgs_sum visible="0"  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

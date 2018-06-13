@@ -1,0 +1,42 @@
+﻿$PBExportHeader$f_getfileopen.srf
+$PBExportComments$화일을 Open한다.(A:String(기초확장자), R:File Full Name)
+global type f_getfileopen from function_object
+end type
+
+forward prototypes
+global function string f_getfileopen (string as_basicfile)
+end prototypes
+
+global function string f_getfileopen (string as_basicfile);// ------------------------------------------------------------------------------------------
+// Function Name	:	f_getfileopen
+// Function 설명	:	File Open
+// Argument			:	String(기초화일확장자)
+// Return			:	String(File Full Name)
+// ------------------------------------------------------------------------------------------
+
+// Upload File Open
+Integer	li_Rtn
+String	ls_FullName
+String	ls_FileName
+string	ls_files
+
+as_basicfile = upper(as_basicfile)
+
+if as_basicfile	=	'TXT' then
+	ls_files	=	"Text Files (*.TXT),*.TXT, Dat Files (*.DAT),*.DAT, Excel Files (*.XLS),*.XLS, All Files (*.*),*.*"
+elseif as_basicfile = 'DAT' then
+	ls_files	=	"Dat Files (*.DAT),*.DAT, Excel Files (*.XLS),*.XLS, Text Files (*.TXT),*.TXT, All Files (*.*),*.*"
+elseif as_basicfile = 'XLS' then
+	ls_files	=	"Excel Files (*.XLS),*.XLS, Dat Files (*.DAT),*.DAT, Text Files (*.TXT),*.TXT, All Files (*.*),*.*"
+else
+	ls_files	=	"All Files (*.*),*.*, Dat Files (*.DAT),*.DAT, Excel Files (*.XLS),*.XLS, Text Files (*.TXT),*.TXT"
+end if	
+	
+li_Rtn = GetFileOpenName("파일선택", ls_FullName, ls_FileName, as_basicfile, ls_files)
+
+if li_Rtn <> 1 then	return	''
+
+return	ls_fullname
+
+end function
+

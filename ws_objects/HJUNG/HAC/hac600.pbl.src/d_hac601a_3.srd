@@ -1,0 +1,35 @@
+﻿$PBExportHeader$d_hac601a_3.srd
+$PBExportComments$부서간 예산 전용 결의서(전용사유)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(6) updatewhereclause=yes name=acct_code dbname="hac014h.acct_code" )
+ column=(type=char(255) updatewhereclause=yes name=causes dbname="hac014h.causes" )
+ retrieve="SELECT	A.ACCT_CODE,
+			A.CAUSES
+FROM		ACDB.HAC014H A
+WHERE		A.BDGT_YEAR 		= :AS_BDGT_YEAR
+AND		A.GWA 				= :AS_GWA
+AND		A.TRAN_GWA 			= :AS_TRAN_GWA
+AND		A.ACCT_CLASS 		= :AI_ACCT_CLASS
+AND		A.IO_GUBUN 			= :AS_SLIP_CLASS
+AND		A.REQ_DATE 			= :AS_REQ_DATE
+AND		A.REQ_MEMBER_NO 	= :AS_REQ_MEMBER_NO
+ORDER BY	A.IO_GUBUN, A.ACCT_CODE, A.SEQ
+" arguments=(("as_bdgt_year", string),("as_gwa", string),("as_tran_gwa", string),("ai_acct_class", number),("as_slip_class", string),("as_req_date", string),("as_req_member_no", string)) )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="0" y="0" height="64" width="192" format="[general]" html.valueishtml="0"  name=acct_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="192" y="0" height="64" width="3950" format="[general]" html.valueishtml="0"  name=causes visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,95 @@
+﻿$PBExportHeader$d_dhwhj406q_2.srd
+$PBExportComments$[대학원학적] 학위증명서(영문)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=3988 color="536870912" )
+table(column=(type=char(9) updatewhereclause=yes name=d_hakjuk_jolup_hakbun dbname="hakbun" )
+ column=(type=char(30) updatewhereclause=yes name=d_hakjuk_jolup_ename dbname="ename" )
+ column=(type=char(9) updatewhereclause=yes name=bir_mon dbname="bir_mon" )
+ column=(type=char(6) updatewhereclause=yes name=bir_yy dbname="bir_yy" )
+ column=(type=char(1) updatewhereclause=yes name=d_hakjuk_jolup_sex dbname="sex" values="Male	1/Female	2/" )
+ column=(type=char(9) updatewhereclause=yes name=iphak_mon dbname="iphak_mon" )
+ column=(type=char(6) updatewhereclause=yes name=iphak_yy dbname="iphak_yy" )
+ column=(type=number updatewhereclause=yes name=b_hakjum dbname="hakjum" )
+ column=(type=char(100) updatewhereclause=yes name=d_gwa_code_gwa_ename dbname="gwa_ename" )
+ column=(type=char(9) updatewhereclause=yes name=sys_mon dbname="sys_mon" )
+ column=(type=char(6) updatewhereclause=yes name=sys_yy dbname="sys_yy" )
+ retrieve="SELECT	A.HAKBUN,
+			A.ENAME,
+			TO_CHAR(TO_DATE('19'||SUBSTR(A.JUMIN_NO, 1, 6)), 'MONTH')	AS	BIR_MON,
+			TO_CHAR(TO_DATE('19'||SUBSTR(A.JUMIN_NO, 1, 6)), 'DDYYYY')	AS	BIR_YY,
+			A.SEX,
+			TO_CHAR(TO_DATE(A.IPHAK_DATE), 'MONTH')	AS	IPHAK_MON,
+			TO_CHAR(TO_DATE(A.IPHAK_DATE), 'DDYYYY')	AS	IPHAK_YY,
+			B.HAKJUM,
+			C.GWA_ENAME,
+			TO_CHAR(SYSDATE, 'MONTH')	AS	SYS_MON,
+			TO_CHAR(SYSDATE, 'DDYYYY')	AS	SYS_YY
+FROM	HAKSA.D_HAKJUK	A,
+		(	SELECT	HAKBUN,
+						SUM(PASS_HAKJUM)	AS	HAKJUM
+			FROM	HAKSA.D_SUNGJUKGYE
+			WHERE	HAKBUN			=	:as_hakbun
+			AND	SUNGJUK_INJUNG	=	'1'
+			GROUP BY HAKBUN
+		)	B,
+		HAKSA.D_GWA_CODE	C
+WHERE	A.HAKBUN			=	B.HAKBUN(+)
+AND	A.GWA_ID			=	C.GWA_ID
+AND	A.SANGTAE_ID	=	'04'
+AND	A.HAKBUN			=	:as_hakbun
+" arguments=(("as_hakbun", string)) )
+text(band=detail alignment="0" text="This is to certify that the above-named student Graduated from" border="0" color="0" x="594" y="2708" height="72" width="2450" html.valueishtml="0"  name=t_6 visible="1"  font.face="바탕" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="of Graduate School of Information Industry, Chungwoon University." border="0" color="0" x="471" y="2944" height="72" width="2592" html.valueishtml="0"  name=t_11 visible="1"  font.face="바탕" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="631" y="2832" height="76" width="2423" format="[general]" html.valueishtml="0"  name=d_gwa_code_gwa_ename visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="the" border="0" color="0" x="475" y="2832" height="72" width="137" html.valueishtml="0"  name=t_18 visible="1"  font.face="바탕" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="DATE PRINTED. :" border="0" color="0" x="1893" y="1272" height="60" width="549" html.valueishtml="0"  name=t_28 visible="1"  font.face="바탕" font.height="-10" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="2464" y="1268" height="60" width="325" format="[general]" html.valueishtml="0"  name=sys_mon visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="2807" y="1268" height="60" width="306" format="[general]" html.valueishtml="0"  name=sys_yy visible="1" editmask.mask="XX, XXXX" editmask.focusrectangle=no  font.face="바탕" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="" border="0" color="0" x="2674" y="1196" height="60" width="439" html.valueishtml="0"  name=t_bunho visible="1"  font.face="바탕" font.height="-10" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="FILE No. :" border="0" color="0" x="2331" y="1196" height="60" width="320" html.valueishtml="0"  name=t_10 visible="1"  font.face="바탕" font.height="-10" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=detail x1="1797" y1="3556" x2="2738" y2="3556"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="Chairman of Academic and Student Affairs of" border="0" color="0" x="1856" y="3680" height="56" width="1275" html.valueishtml="0"  name=t_9 visible="1"  font.face="바탕" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="Graduate School of Information Industry" border="0" color="0" x="1856" y="3744" height="56" width="1275" html.valueishtml="0"  name=t_16 visible="1"  font.face="바탕" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="Chungwoon University" border="0" color="0" x="1856" y="3808" height="56" width="1275" html.valueishtml="0"  name=t_17 visible="1"  font.face="바탕" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="1586" y="1584" height="72" width="960" format="[general]" html.valueishtml="0"  name=d_hakjuk_jolup_ename visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="1586" y="1856" height="72" width="960" format="[general]" html.valueishtml="0"  name=d_hakjuk_jolup_sex visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="바탕" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="1586" y="1992" height="72" width="960" format="[general]" html.valueishtml="0"  name=d_hakjuk_jolup_hakbun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="1586" y="2264" height="72" width="960" format="[general]" html.valueishtml="0"  name=b_hakjum visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1582" y="1720" height="72" width="370" format="[general]" html.valueishtml="0"  name=bir_mon visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1975" y="1720" height="72" width="361" format="[general]" html.valueishtml="0"  name=bir_yy visible="1" editmask.mask="XX, XXXX" editmask.focusrectangle=no  font.face="바탕" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1582" y="2128" height="72" width="389" format="[general]" html.valueishtml="0"  name=iphak_mon visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="1989" y="2128" height="72" width="361" format="[general]" html.valueishtml="0"  name=iphak_yy visible="1"  slideleft=yes editmask.mask="XX, XXXX" editmask.focusrectangle=no  font.face="바탕" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text=":" border="0" color="0" x="1509" y="1584" height="72" width="46" html.valueishtml="0"  name=t_19 visible="1"  font.face="바탕" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text=":" border="0" color="0" x="1509" y="1720" height="72" width="46" html.valueishtml="0"  name=t_20 visible="1"  font.face="바탕" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text=":" border="0" color="0" x="1509" y="1856" height="72" width="46" html.valueishtml="0"  name=t_24 visible="1"  font.face="바탕" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text=":" border="0" color="0" x="1509" y="1992" height="72" width="46" html.valueishtml="0"  name=t_26 visible="1"  font.face="바탕" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text=":" border="0" color="0" x="1509" y="2128" height="72" width="46" html.valueishtml="0"  name=t_25 visible="1"  font.face="바탕" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text=":" border="0" color="0" x="1509" y="2264" height="72" width="46" html.valueishtml="0"  name=t_27 visible="1"  font.face="바탕" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="Gender" border="0" color="0" x="750" y="1856" height="72" width="709" html.valueishtml="0"  name=t_4 visible="1"  font.face="바탕" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="Date of Admission" border="0" color="0" x="750" y="2128" height="72" width="709" html.valueishtml="0"  name=t_14 visible="1"  font.face="바탕" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="Credit" border="0" color="0" x="750" y="2264" height="72" width="709" html.valueishtml="0"  name=t_15 visible="1"  font.face="바탕" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="Name in Full" border="0" color="0" x="750" y="1584" height="72" width="709" html.valueishtml="0"  name=t_2 visible="1"  font.face="바탕" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="Date of Birth" border="0" color="0" x="750" y="1720" height="72" width="709" html.valueishtml="0"  name=t_3 visible="1"  font.face="바탕" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="Student Number" border="0" color="0" x="750" y="1992" height="72" width="709" html.valueishtml="0"  name=t_5 visible="1"  font.face="바탕" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="GRADUATE SCHOOL OF INFORMATION INDUSTRY" border="0" color="0" x="238" y="428" height="112" width="2907" html.valueishtml="0"  name=t_21 visible="1"  font.face="바탕체" font.height="-18" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="CHUNGWOON UNIVERSITY" border="0" color="0" x="238" y="536" height="112" width="2907" html.valueishtml="0"  name=t_22 visible="1"  font.face="바탕체" font.height="-18" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="San 29 Namjang-ri Hongsung-eup, Hongsung-gun, Chungnam-do, 350-701" border="0" color="0" x="238" y="648" height="60" width="2907" html.valueishtml="0"  name=t_23 visible="1"  font.face="바탕체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="Republic of Korea" border="0" color="0" x="238" y="716" height="60" width="2907" html.valueishtml="0"  name=t_1 visible="1"  font.face="바탕체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="E-Mail : grad@chungwoon.ac.kr" border="0" color="0" x="238" y="780" height="60" width="2907" html.valueishtml="0"  name=t_12 visible="1"  font.face="바탕체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="Tel : 82-41-630-3145" border="0" color="0" x="238" y="844" height="60" width="2907" html.valueishtml="0"  name=t_13 visible="1"  font.face="바탕체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="f_director_name('E') + ~", Ph.D~""border="0" color="0" x="1851" y="3592" height="72" width="1189" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="바탕" font.height="-12" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

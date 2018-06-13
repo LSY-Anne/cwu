@@ -1,0 +1,40 @@
+﻿$PBExportHeader$d_hss501a_3.srd
+$PBExportComments$기타 구입신청(조회)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(8) updatewhereclause=yes name=apply_date dbname="hst317h.apply_date" )
+ column=(type=number updatewhereclause=yes name=apply_seq dbname="hst317h.apply_seq" )
+ column=(type=char(100) updatewhereclause=yes name=mid_name dbname="hst317h.mid_name" )
+ column=(type=number updatewhereclause=yes name=compute_0004 dbname="compute_0004" )
+ retrieve="SELECT APPLY_DATE,
+       APPLY_SEQ,
+       MID_NAME,
+       SUM(ITEM_AMT)
+FROM   STDB.HST317H
+WHERE  APPLY_DATE  BETWEEN :as_fr_date AND :as_to_date
+AND    MID_NAME  LIKE  :as_mid_name||'%'
+AND    decode(:as_gbn,0,0,ITEM_GBN) = :as_gbn
+GROUP BY APPLY_DATE, APPLY_SEQ, MID_NAME" arguments=(("as_fr_date", string),("as_to_date", string),("as_mid_name", string),("as_gbn", number)) )
+text(band=header alignment="2" text="신청일자" border="0" color="0" x="9" y="8" height="56" width="425" html.valueishtml="0"  name=apply_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="신청번호" border="0" color="0" x="443" y="8" height="56" width="329" html.valueishtml="0"  name=apply_seq_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="건명" border="0" color="0" x="782" y="8" height="56" width="1970" html.valueishtml="0"  name=mid_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="금액" border="0" color="0" x="2761" y="8" height="56" width="608" html.valueishtml="0"  name=compute_0004_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="8" height="68" width="425" format="@@@@/@@/@@" html.valueishtml="0"  name=apply_date visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="443" y="8" height="68" width="329" format="[general]" html.valueishtml="0"  name=apply_seq visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="782" y="8" height="68" width="1970" format="[general]" html.valueishtml="0"  name=mid_name visible="1" edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="2761" y="8" height="68" width="608" format="#,##0" html.valueishtml="0"  name=compute_0004 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,48 @@
+﻿$PBExportHeader$d_hsg110p_1.srd
+$PBExportComments$상담내역조회(교수/인력개발센터)-교수별 상담횟수
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(60) updatewhereclause=yes name=gwa_nm dbname="sum140tl.gwa_nm" )
+ column=(type=char(5) updatewhereclause=yes name=member_no dbname="hin001m.member_no" )
+ column=(type=char(40) updatewhereclause=yes name=name dbname="hin001m.name" )
+ column=(type=number updatewhereclause=yes name=cnt dbname="cnt" )
+ retrieve="SELECT A.GWA_NM,
+ B.MEMBER_NO, 
+B.NAME,  
+ COUNT(*) AS CNT 
+FROM HAKSA.SUM140TL A, INDB.HIN001M B
+WHERE A.YEAR = :AS_YEAR
+AND A.HAKGI = :AS_HAKGI
+AND (:AS_GWA = '%' OR A.GWA = :AS_GWA)
+AND A.COUNSEL_DT BETWEEN :AS_FR_DT AND :AS_TO_DT
+AND A.COUNSEL_TP = '2'
+AND (:AS_MEMBER_NO = '%' OR TRIM(A.COUNSELLER) = :AS_MEMBER_NO)
+AND TRIM(A.COUNSELLER) = B.MEMBER_NO
+GROUP BY A.GWA_NM, B.MEMBER_NO, B.NAME
+
+" arguments=(("as_year", string),("as_hakgi", string),("as_gwa", string),("as_fr_dt", string),("as_to_dt", string),("as_member_no", string))  sort="gwa_nm A member_no A " )
+text(band=header alignment="2" text="NO" border="0" color="33554432" x="9" y="8" height="56" width="251" html.valueishtml="0"  name=no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="학과" border="0" color="0" x="270" y="8" height="56" width="873" html.valueishtml="0"  name=gwa_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="교번" border="0" color="0" x="1152" y="8" height="56" width="283" html.valueishtml="0"  name=member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="교수명" border="0" color="0" x="1445" y="8" height="56" width="750" html.valueishtml="0"  name=name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="횟수" border="0" color="0" x="2203" y="8" height="56" width="1138" html.valueishtml="0"  name=cnt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="2" expression="getrow()"border="0" color="0" x="9" y="8" height="68" width="251" format="[GENERAL]" html.valueishtml="0"  name=no visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="274" y="8" height="68" width="869" format="[general]" html.valueishtml="0"  name=gwa_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="1157" y="8" height="68" width="279" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="1449" y="8" height="68" width="745" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="2208" y="8" height="68" width="1134" format="[general]" html.valueishtml="0"  name=cnt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

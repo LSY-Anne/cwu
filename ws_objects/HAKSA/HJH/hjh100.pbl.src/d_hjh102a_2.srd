@@ -1,0 +1,52 @@
+﻿$PBExportHeader$d_hjh102a_2.srd
+$PBExportComments$[청운대]장학코드선택
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=84 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes name=hakbun dbname="jaehak_hakjuk.hakbun" )
+ column=(type=char(20) updatewhereclause=yes name=hname dbname="jaehak_hakjuk.hname" )
+ column=(type=char(0) updatewhereclause=yes name=janghak_yn dbname="janghak_yn" values="	1/	0" )
+ column=(type=char(4) updatewhereclause=yes name=gwa dbname="jaehak_hakjuk.gwa" )
+ column=(type=char(1) updatewhereclause=yes name=su_hakyun dbname="jaehak_hakjuk.su_hakyun" )
+ column=(type=char(1) updatewhereclause=yes name=hakgi dbname="jaehak_hakjuk.hakgi" )
+ column=(type=decimal(0) updatewhereclause=yes name=gwa_sym_order_seq dbname="jaehak_hakjuk.order_seq" )
+ retrieve="SELECT  	JAEHAK_HAKJUK.HAKBUN ,
+			JAEHAK_HAKJUK.HNAME ,
+			'' JANGHAK_YN ,
+			JAEHAK_HAKJUK.GWA,
+			JAEHAK_HAKJUK.SU_HAKYUN,
+			JAEHAK_HAKJUK.HAKGI,
+			GWA_SYM.ORDER_SEQ     
+FROM 		HAKSA.JAEHAK_HAKJUK,
+			HAKSA.GWA_SYM  
+WHERE 	JAEHAK_HAKJUK.GWA		=	GWA_SYM.GWA
+AND		JAEHAK_HAKJUK.GWA 			like 	:as_gwa 	
+AND		JAEHAK_HAKJUK.SU_HAKYUN	like	:as_hakyun
+AND		JAEHAK_HAKJUK.HAKBUN		like	:as_hakbun
+and      JAEHAK_HAKJUK.SANGTAE 	= 		'01' 		
+
+
+
+" arguments=(("as_gwa", string),("as_hakyun", string),("as_hakbun", string))  sort="gwa_sym_order_seq A su_hakyun A hakbun A " )
+group(level=1 header.height=80 trailer.height=0 by=("gwa" , "su_hakyun" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text="학번" border="0" color="25058105" x="5" y="4" height="80" width="329" html.valueishtml="0"  name=jaehakseng_hakjuk_hakbun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="성명" border="0" color="25058105" x="338" y="4" height="80" width="512" html.valueishtml="0"  name=jaehakseng_hakjuk_hname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+column(band=header.1 id=4 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="76" width="640" format="[general]" html.valueishtml="0"  name=gwa visible="1" dddw.name=d_dddw_hakgwa dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12639424" )
+column(band=header.1 id=5 alignment="0" tabsequence=32766 border="0" color="0" x="658" y="4" height="76" width="192" format="[general]" html.valueishtml="0"  name=su_hakyun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12639424" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="0" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=hakbun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="1090519039~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=3 alignment="2" tabsequence=10 border="0" color="0" x="782" y="4" height="76" width="69" format="[general]" html.valueishtml="0"  name=janghak_yn visible="1" checkbox.text="" checkbox.on="1" checkbox.off="0" checkbox.scale=no checkbox.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="1090519039~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="338" y="4" height="76" width="434" format="[general]" html.valueishtml="0"  name=hname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="1090519039~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

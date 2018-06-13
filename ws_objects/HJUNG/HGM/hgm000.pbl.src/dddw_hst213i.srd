@@ -1,0 +1,48 @@
+﻿$PBExportHeader$dddw_hst213i.srd
+$PBExportComments$견적업체  dddw
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=92 color="536870912" )
+table(column=(type=char(60) updatewhereclause=yes name=cust_name dbname="cust_name" )
+ column=(type=char(10) updatewhereclause=yes name=cust_no dbname="cust_no" )
+ retrieve="select DISTINCT c.cust_name,  a.cust_no CUST_NO
+from stdb.hst031h a, stdb.hst030h b, stdb.hst001m c, 
+     (select  kk.item_name ITM_NM ,cc.cust_name XX, aa.req_no YY, aa.cust_no MM, aa.item_seq ZZ,  MAX(aa.quot_num) DD
+      from stdb.hst031h aa, stdb.hst030h bb, stdb.hst001m cc,stdb.hst004m kk, stdb.hst027m	  jj
+      where TRIM(aa.req_no) = TRIM(bb.req_no)
+	  and 	trim(aa.req_no) =	:as_req_no
+	  and	  bb.id_no		 =	jj.id_no
+	  and	  bb.item_class	 =	jj.item_class
+	  and	  jj.item_no	 =	kk.item_no		
+	  and   aa.item_seq = bb.item_seq
+      and   aa.cust_no = cc.cust_no
+      group by  kk.item_name, cc.cust_name, aa.req_no, aa.cust_no, aa.item_seq
+     )
+where TRIM(a.req_no) = TRIM(b.req_no)
+and   trim(a.req_no) =	:as_req_no
+and	  a.item_seq =		ZZ
+and   a.cust_no = c.cust_no
+and   c.cust_name = XX
+and   TRIM(a.req_no) = TRIM(YY)
+and   a.cust_no = MM
+and   a.quot_num = DD
+and	  a.confirm_opt is null
+group by  ITM_NM,c.cust_name, a.req_no, a.ITEM_SEQ,  a.cust_no, a.quot_num, a.sheet_price, a.confirm_opt
+order by a.cust_no asc
+			" arguments=(("as_req_no", string)) )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="8" height="76" width="937" format="[general]" html.valueishtml="0"  name=cust_name visible="1" edit.limit=60 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="955" y="8" height="76" width="302" format="[general]" html.valueishtml="0"  name=cust_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

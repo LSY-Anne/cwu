@@ -1,0 +1,198 @@
+﻿$PBExportHeader$uf_gangplan_save.srf
+$PBExportComments$[청운대]강의계획서 - 복사기능
+global type uf_gangplan_save from function_object
+end type
+
+forward prototypes
+global function integer uf_gangplan_save (string as_year, string as_hakgi, string as_gwa, string as_hakyun, string as_ban, string as_gwamok, integer ai_gwamok_seq, string as_bunban)
+end prototypes
+
+global function integer uf_gangplan_save (string as_year, string as_hakgi, string as_gwa, string as_hakyun, string as_ban, string as_gwamok, integer ai_gwamok_seq, string as_bunban);
+string	ls_year, ls_hakgi, ls_gwa, ls_hakyun, ls_ban, ls_gwamok, ls_bunban
+int	li_gwamok_seq
+
+DECLARE CUR_SAVE CURSOR FOR
+SELECT	YEAR,
+			HAKGI,
+			GWA,
+			HAKYUN,
+			BAN,
+			GWAMOK_ID,
+			GWAMOK_SEQ,
+			BUNBAN			
+FROM	HAKSA.GAESUL_GWAMOK
+WHERE	YEAR			=	:as_year
+AND	HAKGI			=	:as_hakgi
+AND	(	GWA		<>	:as_gwa
+		OR	HAKYUN	<> :as_hakyun
+		OR	BAN		<>	:as_ban
+		OR	BUNBAN	<>	:as_bunban	)
+AND	GWAMOK_ID	=	:as_gwamok
+AND	GWAMOK_SEQ	=	:ai_gwamok_seq
+AND	ISU_ID		IN	('11', '12')	;
+
+OPEN	CUR_SAVE	;
+DO
+	FETCH	CUR_SAVE	INTO	:ls_year, :ls_hakgi, :ls_gwa, :ls_hakyun, :ls_ban, :ls_gwamok, :li_gwamok_seq, :ls_bunban	;
+	
+	IF SQLCA.SQLCODE = 100 THEN 
+		EXIT
+	
+	ELSEIF SQLCA.SQLCODE = -1 THEN
+		messagebox("오류", "오류가 발생되었습니다.(1)~r~n" + sqlca.sqlerrtext)
+		RETURN 1
+		
+	END IF
+	
+	DELETE FROM HAKSA.GANGPLAN_JU
+	WHERE	YEAR			=	:ls_year
+	AND	HAKGI			=	:ls_hakgi
+	AND	GWA			=	:ls_gwa
+	AND	HAKYUN		=	:ls_hakyun
+	AND	BAN			=	:ls_ban
+	AND	GWAMOK_ID	=	:ls_gwamok
+	AND	GWAMOK_SEQ	=	:li_gwamok_seq
+	AND	BUNBAN		=	:ls_bunban		;
+	
+	if sqlca.sqlcode <> 0 then
+		messagebox("오류", "오류가 발생되었습니다.(2)~r~n" + sqlca.sqlerrtext)
+		return 2
+	end if
+	
+	DELETE FROM HAKSA.GANGPLAN
+	WHERE	YEAR			=	:ls_year
+	AND	HAKGI			=	:ls_hakgi
+	AND	GWA			=	:ls_gwa
+	AND	HAKYUN		=	:ls_hakyun
+	AND	BAN			=	:ls_ban
+	AND	GWAMOK_ID	=	:ls_gwamok
+	AND	GWAMOK_SEQ	=	:li_gwamok_seq
+	AND	BUNBAN		=	:ls_bunban		;
+	
+	if SQLCA.SQLCODE = 0 then
+		
+		INSERT INTO	HAKSA.GANGPLAN
+		SELECT	:ls_year,
+					:ls_hakgi,
+					:ls_gwa,
+					:ls_hakyun,
+					:ls_ban,
+					:ls_gwamok,
+					:li_gwamok_seq,
+					:ls_bunban,
+					TEL,
+					MOKJUK,
+					MOKPYO,
+					GANG_HYUNG,
+					SU_1,
+					SU_2,
+					SU_3,
+					SU_4,
+					SU_5,
+					SU_6,
+					SU_7,
+					SU_8,
+					SU_9,
+					SU_10,
+					SU_11,
+					SU_12,
+					GIJAJAE_1,
+					GIJAJAE_2,
+					GIJAJAE_3,
+					GIJAJAE_4,
+					GIJAJAE_5,
+					GIJAJAE_6,
+					GIJAJAE_7,
+					GIJAJAE_8,
+					PYUNGGA_GUBUN,
+					JU_AUTHOR,
+					JU_YEAR,
+					JU_COMPANY,
+					JU_TITLE,
+					BU_AUTHOR,
+					BU_YEAR,
+					BU_COMPANY,
+					BU_TITLE,
+					CHAM1_AUTHOR,
+					CHAM1_YEAR,
+					CHAM1_COMPANY,
+					CHAM1_TITLE,
+					CHAM2_AUTHOR,
+					CHAM2_YEAR,
+					CHAM2_COMPANY,
+					CHAM2_TITLE,
+					CHAM3_AUTHOR,
+					CHAM3_YEAR,
+					CHAM3_COMPANY,
+					CHAM3_TITLE,
+					WORKER,
+					IPADDR,
+					WORK_DATE,
+					JOB_UID,
+					JOB_ADD,
+					JOB_DATE
+		FROM	HAKSA.GANGPLAN
+		WHERE	YEAR			=	:as_year
+		AND	HAKGI			=	:as_hakgi
+		AND	GWA			=	:as_gwa
+		AND	HAKYUN		=	:as_hakyun
+		AND	BAN			=	:as_ban
+		AND	GWAMOK_ID	=	:as_gwamok
+		AND	GWAMOK_SEQ	=	:ai_gwamok_seq
+		AND	BUNBAN		=	:as_bunban		;
+		
+		if sqlca.sqlcode <> 0 then
+			messagebox("오류", "오류가 발생되었습니다.(3)~r~n" + sqlca.sqlerrtext)
+			return 3
+			
+		end if
+		
+		INSERT INTO	HAKSA.GANGPLAN_JU
+		SELECT	:ls_year,
+					:ls_hakgi,
+					:ls_gwa,
+					:ls_hakyun,
+					:ls_ban,
+					:ls_gwamok,
+					:li_gwamok_seq,
+					:ls_bunban,
+					JU,
+					NAEYONG,
+					BANG,
+					JARYO,
+					GWAJAE,
+					WORKER,
+					IPADDR,
+					WORK_DATE,
+					JOB_UID,
+					JOB_ADD,
+					JOB_DATE
+		FROM	HAKSA.GANGPLAN_JU
+		WHERE	YEAR			=	:as_year
+		AND	HAKGI			=	:as_hakgi
+		AND	GWA			=	:as_gwa
+		AND	HAKYUN		=	:as_hakyun
+		AND	BAN			=	:as_ban
+		AND	GWAMOK_ID	=	:as_gwamok
+		AND	GWAMOK_SEQ	=	:ai_gwamok_seq
+		AND	BUNBAN		=	:as_bunban		;
+		
+		if sqlca.sqlcode <> 0 then
+			messagebox("오류", "오류가 발생되었습니다.(4)~r~n" + sqlca.sqlerrtext)
+			return 4
+			
+		end if
+		
+	else
+		messagebox("오류", "오류가 발생되었습니다.(5)~r~n" + sqlca.sqlerrtext)
+		return 5
+		
+	end if
+	
+LOOP WHILE TRUE
+CLOSE CUR_SAVE	;
+return 0
+
+
+end function
+

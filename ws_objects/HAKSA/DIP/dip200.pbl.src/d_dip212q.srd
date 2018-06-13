@@ -1,0 +1,72 @@
+﻿$PBExportHeader$d_dip212q.srd
+$PBExportComments$[대학원입시] 일별접수현황
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=720 color="536870912" )
+summary(height=4 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=char(1) updatewhereclause=yes name=gyeyul_id dbname="di_wonseo.gyeyul_id" dbalias=".gyeyul_id" )
+ column=(type=char(3) updatewhereclause=yes name=gwa_id dbname="di_wonseo.gwa_id" dbalias=".gwa_id" )
+ column=(type=char(4) updatewhereclause=yes name=jungong_id dbname="di_wonseo.jungong_id" dbalias=".jungong_id" )
+ column=(type=char(8) updatewhereclause=yes name=jupsu_ilja dbname="di_wonseo.jupsu_ilja" dbalias=".jupsu_ilja" )
+ column=(type=char(1) updatewhereclause=yes name=jongbyul_id dbname="di_wonseo.jongbyul_id" dbalias=".jongbyul_id" )
+ column=(type=char(8) updatewhereclause=yes name=s_no dbname="s_no" )
+ column=(type=char(8) updatewhereclause=yes name=e_no dbname="e_no" )
+ column=(type=number updatewhereclause=yes name=inwon dbname="inwon" )
+ retrieve="SELECT	GYEYUL_ID,
+             GWA_ID,
+             JUNGONG_ID,
+			JUPSU_ILJA,
+			JONGBYUL_ID,
+			MIN(SUHUM_NO)		AS	S_NO,
+			MAX(SUHUM_NO)		AS	E_NO,
+			COUNT(SUHUM_NO)	AS	INWON
+FROM	DIPSI.DI_WONSEO
+WHERE	YEAR	=	:as_year
+AND	HAKGI	=	:as_hakgi
+AND	(JUPSU_ILJA	BETWEEN	:as_start	AND	:as_end)
+GROUP BY GYEYUL_ID,
+                GWA_ID,
+                JUNGONG_ID,
+			  JUPSU_ILJA,
+			  JONGBYUL_ID" arguments=(("as_year", string),("as_hakgi", string),("as_start", string),("as_end", string))  sort="jungong_id A jupsu_ilja A " )
+compute(band=header alignment="0" expression=" as_start"border="0" color="0" x="46" y="540" height="60" width="347" format="@@@@.@@.@@" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="~~" border="0" color="0" x="407" y="540" height="60" width="41" html.valueishtml="0"  name=t_10 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=header alignment="0" expression=" as_end "border="0" color="0" x="466" y="540" height="60" width="347" format="@@@@.@@.@@" html.valueishtml="0"  name=compute_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="3529" y="16" height="64" width="242" format="[general]" html.valueishtml="0"  name=inwon visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="3099" y="16" height="64" width="352" format="[general]" html.valueishtml="0"  name=e_no visible="1" edit.limit=8 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="2693" y="16" height="64" width="352" format="[general]" html.valueishtml="0"  name=s_no visible="1" edit.limit=8 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="3845" y="12" height="64" width="256" format="[general]" html.valueishtml="0"  name=jongbyul_id visible="1" dddw.name=d_dddw_di_jongbyul dddw.displaycolumn=jongbyul_name dddw.datacolumn=jongbyul_id dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="2185" y="16" height="64" width="398" format="[general]" html.valueishtml="0"  name=jupsu_ilja visible="1" editmask.mask="XXXX.XX.XX" editmask.focusrectangle=no  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1216" y="20" height="60" width="901" format="[general]" html.valueishtml="0"  name=jungong_id visible="1" dddw.name=d_dddw_di_jungong dddw.displaycolumn=jungong_hname dddw.datacolumn=jungong_id dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="접수일" border="0" color="0" x="2185" y="640" height="60" width="398" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="인원" border="0" color="0" x="3529" y="640" height="60" width="242" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="끝번호" border="0" color="0" x="3099" y="640" height="60" width="352" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="시작번호" border="0" color="0" x="2693" y="640" height="60" width="352" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="구분" border="0" color="0" x="3845" y="640" height="60" width="256" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="지 망 전 공" border="0" color="0" x="1216" y="640" height="60" width="901" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=0 border="0" color="0" x="73" y="20" height="60" width="485" html.valueishtml="0"  name=gyeyul_id visible="1" dddw.name=d_dddw_di_gyeyul dddw.displaycolumn=gyeyul_hname dddw.datacolumn=gyeyul_id dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="지 망 계 열" border="0" color="0" x="73" y="640" height="60" width="485" html.valueishtml="0"  name=t_11 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=0 border="0" color="0" x="585" y="20" height="60" width="608" html.valueishtml="0"  name=gwa_id visible="1" dddw.name=d_dddw_di_hakgwa dddw.displaycolumn=gwa_hname dddw.datacolumn=gwa_id dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="지 망 학 과" border="0" color="0" x="585" y="640" height="60" width="608" html.valueishtml="0"  name=t_12 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=header x1="23" y1="608" x2="4146" y2="608"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="23" y1="716" x2="4146" y2="716"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="23" y1="0" x2="4146" y2="0"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=header alignment="1" expression="today()"border="0" color="0" x="3840" y="492" height="56" width="283" format="yyyy.mm.dd" html.valueishtml="0"  name=date_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=header alignment="1" expression="page() + ' of ' + pageCount()"border="0" color="0" x="3840" y="552" height="48" width="283" format="[general]" html.valueishtml="0"  name=page_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="출력일 :" border="0" color="0" x="3575" y="492" height="56" width="247" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="페이지 :" border="0" color="0" x="3575" y="552" height="48" width="247" html.valueishtml="0"  name=t_9 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=header alignment="2" expression="'(' + as_year + '학년도 ' +  as_hakgi + ' 학기 입시)'"border="0" color="0" x="1678" y="324" height="60" width="727" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="일 별 접 수 현 황" border="0" color="0" x="1390" y="216" height="96" width="1344" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림체" font.height="-16" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" font.underline="1" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,96 @@
+﻿$PBExportHeader$d_dhwsu201a.srd
+$PBExportComments$[대학원수업] 개설과목관리
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=88 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(4) update=yes updatewhereclause=yes key=yes name=year dbname="d_gaesul_gwamok.year" )
+ column=(type=char(1) update=yes updatewhereclause=yes key=yes name=hakgi dbname="d_gaesul_gwamok.hakgi" )
+ column=(type=char(1) update=yes updatewhereclause=yes key=yes name=gwajung_id dbname="d_gaesul_gwamok.gwajung_id" )
+ column=(type=char(3) update=yes updatewhereclause=yes key=yes name=gwa_id dbname="d_gaesul_gwamok.gwa_id" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=jungong_id dbname="d_gaesul_gwamok.jungong_id" )
+ column=(type=char(6) update=yes updatewhereclause=yes key=yes name=gwamok_id dbname="d_gaesul_gwamok.gwamok_id" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=hakjum dbname="d_gaesul_gwamok.hakjum" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=sisu dbname="d_gaesul_gwamok.sisu" )
+ column=(type=char(5) update=yes updatewhereclause=yes key=yes name=member_no dbname="d_gaesul_gwamok.member_no" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=yoil dbname="d_gaesul_gwamok.yoil" values="월	a/화	b/수	c/목	d/금	e/토	f/" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=sigan dbname="d_gaesul_gwamok.sigan" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=hosil_id dbname="d_gaesul_gwamok.hosil_id" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=gaesul_gubun dbname="d_gaesul_gwamok.gaesul_gubun" values="개설	01/폐강	11/" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=isu_id dbname="d_gaesul_gwamok.isu_id" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="d_gaesul_gwamok.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="d_gaesul_gwamok.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="d_gaesul_gwamok.work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="d_gaesul_gwamok.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="d_gaesul_gwamok.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="d_gaesul_gwamok.job_date" )
+ column=(type=char(1) updatewhereclause=yes name=gyeyul_id dbname="d_gwa_code.gyeyul_id" )
+ retrieve="  SELECT A.YEAR,   
+         A.HAKGI,   
+         A.GWAJUNG_ID,   
+         A.GWA_ID,   
+         A.JUNGONG_ID,   
+         A.GWAMOK_ID,   
+         A.HAKJUM,   
+         A.SISU,   
+         A.MEMBER_NO,   
+         A.YOIL,   
+         A.SIGAN,   
+         A.HOSIL_ID,   
+         A.GAESUL_GUBUN,   
+         A.ISU_ID,
+            A.WORKER,
+             A.IPADDR,  
+             A.WORK_DATE,
+             A.JOB_UID,
+             A.JOB_ADD, 
+             A.JOB_DATE,
+             B.GYEYUL_ID
+    FROM HAKSA.D_GAESUL_GWAMOK  A
+           , HAKSA.D_GWA_CODE  B
+   WHERE  A.GWA_ID = B.GWA_ID
+         AND A.YEAR = :as_year
+         AND A.HAKGI = :as_hakgi
+         AND A.GWAJUNG_ID like :as_gwajung
+         AND A.GWA_ID like :as_hakgwa
+         AND NVL(A.JUNGONG_ID, ' ') like :as_jungong
+         AND B.GYEYUL_ID like :as_gyeyul_id
+
+" update="HAKSA.D_GAESUL_GWAMOK" updatewhere=0 updatekeyinplace=yes arguments=(("as_year", string),("as_hakgi", string),("as_gwajung", string),("as_gyeyul_id", string),("as_hakgwa", string),("as_jungong", string)) )
+text(band=header alignment="2" text="과정" border="0" color="8388608" x="5" y="4" height="80" width="201" html.valueishtml="0"  name=gwajung_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="전공" border="0" color="8388608" x="951" y="4" height="80" width="567" html.valueishtml="0"  name=jungong_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="과목명" border="0" color="8388608" x="1522" y="4" height="80" width="800" html.valueishtml="0"  name=gwamok_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="이수구분" border="0" color="8388608" x="2327" y="4" height="80" width="357" html.valueishtml="0"  name=isu_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학과" border="0" color="8388608" x="210" y="4" height="80" width="736" html.valueishtml="0"  name=gwa_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학점" border="0" color="8388608" x="2688" y="4" height="80" width="165" html.valueishtml="0"  name=hakjum_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="시수" border="0" color="8388608" x="2857" y="4" height="80" width="165" html.valueishtml="0"  name=sisu_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="담당교수" border="0" color="8388608" x="3026" y="4" height="80" width="448" html.valueishtml="0"  name=member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="요일" border="0" color="8388608" x="3479" y="4" height="80" width="160" html.valueishtml="0"  name=yoil_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="시간" border="0" color="8388608" x="3643" y="4" height="80" width="507" html.valueishtml="0"  name=sigan_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="강의실" border="0" color="8388608" x="4155" y="4" height="80" width="370" html.valueishtml="0"  name=hosil_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="개설구분" border="0" color="8388608" x="4530" y="4" height="80" width="311" html.valueishtml="0"  name=gaesul_gubun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=3 alignment="0" tabsequence=10 border="0" color="0" x="5" y="4" height="76" width="201" format="[general]" html.valueishtml="0"  name=gwajung_id visible="1" dddw.name=d_dddw_d_gwajung dddw.displaycolumn=gwajung_hname dddw.datacolumn=gwajung_id dddw.percentwidth=230 dddw.lines=2 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.nilisnull=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=40 border="0" color="0" x="951" y="4" height="76" width="567" format="[general]" html.valueishtml="0"  name=jungong_id  tag="KOR" visible="1" dddw.name=d_dddw_d_jungong dddw.displaycolumn=jungong_hname dddw.datacolumn=jungong_id dddw.percentwidth=180 dddw.lines=7 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.nilisnull=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=50 border="0" color="0" x="1522" y="4" height="76" width="800" format="[general]" html.valueishtml="0"  name=gwamok_id  tag="KOR" visible="1" dddw.name=d_dddw_d_gwamok dddw.displaycolumn=gwamok_gubun dddw.datacolumn=gwamok_id dddw.percentwidth=182 dddw.lines=8 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.nilisnull=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="0" tabsequence=60 border="0" color="0" x="2327" y="4" height="76" width="357" format="[general]" html.valueishtml="0"  name=isu_id visible="1" dddw.name=d_dddw_d_isugubun dddw.displaycolumn=isu_name dddw.datacolumn=isu_id dddw.percentwidth=150 dddw.lines=5 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.nilisnull=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="1" tabsequence=70 border="0" color="0" x="2688" y="4" height="76" width="165" format="[general]" html.valueishtml="0"  name=hakjum visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="1" tabsequence=80 border="0" color="0" x="2857" y="4" height="76" width="165" format="[general]" html.valueishtml="0"  name=sisu visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="0" tabsequence=90 border="0" color="0" x="3026" y="4" height="76" width="448" format="[general]" html.valueishtml="0"  name=member_no  tag="KOR" visible="1" dddw.name=d_dddw_prof dddw.displaycolumn=prof_gubun dddw.datacolumn=member_no dddw.percentwidth=147 dddw.lines=7 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.nilisnull=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=100 border="0" color="0" x="3479" y="4" height="76" width="160" format="[general]" html.valueishtml="0"  name=yoil visible="1" ddlb.limit=0 ddlb.allowedit=yes ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="0" tabsequence=110 border="0" color="0" x="3643" y="4" height="76" width="507" format="[general]" html.valueishtml="0"  name=sigan visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="0" tabsequence=120 border="0" color="0" x="4155" y="4" height="76" width="370" format="[general]" html.valueishtml="0"  name=hosil_id visible="1" edit.limit=10 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="0" tabsequence=130 border="0" color="0" x="4530" y="4" height="76" width="311" format="[general]" html.valueishtml="0"  name=gaesul_gubun visible="1" ddlb.limit=0 ddlb.allowedit=yes ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=30 border="0" color="0" x="210" y="4" height="76" width="736" format="[general]" html.valueishtml="0"  name=gwa_id  tag="KOR" visible="1" dddw.name=d_dddw_d_hakgwa dddw.displaycolumn=gwa_hname dddw.datacolumn=gwa_id dddw.percentwidth=207 dddw.lines=5 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.nilisnull=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

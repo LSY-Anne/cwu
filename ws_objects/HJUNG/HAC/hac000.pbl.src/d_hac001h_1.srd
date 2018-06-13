@@ -1,0 +1,56 @@
+﻿$PBExportHeader$d_hac001h_1.srd
+$PBExportComments$계정코드도움말(계정코드,계정명) 예산통제체크
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 grid.columnmove=no selected.mouse=no )
+header(height=76 color="1073741824" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(30) updatewhereclause=yes name=large_name dbname="hac001m.com_large_name" )
+ column=(type=char(30) updatewhereclause=yes name=middle_name dbname="hac001m.com_middle_name" )
+ column=(type=char(30) updatewhereclause=yes name=mok_name dbname="hac001m.com_mok_name" )
+ column=(type=char(6) updatewhereclause=yes name=com_acct_code dbname="hac001m.com_acct_code" )
+ column=(type=char(30) updatewhereclause=yes name=com_acct_name dbname="hac001m.com_acct_name" )
+ column=(type=char(1) updatewhereclause=yes name=com_drcr_class dbname="hac001m.com_drcr_class" values="차변	D/대변	C/" )
+ column=(type=char(1) updatewhereclause=yes name=com_bdgt_cntl_yn dbname="hac001m.com_bdgt_cntl_yn" values="Y	Y/N	N/" )
+ retrieve="SELECT	B.ACCT_NAME		COM_LARGE_NAME,
+			C.ACCT_NAME		COM_MIDDLE_NAME,
+			D.ACCT_NAME		COM_MOK_NAME,
+			A.ACCT_CODE		COM_ACCT_CODE,
+			A.ACCT_NAME		COM_ACCT_NAME,
+			A.DRCR_CLASS	COM_DRCR_CLASS,
+			A.BDGT_CNTL_YN	COM_BDGT_CNTL_YN
+FROM		ACDB.HAC001M A, ACDB.HAC001M B, ACDB.HAC001M C, ACDB.HAC001M D
+WHERE		A.LARGE_ACCT||'00' = B.ACCT_CODE (+)
+AND		A.MIDDLE_ACCT||'00' = C.ACCT_CODE (+)
+AND		A.MOK_ACCT||'00' = D.ACCT_CODE (+)
+AND		A.LEVEL_CLASS = '4'
+AND		(A.ACCT_USE_OPT = 'Y' OR (A.ACCT_USE_OPT = 'N' AND SUBSTR(A.ACCT_CODE,1,1) = '9'))
+AND		A.JG_GUBUN = 'Y'
+AND		SUBSTR(A.ACCT_CLASS_GBN,:AI_ACCT_CLASS,1) = '9'
+AND		DECODE(:AS_IO_GUBUN,'1',A.SUIP_GUBUN,'2',A.JICHUL_GUBUN,'') = 'Y'
+AND		A.ACCT_CODE LIKE :AS_ACCT_CODE||'%'
+AND		A.ACCT_NAME LIKE :AS_ACCT_NAME||'%'
+ORDER BY	A.ACCT_CODE
+" arguments=(("as_Acct_Code", string),("as_Acct_Name", string),("ai_acct_class", number),("as_io_gubun", string)) )
+text(band=header alignment="2" text="계정목명" border="0" color="0" x="9" y="8" height="56" width="603" html.valueishtml="0"  name=mok_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계정코드" border="0" color="0" x="622" y="8" height="56" width="261" html.valueishtml="0"  name=com_acct_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계정코드명" border="0" color="0" x="891" y="8" height="56" width="951" html.valueishtml="0"  name=com_acct_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="차대" border="0" color="0" x="1851" y="8" height="56" width="174" html.valueishtml="0"  name=com_drcr_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="통제" border="0" color="0" x="2034" y="8" height="56" width="174" html.valueishtml="0"  name=com_bdgt_cntl_yn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="603" format="[general]" html.valueishtml="0"  name=mok_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="622" y="4" height="72" width="261" format="@@@@-@@" html.valueishtml="0"  name=com_acct_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="891" y="4" height="72" width="951" format="[general]" html.valueishtml="0"  name=com_acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="1851" y="4" height="72" width="174" format="[general]" html.valueishtml="0"  name=com_drcr_class visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="2034" y="4" height="72" width="174" format="[general]" html.valueishtml="0"  name=com_bdgt_cntl_yn visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

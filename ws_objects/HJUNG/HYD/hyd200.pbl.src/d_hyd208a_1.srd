@@ -1,0 +1,93 @@
+﻿$PBExportHeader$d_hyd208a_1.srd
+$PBExportComments$수상사항등록
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(6) update=yes updatewhereclause=yes key=yes name=std_ym dbname="hyd306t.std_ym" dbalias="A.std_ym" )
+ column=(type=char(5) update=yes updatewhereclause=yes key=yes name=member_no dbname="hyd306t.member_no" dbalias="A.member_no" )
+ column=(type=char(40) updatewhereclause=yes name=name dbname="hin001m.name" dbalias="B.name" )
+ column=(type=char(12) update=yes updatewhereclause=yes key=yes name=mng_no dbname="hyd306t.mng_no" dbalias="A.mng_no" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=awrd_ym dbname="hyd306t.awrd_ym" dbalias="A.awrd_ym" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=awrd_nm dbname="hyd306t.awrd_nm" dbalias="A.awrd_nm" )
+ column=(type=char(150) update=yes updatewhereclause=yes name=cfmt_agc_nm dbname="hyd306t.cfmt_agc_nm" dbalias="A.cfmt_agc_nm" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=cfmt_ntn_cd dbname="hyd306t.cfmt_ntn_cd" dbalias="A.cfmt_ntn_cd" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=awrd_dvs_cd dbname="hyd306t.awrd_dvs_cd" dbalias="A.awrd_dvs_cd" )
+ column=(type=datetime update=yes updatewhereclause=yes name=appr_dttm dbname="hyd306t.appr_dttm" dbalias="A.appr_dttm" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=appr_dvs_cd dbname="hyd306t.appr_dvs_cd" dbalias="A.appr_dvs_cd" initial="1" )
+ column=(type=datetime update=yes updatewhereclause=yes name=appr_cncl_dttm dbname="hyd306t.appr_cncl_dttm" dbalias="A.appr_cncl_dttm" )
+ column=(type=char(4000) update=yes updatewhereclause=yes name=appr_rtrn_cncl_rsn_cntn dbname="hyd306t.appr_rtrn_cncl_rsn_cntn" dbalias="A.appr_rtrn_cncl_rsn_cntn" )
+ column=(type=decimal(2) update=yes updatewhereclause=yes name=gus_point dbname="hyd306t.gus_point" dbalias="A.gus_point" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=evl_slt_yn dbname="hyd306t.evl_slt_yn" dbalias="A.evl_slt_yn" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=evl_stat dbname="hyd306t.evl_stat" dbalias="A.evl_stat" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=kri_link_yn dbname="hyd306t.kri_link_yn" dbalias="A.kri_link_yn" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=worker dbname="hyd306t.worker" dbalias="A.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hyd306t.ipaddr" dbalias="A.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hyd306t.work_date" dbalias="A.work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_uid dbname="hyd306t.job_uid" dbalias="A.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hyd306t.job_add" dbalias="A.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hyd306t.job_date" dbalias="A.job_date" )
+ retrieve="  SELECT A.STD_YM,   
+         A.MEMBER_NO,   
+  B.NAME,
+         A.MNG_NO,   
+         A.AWRD_YM,   
+         A.AWRD_NM,   
+         A.CFMT_AGC_NM,   
+         A.CFMT_NTN_CD,   
+         A.AWRD_DVS_CD,   
+         A.APPR_DTTM,   
+         A.APPR_DVS_CD,   
+         A.APPR_CNCL_DTTM,   
+         A.APPR_RTRN_CNCL_RSN_CNTN,   
+         A.GUS_POINT,   
+         A.EVL_SLT_YN,   
+         A.EVL_STAT,   
+         A.KRI_LINK_YN,   
+         A.WORKER,   
+         A.IPADDR,   
+         A.WORK_DATE,   
+         A.JOB_UID,   
+         A.JOB_ADD,   
+         A.JOB_DATE  
+    FROM YGDB.HYD306T   A,   
+         INDB.HIN001M B  
+   WHERE ( A.MEMBER_NO = B.MEMBER_NO ) and  
+         ( ( A.STD_YM BETWEEN :as_ym AND :as_ym_to ) AND  
+         ( :as_gwa = '%' OR B.GWA = :as_gwa ) AND  
+         ( :as_member_no = '%' OR A.MEMBER_NO = :as_member_no ) AND  
+         ( :as_yn = '%' OR  A.APPR_DVS_CD = :as_yn ) )    
+" update="YGDB.HYD306T" updatewhere=1 updatekeyinplace=no arguments=(("as_ym", string),("as_ym_to", string),("as_gwa", string),("as_member_no", string),("as_yn", string)) )
+text(band=header alignment="2" text="개인번호" border="0" color="33554432" x="192" y="8" height="56" width="320" html.valueishtml="0"  name=member_no_t  tag="ess" visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="관리번호" border="0" color="33554432" x="887" y="8" height="56" width="366" html.valueishtml="0"  name=mng_no_t  tag="ess" visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="수상년월" border="0" color="33554432" x="1262" y="8" height="56" width="288" html.valueishtml="0"  name=awrd_ym_t  tag="ess" visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="수상명" border="0" color="33554432" x="1559" y="8" height="56" width="462" html.valueishtml="0"  name=awrd_nm_t  tag="ess" visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="수여기관" border="0" color="33554432" x="2030" y="8" height="56" width="923" html.valueishtml="0"  name=cfmt_agc_nm_t  tag="ess" visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="수여국가코드" border="0" color="33554432" x="2962" y="8" height="56" width="416" html.valueishtml="0"  name=cfmt_ntn_cd_t  tag="ess" visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="수상구분" border="0" color="33554432" x="3387" y="8" height="56" width="480" html.valueishtml="0"  name=awrd_dvs_cd_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="승인구분" border="0" color="33554432" x="3877" y="8" height="56" width="347" html.valueishtml="0"  name=appr_dvs_cd_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성명" border="0" color="0" x="521" y="8" height="56" width="357" html.valueishtml="0"  name=name_t  tag="" visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="순번" border="0" color="33554432" x="5" y="8" height="56" width="178" html.valueishtml="0"  name=no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=40 border="0" color="33554432" x="1266" y="8" height="68" width="283" format="[general]" html.valueishtml="0"  name=awrd_ym  tag="NOTNULL(수상년월)" visible="1" editmask.mask="####/##" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=50 border="0" color="33554432" x="1559" y="8" height="68" width="462" format="[general]" html.valueishtml="0"  name=awrd_nm  tag="NOTNULL(수상명);kor" visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=60 border="0" color="33554432" x="2030" y="8" height="68" width="923" format="[general]" html.valueishtml="0"  name=cfmt_agc_nm  tag="NOTNULL(수여기관);kor" visible="1" edit.limit=150 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=70 border="0" color="33554432" x="2962" y="8" height="68" width="416" format="[general]" html.valueishtml="0"  name=cfmt_ntn_cd  tag="NOTNULL(수여국가코드)" visible="1" dddw.name=d_dddw_code dddw.displaycolumn=cd_nm dddw.datacolumn=cd dddw.percentwidth=200 dddw.lines=0 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes dddw.autoretrieve=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=80 border="0" color="33554432" x="3387" y="8" height="68" width="480" format="[general]" html.valueishtml="0"  name=awrd_dvs_cd  tag="수상구분코드" visible="1" dddw.name=d_dddw_code dddw.displaycolumn=cd_nm dddw.datacolumn=cd dddw.percentwidth=300 dddw.lines=0 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes dddw.autoretrieve=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="33554432" x="3877" y="8" height="68" width="347" format="[general]" html.valueishtml="0"  name=appr_dvs_cd  tag="승인구분" visible="1" dddw.name=d_dddw_code dddw.displaycolumn=cd_nm dddw.datacolumn=cd dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes dddw.autoretrieve=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="getrow()"border="0" color="0" x="5" y="8" height="68" width="178" format="[GENERAL]" html.valueishtml="0"  name=no visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=10 border="0" color="33554432" x="192" y="8" height="68" width="320" format="[general]" html.valueishtml="0" protect="0~tif(isrownew(), 0, 1)"  name=member_no  tag="NOTNULL(개인번호)" visible="1" edit.limit=5 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=20 border="0" color="33554432" x="521" y="8" height="68" width="357" format="[general]" html.valueishtml="0" protect="0~tif(isrownew(), 0, 1)"  name=name  tag="kor" visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=30 border="0" color="33554432" x="887" y="8" height="68" width="366" format="[general]" html.valueishtml="0" protect="0~tif(isrownew(), 0, 1)"  name=mng_no  tag="NOTNULL(관리번호)" visible="1" edit.limit=12 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

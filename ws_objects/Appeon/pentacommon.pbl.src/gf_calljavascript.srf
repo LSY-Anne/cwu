@@ -1,0 +1,16 @@
+﻿$PBExportHeader$gf_calljavascript.srf
+global type gf_calljavascript from function_object
+end type
+
+forward prototypes
+global function string gf_calljavascript (string funcname, string owner, string param1, string param2)
+end prototypes
+
+global function string gf_calljavascript (string funcname, string owner, string param1, string param2);String	ls_rtn
+u_proxy  luo_proxy
+luo_proxy = Create u_proxy
+ls_rtn = luo_proxy.InvokeEx(funcname, owner, param1, param2)
+Destroy luo_proxy
+return ls_rtn
+end function
+

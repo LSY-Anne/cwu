@@ -1,0 +1,73 @@
+﻿$PBExportHeader$d_hin208p_03.srd
+$PBExportComments$인사기본정보출력_가족사항출력용
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 2 print.margin.left = 110 print.margin.right = 110 print.margin.top = 300 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=544 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=112 color="536870912" )
+table(column=(type=char(10) update=yes updatewhereclause=yes key=yes name=member_no dbname="hin019h.member_no" )
+ column=(type=char(13) update=yes updatewhereclause=yes key=yes name=jumin_no dbname="hin019h.jumin_no" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=relation dbname="hin019h.relation" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=kname dbname="hin019h.kname" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_name dbname="hin019h.job_name" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=handicap_opt dbname="hin019h.handicap_opt" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=sudang_yn dbname="hin019h.sudang_yn" values="	1/	0" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=gongje_yn dbname="hin019h.gongje_yn" values="	1/	0" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=worker dbname="hin019h.worker" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hin019h.work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hin019h.ipaddr" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=job_uid dbname="hin019h.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hin019h.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hin019h.job_date" )
+ column=(type=char(4000) updatewhereclause=yes name=com_gwangae_code_nm dbname="com_gwangae_code_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_handicap_opt_nm dbname="com_handicap_opt_nm" )
+ retrieve="SELECT	A.MEMBER_NO,
+			A.JUMIN_NO,
+			A.GWANGAE_CODE     RELATION,
+			A.NAME             KNAME,
+			A.JOB_NAME,
+			A.HANDICAP_OPT,
+			A.SUDANG_YN,
+			A.GONGJE_YN,
+			A.WORKER,
+			A.WORK_DATE,
+			A.IPADDR,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE,
+			FU_CODE_NM('COMM','gwangae_code',A.GWANGAE_CODE,'K')	COM_GWANGAE_CODE_NM,
+			FU_CODE_NM('COMM','handicap_opt',A.HANDICAP_OPT,'K')	COM_HANDICAP_OPT_NM
+FROM		INDB.HIN019H A
+WHERE		A.MEMBER_NO = :as_MemberNo
+ORDER	BY	A.GWANGAE_CODE,
+			A.JUMIN_NO
+
+" update="INDB.HIN019H" updatewhere=0 updatekeyinplace=no arguments=(("as_MemberNo", string)) )
+line(band=header x1="343" y1="380" x2="343" y2="544"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="9" y1="376" x2="9" y2="612"  name=l_80 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="9" y1="540" x2="3392" y2="540"  name=l_3 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="9" y1="376" x2="3392" y2="376"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3392" y1="376" x2="3392" y2="612"  name=l_10 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="가족" border="0" color="0" x="27" y="428" height="60" width="302" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="관계" border="0" color="0" x="384" y="428" height="60" width="526" html.valueishtml="0"  name=relation_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="성명(한글)" border="0" color="0" x="1166" y="428" height="60" width="663" html.valueishtml="0"  name=kname_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="주민번호" border="0" color="0" x="2217" y="428" height="60" width="677" html.valueishtml="0"  name=jumin_no_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=detail x1="9" y1="0" x2="9" y2="152"  name=l_11 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="9" y1="108" x2="3392" y2="108"  name=l_18 visible="1" pen.style="0" pen.width="5~tif(getrow() = last(getrow() for page), 10, 5)" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3392" y1="0" x2="3392" y2="152"  name=l_12 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=15 alignment="2" tabsequence=32766 border="0" color="0" x="384" y="24" height="60" width="526" format="[general]" html.valueishtml="0"  name=com_gwangae_code_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="1166" y="24" height="60" width="663" format="[general]" html.valueishtml="0"  name=kname  tag="성명(한글)" visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="2217" y="24" height="60" width="677" format="@@@@@@-*******" html.valueishtml="0"  name=jumin_no  tag="주민번호" visible="1" edit.limit=13 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=footer x1="9" y1="508" x2="3392" y2="508"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

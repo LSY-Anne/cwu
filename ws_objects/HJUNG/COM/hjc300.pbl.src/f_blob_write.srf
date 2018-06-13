@@ -1,0 +1,58 @@
+﻿$PBExportHeader$f_blob_write.srf
+$PBExportComments$Global Function Binary File Write
+global type f_blob_write from function_object
+end type
+
+forward prototypes
+global function boolean f_blob_write (blob abo_blob, string as_filename)
+end prototypes
+
+global function boolean f_blob_write (blob abo_blob, string as_filename);String	ls_FileExt,	ls_FileName, ls_FileLen
+Integer	li_FileNum, li_idx
+Blob		lbo_FileBlob 
+Long		ll_Loop, ll_FileHandle, ll_ByteRead
+Long		ll_NewPos, ll_BlobPos, ll_FilePos
+Long		ll_FileLen
+
+SetPointer(HourGlass!)
+
+ll_FileLen = LEN(abo_blob)
+IF ll_FileLen > 32765 THEN
+	IF Mod(ll_FileLen, 32765) = 0 THEN
+   	ll_Loop = ll_FileLen/32765
+   ELSE
+	   ll_Loop = (ll_FileLen/32765) + 1
+   END IF
+ELSE
+   ll_Loop = 1
+END IF
+
+ll_FileHandle = FileOpen(as_FileName, StreamMode!,Write!, Shared!, Replace!)
+
+ll_ByteRead = 32765
+ll_NewPos = 0
+ll_BloBPos = 1
+li_idx = 1
+IF ll_FileHandle <> 1 THEN
+	FileClose(ll_FileHandle)
+	RETURN FALSE
+ELSE
+	ll_FilePos = FileSeek(ll_FileHandle, ll_NewPos, fromBeginning!)
+
+	FOR li_idx = 1 TO ll_Loop
+		lbo_Fileblob = BlobMid(abo_Blob, ll_BlobPos, ll_ByteRead)
+		FileWrite(ll_FileHandle, lbo_Fileblob)
+		ll_NewPos = ll_NewPos + ll_ByteRead    // File Position
+		ll_BlobPos = ll_BlobPos + ll_ByteRead  // Blob Position
+		IF li_idx < ll_Loop THEN
+			ll_FilePos = FileSeek(ll_FileHandle, ll_NewPos,  fromBeginning!)
+		END IF
+	NEXT
+END IF
+
+FileClose(ll_FileHandle)
+
+RETURN TRUE
+//////////////////////////////////////////////////////////////////////////////////////////
+end function
+

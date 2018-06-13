@@ -1,0 +1,61 @@
+﻿$PBExportHeader$d_hin208p_015.srd
+$PBExportComments$인사기록카드_기본사항_주요위원회
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 2 print.margin.left = 110 print.margin.right = 110 print.margin.top = 300 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=400 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=112 color="536870912" )
+table(column=(type=char(8) updatewhereclause=yes name=hin030h_syymmdd dbname="hin030h.syymmdd" )
+ column=(type=char(8) updatewhereclause=yes name=hin030h_eyymmdd dbname="hin030h.eyymmdd" )
+ column=(type=char(40) updatewhereclause=yes name=hin029m_commitee_name dbname="hin030h.commitee_name" )
+ column=(type=char(1) updatewhereclause=yes name=hin030h_term_opt dbname="hin030h.term_opt" )
+ column=(type=char(4000) updatewhereclause=yes name=com_commitee_opt_nm dbname="com_commitee_opt_nm" )
+ column=(type=number updatewhereclause=yes name=com_year_nm dbname="com_year_nm" )
+ column=(type=char(100) updatewhereclause=yes name=hin030h_remark dbname="hin030h.remark" )
+ retrieve="SELECT	A.SYYMMDD,
+			A.EYYMMDD,
+			C.COMMITEE_NAME,
+			A.TERM_OPT,
+			FU_CODE_NM('HAENG','COMMITEE_OPT',A.COMMITEE_OPT,'K')	COM_COMMITEE_OPT_NM,
+			FU_RTN_YEAR_MONTH(A.SYYMMDD, A.EYYMMDD) 					COM_YEAR_NM,
+			A.REMARK
+FROM		INDB.HIN030H A,
+			INDB.HIN001M B,
+			INDB.HIN029M C
+WHERE		A.MEMBER_NO     = B.MEMBER_NO
+AND		A.COMMITEE_CODE = C.COMMITEE_CODE
+AND		A.MEMBER_NO     = :as_MemberNo
+ORDER	BY	A.SYYMMDD,
+			A.EYYMMDD,
+			C.COMMITEE_NAME" arguments=(("as_MemberNo", string)) )
+line(band=header x1="9" y1="232" x2="3392" y2="232"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="9" y1="396" x2="3392" y2="396"  name=l_3 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="9" y1="232" x2="9" y2="468"  name=l_80 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3392" y1="232" x2="3392" y2="468"  name=l_10 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="주요위원회" border="0" color="0" x="27" y="280" height="60" width="311" html.valueishtml="0"  name=decision_opt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="347" y1="236" x2="347" y2="400"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="비고" border="0" color="0" x="3013" y="284" height="60" width="357" html.valueishtml="0"  name=organ_name_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="위원회명" border="0" color="0" x="379" y="284" height="60" width="901" html.valueishtml="0"  name=certify_no_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="임명일" border="0" color="0" x="1385" y="284" height="60" width="402" html.valueishtml="0"  name=get_date_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="임면일" border="0" color="0" x="1865" y="284" height="60" width="402" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="임명기간(년.월)" border="0" color="0" x="2459" y="284" height="60" width="489" html.valueishtml="0"  name=content_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=detail x1="347" y1="108" x2="3392" y2="108"  name=l_4 visible="1" pen.style="0" pen.width="5~tif(getrow() = last(getrow() for page), 10, 5)" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="347" y1="0" x2="347" y2="136"  name=l_9 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3392" y1="0" x2="3392" y2="136"  name=l_14 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="379" y="20" height="60" width="901" format="[general]" html.valueishtml="0"  name=hin029m_commitee_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="2" expression="if ( string(com_year_nm) > '0' , string(com_year_nm)  , '' )"border="0" color="0" x="2459" y="16" height="60" width="489" format="[GENERAL]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="1874" y="16" height="60" width="471" format="@@@@.@@.@@" html.valueishtml="0"  name=hin030h_eyymmdd visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="1385" y="16" height="60" width="402" format="@@@@.@@.@@" html.valueishtml="0"  name=hin030h_syymmdd visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="2" expression="if ( isnull ( hin030h_eyymmdd ) ,  ' 현재' , '' )"border="0" color="0" x="1870" y="16" height="60" width="471" format="[GENERAL]" html.valueishtml="0"  name=to_date_15 visible="1~tif( hin030h_syymmdd   > '1', 1, 0)"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

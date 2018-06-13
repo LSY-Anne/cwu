@@ -1,0 +1,48 @@
+﻿$PBExportHeader$d_hac903p_letter.srd
+$PBExportComments$재학생 DM
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 0 print.margin.right = 0 print.margin.top = 0 print.margin.bottom = 0 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=3776 color="536870912" )
+table(column=(type=char(4) updatewhereclause=yes name=gwa dbname="jaehak_hakjuk.gwa" )
+ column=(type=char(1) updatewhereclause=yes name=su_hakyun dbname="jaehak_hakjuk.su_hakyun" )
+ column=(type=char(1) updatewhereclause=yes name=ban dbname="jaehak_hakjuk.ban" )
+ column=(type=char(10) updatewhereclause=yes key=yes name=hakbun dbname="jaehak_hakjuk.hakbun" )
+ column=(type=char(20) updatewhereclause=yes name=hname dbname="jaehak_hakjuk.hname" )
+ column=(type=char(6) updatewhereclause=yes name=zip_id dbname="zip_id" )
+ column=(type=char(200) updatewhereclause=yes name=addr dbname="addr" )
+ retrieve="SELECT 	JAEHAK_HAKJUK.GWA ,
+			JAEHAK_HAKJUK.SU_HAKYUN ,
+			JAEHAK_HAKJUK.BAN ,
+			JAEHAK_HAKJUK.HAKBUN ,
+			JAEHAK_HAKJUK.HNAME,
+			DECODE(JAEHAK_HAKJUK.ZIP_ID,  NULL, JAEHAK_HAKJUK.BO_ZIP_ID, 
+															JAEHAK_HAKJUK.ZIP_ID) ZIP_ID,
+			DECODE(JAEHAK_HAKJUK.BO_ADDR, NULL, JAEHAK_HAKJUK.ADDR, 
+															JAEHAK_HAKJUK.BO_ADDR) ADDR
+FROM 		HAKSA.JAEHAK_HAKJUK     
+WHERE 	JAEHAK_HAKJUK.GWA		 			like 	:as_gwa
+and		JAEHAK_HAKJUK.DR_HAKYUN  		like 	:as_hakyun  
+and		JAEHAK_HAKJUK.SANGTAE 			= 		'01'
+and		JAEHAK_HAKJUK.IPHAK_JUNHYUNG 	<> 	'06'
+ORDER BY JAEHAK_HAKJUK.GWA,
+			JAEHAK_HAKJUK.SU_HAKYUN
+
+" update="HAKSA.JAEHAK_HAKJUK" updatewhere=0 updatekeyinplace=no arguments=(("as_gwa", string),("as_hakyun", string)) )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="3849" y="3144" height="108" width="946" format="@ @ @ - @ @ @" html.valueishtml="0"  name=zip_id visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="돋움체" font.height="-18" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="2" expression="page()"border="0" color="0" x="4846" y="636" height="76" width="256" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="1" expression="if ( isnull ( addr ) , '', addr )"border="0" color="0" x="411" y="2696" height="108" width="4631" format="[GENERAL]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="맑은 고딕" font.height="-14" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="1" expression="if ( isnull ( hname ) , '', hname ) + ' ' + '귀하'"border="0" color="0" x="2674" y="2892" height="132" width="2368" format="[GENERAL]" html.valueishtml="0"  name=compute_3 visible="1"  font.face="맑은 고딕" font.height="-16" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

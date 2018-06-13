@@ -1,0 +1,115 @@
+﻿$PBExportHeader$f_hakjuk_update.srf
+$PBExportComments$[청운대] 학적등 변경된 이름,주민번호를 관련테이블에 업데이트
+global type f_hakjuk_update from function_object
+end type
+
+forward prototypes
+global function integer f_hakjuk_update (string as_hakbun, string as_hname, string as_jumin_no)
+end prototypes
+
+global function integer f_hakjuk_update (string as_hakbun, string as_hname, string as_jumin_no);// 학번, 이름, 주민번호 변경 시 관련테이블에 없데이트 한다.
+//desc  haksa.sum220tl -- 이름 주민번호
+//desc  sch.saz220t  -- 이름 주민번호
+//desc  sch.saz320t -- 이름
+//desc sch.saz330t -- 이름
+//desc sch.saz340t -- 이름
+//desc sch.saz350t -- 이름
+//desc sch.saz370t -- 이름
+//desc sch.saz310t -- 이름
+
+UPDATE HAKSA.JAEHAK_HAKJUK
+      SET HNAME     = DECODE(:as_hname, 'N', HNAME, :as_hname )
+		 , JUMIN_NO = DECODE(:as_jumin_no, 'N', JUMIN_NO, :as_jumin_no )
+ WHERE HAKBUN   = :as_hakbun
+ USING SQLCA ;
+ 
+ If sqlca.sqlcode <> 0 Then
+	Messagebox('오류', '학적에 업데이트시 오류 발생!' )
+	Return -1
+End If
+ 
+UPDATE HAKSA.SUM220TL
+      SET HNAME     = DECODE(:as_hname, 'N', HNAME, :as_hname )
+		 , JUMIN_NO = DECODE(:as_jumin_no, 'N', JUMIN_NO, :as_jumin_no )
+ WHERE HAKBUN   = :as_hakbun
+ USING SQLCA ;
+ 
+If sqlca.sqlcode <> 0 Then
+	Messagebox('오류', '학생환경이력카드에 업데이트시 오류 발생!' )
+	Return -1
+End If
+
+UPDATE SCH.SAZ220T
+      SET HNAME     = DECODE(:as_hname, 'N', HNAME, :as_hname )
+		 , JUMIN_NO = DECODE(:as_jumin_no, 'N', JUMIN_NO, :as_jumin_no )
+ WHERE HAKBUN   = :as_hakbun
+ USING SQLCA ;
+ 
+If sqlca.sqlcode <> 0 Then
+	Messagebox('오류', '기숙사-입사신청서에 업데이트시 오류 발생!' )
+	Return -1
+End If
+
+UPDATE SCH.SAZ320T
+      SET HNAME     = DECODE(:as_hname, 'N', HNAME, :as_hname )
+ WHERE HAKBUN   = :as_hakbun
+ USING SQLCA ;
+ 
+If sqlca.sqlcode <> 0 Then
+	Messagebox('오류', '기숙사-늦은귀사신청내역에 업데이트시 오류 발생!' )
+	Return -1
+End If
+
+UPDATE SCH.SAZ330T
+      SET HNAME     = DECODE(:as_hname, 'N', HNAME, :as_hname )
+ WHERE HAKBUN   = :as_hakbun
+ USING SQLCA ;
+ 
+If sqlca.sqlcode <> 0 Then
+	Messagebox('오류', '기숙사-외박신청내역에 업데이트시 오류 발생!' )
+	Return -1
+End If
+
+UPDATE SCH.SAZ340T
+      SET HNAME     = DECODE(:as_hname, 'N', HNAME, :as_hname )
+ WHERE HAKBUN   = :as_hakbun
+ USING SQLCA ;
+ 
+If sqlca.sqlcode <> 0 Then
+	Messagebox('오류', '기숙사-하자신청내역에 업데이트시 오류 발생!' )
+	Return -1
+End If
+
+UPDATE SCH.SAZ350T
+      SET HNAME     = DECODE(:as_hname, 'N', HNAME, :as_hname )
+ WHERE HAKBUN   = :as_hakbun
+ USING SQLCA ;
+ 
+If sqlca.sqlcode <> 0 Then
+	Messagebox('오류', '기숙사-프로그램신청내역에 업데이트시 오류 발생!' )
+	Return -1
+End If
+
+UPDATE SCH.SAZ370T
+      SET HNAME     = DECODE(:as_hname, 'N', HNAME, :as_hname )
+ WHERE HAKBUN   = :as_hakbun
+ USING SQLCA ;
+ 
+If sqlca.sqlcode <> 0 Then
+	Messagebox('오류', '기숙사-상벌관리에 업데이트시 오류 발생!' )
+	Return -1
+End If
+
+UPDATE SCH.SAZ310T
+      SET HNAME     = DECODE(:as_hname, 'N', HNAME, :as_hname )
+ WHERE HAKBUN   = :as_hakbun
+ USING SQLCA ;
+ 
+If sqlca.sqlcode <> 0 Then
+	Messagebox('오류', '기숙사-상담신청내역에 업데이트시 오류 발생!' )
+	Return -1
+End If
+
+Return 1
+end function
+

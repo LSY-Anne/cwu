@@ -1,0 +1,110 @@
+﻿$PBExportHeader$d_hfn533p_11.srd
+$PBExportComments$현금출납부--------------------//연속지출력용
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 0 print.margin.right = 0 print.margin.top = 0 print.margin.bottom = 0 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=676 color="536870912" )
+summary(height=144 color="536870912" )
+footer(height=180 color="536870912" )
+detail(height=144 color="536870912" )
+table(column=(type=char(8) updatewhereclause=yes name=com_slip_date dbname="hac001m.com_slip_date" dbalias=".com_slip_date" )
+ column=(type=char(100) updatewhereclause=yes name=com_remark dbname="hac001m.com_remark" dbalias=".com_remark" )
+ column=(type=char(8) updatewhereclause=yes name=com_date dbname="hac001m.com_date" dbalias=".com_date" )
+ column=(type=number updatewhereclause=yes name=com_slip_no dbname="hac001m.com_slip_no" dbalias=".com_slip_no" )
+ column=(type=number updatewhereclause=yes name=com_slip_seq dbname="hac001m.com_slip_seq" dbalias=".com_slip_seq" )
+ column=(type=char(20) updatewhereclause=yes name=com_cust_no dbname="hac001m.com_cust_no" dbalias=".com_cust_no" )
+ column=(type=char(6) updatewhereclause=yes name=com_acct_code dbname="hac001m.com_acct_code" dbalias=".com_acct_code" )
+ column=(type=number updatewhereclause=yes name=com_dr_amt dbname="hac001m.com_dr_amt" dbalias=".com_dr_amt" )
+ column=(type=number updatewhereclause=yes name=com_cr_amt dbname="hac001m.com_cr_amt" dbalias=".com_cr_amt" )
+ column=(type=char(30) updatewhereclause=yes name=com_acct_name dbname="hac001m.com_acct_name" dbalias="B.com_acct_name" )
+ column=(type=char(60) updatewhereclause=yes name=com_cust_name dbname="hst001m.com_cust_name" dbalias="C.com_cust_name" )
+ column=(type=char(32) updatewhereclause=yes name=title_dt dbname="title_dt" )
+ retrieve="SELECT	A.COM_SLIP_DATE		COM_SLIP_DATE,
+			A.COM_REMARK		COM_REMARK,
+         A.COM_DATE		COM_DATE,
+			A.COM_SLIP_NO		COM_SLIP_NO,
+			A.COM_SLIP_SEQ		COM_SLIP_SEQ,
+			A.COM_CUST_NO		COM_CUST_NO,
+			A.COM_ACCT_CODE 	COM_ACCT_CODE,
+			A.COM_DR_AMT 	COM_DR_AMT,
+			A.COM_CR_AMT 	 COM_CR_AMT,
+			B.ACCT_NAME	COM_ACCT_NAME,
+			C.CUST_NAME	COM_CUST_NAME,
+'기간 :  ' || to_char(to_date(:as_FrSlipDate), 'yyyy/mm/dd')  || ' ∼ ' ||  to_char(to_date(:as_ToSlipDate), 'yyyy/mm/dd') as title_dt
+FROM		(	SELECT	SUBSTR(:AS_FRSLIPDATE,1,6)||'00' COM_SLIP_DATE,
+							'' COM_REMARK,
+							'' COM_DATE,
+							0 COM_SLIP_NO,
+							0 COM_SLIP_SEQ,
+							'' COM_CUST_NO,
+							'' COM_ACCT_CODE,
+							NVL(SUM(A.DR_ALT_AMT),0) + NVL(SUM(A.DR_CASH_AMT),0) COM_DR_AMT,
+							NVL(SUM(A.CR_ALT_AMT),0) + NVL(SUM(A.CR_CASH_AMT),0) COM_CR_AMT
+				FROM		FNDB.HFN502H A
+				WHERE		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+				AND		A.BDGT_YEAR = SUBSTR(:AS_STRSLIPDATE,1,4)
+				AND		A.ACCT_DATE < :AS_FRSLIPDATE
+				AND		SUBSTR(A.ACCT_CODE,1,4) IN ('1111', '1112')
+				UNION ALL
+				SELECT	B.ACCT_DATE COM_SLIP_DATE,
+							A.REMARK COM_REMARK,
+							A.SLIP_DATE  COM_DATE,
+							A.SLIP_NO    COM_SLIP_NO,
+							A.SLIP_SEQ   COM_SLIP_SEQ,
+							DECODE(A.MANA_CODE1,2,A.MANA_DATA1,DECODE(A.MANA_CODE2,2,A.MANA_DATA2,
+							DECODE(A.MANA_CODE3,2,A.MANA_DATA3,DECODE(A.MANA_CODE4,2,A.MANA_DATA4,'')))) COM_CUST_NO,
+							A.ACCT_CODE COM_ACCT_CODE,
+							NVL(SUM(DECODE(A.DRCR_CLASS,'C',A.SLIP_AMT,0)),0) COM_DR_AMT,
+							NVL(SUM(DECODE(A.DRCR_CLASS,'D',A.SLIP_AMT,0)),0) COM_CR_AMT
+				FROM		FNDB.HFN202M A, FNDB.HFN201M B, ACDB.HAC001M C
+				WHERE		A.ACCT_CLASS = B.ACCT_CLASS
+				AND		A.SLIP_DATE  = B.SLIP_DATE
+				AND		A.SLIP_NO    = B.SLIP_NO
+				AND		A.ACCT_CODE  = C.ACCT_CODE (+)
+				AND		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+				AND		B.ACCT_DATE  BETWEEN :AS_FRSLIPDATE AND :AS_TOSLIPDATE
+				AND		B.SLIP_CLASS <> 3
+				AND		B.CLOSE_YN   = 'Y'
+				AND		SUBSTR(A.ACCT_CODE,1,4) <> '1111'
+				AND		SUBSTR(A.ACCT_CODE,1,4) <> '1112'
+				GROUP BY B.ACCT_DATE, A.REMARK,A.SLIP_DATE,
+							A.SLIP_NO,
+							A.SLIP_SEQ,  
+							DECODE(A.MANA_CODE1,2,A.MANA_DATA1,DECODE(A.MANA_CODE2,2,A.MANA_DATA2,
+							DECODE(A.MANA_CODE3,2,A.MANA_DATA3,DECODE(A.MANA_CODE4,2,A.MANA_DATA4,'')))), A.ACCT_CODE	) A,
+			ACDB.HAC001M B, STDB.HST001M C
+WHERE		A.COM_ACCT_CODE = B.ACCT_CODE (+)
+AND		A.COM_CUST_NO   = C.CUST_NO (+)
+ORDER BY A.COM_SLIP_DATE ASC,
+         A.COM_DATE ASC,
+			A.COM_SLIP_NO ASC,
+			A.COM_SLIP_SEQ ASC
+" arguments=(("ai_acct_class", number),("as_strslipdate", string),("as_FrSlipDate", string),("as_ToSlipDate", string)) )
+group(level=1 header.height=0 trailer.height=144 by=("left(com_slip_date,6)" ) header.color="536870912" trailer.color="536870912" )
+column(band=header id=12 alignment="1" tabsequence=0 border="0" color="0" x="3982" y="460" height="60" width="1335" html.valueishtml="0"  name=title_dt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="현 금 출 납 부" border="0" color="0" x="242" y="164" height="132" width="4837" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-22" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=header alignment="1" expression="'( ' + page() + ' / ' + pagecount() + ' )'"border="0" color="0" x="3927" y="384" height="60" width="1390" format="[General]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="1" expression="cumulativeSum( com_dr_amt for all ) - cumulativeSum( com_cr_amt for all )"border="0" color="0" x="4763" y="24" height="100" width="571" format="###,###,###,###" html.valueishtml="0"  name=compute_5 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="if(right( com_slip_date , 2) = '00', '전기(월) 이월',  com_remark )"border="0" color="0" x="965" y="16" height="116" width="1970" format="[GENERAL]" html.valueishtml="0"  name=compute_6 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="0" x="2949" y="16" height="116" width="562" format="[general]" html.valueishtml="0"  name=com_cust_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="3525" y="24" height="100" width="603" format="###,###,###,###" html.valueishtml="0"  name=com_dr_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="4142" y="24" height="100" width="594" format="###,###,###,###" html.valueishtml="0"  name=com_cr_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="if(right( com_slip_date , 2) = '00', '', mid( com_slip_date ,5,2) + '/' + mid( com_slip_date ,7,2))"border="0" color="0" x="96" y="24" height="100" width="325" format="[GENERAL]" html.valueishtml="0"  name=com_date visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="if( right( com_slip_date, 2 ) = '00' , '', com_date + '-' + string( com_slip_no ) + '-' + string( com_slip_seq ) )"border="0" color="0" x="471" y="24" height="100" width="462" format="[GENERAL]" html.valueishtml="0"  name=compute_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(if(right( com_slip_date ,2) = '00', 0, com_cr_amt) for group 1)"border="0" color="0" x="4142" y="28" height="108" width="594" format="###,###,###,###" html.valueishtml="0"  name=com_dae_month visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(if(right( com_slip_date ,2) = '00', 0, com_dr_amt) for group 1)"border="0" color="0" x="3525" y="28" height="108" width="603" format="###,###,###,###" html.valueishtml="0"  name=com_cha_month visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=trailer.1 alignment="2" text="월          계" border="0" color="0" x="416" y="28" height="108" width="3095" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(com_dr_amt for all)"border="0" color="0" x="3525" y="28" height="108" width="603" format="###,###,###,###" html.valueishtml="0"  name=com_cha_tot visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(com_cr_amt for all)"border="0" color="0" x="4142" y="28" height="108" width="594" format="###,###,###,###" html.valueishtml="0"  name=com_dae_tot visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=summary alignment="2" text="누          계" border="0" color="0" x="416" y="28" height="108" width="3095" html.valueishtml="0"  name=t_10 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+
+sparse(names="com_date")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

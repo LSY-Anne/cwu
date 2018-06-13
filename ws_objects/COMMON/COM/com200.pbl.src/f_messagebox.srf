@@ -1,0 +1,59 @@
+﻿$PBExportHeader$f_messagebox.srf
+global type f_messagebox from function_object
+end type
+
+forward prototypes
+global function integer f_messagebox (string as_type, string as_gubun)
+end prototypes
+
+global function integer f_messagebox (string as_type, string as_gubun);//////////////////////////////////////////////////////////////////
+// 	작성목적 : MessageBox를 생성한다.
+//    적 성 인 : 이현수
+//		작성일자 : 2002.10
+//    변 경 인 :
+//    변경일자 :
+//    변경사유 :
+//////////////////////////////////////////////////////////////////
+
+//  Question!    질문일때
+//  Information! 일상적일때
+//  StopSign!    금지
+string ls_gubun
+int li_return
+string le_icon
+
+ls_gubun = upper(as_gubun)
+If as_type = '1' Then // Information! 일반적인 MessageBox
+   Choose Case ls_gubun
+		Case 'SAVE'
+		   li_return = MessageBox('확인','저장 하였습니다.')
+		Case 'DEL'
+			li_return = MessageBox('확인','삭제 하였습니다.')
+		case else
+			li_return = MessageBox('확인', ls_gubun)
+	End choose
+ElseIf as_type = '2' Then  // Question! 질문 MessageBox
+	Choose Case ls_gubun
+		Case 'SAVE'
+			li_return = MessageBox('확인','저장 하시겠습니까?',Question!, YesNo!, 1)
+		Case 'DEL'
+			li_return = MessageBox('확인','삭제 하시겠습니까?',Question!, YesNo!, 1)
+		case else
+			li_return = MessageBox('확인',ls_gubun,Question!, YesNo!, 1)
+	End choose
+ElseIf as_type = '3' Then  // StopSign! 에러나 금지 MessageBox
+	Choose Case ls_gubun
+		Case 'SAVE'
+			li_return = MessageBox('실패','저장 실패',StopSign!)
+		Case 'DEL'
+			li_return = MessageBox('실패','삭제 실패',StopSign!)
+		case else
+			li_return = MessageBox('실패',ls_gubun,StopSign!)
+	End choose
+End if
+
+return li_return
+
+
+end function
+

@@ -1,0 +1,55 @@
+﻿$PBExportHeader$d_hin108a_1.srd
+$PBExportComments$승진소요년수 등록용
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=76 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(3) update=yes updatewhereclause=yes key=yes name=hin024m_duty_code dbname="hin024m.duty_code" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=hin024m_upgrade_opt dbname="hin024m.upgrade_opt" values="승진	1/재임용	2/" )
+ column=(type=char(3) update=yes updatewhereclause=yes name=hin024m_up_duty_code dbname="hin024m.up_duty_code" )
+ column=(type=number update=yes updatewhereclause=yes name=hin024m_spend_year dbname="hin024m.spend_year" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=hin024m_worker dbname="hin024m.worker" )
+ column=(type=datetime update=yes updatewhereclause=yes name=hin024m_work_date dbname="hin024m.work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=hin024m_ipaddr dbname="hin024m.ipaddr" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=hin024m_job_uid dbname="hin024m.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=hin024m_job_add dbname="hin024m.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=hin024m_job_date dbname="hin024m.job_date" )
+ column=(type=char(3) updatewhereclause=yes name=hin003m_duty_code dbname="hin003m.duty_code" )
+ column=(type=char(20) updatewhereclause=yes name=hin003m_duty_name dbname="hin003m.duty_name" )
+ retrieve="SELECT	A.DUTY_CODE,
+			A.UPGRADE_OPT,
+			A.UP_DUTY_CODE,
+			A.SPEND_YEAR,
+			A.WORKER,
+			A.WORK_DATE,
+			A.IPADDR,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE,
+			B.DUTY_CODE,
+			B.DUTY_NAME
+FROM		INDB.HIN024M A,
+			INDB.HIN003M B
+WHERE		A.DUTY_CODE(+)   = B.DUTY_CODE
+AND		A.UPGRADE_OPT(+) = :ai_UpgradeOpt
+ORDER	BY	B.DUTY_CODE,
+			A.UPGRADE_OPT" update="INDB.HIN024M" updatewhere=1 updatekeyinplace=no arguments=(("ai_UpgradeOpt", number)) )
+text(band=header alignment="2" text="현직급" border="0" color="0" x="9" y="8" height="56" width="507" html.valueishtml="0"  name=hin003m_duty_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="상위직급" border="0" color="0" x="526" y="8" height="56" width="530" html.valueishtml="0"  name=hin024m_up_duty_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="소요년수" border="0" color="0" x="1065" y="8" height="56" width="329" html.valueishtml="0"  name=hin024m_spend_year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="507" format="[general]" html.valueishtml="0"  name=hin003m_duty_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=10 border="0" color="0" x="526" y="4" height="72" width="530" format="[general]" html.valueishtml="0"  name=hin024m_up_duty_code visible="1" dddw.name=dddw_duty_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=150 dddw.lines=10 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.nilisnull=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="1" tabsequence=20 border="0" color="0" x="1065" y="4" height="72" width="329" format="#0.00" html.valueishtml="0"  name=hin024m_spend_year visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.nilisnull=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

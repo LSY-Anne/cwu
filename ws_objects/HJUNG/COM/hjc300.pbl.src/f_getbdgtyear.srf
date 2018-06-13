@@ -1,0 +1,40 @@
+﻿$PBExportHeader$f_getbdgtyear.srf
+$PBExportComments$특정일자의 회계년도를 찾아온다.(A:일자, R:year)
+global type f_getbdgtyear from function_object
+end type
+
+forward prototypes
+global function string f_getbdgtyear (string as_date)
+end prototypes
+
+global function string f_getbdgtyear (string as_date);// ------------------------------------------------------------------------------------------
+//  Funtion Name :  f_getbdgtyear
+//  개요         :  특정일자의 회계년도를 찾아온다.(A:일자, R:year)
+//  Argument     :  as_date(String)	:	일자
+//  Return Value :  year(년도)
+// ------------------------------------------------------------------------------------------
+
+string	ls_year
+
+select	nvl(bdgt_year, '')
+into		:ls_year
+from		acdb.hac003m
+where		bdgt_class	=	0
+and		stat_class	=	0	
+and		from_date	<=	:as_date
+and		to_date		>=	:as_date
+and		bdgt_year	=	(	select	nvl(max(bdgt_year), '')
+									from		acdb.hac003m
+									where		bdgt_class	=	0
+									and		stat_class	=	0
+									and		from_date	<=	:as_date
+									and		to_date		>=	:as_date	)	;
+
+if sqlca.sqlcode <> 0 or trim(ls_year) = '' then
+	f_messagebox('3', '회계기간이 정확하지 않습니다.~n~n전산실에 문의하시기 바랍니다!')
+	return	''
+end if
+
+return	ls_year
+end function
+

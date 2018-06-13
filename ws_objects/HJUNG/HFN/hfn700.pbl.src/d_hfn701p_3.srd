@@ -1,0 +1,130 @@
+﻿$PBExportHeader$d_hfn701p_3.srd
+$PBExportComments$예탁금명세서 - 계정과목별
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 200 print.margin.right = 0 print.margin.top = 300 print.margin.bottom = 0 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=560 color="536870912" )
+summary(height=96 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=96 color="536870912" )
+table(column=(type=char(20) updatewhereclause=yes name=mana_data dbname="hfn501h.mana_data" )
+ column=(type=decimal(0) updatewhereclause=yes name=acct_gubun dbname="hfn003m.acct_gubun" )
+ column=(type=decimal(0) updatewhereclause=yes name=jagum_gubun dbname="hfn003m.jagum_gubun" )
+ column=(type=char(6) updatewhereclause=yes name=acct_code dbname="hfn003m.acct_code" )
+ column=(type=decimal(0) updatewhereclause=yes name=depo_class dbname="hfn003m.depo_class" )
+ column=(type=decimal(0) updatewhereclause=yes name=bank_code dbname="hfn003m.bank_code" )
+ column=(type=datetime updatewhereclause=yes name=open_date dbname="hfn003m.open_date" )
+ column=(type=datetime updatewhereclause=yes name=close_date dbname="hfn003m.close_date" )
+ column=(type=decimal(2) updatewhereclause=yes name=loan_rate dbname="hfn003m.loan_rate" )
+ column=(type=char(100) updatewhereclause=yes name=remark dbname="hfn003m.remark" )
+ column=(type=number updatewhereclause=yes name=com_jan_amt dbname="com_jan_amt" )
+ column=(type=char(20) updatewhereclause=yes name=title_dt dbname="title_dt" )
+ retrieve="SELECT	A.MANA_DATA,
+			B.ACCT_GUBUN,
+			B.JAGUM_GUBUN,
+			B.ACCT_CODE,
+			B.DEPO_CLASS,
+			B.BANK_CODE,
+			B.OPEN_DATE,
+			B.CLOSE_DATE,
+			B.LOAN_RATE,
+			B.REMARK,
+			NVL(SUM(A.DR_ALT_AMT),0) + NVL(SUM(A.DR_CASH_AMT),0) -
+			NVL(SUM(A.CR_ALT_AMT),0) - NVL(SUM(A.CR_CASH_AMT),0)	COM_JAN_AMT,
+'( ' || to_char(to_date(:as_date), 'yyyy/mm/dd')  || '  현재 )' as title_dt
+FROM		FNDB.HFN501H A, FNDB.HFN003M B
+WHERE		A.MANA_DATA = B.ACCT_NO (+)
+AND		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+AND		A.BDGT_YEAR = :AS_BDGT_YEAR
+AND		A.ACCT_DATE <= :AS_DATE
+AND		A.MANA_CODE = 1
+GROUP BY A.MANA_DATA, B.ACCT_GUBUN, B.JAGUM_GUBUN, B.ACCT_CODE,
+			B.DEPO_CLASS, B.BANK_CODE, B.OPEN_DATE, B.CLOSE_DATE,
+			B.LOAN_RATE, B.REMARK
+HAVING	NVL(SUM(A.DR_ALT_AMT),0) + NVL(SUM(A.DR_CASH_AMT),0) - NVL(SUM(A.CR_ALT_AMT),0) - NVL(SUM(A.CR_CASH_AMT),0) <> 0
+ORDER BY B.ACCT_CODE, A.MANA_DATA
+" arguments=(("ai_acct_class", number),("as_bdgt_year", string),("as_date", string)) )
+group(level=1 header.height=0 trailer.height=96 by=("acct_code" ) header.color="536870912" trailer.color="536870912" )
+column(band=header id=12 alignment="2" tabsequence=32766 border="0" color="0" x="1824" y="144" height="60" width="1097" format="[general]" html.valueishtml="0"  name=title_dt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+compute(band=header alignment="0" expression="'( ' + page() + ' / ' + pagecount() + ' )'"border="0" color="0" x="4320" y="296" height="60" width="393" format="[general]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+rectangle(band=header x="27" y="368" height="248" width="4686"  name=r_1 visible="1" brush.hatch="6" brush.color="31580641" pen.style="0" pen.width="5" pen.color="31580641"  background.mode="2" background.color="12632256" )
+line(band=header x1="27" y1="364" x2="27" y2="748"  name=l_49 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="27" y1="368" x2="4704" y2="368"  name=l_8 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="27" y1="556" x2="4704" y2="556"  name=l_29 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="4713" y1="364" x2="4713" y2="748"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="2030" y1="460" x2="2761" y2="460"  name=l_31 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=header alignment="2" expression="'예탁금명세서(예금종류)'"border="0" color="0" x="27" y="8" height="124" width="4686" format="[GENERAL]" html.valueishtml="0"  name=compute_4 visible="1"  font.face="굴림체" font.height="-20" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" font.underline="1" background.mode="1" background.color="553648127" )
+line(band=header x1="416" y1="364" x2="416" y2="748"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="905" y1="364" x2="905" y2="748"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1518" y1="364" x2="1518" y2="748"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2030" y1="364" x2="2030" y2="748"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2395" y1="460" x2="2395" y2="756"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2761" y1="364" x2="2761" y2="748"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2971" y1="364" x2="2971" y2="748"  name=l_17 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3397" y1="364" x2="3397" y2="748"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="기     간" border="0" color="0" x="2048" y="392" height="56" width="699" html.valueishtml="0"  name=t_9 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="예탁기관" border="0" color="0" x="434" y="436" height="56" width="457" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="계좌번호" border="0" color="0" x="923" y="436" height="56" width="581" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="예탁금액" border="0" color="0" x="1536" y="436" height="56" width="480" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="예탁일" border="0" color="0" x="2048" y="484" height="56" width="334" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="만기일" border="0" color="0" x="2414" y="484" height="56" width="334" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="이율" border="0" color="0" x="2779" y="436" height="56" width="178" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="예금종류" border="0" color="0" x="2990" y="436" height="56" width="393" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="비    고" border="0" color="0" x="3415" y="436" height="56" width="1280" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="예금종류" border="0" color="0" x="46" y="436" height="56" width="357" html.valueishtml="0"  name=depo_name_t visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="string(f_sysdate(), 'yyyy/mm/dd')"border="0" color="0" x="4320" y="152" height="60" width="393" format="[GENERAL]" html.valueishtml="0"  name=compute_12 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=header alignment="0" expression="string(f_sysdate(), 'hh:mm:ss')"border="0" color="0" x="4320" y="224" height="60" width="393" format="[GENERAL]" html.valueishtml="0"  name=compute_11 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression="0"border="0" color="0" x="82" y="916" height="76" width="256" format="[GENERAL]" html.valueishtml="0"  name=grp_jikjong visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="2" expression="getrow()"border="0" color="0" x="91" y="772" height="56" width="128" format="[GENERAL]" html.valueishtml="0"  name=compute_3 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="3415" y="16" height="56" width="1280" format="[general]" html.valueishtml="0"  name=remark visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="2990" y="16" height="56" width="393" format="[general]" html.valueishtml="0"  name=depo_class visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.autoretrieve=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="0" x="2779" y="16" height="56" width="178" format="[general]" html.valueishtml="0"  name=loan_rate visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="2048" y="16" height="56" width="334" format="yyyy/mm/dd" html.valueishtml="0"  name=open_date visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="1" tabsequence=32766 border="0" color="0" x="1536" y="16" height="56" width="480" format="#,###" html.valueishtml="0"  name=com_jan_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="923" y="16" height="56" width="581" format="[general]" html.valueishtml="0"  name=mana_data visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="434" y="16" height="56" width="457" format="[general]" html.valueishtml="0"  name=bank_code visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.autoretrieve=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=detail x1="27" y1="0" x2="27" y2="384"  name=l_7 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="4713" y1="0" x2="4713" y2="384"  name=l_6 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="27" y1="92" x2="4704" y2="92"  name=l_39 visible="1~tIf( GetRow() = long( Describe( ~"datawindow.LastRowOnpage~" ) ), 1, 0 )" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="27" y1="88" x2="4704" y2="88"  name=l_40 visible="1~tIf( GetRow() = long( Describe( ~"datawindow.LastRowOnpage~" ) ), 0, 1 )" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1518" y1="0" x2="1518" y2="384"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2030" y1="0" x2="2030" y2="384"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2395" y1="0" x2="2395" y2="384"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2761" y1="0" x2="2761" y2="384"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2971" y1="0" x2="2971" y2="384"  name=l_18 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3397" y1="0" x2="3397" y2="384"  name=l_20 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="2414" y="16" height="56" width="334" format="yyyy/mm/dd" html.valueishtml="0"  name=close_date visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="46" y="16" height="56" width="357" format="[general]" html.valueishtml="0"  name=acct_code visible="1" dddw.name=dddw_yegum_code dddw.displaycolumn=acct_name dddw.datacolumn=acct_code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=detail x1="416" y1="0" x2="416" y2="96"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="905" y1="0" x2="905" y2="96"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="27" y1="0" x2="27" y2="384"  name=l_21 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="4713" y1="0" x2="4713" y2="384"  name=l_22 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=trailer.1 x1="27" y1="92" x2="4704" y2="92"  name=l_23 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="1518" y1="0" x2="1518" y2="384"  name=l_27 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="2030" y1="0" x2="2030" y2="384"  name=l_28 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="2395" y1="0" x2="2395" y2="384"  name=l_30 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="2761" y1="0" x2="2761" y2="384"  name=l_32 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="2971" y1="0" x2="2971" y2="384"  name=l_33 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="3397" y1="0" x2="3397" y2="384"  name=l_34 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=trailer.1 alignment="2" text="예금종류별 소계" border="0" color="0" x="46" y="16" height="56" width="1458" html.valueishtml="0"  name=t_10 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(com_jan_amt for group 1)"border="0" color="0" x="1536" y="16" height="56" width="480" format="#,###" html.valueishtml="0"  name=compute_5 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=summary x1="27" y1="0" x2="27" y2="384"  name=l_24 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="4713" y1="0" x2="4713" y2="384"  name=l_25 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="27" y1="92" x2="4704" y2="92"  name=l_26 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="1518" y1="0" x2="1518" y2="384"  name=l_35 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="2030" y1="0" x2="2030" y2="384"  name=l_36 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="2395" y1="0" x2="2395" y2="384"  name=l_37 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="2761" y1="0" x2="2761" y2="384"  name=l_38 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="2971" y1="0" x2="2971" y2="384"  name=l_41 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="3397" y1="0" x2="3397" y2="384"  name=l_42 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=summary alignment="2" text="합          계" border="0" color="0" x="46" y="16" height="56" width="1458" html.valueishtml="0"  name=t_11 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(com_jan_amt for all)"border="0" color="0" x="1536" y="16" height="56" width="480" format="#,###" html.valueishtml="0"  name=compute_6 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

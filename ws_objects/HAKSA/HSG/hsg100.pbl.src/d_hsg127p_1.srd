@@ -1,0 +1,98 @@
+﻿$PBExportHeader$d_hsg127p_1.srd
+$PBExportComments$학과별 교수/학년별 총계
+release 10.5;
+datawindow(units=0 timer_interval=0 color=33554431 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=652 color="536870912" )
+summary(height=104 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(60) updatewhereclause=yes name=gwa_nm dbname="gwa_nm" )
+ column=(type=char(40) updatewhereclause=yes name=name dbname="name" )
+ column=(type=number updatewhereclause=yes name=total_cnt dbname="total_cnt" )
+ column=(type=number updatewhereclause=yes name=cnt1 dbname="cnt1" )
+ column=(type=number updatewhereclause=yes name=cnt2 dbname="cnt2" )
+ column=(type=number updatewhereclause=yes name=cnt3 dbname="cnt3" )
+ column=(type=number updatewhereclause=yes name=cnt4 dbname="cnt4" )
+ column=(type=char(60) updatewhereclause=yes name=hakgi dbname="hakgi" )
+ retrieve="select ab.gwa_nm, ab.name, sum(cnt1+cnt2+cnt3+cnt4) as total_cnt, sum(cnt1) as cnt1,sum(cnt2) as cnt2,sum(cnt3) as cnt3,sum(cnt4) as cnt4
+,MAX((SELECT FNAME FROM CDDB.KCH102D WHERE CODE_GB = 'HSG01' AND CODE = :as_hakgi))	AS hakgi
+from 
+(
+select a.gwa_nm, b.name ,
+(case when a.su_hakyun = 1 then count(*) else 0  end)  as cnt1, 
+(case when a.su_hakyun = 2 then count(*) else 0 end)  as cnt2, 
+(case when a.su_hakyun = 3 then count(*) else 0 end)  as cnt3, 
+(case when a.su_hakyun = 4 then count(*) else 0 end) as cnt4
+from haksa.sum140tl a, indb.hin001m b
+where b.member_no = trim(a.counseller)
+and a.year = :as_year
+and a.hakgi = :as_hakgi
+and a.purpose = '1'
+and a.counsel_tp = '2'
+group by a.gwa_nm, b.name,a.su_hakyun
+) ab
+group by ab.gwa_nm, ab.name" arguments=(("as_year", string),("as_hakgi", string)) )
+group(level=1 header.height=0 trailer.height=84 by=("gwa_nm" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text="학과별 교수/학년별 통계" border="0" color="33554432" x="5" y="80" height="92" width="3401" html.valueishtml="0"  name=t_6 visible="1"  font.face="Tahoma" font.height="-14" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="33554431" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="5" y="4" height="68" width="919" format="[general]" html.valueishtml="0"  name=gwa_nm visible="1" edit.limit=60 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="33554432" x="2496" y="4" height="68" width="302" format="###,##0" html.valueishtml="0"  name=cnt2 visible="1" editmask.mask="###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="33554432" x="2807" y="4" height="68" width="302" format="###,##0" html.valueishtml="0"  name=cnt3 visible="1" editmask.mask="###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="33554432" x="3109" y="4" height="68" width="302" format="###,##0" html.valueishtml="0"  name=cnt4 visible="1" editmask.mask="###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="1047" y="4" height="68" width="773" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=40 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="33554432" x="1824" y="0" height="68" width="302" format="###,##0" html.valueishtml="0"  name=total_cnt visible="1" editmask.mask="###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="33554432" x="2167" y="4" height="68" width="302" format="###,##0" html.valueishtml="0"  name=cnt1 visible="1" editmask.mask="###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="0" y1="80" x2="3410" y2="80"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1033" y1="0" x2="1033" y2="208"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1819" y1="0" x2="1819" y2="84"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="0" y1="352" x2="3410" y2="352"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="32299726" )
+line(band=detail x1="2130" y1="0" x2="2130" y2="84"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2491" y1="0" x2="2491" y2="84"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2798" y1="0" x2="2798" y2="84"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3104" y1="0" x2="3104" y2="80"  name=l_17 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=trailer.1 alignment="2" text="" border="0" color="0" x="1042" y="0" height="56" width="2368" html.valueishtml="0"  name=t_5 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="33554431" )
+line(band=trailer.1 x1="0" y1="80" x2="3410" y2="80"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="33554431" )
+text(band=trailer.1 alignment="2" text="학과별소계" border="0" color="0" x="23" y="0" height="56" width="690" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="33554431" )
+text(band=trailer.1 alignment="2" text="학과별소계" border="0" color="0" x="23" y="0" height="56" width="690" html.valueishtml="0"  name=t_9 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="33554431" )
+compute(band=trailer.1 alignment="2" expression="sum(total_cnt for group 1)"border="0" color="33554432" x="727" y="4" height="68" width="302" format="###,##0" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="33554431" )
+line(band=trailer.1 x1="1033" y1="0" x2="1033" y2="84"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="33554431" )
+line(band=trailer.1 x1="718" y1="0" x2="718" y2="84"  name=l_18 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="33554431" )
+compute(band=header alignment="1" expression=" as_year + ~" 학년도~""border="0" color="33554432" x="23" y="384" height="92" width="338" format="[GENERAL]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="33554431" )
+column(band=header id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="379" y="380" height="80" width="498" format="[general]" html.valueishtml="0"  name=hakgi visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학과별 총계" border="0" color="33554432" x="0" y="492" height="56" width="1038" html.valueishtml="0"  name=t_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="교수별 총계" border="0" color="33554432" x="1038" y="492" height="56" width="1088" html.valueishtml="0"  name=t_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="학과" border="0" color="33554432" x="5" y="568" height="56" width="1029" html.valueishtml="0"  name=gwa_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="교수명" border="0" color="33554432" x="1038" y="568" height="56" width="782" html.valueishtml="0"  name=name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="건" border="0" color="33554432" x="1824" y="568" height="56" width="302" html.valueishtml="0"  name=total_cnt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="1학년" border="0" color="33554432" x="2135" y="564" height="56" width="352" html.valueishtml="0"  name=cnt1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="학년별 총계" border="0" color="33554432" x="2130" y="492" height="56" width="1280" html.valueishtml="0"  name=t_4 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="2학년" border="0" color="33554432" x="2496" y="568" height="56" width="302" html.valueishtml="0"  name=cnt2_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="3학년" border="0" color="33554432" x="2802" y="568" height="56" width="302" html.valueishtml="0"  name=cnt3_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="4학년" border="0" color="33554432" x="3109" y="568" height="56" width="302" html.valueishtml="0"  name=cnt4_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=header x1="0" y1="560" x2="3410" y2="560"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1819" y1="560" x2="1819" y2="764"  name=l_20 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1033" y1="480" x2="1033" y2="760"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="0" y1="480" x2="3410" y2="480"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="0" y1="640" x2="3410" y2="640"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2130" y1="480" x2="2130" y2="736"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2491" y1="560" x2="2491" y2="740"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2798" y1="560" x2="2798" y2="732"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3104" y1="560" x2="3104" y2="736"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="0" y1="648" x2="3410" y2="648"  name=l_25 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="0" y1="4" x2="3410" y2="4"  name=l_23 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="33554431" )
+text(band=summary alignment="2" text="총계" border="0" color="0" x="23" y="24" height="56" width="690" html.valueishtml="0"  name=t_7 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="33554431" )
+text(band=summary alignment="2" text="" border="0" color="0" x="1042" y="24" height="56" width="2368" html.valueishtml="0"  name=t_8 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="33554431" )
+line(band=summary x1="0" y1="100" x2="3410" y2="100"  name=l_21 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="33554431" )
+compute(band=summary alignment="2" expression="sum(total_cnt for all)"border="0" color="33554432" x="727" y="24" height="68" width="302" format="###,##0" html.valueishtml="0"  name=compute_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="33554431" )
+line(band=summary x1="1033" y1="4" x2="1033" y2="104"  name=l_22 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="33554431" )
+line(band=summary x1="718" y1="4" x2="718" y2="104"  name=l_24 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="33554431" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

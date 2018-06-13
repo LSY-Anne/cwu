@@ -1,0 +1,118 @@
+﻿$PBExportHeader$uf_hakgi_chk.srf
+$PBExportComments$[청운대]학기제,학점제 체크
+global type uf_hakgi_chk from function_object
+end type
+
+forward prototypes
+global function string uf_hakgi_chk (string as_year, string as_hakgi, string as_hakbun)
+end prototypes
+
+global function string uf_hakgi_chk (string as_year, string as_hakgi, string as_hakbun);String ls_hakyun,   ls_iphakgb,   ls_chk,   ls_iphakdt,   ls_jaeipdt,  ls_hjmod
+Int    li_hakgi
+
+
+
+SELECT case when nvl(iphak_gubun, ' ') = '04' then '2' else '1' end,
+		 iphak_date,
+		 substr(jaeiphak_date, 1, 4),
+		 hjmod_id
+  INTO :ls_iphakgb,
+		 :ls_iphakdt,
+		 :ls_jaeipdt,
+		 :ls_hjmod
+  FROM haksa.jaehak_hakjuk
+ WHERE hakbun   = :as_hakbun
+ USING SQLCA ;
+ 
+IF sqlca.sqlnrows = 0 THEN
+	messagebox("알림", as_hakbun + '의 학번이 재학자료에 없으니 확인바랍니다.')
+	return 'NO'
+END IF
+
+
+// 재입학당시의 학년을 가져 오기
+SELECT	su_hakyun,
+			HJMOD_ID
+INTO	 	:ls_hakyun,
+			:ls_hjmod
+FROM 		haksa.HAKJUKBYENDONG
+WHERE 	hakbun   = :as_hakbun
+AND		HJMOD_ID = 'I'
+AND		HJMOD_SIJUM = (	SELECT 	MAX(HJMOD_SIJUM)
+									FROM		haksa.HAKJUKBYENDONG
+									WHERE 	hakbun   = :as_hakbun
+									AND		HJMOD_ID = 'I')
+USING SQLCA ;
+							
+ls_chk          = 'N'
+//IF as_year      = '2009' THEN
+//	ls_chk       = 'Y'
+//END IF
+//IF as_year      = '2006' THEN
+//	IF ls_hakyun = '1'    THEN
+//	   ls_chk    = 'Y'
+//	END IF
+//ELSEIF as_year  = '2007' THEN
+//	IF ls_hakyun = '1' OR ls_hakyun = '2' THEN
+//	   ls_chk    = 'Y'
+//	END IF
+//ELSEIF as_year  = '2008' THEN
+//	IF ls_hakyun = '1' OR ls_hakyun = '2' OR ls_hakyun = '3' THEN
+//	   ls_chk    = 'Y'
+//	END IF
+//END IF
+/* 재입학생 학기제 적용 */
+IF ls_hjmod     = 'I' THEN
+	IF ls_jaeipdt      >= '2009' THEN
+		ls_chk       = 'Y'
+	ELSEIF ls_jaeipdt  = '2006' THEN
+		IF ls_hakyun = '1'    THEN
+			ls_chk    = 'Y'
+		END IF
+	ELSEIF ls_jaeipdt  = '2007' THEN
+		IF ls_hakyun = '1' OR ls_hakyun = '2' THEN
+			ls_chk    = 'Y'
+		END IF
+	ELSEIF ls_jaeipdt  = '2008' THEN
+		IF ls_hakyun = '1' OR ls_hakyun = '2' OR ls_hakyun = '3' THEN
+			ls_chk    = 'Y'
+		END IF
+	END IF
+ELSE
+	/* 신입생은 입학일자가 2006년 1월 1일 이후 학기제 적용 */
+	IF ls_iphakgb   = '1' THEN
+		IF ls_iphakdt  >= '20060101' THEN
+			ls_chk       = 'Y'
+		END IF
+	END IF
+	/* 편입생은 입학일자가 2008년 1월 1일 이후 학기제 적용 */
+	IF ls_iphakgb   = '2' THEN
+		IF ls_iphakdt  >= '20080101' THEN
+			ls_chk       = 'Y'
+		END IF
+	END IF
+
+END IF
+
+/* 등록학기 체크 */
+SELECT nvl(COUNT(HAKGI), 0)
+  INTO :li_hakgi
+  FROM HAKSA.SUNGJUKGYE
+ WHERE hakgi in('1', '2')
+	AND HAKBUN     = :as_hakbun 
+USING SQLCA ;
+IF sqlca.sqlnrows = 0 THEN
+	li_hakgi       = 0
+END IF
+
+IF ls_chk         = 'Y' THEN
+	IF ls_iphakgb  = '1'    AND li_hakgi > 8 THEN
+		ls_chk      = 'N'
+	ELSEIF ls_iphakgb = '2' AND li_hakgi > 4 THEN
+		ls_chk      = 'N'
+	END IF
+END IF
+
+return ls_chk
+end function
+

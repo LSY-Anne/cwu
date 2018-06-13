@@ -1,0 +1,98 @@
+﻿$PBExportHeader$d_hjh103a_1.srd
+$PBExportComments$[청운대]근로장학생생성관리
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=136 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=148 color="536870912" )
+table(column=(type=char(8) update=yes updatewhereclause=yes key=yes name=work_janghak_hakbun dbname="work_janghak.hakbun" )
+ column=(type=char(20) updatewhereclause=yes name=jaehak_hakjuk_hname dbname="jaehak_hakjuk.hname" )
+ column=(type=char(4) update=yes updatewhereclause=yes key=yes name=work_janghak_year dbname="work_janghak.year" )
+ column=(type=char(4) update=yes updatewhereclause=yes key=yes name=work_janghak_gwa dbname="work_janghak.gwa" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=work_janghak_hakyun dbname="work_janghak.hakyun" )
+ column=(type=char(1) update=yes updatewhereclause=yes key=yes name=work_janghak_hakgi dbname="work_janghak.hakgi" )
+ column=(type=char(3) update=yes updatewhereclause=yes key=yes name=work_janghak_janghak_id dbname="work_janghak.janghak_id" )
+ column=(type=char(2) update=yes updatewhereclause=yes key=yes name=work_janghak_jigup_month dbname="work_janghak.jigup_month" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=work_janghak_buseo dbname="work_janghak.buseo" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=work_janghak_work_start dbname="work_janghak.work_start" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=work_janghak_work_end dbname="work_janghak.work_end" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=work_janghak_work_gigan dbname="work_janghak.work_gigan" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=work_janghak_jigup_money dbname="work_janghak.jigup_money" )
+ column=(type=decimal(0) updatewhereclause=yes name=gwa_sym_order_seq dbname="gwa_sym.order_seq" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="work_janghak.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="work_janghak.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="work_janghak.work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="work_janghak.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="work_janghak.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="work_janghak.job_date" )
+ retrieve="SELECT  	A.HAKBUN ,
+			B.HNAME,
+			A.YEAR ,
+			A.GWA,
+			A.HAKYUN ,
+			A.HAKGI ,
+			A.JANGHAK_ID ,
+			A.JIGUP_MONTH ,
+			A.BUSEO ,
+			A.WORK_START ,
+			A.WORK_END ,
+			A.WORK_GIGAN ,
+			A.JIGUP_MONEY,
+			C.ORDER_SEQ,
+             A.WORKER,
+             A.IPADDR,  
+             A.WORK_DATE,
+             A.JOB_UID,
+             A.JOB_ADD, 
+             A.JOB_DATE
+FROM 		HAKSA.WORK_JANGHAK A,
+			HAKSA.JAEHAK_HAKJUK B ,
+			HAKSA.GWA_SYM C  
+WHERE 	A.GWA		=	C.GWA
+AND		A.HAKBUN 	= B.HAKBUN	
+AND		A.YEAR		= :as_year		
+and		A.HAKGI	= :as_hakgi		
+and		A.JIGUP_MONTH = :as_month	
+and		A.HAKYUN	like :as_hakyun
+and      A.GWA 		like :as_gwa 
+
+" update="HAKSA.WORK_JANGHAK" updatewhere=0 updatekeyinplace=no arguments=(("as_year", string),("as_hakgi", string),("as_month", string),("as_hakyun", string),("as_gwa", string))  sort="gwa_sym_order_seq A work_janghak_hakbun A work_janghak_jigup_month A " )
+text(band=header alignment="2" text="학과" border="0" color="8388608" x="78" y="200" height="60" width="901" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학번" border="0" color="25058105" x="5" y="4" height="64" width="590" html.valueishtml="0"  name=work_janghak_hakbun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="장학년도" border="0" color="25058105" x="5" y="72" height="64" width="297" html.valueishtml="0"  name=work_janghak_year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="장학코드" border="0" color="25058105" x="599" y="72" height="64" width="590" html.valueishtml="0"  name=work_janghak_janghak_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="학기" border="0" color="25058105" x="453" y="72" height="64" width="142" html.valueishtml="0"  name=work_janghak_hakgi_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="학년" border="0" color="25058105" x="306" y="72" height="64" width="142" html.valueishtml="0"  name=work_janghak_hakyun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="지급월" border="0" color="25058105" x="1193" y="72" height="64" width="206" html.valueishtml="0"  name=t_15 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="지급금액" border="0" color="25058105" x="1403" y="72" height="64" width="375" html.valueishtml="0"  name=work_janghak_jigup_money_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="근무시작일" border="0" color="25058105" x="1783" y="72" height="64" width="389" html.valueishtml="0"  name=work_janghak_work_start_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="근무종료일" border="0" color="25058105" x="2176" y="72" height="64" width="389" html.valueishtml="0"  name=work_janghak_work_end_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="근무부서" border="0" color="25058105" x="2569" y="72" height="64" width="736" html.valueishtml="0"  name=work_janghak_buseo_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="" border="0" color="25058105" x="1193" y="4" height="64" width="2112" html.valueishtml="0"  name=t_10 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="성명" border="0" color="25058105" x="599" y="4" height="64" width="590" html.valueishtml="0"  name=jaehak_hakjuk_hname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="18" y="296" height="60" width="901" format="[general]" html.valueishtml="0"  name=work_janghak_gwa visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=detail x1="5" y1="144" x2="3310" y2="144"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="16711935"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="" border="0" color="25058105" x="1193" y="4" height="64" width="2112" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="5" y="72" height="68" width="297" format="[general]" html.valueishtml="0"  name=work_janghak_year visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="599" y="72" height="68" width="590" format="[general]" html.valueishtml="0"  name=work_janghak_janghak_id visible="1" dddw.name=d_dddw_janghak_model dddw.displaycolumn=janghak_name dddw.datacolumn=janghak_id dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="453" y="72" height="68" width="142" format="[general]" html.valueishtml="0"  name=work_janghak_hakgi visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=5 alignment="2" tabsequence=20 border="0" color="0" x="306" y="72" height="68" width="142" format="[general]" html.valueishtml="0"  name=work_janghak_hakyun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=8 alignment="2" tabsequence=30 border="0" color="255" x="1193" y="72" height="68" width="206" format="[general]" html.valueishtml="0"  name=work_janghak_jigup_month visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=13 alignment="1" tabsequence=40 border="0" color="0" x="1403" y="72" height="68" width="375" format="#,##0" html.valueishtml="0"  name=work_janghak_jigup_money visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12639424~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=10 alignment="2" tabsequence=50 border="0" color="0" x="1783" y="72" height="68" width="389" format="@@@@.@@.@@" html.valueishtml="0"  name=work_janghak_work_start visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12639424~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=11 alignment="2" tabsequence=60 border="0" color="0" x="2176" y="72" height="68" width="389" format="@@@@.@@.@@" html.valueishtml="0"  name=work_janghak_work_end visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12639424~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=9 alignment="2" tabsequence=70 border="0" color="0" x="2569" y="72" height="68" width="736" format="[general]" html.valueishtml="0"  name=work_janghak_buseo visible="1" dddw.name=d_dddw_buseo_tot dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=150 dddw.lines=5 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12639424~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=1 alignment="2" tabsequence=10 border="0" color="0" x="5" y="4" height="64" width="590" format="[general]" html.valueishtml="0"  name=work_janghak_hakbun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="599" y="4" height="64" width="590" format="[general]" html.valueishtml="0"  name=jaehak_hakjuk_hname visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="0" background.color="16777215~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

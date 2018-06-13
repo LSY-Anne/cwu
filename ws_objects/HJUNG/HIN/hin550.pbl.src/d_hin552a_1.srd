@@ -1,0 +1,158 @@
+﻿$PBExportHeader$d_hin552a_1.srd
+$PBExportComments$개인별년가사용 등록/출력-등록용
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 grid.columnmove=no selected.mouse=no )
+header(height=136 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes name=com_member_no dbname="com_member_no" )
+ column=(type=char(20) updatewhereclause=yes name=kname dbname="kname" )
+ column=(type=char(13) updatewhereclause=yes name=jumin_no dbname="jumin_no" )
+ column=(type=char(10) update=yes updatewhereclause=yes key=yes name=member_no dbname="member_no" )
+ column=(type=char(4) update=yes updatewhereclause=yes key=yes name=year dbname="year" )
+ column=(type=char(2) update=yes updatewhereclause=yes key=yes name=month dbname="month" )
+ column=(type=number updatewhereclause=yes name=year_day dbname="year_day" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=use_day dbname="use_day" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=mon_day dbname="mon_day" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=mense_day dbname="mense_day" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=dat_day dbname="dat_day" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=late_day dbname="late_day" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=cut_day dbname="cut_day" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=absent_day dbname="absent_day" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=out_day dbname="out_day" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=space_day dbname="space_day" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=special_day dbname="special_day" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=seak_day dbname="seak_day" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=etc1_day dbname="etc1_day" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=etc2_day dbname="etc2_day" )
+ column=(type=char(80) update=yes updatewhereclause=yes name=remark dbname="remark" )
+ column=(type=char(4000) updatewhereclause=yes name=com_dept_nm dbname="com_dept_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_jikjong_nm dbname="com_jikjong_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_jikwi_nm dbname="com_jikwi_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_duty_nm dbname="com_duty_nm" )
+ retrieve="SELECT	B.MEMBER_NO	COM_MEMBER_NO,
+			B.NAME		KNAME,
+			B.JUMIN_NO,
+			A.MEMBER_NO,
+			A.YEAR,
+			A.MONTH,
+			NVL(A.YEAR_DAY,0)	YEAR_DAY,
+			A.USE_DAY,
+			A.MON_DAY,
+			A.MENSE_DAY,
+			A.DAT_DAY,
+			A.LATE_DAY,
+			A.CUT_DAY,
+			A.ABSENT_DAY,
+			A.OUT_DAY,
+			A.SPACE_DAY,
+			A.SPECIAL_DAY,
+			A.SEAK_DAY,
+			A.ETC1_DAY,
+			A.ETC2_DAY,
+			A.REMARK,
+
+			FU_DEPT_NM(B.GWA,'K')														COM_DEPT_NM,
+			FU_CODE_NM('HAENG','JIKJONG_CODE',SUBSTR(B.DUTY_CODE,1,1),'K')	COM_JIKJONG_NM,
+			FU_CODE_NM('HAENG','JIKWI_CODE',B.JIKWI_CODE,'K')					COM_JIKWI_NM,
+			FU_DUTY_NM(B.DUTY_CODE,'K')												COM_DUTY_NM
+
+FROM		(	SELECT	B.MEMBER_NO,
+							B.YEAR,
+							:as_Month MONTH,
+							B.YEAR_DAY,
+							A.USE_DAY,
+							A.MON_DAY,
+							A.MENSE_DAY,
+							A.DAT_DAY,
+							A.LATE_DAY,
+							A.CUT_DAY,
+							A.ABSENT_DAY,
+							A.OUT_DAY,
+							A.SPACE_DAY,
+							A.SPECIAL_DAY,
+							A.SEAK_DAY,
+							A.ETC1_DAY,
+							A.ETC2_DAY,
+							A.REMARK
+				FROM		INDB.HIN027H A,
+							INDB.HIN028M B
+				WHERE		A.MEMBER_NO(+) = B.MEMBER_NO
+				AND		A.YEAR     (+) = B.YEAR
+				AND		B.YEAR         = :as_Year
+				AND		A.MONTH    (+) = :as_Month	) A,
+			INDB.HIN001M B
+WHERE		A.MEMBER_NO = B.MEMBER_NO
+AND		B.NAME     LIKE :as_KName||'%'
+ORDER	BY	B.MEMBER_NO
+" update="HIN027H" updatewhere=0 updatekeyinplace=no arguments=(("as_Year", string),("as_Month", string),("as_KName", string)) )
+text(band=header alignment="2" text="개인번호" border="0" color="0" x="9" y="8" height="56" width="288" html.valueishtml="0"  name=com_member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="성명" border="0" color="0" x="306" y="8" height="56" width="338" html.valueishtml="0"  name=kname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="주민번호" border="0" color="0" x="654" y="8" height="56" width="507" html.valueishtml="0"  name=jumin_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="부서명" border="0" color="0" x="1170" y="8" height="56" width="425" html.valueishtml="0"  name=com_dept_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직종명" border="0" color="0" x="1605" y="8" height="56" width="247" html.valueishtml="0"  name=com_jikjong_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직위명" border="0" color="0" x="1861" y="8" height="56" width="338" html.valueishtml="0"  name=com_jikwi_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직급명" border="0" color="0" x="2208" y="8" height="56" width="421" html.valueishtml="0"  name=com_duty_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="년가
+일수" border="0" color="0" x="2638" y="8" height="112" width="165" html.valueishtml="0"  name=year_day_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="년가
+사용" border="0" color="0" x="2811" y="8" height="112" width="165" html.valueishtml="0"  name=use_day_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="월차
+일수" border="0" color="0" x="2985" y="8" height="112" width="165" html.valueishtml="0"  name=mon_day_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="생리
+일수" border="0" color="0" x="3159" y="8" height="112" width="165" html.valueishtml="0"  name=mense_day_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="토요
+일수" border="0" color="0" x="3333" y="8" height="112" width="160" html.valueishtml="0"  name=dat_day_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="지각
+일수" border="0" color="0" x="3502" y="8" height="112" width="165" html.valueishtml="0"  name=late_day_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="조퇴
+일수" border="0" color="0" x="3675" y="8" height="112" width="165" html.valueishtml="0"  name=cut_day_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="결근
+일수" border="0" color="0" x="3849" y="8" height="112" width="165" html.valueishtml="0"  name=absent_day_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="출장
+일수" border="0" color="0" x="4023" y="8" height="112" width="160" html.valueishtml="0"  name=out_day_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="공가
+일수" border="0" color="0" x="4192" y="8" height="112" width="165" html.valueishtml="0"  name=space_day_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="특휴
+일수" border="0" color="0" x="4366" y="8" height="112" width="165" html.valueishtml="0"  name=special_day_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="병가
+일수" border="0" color="0" x="4539" y="8" height="112" width="165" html.valueishtml="0"  name=seak_day_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="기타1
+일수" border="0" color="0" x="4713" y="8" height="112" width="165" html.valueishtml="0"  name=etc1_day_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="기타2
+일수" border="0" color="0" x="4887" y="8" height="112" width="160" html.valueishtml="0"  name=etc2_day_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="비고" border="0" color="0" x="5056" y="8" height="56" width="1426" html.valueishtml="0"  name=remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="288" format="[general]" html.valueishtml="0"  name=com_member_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="2638" y="4" height="72" width="165" format="[general]" html.valueishtml="0"  name=year_day visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=22 alignment="0" tabsequence=32766 border="0" color="0" x="1170" y="4" height="72" width="425" format="[general]" html.valueishtml="0"  name=com_dept_nm visible="1" edit.limit=4000 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=23 alignment="0" tabsequence=32766 border="0" color="0" x="1605" y="4" height="72" width="247" format="[general]" html.valueishtml="0"  name=com_jikjong_nm visible="1" edit.limit=4000 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=24 alignment="0" tabsequence=32766 border="0" color="0" x="1861" y="4" height="72" width="338" format="[general]" html.valueishtml="0"  name=com_jikwi_nm visible="1" edit.limit=4000 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=25 alignment="0" tabsequence=32766 border="0" color="0" x="2208" y="4" height="72" width="421" format="[general]" html.valueishtml="0"  name=com_duty_nm visible="1" edit.limit=4000 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="306" y="4" height="72" width="338" format="[general]" html.valueishtml="0"  name=kname visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="654" y="4" height="72" width="507" format="@@@@@@-@@@@@@@" html.valueishtml="0"  name=jumin_no visible="1" edit.limit=13 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="1" tabsequence=10 border="0" color="0" x="2811" y="4" height="72" width="165" format="[general]" html.valueishtml="0"  name=use_day visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=9 alignment="1" tabsequence=20 border="0" color="0" x="2985" y="4" height="72" width="165" format="[general]" html.valueishtml="0"  name=mon_day visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=10 alignment="1" tabsequence=30 border="0" color="0" x="3159" y="4" height="72" width="165" format="[general]" html.valueishtml="0"  name=mense_day visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=11 alignment="1" tabsequence=40 border="0" color="0" x="3333" y="4" height="72" width="160" format="[general]" html.valueishtml="0"  name=dat_day visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=12 alignment="1" tabsequence=50 border="0" color="0" x="3502" y="4" height="72" width="165" format="[general]" html.valueishtml="0"  name=late_day visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=13 alignment="1" tabsequence=60 border="0" color="0" x="3675" y="4" height="72" width="165" format="[general]" html.valueishtml="0"  name=cut_day visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=14 alignment="1" tabsequence=70 border="0" color="0" x="3849" y="4" height="72" width="165" format="[general]" html.valueishtml="0"  name=absent_day visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=15 alignment="1" tabsequence=80 border="0" color="0" x="4023" y="4" height="72" width="160" format="[general]" html.valueishtml="0"  name=out_day visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=16 alignment="1" tabsequence=90 border="0" color="0" x="4192" y="4" height="72" width="165" format="[general]" html.valueishtml="0"  name=space_day visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=17 alignment="1" tabsequence=100 border="0" color="0" x="4366" y="4" height="72" width="165" format="[general]" html.valueishtml="0"  name=special_day visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=18 alignment="1" tabsequence=110 border="0" color="0" x="4539" y="4" height="72" width="165" format="[general]" html.valueishtml="0"  name=seak_day visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=19 alignment="1" tabsequence=120 border="0" color="0" x="4713" y="4" height="72" width="165" format="[general]" html.valueishtml="0"  name=etc1_day visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=20 alignment="1" tabsequence=130 border="0" color="0" x="4887" y="4" height="72" width="160" format="[general]" html.valueishtml="0"  name=etc2_day visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=21 alignment="0" tabsequence=140 border="0" color="0" x="5056" y="4" height="72" width="1426" format="[general]" html.valueishtml="0"  name=remark visible="1" edit.limit=80 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

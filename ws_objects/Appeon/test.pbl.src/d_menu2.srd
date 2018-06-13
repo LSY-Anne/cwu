@@ -1,0 +1,76 @@
+﻿$PBExportHeader$d_menu2.srd
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=136 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(5) updatewhereclause=yes name=pgm_no dbname="pf_pgm_mst.pgm_no" )
+ column=(type=char(50) updatewhereclause=yes name=pgm_id dbname="pf_pgm_mst.pgm_id" )
+ column=(type=char(100) updatewhereclause=yes name=pgm_nm dbname="pf_pgm_mst.pgm_nm" )
+ column=(type=char(1) updatewhereclause=yes name=pgm_kc dbname="pf_pgm_mst.pgm_kc" )
+ column=(type=char(50) updatewhereclause=yes name=pic dbname="pf_pgm_mst.pic" )
+ column=(type=char(50) updatewhereclause=yes name=spic dbname="pf_pgm_mst.spic" )
+ column=(type=char(40) updatewhereclause=yes name=sort_order dbname="sort_order" )
+ column=(type=char(1) updatewhereclause=yes name=print_yn dbname="pf_pgm_mst.print_yn" )
+ column=(type=char(21) updatewhereclause=yes name=parent_node dbname="pf_pgm_mst.parent_node" )
+ column=(type=char(21) updatewhereclause=yes name=node dbname="pf_pgm_mst.node" )
+ retrieve="SELECT Distinct a.pgm_no					as pgm_no
+						,a.pgm_id					as pgm_id
+						,a.pgm_name			as pgm_nm
+						,a.pgm_kind_code		as pgm_kc
+						,a.picture					as pic
+						,a.select_picture		as spic
+						,To_Char(a.sort_order)	as sort_order
+						,a.print_log_yn			as print_yn
+						,a.parent_node			as parent_node
+						,a.node						as node
+				FROM  pf_pgm_mst 	a,
+						 pf_pgm_role	b,
+						 pf_userrole		c
+			 WHERE a.pgm_use_yn = 'Y'
+				  AND a.menu_use_yn = 'Y'
+				  AND a.pgm_no			= b.pgm_no
+				 AND b.role_no				= c.role_no
+  				 AND c.emp_code			= :as_emp_code
+" arguments=(("as_emp_code", string)) )
+text(band=header alignment="2" text="Pf Pgm Mst
+Pgm No" border="0" color="33554432" x="14" y="8" height="120" width="320" html.valueishtml="0"  name=pf_pgm_mst_pgm_no_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Pf Pgm Mst
+Pgm Id" border="0" color="33554432" x="347" y="8" height="120" width="1399" html.valueishtml="0"  name=pf_pgm_mst_pgm_id_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Pf Pgm Mst
+Pgm Nm" border="0" color="33554432" x="1760" y="8" height="120" width="2770" html.valueishtml="0"  name=pf_pgm_mst_pgm_nm_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Pf Pgm Mst
+Pgm Kc" border="0" color="33554432" x="4544" y="8" height="120" width="320" html.valueishtml="0"  name=pf_pgm_mst_pgm_kc_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Pf Pgm Mst
+Pic" border="0" color="33554432" x="4878" y="8" height="120" width="1399" html.valueishtml="0"  name=pf_pgm_mst_pic_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Pf Pgm Mst
+Spic" border="0" color="33554432" x="6290" y="8" height="120" width="1399" html.valueishtml="0"  name=pf_pgm_mst_spic_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Sort Order" border="0" color="33554432" x="7703" y="8" height="60" width="1129" html.valueishtml="0"  name=sort_order_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Pf Pgm Mst
+Print Yn" border="0" color="33554432" x="8846" y="8" height="120" width="320" html.valueishtml="0"  name=pf_pgm_mst_print_yn_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Pf Pgm Mst
+Parent Node" border="0" color="33554432" x="9179" y="8" height="120" width="603" html.valueishtml="0"  name=pf_pgm_mst_parent_node_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Pf Pgm Mst
+Node" border="0" color="33554432" x="9797" y="8" height="120" width="603" html.valueishtml="0"  name=pf_pgm_mst_node_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="14" y="8" height="68" width="320" format="[general]" html.valueishtml="0"  name=pgm_no visible="1" edit.limit=5 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="347" y="8" height="68" width="1399" format="[general]" html.valueishtml="0"  name=pgm_id visible="1" edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="1760" y="8" height="68" width="2770" format="[general]" html.valueishtml="0"  name=pgm_nm visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="4544" y="8" height="68" width="320" format="[general]" html.valueishtml="0"  name=pgm_kc visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="33554432" x="4878" y="8" height="68" width="1399" format="[general]" html.valueishtml="0"  name=pic visible="1" edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="33554432" x="6290" y="8" height="68" width="1399" format="[general]" html.valueishtml="0"  name=spic visible="1" edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="7703" y="8" height="68" width="1129" format="[general]" html.valueishtml="0"  name=sort_order visible="1" edit.limit=40 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="8846" y="8" height="68" width="320" format="[general]" html.valueishtml="0"  name=print_yn visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="33554432" x="9179" y="8" height="68" width="603" format="[general]" html.valueishtml="0"  name=parent_node visible="1" edit.limit=21 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="33554432" x="9797" y="8" height="68" width="603" format="[general]" html.valueishtml="0"  name=node visible="1" edit.limit=21 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

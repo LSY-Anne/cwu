@@ -1,0 +1,38 @@
+﻿$PBExportHeader$f_update.srf
+$PBExportComments$DW 저장 함수(저장:'U', 삭제'D')
+global type f_update from function_object
+end type
+
+forward prototypes
+global function boolean f_update (datawindow dwin, string fs_arg)
+end prototypes
+
+global function boolean f_update (datawindow dwin, string fs_arg);//////////////////////////////////////////////////////////////////
+// 	작성목적 : 데이타의 저장여부확인
+//    적 성 인 : 이현수
+//		작성일자 : 2002.10
+//    변 경 인 :
+//    변경일자 :
+//    변경사유 :
+//////////////////////////////////////////////////////////////////
+
+
+Boolean b_return = False
+IF dwin.update() = 1 THEN
+	COMMIT USING SQLCA ;
+	b_return = true
+ELSE
+	ROLLBACK USING SQLCA ;
+	IF fs_arg = 'U' THEN
+		messagebox("확인","자료 저장을 실패했습니다. 확인한 후 다시 저장해 주세요.")
+	ELSE
+		messagebox("확인","자료 삭제를 실패했습니다.")
+	END IF	
+	  
+END IF
+  
+RETURN b_return
+
+
+end function
+

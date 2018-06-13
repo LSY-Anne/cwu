@@ -1,0 +1,89 @@
+﻿$PBExportHeader$d_hac302a_1.srd
+$PBExportComments$예산 요구 등록/출력(예산신청 등록)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=decimal(0) update=yes updatewhereclause=yes name=sort dbname="hac009h.sort" initial="0" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=io_gubun dbname="hac009h.io_gubun" values="수입	1/지출	2/" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=req_amt dbname="hac009h.req_amt" initial="0" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=bdgt_year dbname="hac009h.bdgt_year" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=gwa dbname="hac009h.gwa" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=acct_code dbname="hac009h.acct_code" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=acct_class dbname="hac009h.acct_class" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=bdgt_class dbname="hac009h.bdgt_class" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=stat_class dbname="hac009h.stat_class" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=mgr_gwa dbname="hac009h.mgr_gwa" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hac009h.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hac009h.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hac009h.work_date" )
+ column=(type=char(30) updatewhereclause=yes name=acct_name dbname="acct_name" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hac009h.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hac009h.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hac009h.job_date" )
+ column=(type=char(1) updatewhereclause=yes name=hac011h_work_gbn dbname="hac009h.work_gbn" )
+ retrieve="SELECT	A.SORT,
+		A.IO_GUBUN,
+		A.REQ_AMT,
+		A.BDGT_YEAR,
+		A.GWA,
+		A.ACCT_CODE,
+		A.ACCT_CLASS,
+		A.BDGT_CLASS,
+		A.STAT_CLASS,
+		A.MGR_GWA,
+		A.WORKER,
+		A.IPADDR,
+		A.WORK_DATE,
+		DECODE(A.IO_GUBUN,'1',B.ACCT_INAME,'2',B.ACCT_ONAME,B.ACCT_NAME)	ACCT_NAME,
+		A.JOB_UID,
+		A.JOB_ADD,
+		A.JOB_DATE,
+		C.WORK_GBN
+FROM	ACDB.HAC009H A, ACDB.HAC001M B, ACDB.HAC011H C
+WHERE	A.BDGT_YEAR 	= 	 C.BDGT_YEAR (+)
+AND		A.GWA 			= 	 C.GWA (+)
+AND		A.ACCT_CODE 	= 	 C.ACCT_CODE (+)
+AND		A.ACCT_CLASS 	= 	 C.ACCT_CLASS (+)
+AND		A.IO_GUBUN 		= 	 C.IO_GUBUN (+)
+AND		A.BDGT_CLASS 	= 	 C.BDGT_CLASS (+)
+AND		A.ACCT_CODE 	= 	 B.ACCT_CODE (+)
+AND		A.BDGT_YEAR 	= 	 :AS_BDGT_YEAR
+AND		A.GWA 			LIKE :AS_GWA||'%'
+AND		A.ACCT_CLASS 	= 	 :AI_ACCT_CLASS
+AND		A.IO_GUBUN 		LIKE :AS_IO_GUBUN||'%'
+AND		A.BDGT_CLASS 	= 	 :AI_BDGT_CLASS
+ORDER BY	A.GWA, A.SORT, A.IO_GUBUN, A.ACCT_CODE" arguments=(("as_bdgt_year", string),("as_gwa", string),("ai_acct_class", number),("as_io_gubun", string),("ai_bdgt_class", number),("ai_stat_class", number)) )
+group(level=1 header.height=0 trailer.height=0 by=("gwa" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text="요구부서" border="0" color="0" x="9" y="12" height="56" width="768" html.valueishtml="0"  name=gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="우선순위" border="0" color="0" x="786" y="12" height="56" width="283" html.valueishtml="0"  name=sort_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="상태구분" border="0" color="0" x="3616" y="12" height="56" width="361" html.valueishtml="0"  name=stat_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="이관" border="0" color="0" x="3986" y="12" height="56" width="251" html.valueishtml="0"  name=compute_1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계정코드명" border="0" color="0" x="1659" y="12" height="56" width="855" html.valueishtml="0"  name=acct_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="요구금액" border="0" color="0" x="3145" y="12" height="56" width="462" html.valueishtml="0"  name=req_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="주관부서" border="0" color="0" x="2523" y="12" height="56" width="613" html.valueishtml="0"  name=mgr_gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="구분" border="0" color="0" x="1079" y="12" height="56" width="219" html.valueishtml="0"  name=io_gubun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계정코드" border="0" color="0" x="1307" y="12" height="56" width="343" html.valueishtml="0"  name=acct_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="768" format="[general]" html.valueishtml="0"  name=gwa visible="1" dddw.name=dddw_sosok501 dddw.displaycolumn=dept_name dddw.datacolumn=dept_code dddw.percentwidth=300 dddw.lines=10 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="2523" y="4" height="72" width="613" format="[general]" html.valueishtml="0"  name=mgr_gwa visible="1" dddw.name=dddw_sosok501 dddw.displaycolumn=dept_name dddw.datacolumn=dept_code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="2" expression=" if ( hac011h_work_gbn = 'C', 'Y', '' ) "border="0" color="0" x="3986" y="4" height="72" width="251" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="0" x="3616" y="4" height="72" width="361" format="[general]" html.valueishtml="0"  name=stat_class visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=10 border="0" color="0" x="786" y="4" height="72" width="283" format="#0" html.valueishtml="0" protect="0~tif ( stat_class = ai_stat_class and  isnull ( hac011h_work_gbn ), 0 , 1 )"  name=sort visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif ( stat_class = ai_stat_class and  isnull ( hac011h_work_gbn ), rgb ( 255, 255, 255 ), 78682240 )" )
+column(band=detail id=3 alignment="1" tabsequence=30 border="0" color="0" x="3145" y="4" height="72" width="462" format="#,##0" html.valueishtml="0" protect="0~tif ( stat_class = ai_stat_class and  isnull ( hac011h_work_gbn ), 0 , 1 )"  name=req_amt visible="1" editmask.mask="###,###,###,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif ( stat_class = ai_stat_class and  isnull ( hac011h_work_gbn ), rgb ( 255, 255, 255 ), 78682240 )" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="1659" y="4" height="72" width="855" format="[general]" html.valueishtml="0"  name=acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="1079" y="4" height="72" width="219" format="[general]" html.valueishtml="0"  name=io_gubun visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=20 border="0" color="0" x="1307" y="4" height="72" width="343" format="[general]" html.valueishtml="0" protect="0~tif ( stat_class = ai_stat_class and  isnull ( hac011h_work_gbn ), 0 , 1 )"  name=acct_code visible="1" editmask.autoskip=yes editmask.mask="xxxx-xx" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( stat_class = ai_stat_class and  isnull ( hac011h_work_gbn ), rgb ( 255, 255, 255 ), 78682240 )" )
+
+sparse(names="gwa")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

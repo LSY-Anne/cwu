@@ -1,0 +1,91 @@
+﻿$PBExportHeader$d_hpa602a_2.srd
+$PBExportComments$전근무지 상황 관리/출력(전근무지상황)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=84 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(10) update=yes updatewhereclause=yes key=yes name=member_no dbname="hpa017m.member_no" dbalias=".member_no" )
+ column=(type=char(4) update=yes updatewhereclause=yes key=yes name=year dbname="hpa017m.year" dbalias=".year" )
+ column=(type=number update=yes updatewhereclause=yes key=yes name=seq_no dbname="hpa017m.seq_no" dbalias=".seq_no" initial="0" )
+ column=(type=char(30) update=yes updatewhereclause=yes name=work_place dbname="hpa017m.work_place" dbalias=".work_place" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=register_no dbname="hpa017m.register_no" dbalias=".register_no" )
+ column=(type=char(80) update=yes updatewhereclause=yes name=address dbname="hpa017m.address" dbalias=".address" )
+ column=(type=number update=yes updatewhereclause=yes name=pay_total dbname="hpa017m.pay_total" dbalias=".pay_total" initial="0" )
+ column=(type=number update=yes updatewhereclause=yes name=bonus_total dbname="hpa017m.bonus_total" dbalias=".bonus_total" initial="0" )
+ column=(type=number update=yes updatewhereclause=yes name=income_tax dbname="hpa017m.income_tax" dbalias=".income_tax" initial="0" )
+ column=(type=number update=yes updatewhereclause=yes name=farm_tax dbname="hpa017m.farm_tax" dbalias=".farm_tax" initial="0" )
+ column=(type=number update=yes updatewhereclause=yes name=resident_tax dbname="hpa017m.resident_tax" dbalias=".resident_tax" initial="0" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=worker dbname="hpa017m.worker" dbalias=".worker" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hpa017m.work_date" dbalias=".work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hpa017m.ipaddr" dbalias=".ipaddr" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=job_uid dbname="hpa017m.job_uid" dbalias=".job_uid" )
+ column=(type=char(16) update=yes updatewhereclause=yes name=job_add dbname="hpa017m.job_add" dbalias=".job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hpa017m.job_date" dbalias=".job_date" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=nontax_amt dbname="hpa017m.nontax_amt" dbalias=".nontax_amt" initial="0" )
+ retrieve="  SELECT PADB.HPA017M.MEMBER_NO,   
+         PADB.HPA017M.YEAR,   
+         PADB.HPA017M.SEQ_NO,   
+         PADB.HPA017M.WORK_PLACE,   
+         PADB.HPA017M.REGISTER_NO,   
+         PADB.HPA017M.ADDRESS,   
+         PADB.HPA017M.PAY_TOTAL,   
+         PADB.HPA017M.BONUS_TOTAL,   
+         PADB.HPA017M.INCOME_TAX,   
+         PADB.HPA017M.FARM_TAX,   
+         PADB.HPA017M.RESIDENT_TAX,   
+         PADB.HPA017M.WORKER,   
+         PADB.HPA017M.WORK_DATE,   
+         PADB.HPA017M.IPADDR,   
+         PADB.HPA017M.JOB_UID,   
+         PADB.HPA017M.JOB_ADD,   
+         PADB.HPA017M.JOB_DATE,   
+         PADB.HPA017M.NONTAX_AMT  
+    FROM PADB.HPA017M  
+   WHERE PADB.HPA017M.MEMBER_NO = :as_member_no   
+ORDER BY PADB.HPA017M.YEAR ASC,   
+         PADB.HPA017M.SEQ_NO ASC
+" update="PADB.HPA017M" updatewhere=1 updatekeyinplace=no arguments=(("as_member_no", string)) )
+text(band=header alignment="2" text="년도" border="0" color="0" x="9" y="12" height="56" width="160" html.valueishtml="0"  name=year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="회 사 명" border="0" color="0" x="178" y="12" height="56" width="823" html.valueishtml="0"  name=work_place_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="급 여 액" border="0" color="0" x="1522" y="12" height="56" width="430" html.valueishtml="0"  name=pay_total_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="소득세" border="0" color="0" x="3255" y="12" height="56" width="425" html.valueishtml="0"  name=income_tax_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="농어촌특별세" border="0" color="0" x="3689" y="12" height="56" width="398" html.valueishtml="0"  name=farm_tax_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="주민세" border="0" color="0" x="4096" y="12" height="56" width="398" html.valueishtml="0"  name=resident_tax_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="사업장등록번호" border="0" color="0" x="1010" y="12" height="56" width="503" html.valueishtml="0"  name=register_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="사업장소재지" border="0" color="0" x="4503" y="12" height="56" width="1746" html.valueishtml="0"  name=address_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="총 급 여" border="0" color="0" x="2802" y="12" height="56" width="443" html.valueishtml="0"  name=compute_6_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="상여총계" border="0" color="0" x="1961" y="12" height="56" width="402" html.valueishtml="0"  name=bonus_total_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="비과세금액" border="0" color="0" x="2373" y="12" height="56" width="421" html.valueishtml="0"  name=nontax_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=10 border="0" color="0" x="9" y="4" height="72" width="160" format="[General]" html.valueishtml="0"  name=year visible="1" edit.limit=4 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=20 border="0" color="0" x="178" y="4" height="72" width="823" format="[General]" html.valueishtml="0"  name=work_place visible="1" edit.limit=30 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=9 alignment="1" tabsequence=70 border="0" color="0" x="3255" y="4" height="72" width="425" format="#,##0" html.valueishtml="0"  name=income_tax visible="1" editmask.mask="###,###,###,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=10 alignment="1" tabsequence=80 border="0" color="0" x="3689" y="4" height="72" width="398" format="#,##0" html.valueishtml="0"  name=farm_tax visible="1" editmask.mask="###,###,###,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=11 alignment="1" tabsequence=90 border="0" color="0" x="4096" y="4" height="72" width="398" format="#,##0" html.valueishtml="0"  name=resident_tax visible="1" editmask.mask="###,###,###,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=6 alignment="0" tabsequence=100 border="0" color="0" x="4503" y="4" height="72" width="1746" format="[general]" html.valueishtml="0"  name=address visible="1" edit.limit=80 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=7 alignment="1" tabsequence=40 border="0" color="0" x="1522" y="4" height="72" width="430" format="#,##0" html.valueishtml="0"  name=pay_total visible="1" editmask.mask="###,###,###,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240)" )
+compute(band=detail alignment="1" expression=" pay_total + bonus_total  +  nontax_amt "border="0" color="8388608" x="2802" y="8" height="64" width="443" format="#,##0" html.valueishtml="0"  name=compute_6 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=30 border="0" color="0" x="1010" y="4" height="72" width="503" format="[general]" html.valueishtml="0"  name=register_no visible="1" editmask.autoskip=yes editmask.mask="###-##-#####" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="1" tabsequence=50 border="0" color="0" x="1961" y="4" height="72" width="402" format="#,##0" html.valueishtml="0"  name=bonus_total visible="1" editmask.mask="###,###,###,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240)" )
+column(band=detail id=18 alignment="1" tabsequence=60 border="0" color="0" x="2373" y="4" height="72" width="421" format="#,##0" html.valueishtml="0"  name=nontax_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=summary alignment="2" text="총계금액" border="0" color="8388608" x="178" y="8" height="56" width="823" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum ( pay_total )"border="0" color="8388608" x="1522" y="8" height="60" width="430" format="#,##0" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum ( income_tax )"border="0" color="8388608" x="3255" y="8" height="60" width="425" format="#,##0" html.valueishtml="0"  name=compute_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum ( farm_tax)"border="0" color="8388608" x="3689" y="8" height="60" width="398" format="#,##0" html.valueishtml="0"  name=compute_4 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum ( resident_tax)"border="0" color="8388608" x="4096" y="8" height="60" width="398" format="#,##0" html.valueishtml="0"  name=compute_5 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum ( bonus_total)"border="0" color="8388608" x="1961" y="8" height="60" width="402" format="#,##0" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum ( pay_total + bonus_total  +  nontax_amt )"border="0" color="8388608" x="2802" y="8" height="60" width="443" format="#,##0" html.valueishtml="0"  name=compute_7 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum(nontax_amt for all)"border="0" color="134217741" x="2373" y="8" height="60" width="421" format="#,##0" html.valueishtml="0"  name=compute_8 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+
+sparse(names="year")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

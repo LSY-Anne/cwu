@@ -1,0 +1,64 @@
+﻿$PBExportHeader$d_hgm201h_1.srd
+$PBExportComments$인사공통 성명,개인번호
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 grid.columnmove=no selected.mouse=no )
+header(height=76 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(20) update=yes updatewhereclause=yes name=kname dbname="kname" )
+ column=(type=char(5) update=yes updatewhereclause=yes key=yes name=member_no dbname="hin001m.member_no" )
+ column=(type=char(13) updatewhereclause=yes name=jumin_no dbname="hin001m.jumin_no" )
+ column=(type=char(4) updatewhereclause=yes name=gwa dbname="hin001m.gwa" )
+ column=(type=char(2) updatewhereclause=yes name=jikjong_code dbname="jikjong_code" )
+ column=(type=decimal(0) updatewhereclause=yes name=jikwi_code dbname="hin001m.jikwi_code" )
+ column=(type=char(3) updatewhereclause=yes name=duty_code dbname="hin001m.duty_code" )
+ column=(type=decimal(0) updatewhereclause=yes name=jikmu_code dbname="hin001m.jikmu_code" )
+ column=(type=char(8) updatewhereclause=yes name=firsthire_date dbname="hin001m.firsthire_date" )
+ column=(type=char(8) updatewhereclause=yes name=hakwonhire_date dbname="hin001m.hakwonhire_date" )
+ column=(type=char(3) updatewhereclause=yes name=sal_class dbname="hin001m.sal_class" )
+ column=(type=char(4000) updatewhereclause=yes name=com_dept_nm dbname="com_dept_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_jikjong_nm dbname="com_jikjong_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_jikwi_nm dbname="com_jikwi_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_duty_nm dbname="com_duty_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_jikmu_nm dbname="com_jikmu_nm" )
+ retrieve="SELECT	RTRIM(A.NAME)				KNAME,
+			A.MEMBER_NO,
+			A.JUMIN_NO,
+			A.GWA,
+			SUBSTR(A.DUTY_CODE,1,1)	JIKJONG_CODE,
+			A.JIKWI_CODE,
+			A.DUTY_CODE,
+			A.JIKMU_CODE,
+			A.FIRSTHIRE_DATE,
+			A.HAKWONHIRE_DATE,
+			A.SAL_CLASS,
+			FU_DEPT_NM(A.GWA,'K')														COM_DEPT_NM,
+			FU_CODE_NM('HAENG','JIKJONG_CODE',SUBSTR(A.DUTY_CODE,1,1),'K')	COM_JIKJONG_NM,
+			FU_CODE_NM('HAENG','JIKWI_CODE',A.JIKWI_CODE,'K')					COM_JIKWI_NM,
+			FU_DUTY_NM(A.DUTY_CODE,'K')												COM_DUTY_NM,
+			FU_CODE_NM('HAENG','JIKWI_CODE',A.JIKMU_CODE,'K')					COM_JIKMU_NM
+FROM		INDB.HIN001M A
+WHERE		A.NAME      LIKE :as_KName||'%'
+AND		A.MEMBER_NO LIKE :as_MemberNo||'%'
+AND      SUBSTR(A.MEMBER_NO,1,1) IN ('A','E','F')
+AND		A.JAEJIK_OPT = '1'
+AND		A.DUTY_CODE  BETWEEN DECODE(:as_JikjongCode,'1','000','2','400','000') 
+							 AND     DECODE(:as_JikjongCode,'1','399','2','999','999')
+ORDER	BY	A.MEMBER_NO" update="INDB.HIN001M" updatewhere=1 updatekeyinplace=no arguments=(("as_KName", string),("as_MemberNo", string),("as_JikjongCode", string)) )
+text(band=header alignment="2" text="개인번호" border="0" color="0" x="9" y="4" height="56" width="347" html.valueishtml="0"  name=member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성명" border="0" color="0" x="366" y="4" height="56" width="494" html.valueishtml="0"  name=kname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="조직명" border="0" color="0" x="869" y="4" height="56" width="1024" html.valueishtml="0"  name=com_dept_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="347" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="366" y="4" height="72" width="494" format="[general]" html.valueishtml="0"  name=kname visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="869" y="4" height="72" width="1024" format="[general]" html.valueishtml="0"  name=com_dept_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

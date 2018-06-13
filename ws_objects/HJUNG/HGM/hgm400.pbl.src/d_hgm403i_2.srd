@@ -1,0 +1,106 @@
+﻿$PBExportHeader$d_hgm403i_2.srd
+$PBExportComments$물품발주리스트
+release 10.5;
+datawindow(units=0 timer_interval=0 color=80269524 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=80 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=76 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes name=req_no dbname="hst107h.req_no" )
+ column=(type=number updatewhereclause=yes name=item_seq dbname="hst107h.item_seq" )
+ column=(type=char(4) updatewhereclause=yes name=apply_gwa dbname="hst107h.apply_gwa" )
+ column=(type=char(6) updatewhereclause=yes name=acct_code dbname="hst107h.acct_code" )
+ column=(type=char(60) updatewhereclause=yes name=cust_name dbname="hst107h.cust_name" )
+ column=(type=char(7) updatewhereclause=yes name=cust_no dbname="hst107h.cust_no" )
+ column=(type=char(4) updatewhereclause=yes name=apply_gwa_1 dbname="hst107h.apply_gwa" )
+ column=(type=char(40) updatewhereclause=yes name=item_name dbname="hst107h.item_name" )
+ column=(type=char(7) updatewhereclause=yes name=item_no dbname="hst107h.item_no" )
+ column=(type=decimal(0) updatewhereclause=yes name=apply_qty dbname="hst107h.apply_qty" )
+ column=(type=number updatewhereclause=yes name=item_seq_1 dbname="hst107h.item_seq" )
+ column=(type=number updatewhereclause=yes name=quot_price dbname="hst107h.quot_price" )
+ column=(type=char(10) updatewhereclause=yes name=ord_no dbname="hst107h.ord_no" )
+ column=(type=char(10) updatewhereclause=yes name=cust_no dbname="hst107h.cust_no" )
+ column=(type=number updatewhereclause=yes name=quot_num dbname="hst107h.quot_num" )
+ column=(type=number updatewhereclause=yes name=summ dbname="summ" )
+ column=(type=number updatewhereclause=yes name=vat dbname="vat" )
+ column=(type=decimal(0) updatewhereclause=yes name=confirm_opt dbname="hst107h.confirm_opt" values="	1/	0" )
+ retrieve="select   a.req_no, 	
+			a.item_Seq,
+			b.apply_gwa,
+			b.acct_code,
+			c.cust_name,
+         c.cust_no,
+			b.apply_gwa, 
+			b.item_name,
+         b.item_no, 
+			b.apply_qty,  
+			a.item_seq,
+			a.QUOT_PRICE, 
+			a.ord_no,
+			a.cust_no CUST_NO, 
+			a.quot_num, 
+			b.apply_qty * a.quot_price summ,
+			(b.apply_qty * a.quot_price) / 10 VAT,
+			A.CONFIRM_OPT 
+from 		stdb.hst107h a, stdb.hst105h b, stdb.hst001m c,
+		     (
+			  select 	  bb.item_name NN,
+						  cc.cust_name XX,
+						  aa.req_no YY,
+						  aa.cust_no MM,
+						  aa.item_seq ZZ,
+						  bb.apply_qty FF,
+						  MAX(aa.quot_num) DD
+		      from 		  stdb.hst107h aa, stdb.hst105h bb, stdb.hst001m cc
+		      where 	  aa.req_no = bb.req_no
+						  and 	trim(aa.req_no) like	:as_req_no||'%'
+						  and   aa.item_seq = bb.item_seq
+					      and   aa.cust_no = cc.cust_no
+		      group by bb.item_name, bb.apply_qty, cc.cust_name, aa.req_no, aa.cust_no, aa.item_seq
+		     )
+where		  a.req_no = b.req_no
+				and   trim(a.req_no) like	:as_req_no||'%'
+				and	a.item_seq 	=		ZZ
+				and	b.apply_qty =		FF
+				and	b.item_name = NN
+				and   a.cust_no 	= c.cust_no
+				and   c.cust_name = XX
+				and   a.req_no 	= YY
+				and   a.cust_no 	= MM
+				and   a.quot_num 	= DD 				
+group by a.req_no, a.item_seq,b.apply_gwa,b.acct_code,c.cust_name,c.cust_no,b.item_name,b.item_no,b.apply_gwa,  b.apply_qty, a.ord_no,a.req_no, a.ITEM_SEQ, a.QUOT_PRICE, a.cust_no, a.quot_num, A.CONFIRM_OPT
+order by a.cust_no, a.quot_price asc
+" arguments=(("as_req_no", string)) )
+group(level=1 header.height=0 trailer.height=80 by=("cust_no" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text="접수번호" border="6" color="0" x="9" y="8" height="64" width="302" html.valueishtml="0"  name=req_no_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="업체명" border="6" color="0" x="320" y="8" height="64" width="937" html.valueishtml="0"  name=cust_name_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="품목명" border="6" color="0" x="1266" y="8" height="64" width="1015" html.valueishtml="0"  name=item_name_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="단가" border="6" color="0" x="2290" y="8" height="64" width="329" html.valueishtml="0"  name=quot_price_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="수량" border="6" color="0" x="2629" y="8" height="64" width="366" html.valueishtml="0"  name=apply_qty_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="합계" border="6" color="0" x="3003" y="8" height="64" width="462" html.valueishtml="0"  name=summ_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="선정구분" border="6" color="0" x="3474" y="8" height="64" width="329" html.valueishtml="0"  name=confirm_opt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="8" height="64" width="302" format="[general]" html.valueishtml="0"  name=req_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="320" y="8" height="64" width="937" format="[general]" html.valueishtml="0"  name=cust_name visible="1" edit.limit=60 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="1266" y="8" height="64" width="1015" format="[general]" html.valueishtml="0"  name=item_name visible="1" edit.limit=40 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="1" tabsequence=32766 border="0" color="0" x="2290" y="8" height="64" width="329" format="#,###,##0" html.valueishtml="0"  name=quot_price visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="0" x="2629" y="8" height="60" width="366" format="#,###,##0" html.valueishtml="0"  name=apply_qty visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="1" tabsequence=32766 border="0" color="0" x="3003" y="8" height="64" width="462" format="#,###,##0" html.valueishtml="0"  name=summ visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=18 alignment="2" tabsequence=10 border="0" color="0" x="3474" y="8" height="64" width="329" format="[general]" html.valueishtml="0"  name=confirm_opt visible="1" checkbox.text="" checkbox.on="1" checkbox.off="0" checkbox.scale=no checkbox.threed=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=trailer.1 alignment="0" text="" border="0" color="0" x="9" y="0" height="76" width="302" html.valueishtml="0"  name=t_6 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12639424" )
+text(band=trailer.1 alignment="0" text="" border="0" color="0" x="320" y="0" height="76" width="937" html.valueishtml="0"  name=t_7 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12639424" )
+text(band=trailer.1 alignment="2" text="합계" border="0" color="0" x="1266" y="0" height="76" width="1015" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="12639424" )
+compute(band=trailer.1 alignment="1" expression="sum(  quot_price  for group 1 )"border="0" color="0" x="2290" y="0" height="76" width="329" format="#,###,##0" html.valueishtml="0"  name=compute_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="12639424" )
+compute(band=trailer.1 alignment="1" expression="sum(  apply_qty  for group 1 )"border="0" color="0" x="2629" y="0" height="76" width="366" format="#,###,##0" html.valueishtml="0"  name=compute_5 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="12639424" )
+compute(band=trailer.1 alignment="1" expression="sum(  summ  for group 1 )"border="0" color="0" x="3003" y="0" height="76" width="462" format="#,###,##0" html.valueishtml="0"  name=compute_6 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="12639424" )
+text(band=trailer.1 alignment="0" text="" border="0" color="0" x="3474" y="0" height="76" width="329" html.valueishtml="0"  name=t_9 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="12639424" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

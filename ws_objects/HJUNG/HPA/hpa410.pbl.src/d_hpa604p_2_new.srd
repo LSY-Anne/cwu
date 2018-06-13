@@ -1,0 +1,103 @@
+﻿$PBExportHeader$d_hpa604p_2_new.srd
+$PBExportComments$소득자별 근로소득 원천징수부 출력(월별내역)(Nested)--교원용//차감원천징수- 소득세,주민세
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 174 print.margin.right = 174 print.margin.top = 0 print.margin.bottom = 0 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=68 color="536870912" )
+footer(height=4 color="536870912" )
+detail(height=68 color="536870912" )
+table(column=(type=char(14) updatewhereclause=yes name=month dbname="month" )
+ column=(type=number updatewhereclause=yes name=pay_amt dbname="pay_amt" initial="0" )
+ column=(type=number updatewhereclause=yes name=bonus dbname="bonus" initial="0" )
+ column=(type=number updatewhereclause=yes name=pay_total dbname="pay_total" initial="0" )
+ column=(type=number updatewhereclause=yes name=euro_amt dbname="euro_amt" initial="0" )
+ column=(type=number updatewhereclause=yes name=pension_amt dbname="pension_amt" initial="0" )
+ column=(type=number updatewhereclause=yes name=tax dbname="tax" initial="0" )
+ column=(type=number updatewhereclause=yes name=jumin dbname="jumin" initial="0" )
+ column=(type=number updatewhereclause=yes name=farm dbname="farm" initial="0" )
+ column=(type=number updatewhereclause=yes name=nontax dbname="nontax" initial="0" )
+ column=(type=number updatewhereclause=yes name=food_amt dbname="food_amt" initial="0" )
+ column=(type=number updatewhereclause=yes name=rsc_amt dbname="rsc_amt" initial="0" )
+ column=(type=number updatewhereclause=yes name=rsc_20amt dbname="rsc_20amt" initial="0" )
+ column=(type=number updatewhereclause=yes name=real_amt dbname="real_amt" initial="0" )
+ column=(type=number updatewhereclause=yes name=last_amt dbname="last_amt" initial="0" )
+ column=(type=number updatewhereclause=yes name=gibo dbname="gibo" )
+ column=(type=number updatewhereclause=yes name=goyong dbname="goyong" )
+ retrieve="SELECT   MONTH,
+		  	SUM(PAY_AMT) PAY_AMT,
+		  	SUM(BONUS) BONUS,
+		  	SUM(PAY_TOTAL) PAY_TOTAL,
+		  	SUM(EURO_AMT) EURO_AMT,
+		  	SUM(PENSION_AMT) PENSION_AMT,
+		  	SUM(TAX) TAX,
+		 	SUM(JUMIN) JUMIN,
+		 	SUM(FARM) FARM,
+		 	SUM(NONTAX) NONTAX,
+		 	SUM(FOOD_AMT) FOOD_AMT,
+		 	SUM(RSC_AMT) RSC_AMT,
+		 	SUM(RSC_20AMT) RSC_20AMT,
+		 	SUM(REAL_AMT) REAL_AMT,
+		 	SUM(LAST_AMT) LAST_AMT,
+			SUM(GIBO) GIBO,
+			SUM(GOYONG) GOYONG
+FROM
+(SELECT  A.YEAR_MONTH||TO_CHAR(LAST_DAY(TO_DATE(A.YEAR_MONTH,'YYYYMM')),'DD') MONTH,
+		0 PAY_AMT,0 BONUS,0 PAY_TOTAL,0 EURO_AMT,0 PENSION_AMT,0 TAX,0 JUMIN,0 FARM,0 NONTAX,0 FOOD_AMT,0 RSC_AMT,0 RSC_20AMT,0 REAL_AMT,0 LAST_AMT,0 GIBO,0 GOYONG
+FROM	PADB.PAY_DATE_VIEW A
+WHERE	A.YEAR_MONTH  LIKE :as_Year||'%'
+UNION
+SELECT	A.YEAR||A.MONTH||TO_CHAR(LAST_DAY(TO_DATE(A.YEAR||A.MONTH,'YYYYMM')),'DD') MONTH,
+			A.MONTHLY_FIX_AMT  PAY_AMT,
+			A.BONUS BONUS,
+			A.MONTHLY_FIX_AMT + A.BONUS  PAY_TOTAL,
+			A.EURO_AMT,
+			A.PENSION_AMT,
+			A.TAX,
+			A.JUMIN,
+			0 FARM,
+			A.REAL_AMT + A.NTAX_FOOD NONTAX,
+			A.NTAX_FOOD FOOD_AMT,
+			A.RSC_AMT,
+			A.RSC_20AMT,
+			A.REAL_AMT,
+		  (SELECT NVL(a.real_amt,0) + NVL(a.ntax_food,0)
+			FROM   padb.hpa005d_hpa116t_view a
+			WHERE  a.year = :as_Year
+			AND    a.member_no = :as_MemberNo
+			AND    a.month  = (SELECT max(month) 
+				   			    FROM   padb.hpa005d_hpa116t_view 
+							       WHERE  a.year = Year 
+	   			  			    AND    a.member_no = member_No)) LAST_AMT,
+			A.GIBO,
+			A.GOYONG
+															
+FROM		PADB.HPA005D_HPA116T_VIEW A
+WHERE		A.YEAR		=	:as_Year
+AND		A.MEMBER_NO	=	:as_MemberNo
+AND		A.MONTHLY_FIX_AMT	 >  0	) T
+GROUP   BY MONTH
+ " arguments=(("as_year", string),("as_memberno", string)) )
+column(band=detail id=16 alignment="1" tabsequence=32766 border="0" color="0" x="2752" y="8" height="52" width="297" format="#,###" html.valueishtml="0"  name=gibo visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="1" tabsequence=32766 border="0" color="0" x="2409" y="8" height="52" width="297" format="#,###" html.valueishtml="0"  name=goyong visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="887" y="8" height="52" width="297" format="#,###" html.valueishtml="0"  name=jumin visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="530" y="8" height="52" width="320" format="#,###" html.valueishtml="0"  name=tax visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="3" expression="getrow()"border="0" color="0" x="18" y="8" height="52" width="219" format="[GENERAL]" html.valueishtml="0"  name=compute_7 visible="1"  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="2062" y="8" height="52" width="293" format="#,###" html.valueishtml="0"  name=euro_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="1655" y="8" height="52" width="320" format="#,###" html.valueishtml="0"  name=pension_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  gibo  for all )"border="0" color="0" x="2752" y="12" height="52" width="297" format="#,###" html.valueishtml="0"  name=compute_11 visible="1"  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(  goyong  for all )"border="0" color="0" x="2409" y="12" height="52" width="297" format="#,###" html.valueishtml="0"  name=compute_8 visible="1"  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum ( jumin ) "border="0" color="0" x="882" y="12" height="52" width="297" format="#,###" html.valueishtml="0"  name=compute_6 visible="1"  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(tax for all)"border="0" color="0" x="530" y="12" height="52" width="320" format="#,###" html.valueishtml="0"  name=compute_5 visible="1"  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=summary alignment="2" text="계" border="0" color="0" x="14" y="8" height="52" width="302" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="1" expression="sum ( euro_amt )"border="0" color="0" x="2062" y="12" height="52" width="293" format="#,##0" html.valueishtml="0"  name=compute_10 visible="1"  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum ( pension_amt )"border="0" color="0" x="1655" y="4" height="52" width="320" format="#,###" html.valueishtml="0"  name=compute_9 visible="1"  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

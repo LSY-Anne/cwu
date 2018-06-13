@@ -1,0 +1,33 @@
+﻿$PBExportHeader$f_setpointer.srf
+$PBExportComments$마우스포인트를 바꾼다
+global type f_setpointer from function_object
+end type
+
+forward prototypes
+global function string f_setpointer (string as_message)
+end prototypes
+
+global function string f_setpointer (string as_message);//////////////////////////////////////////////////////////////////
+// 	작성목적 : 포인터를 변경한다.
+//    적 성 인 : 이현수
+//		작성일자 : 2002.10
+//    변 경 인 :
+//    변경일자 :
+//    변경사유 :
+//////////////////////////////////////////////////////////////////
+
+String s_message
+s_message = UPPER(as_message)
+choose case s_message
+		case 'START' ,'S'
+ 	         SetPointer(HourGlass!)
+            open(w_progress_popup)
+		case 'END' ,'E'				  
+           close(w_progress_popup)	
+           SetPointer(Arrow!)	
+		case else
+END CHOOSE
+
+return s_message
+end function
+

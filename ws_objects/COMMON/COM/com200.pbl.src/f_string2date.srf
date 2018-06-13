@@ -1,0 +1,29 @@
+﻿$PBExportHeader$f_string2date.srf
+$PBExportComments$날자의 포맷을 확인한다.
+global type f_string2date from function_object
+end type
+
+forward prototypes
+global function date f_string2date (string as_day)
+end prototypes
+
+global function date f_string2date (string as_day);//////////////////////////////////////////////////////////////////
+// 	작성목적 : 문자열이 데이타 타입인가르 확인한다
+//    적 성 인 : 이현수
+//		작성일자 : 2002.10
+//    변 경 인 :
+//    변경일자 :
+//    변경사유 :
+//////////////////////////////////////////////////////////////////
+
+string s_date
+DATE   D_date
+s_date = String(as_day,'@@@@/@@/@@')
+IF isdate(s_date) then
+	D_date = DATE(s_date)
+else
+	MessageBox('에러','일자가 잘못 되었습니다.~r' + s_date + '의 일자를 확인 하여 주십시요.')
+end IF
+return D_date
+end function
+

@@ -1,0 +1,43 @@
+﻿$PBExportHeader$d_post_pop_2.srd
+$PBExportComments$우편번호조회 POPUP
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=80 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(6) updatewhereclause=yes name=post_no dbname="zipcodes.post_no" )
+ column=(type=char(5) updatewhereclause=yes name=seq dbname="zipcodes.seq" )
+ column=(type=char(20) updatewhereclause=yes name=sd_nm dbname="zipcodes.sd_nm" )
+ column=(type=char(30) updatewhereclause=yes name=sgg_nm dbname="zipcodes.sgg_nm" )
+ column=(type=char(70) updatewhereclause=yes name=emd_nm dbname="zipcodes.emd_nm" )
+ column=(type=char(70) updatewhereclause=yes name=lee_nm dbname="zipcodes.lee_nm" )
+ column=(type=char(193) update=yes updatewhereclause=yes name=detail_address dbname="detail_address" )
+ retrieve="SELECT		A.ZIP_ID						AS		POST_NO,   
+				A.SERIAL						AS		SEQ,   
+				A.ZIP_NAME1				AS		SD_NM,   
+				A.ZIP_NAME2				AS		SGG_NM,   
+				A.ZIP_NAME3				AS		EMD_NM,   
+				A.ZIP_NAME4				AS		LEE_NM,   
+				A.ZIP_NAME1||' '||A.ZIP_NAME2||' '||A.ZIP_NAME3||' '||A.ZIP_NAME4			AS		DETAIL_ADDRESS
+  FROM		HAKSA.ZIPCODES A
+ WHERE		A.ZIP_NAME1||' '||A.ZIP_NAME2||' '||A.ZIP_NAME3||' '||A.ZIP_NAME4	LIKE	'%'	||	:arg_str	||	'%'
+ORDER BY	A.SERIAL
+" arguments=(("arg_str", string)) )
+text(band=header alignment="2" text="번호" border="0" color="33554432" x="9" y="12" height="56" width="169" html.valueishtml="0"  name=no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="주  소" border="0" color="33554432" x="535" y="12" height="56" width="2857" html.valueishtml="0"  name=detail_address_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="우편번호" border="0" color="33554432" x="192" y="12" height="56" width="329" html.valueishtml="0"  name=post_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="getrow()"border="0" color="25988236" x="9" y="4" height="72" width="169" format="[GENERAL]" html.valueishtml="0"  name=no visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="25988236" x="535" y="4" height="72" width="2857" format="[general]" html.valueishtml="0"  name=detail_address visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.displayonly=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="25988236" x="192" y="4" height="72" width="329" format="@@@-@@@" html.valueishtml="0"  name=post_no visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

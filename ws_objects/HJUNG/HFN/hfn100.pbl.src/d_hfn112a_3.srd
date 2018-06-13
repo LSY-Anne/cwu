@@ -1,0 +1,126 @@
+﻿$PBExportHeader$d_hfn112a_3.srd
+$PBExportComments$양식코드 관리/출력 - 조회
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(6) update=yes updatewhereclause=yes name=form_code dbname="hac006m.form_code" )
+ column=(type=char(60) update=yes updatewhereclause=yes name=form_name dbname="hac006m.form_name" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=acct_class dbname="hac006m.acct_class" values="합산	0/법인	1/교비	2/" )
+ column=(type=char(2) updatewhereclause=yes name=slip_class dbname="slip_class" )
+ column=(type=char(7) update=yes updatewhereclause=yes name=acct_code dbname="hac006m.acct_code" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=drcr_class dbname="hac006m.drcr_class" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=location dbname="hac006m.location" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=approp_yn dbname="hac006m.approp_yn" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=calc_class dbname="hac006m.calc_class" )
+ column=(type=char(7) updatewhereclause=yes name=hac006m_str_code dbname="hac006m.str_code" )
+ column=(type=char(7) updatewhereclause=yes name=hac006m_end_code dbname="hac006m.end_code" )
+ column=(type=char(7) updatewhereclause=yes name=hac006m_code1 dbname="hac006m.code1" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=op1 dbname="hac006m.op1" values=" 	/+	+/-	-/×	*/÷	///" )
+ column=(type=char(7) updatewhereclause=yes name=hac006m_code2 dbname="hac006m.code2" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=op2 dbname="hac006m.op2" values=" 	/+	+/-	-/×	*/÷	///" )
+ column=(type=char(7) updatewhereclause=yes name=hac006m_code3 dbname="hac006m.code3" )
+ column=(type=char(1) updatewhereclause=yes name=hac006m_op3 dbname="hac006m.op3" )
+ column=(type=char(7) updatewhereclause=yes name=hac006m_code4 dbname="hac006m.code4" )
+ column=(type=char(1) updatewhereclause=yes name=hac006m_op4 dbname="hac006m.op4" )
+ column=(type=char(7) updatewhereclause=yes name=hac006m_code5 dbname="hac006m.code5" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=sum_yn dbname="hac006m.sum_yn" )
+ column=(type=char(5) updatewhereclause=yes name=hac006m_used_gbn dbname="hac006m.used_gbn" )
+ column=(type=char(2) updatewhereclause=yes name=used_gbn_1 dbname="used_gbn_1" values="Y	9/	0/" )
+ column=(type=char(2) updatewhereclause=yes name=used_gbn_2 dbname="used_gbn_2" values="Y	9/	0/" )
+ column=(type=char(2) updatewhereclause=yes name=used_gbn_3 dbname="used_gbn_3" values="Y	9/	0/" )
+ column=(type=char(2) updatewhereclause=yes name=used_gbn_4 dbname="used_gbn_4" )
+ column=(type=char(2) updatewhereclause=yes name=used_gbn_5 dbname="used_gbn_5" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=worker dbname="hac006m.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hac006m.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hac006m.work_date" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=job_uid dbname="hac006m.job_uid" )
+ column=(type=char(16) update=yes updatewhereclause=yes name=job_add dbname="hac006m.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hac006m.job_date" )
+ column=(type=char(60) updatewhereclause=yes name=hac001m_acct_name dbname="hac006m.acct_name" )
+ retrieve="
+select	a.form_code, a.form_name, 
+			a.acct_class,
+			substr(a.acct_code, 1, 1)	slip_class,
+			a.acct_code,
+			a.drcr_class,
+			a.location,
+			a.approp_yn,
+			a.calc_class,
+			str_code,
+			end_code,
+			code1, op1,
+			code2, op2,
+			code3, op3,
+			code4, op4,
+			code5,
+			sum_yn,
+			used_gbn,
+			substr(used_gbn, 1, 1)		used_gbn_1,
+			substr(used_gbn, 2, 1)		used_gbn_2,
+			substr(used_gbn, 3, 1)		used_gbn_3,
+			substr(used_gbn, 4, 1)		used_gbn_4,
+			substr(used_gbn, 5, 1)		used_gbn_5,
+			a.worker, a.ipaddr, a.work_date,
+			a.job_uid, a.job_add, a.job_date,
+			b.acct_name
+from		acdb.hac006m a, acdb.hac001m b
+where		a.acct_code		=	b.acct_code (+)
+and		a.acct_class	=	:ai_acct_class
+order by form_code
+" arguments=(("ai_acct_class", number)) )
+text(band=header alignment="2" text="재무코드" border="0" color="0" x="9" y="12" height="56" width="270" html.valueishtml="0"  name=form_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="재 무 명" border="0" color="0" x="288" y="12" height="56" width="626" html.valueishtml="0"  name=form_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계정코드" border="0" color="0" x="928" y="12" height="56" width="261" html.valueishtml="0"  name=acct_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="차대" border="0" color="0" x="1833" y="12" height="56" width="137" html.valueishtml="0"  name=drcr_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="출력위치" border="0" color="0" x="1979" y="12" height="56" width="384" html.valueishtml="0"  name=location_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계산구분" border="0" color="0" x="2373" y="12" height="56" width="384" html.valueishtml="0"  name=calc_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="연산" border="0" color="0" x="3438" y="12" height="56" width="137" html.valueishtml="0"  name=op1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="연산" border="0" color="0" x="3808" y="12" height="56" width="137" html.valueishtml="0"  name=op2_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="범위(F)" border="0" color="0" x="2766" y="12" height="56" width="215" html.valueishtml="0"  name=hac006m_str_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="범위(T)" border="0" color="0" x="2990" y="12" height="56" width="215" html.valueishtml="0"  name=hac006m_end_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="코드" border="0" color="0" x="3214" y="12" height="56" width="215" html.valueishtml="0"  name=hac006m_code1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="코드" border="0" color="0" x="3584" y="12" height="56" width="215" html.valueishtml="0"  name=hac006m_code2_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="코드" border="0" color="0" x="3954" y="12" height="56" width="215" html.valueishtml="0"  name=hac006m_code3_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="연산" border="0" color="0" x="4178" y="12" height="56" width="128" html.valueishtml="0"  name=hac006m_op3_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="코드" border="0" color="0" x="4315" y="12" height="56" width="215" html.valueishtml="0"  name=hac006m_code4_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="연산" border="0" color="0" x="4539" y="12" height="56" width="128" html.valueishtml="0"  name=hac006m_op4_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="코드" border="0" color="0" x="4677" y="12" height="56" width="215" html.valueishtml="0"  name=hac006m_code5_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="시산" border="0" color="0" x="4901" y="12" height="56" width="133" html.valueishtml="0"  name=used_gbn_1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="대차" border="0" color="0" x="5042" y="12" height="56" width="128" html.valueishtml="0"  name=used_gbn_2_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="운영" border="0" color="0" x="5179" y="12" height="56" width="123" html.valueishtml="0"  name=used_gbn_3_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계 정 명" border="0" color="0" x="1198" y="12" height="56" width="626" html.valueishtml="0"  name=hac001m_acct_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="270" format="[general]" html.valueishtml="0"  name=form_code visible="1" edit.limit=6 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="288" y="4" height="72" width="626" format="[general]" html.valueishtml="0"  name=form_name visible="1" edit.limit=60 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="928" y="4" height="72" width="261" format="[general]" html.valueishtml="0"  name=acct_code visible="1" edit.limit=7 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=34 alignment="2" tabsequence=32766 border="0" color="0" x="1198" y="4" height="72" width="626" format="[general]" html.valueishtml="0"  name=hac001m_acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="1833" y="4" height="72" width="137" format="[general]" html.valueishtml="0"  name=drcr_class visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="1979" y="4" height="72" width="384" format="[general]" html.valueishtml="0"  name=location visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.autoretrieve=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="0" x="2373" y="4" height="72" width="384" format="[general]" html.valueishtml="0"  name=calc_class visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.autoretrieve=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="2" tabsequence=32766 border="0" color="0" x="3438" y="4" height="72" width="137" format="[general]" html.valueishtml="0"  name=op1 visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="2" tabsequence=32766 border="0" color="0" x="3808" y="4" height="72" width="137" format="[general]" html.valueishtml="0"  name=op2 visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="0" x="2766" y="4" height="72" width="215" format="[general]" html.valueishtml="0"  name=hac006m_str_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="0" x="2990" y="4" height="72" width="215" format="[general]" html.valueishtml="0"  name=hac006m_end_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="2" tabsequence=32766 border="0" color="0" x="3214" y="4" height="72" width="215" format="[general]" html.valueishtml="0"  name=hac006m_code1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="2" tabsequence=32766 border="0" color="0" x="3584" y="4" height="72" width="215" format="[general]" html.valueishtml="0"  name=hac006m_code2 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=16 alignment="2" tabsequence=32766 border="0" color="0" x="3954" y="4" height="72" width="215" format="[general]" html.valueishtml="0"  name=hac006m_code3 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=17 alignment="2" tabsequence=32766 border="0" color="0" x="4178" y="4" height="72" width="128" format="[general]" html.valueishtml="0"  name=hac006m_op3 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=18 alignment="2" tabsequence=32766 border="0" color="0" x="4315" y="4" height="72" width="215" format="[general]" html.valueishtml="0"  name=hac006m_code4 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=19 alignment="2" tabsequence=32766 border="0" color="0" x="4539" y="4" height="72" width="128" format="[general]" html.valueishtml="0"  name=hac006m_op4 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=20 alignment="2" tabsequence=32766 border="0" color="0" x="4677" y="4" height="72" width="215" format="[general]" html.valueishtml="0"  name=hac006m_code5 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=23 alignment="2" tabsequence=32766 border="0" color="0" x="4901" y="4" height="72" width="133" format="[general]" html.valueishtml="0"  name=used_gbn_1 visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=24 alignment="2" tabsequence=32766 border="0" color="0" x="5042" y="4" height="72" width="128" format="[general]" html.valueishtml="0"  name=used_gbn_2 visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=25 alignment="2" tabsequence=32766 border="0" color="0" x="5179" y="4" height="72" width="123" format="[general]" html.valueishtml="0"  name=used_gbn_3 visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

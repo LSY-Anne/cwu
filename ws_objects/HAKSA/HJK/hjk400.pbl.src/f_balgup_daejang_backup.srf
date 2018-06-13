@@ -1,0 +1,51 @@
+﻿$PBExportHeader$f_balgup_daejang_backup.srf
+global type f_balgup_daejang_backup from function_object
+end type
+
+forward prototypes
+global function integer f_balgup_daejang_backup (string as_bunho, string as_status, string as_yongdo)
+end prototypes
+
+global function integer f_balgup_daejang_backup (string as_bunho, string as_status, string as_yongdo);string	ls_serial, ls_uid, ls_ip
+datetime	ld_sysdate
+
+SELECT	LPAD(TO_CHAR(NVL(MAX(SERIAL),0) + 1),7,'0')
+INTO		:ls_serial
+FROM		HAKSA.BALGUP_DAEJANG_BACKUP	;
+
+ls_uid 	= gs_empcode			//작성자
+ls_ip    	= gs_ip                 	//ipaddr
+ld_sysdate	= f_sysdate()
+
+//BACKUP
+INSERT INTO HAKSA.BALGUP_DAEJANG_BACKUP
+(	SELECT	:ls_serial		,
+				YEAR				,		
+				BUNHO				,
+				YONGDO_ID		,
+				JUNGMYUNG_ID	,
+				HAKBUN			,
+				GWA				,
+				SU_HAKYUN		,
+				B_ILJA			,
+				B_MONEY			,
+				'0'				,
+				null				,
+				:as_status		,
+				'0'				,    
+				:ls_uid			,
+				:ls_ip			,
+				:ld_sysdate		,
+				null				,
+				null				,
+				null	
+	FROM		HAKSA.BALGUP_DAEJANG
+	WHERE		BUNHO			= :as_bunho
+	AND		YONGDO_ID 	= :as_yongdo)	
+	USING SQLCA ;
+	
+//	messagebox('1', "확인" + sqlca.sqlerrtext)
+	return sqlca.sqlcode
+	
+end function
+

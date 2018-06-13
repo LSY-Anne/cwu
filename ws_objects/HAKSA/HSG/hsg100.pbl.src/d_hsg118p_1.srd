@@ -1,0 +1,89 @@
+﻿$PBExportHeader$d_hsg118p_1.srd
+$PBExportComments$집단프로그램 실시 현황(통계)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=33554431 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=452 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(60) updatewhereclause=yes name=kch102d_fname dbname="kch102d.fname" )
+ column=(type=number updatewhereclause=yes name=compute_0002 dbname="compute_0002" )
+ column=(type=char(8) updatewhereclause=yes name=sum150tl_rst_dt dbname="sum150tl.rst_dt" )
+ column=(type=char(4) updatewhereclause=yes name=sum150tl_rst_start_time dbname="sum150tl.rst_start_time" )
+ column=(type=char(4) updatewhereclause=yes name=sum150tl_rst_end_time dbname="sum150tl.rst_end_time" )
+ column=(type=char(2000) updatewhereclause=yes name=sum150tl_rst_context dbname="sum150tl.rst_context" )
+ column=(type=char(30) updatewhereclause=yes name=sum150tl_rst_place dbname="sum150tl.rst_place" )
+ column=(type=char(60) updatewhereclause=yes name=sum150tl_target_nm dbname="sum150tl.target_nm" )
+ column=(type=decimal(0) updatewhereclause=yes name=sum150tl_rst_cnt dbname="sum150tl.rst_cnt" )
+ column=(type=char(60) updatewhereclause=yes name=hakgi dbname="hakgi" )
+ column=(type=char(4) updatewhereclause=yes name=sum150tl_year dbname="sum150tl.year" )
+ retrieve="select B.FNAME
+       ,to_number(A.SEQ)
+       ,A.RST_DT                    
+       ,A.RST_START_TIME            
+       ,A.RST_END_TIME 
+       ,A.RST_CONTEXT               
+       ,A.RST_PLACE                 
+       ,A.TARGET_NM                 
+       ,A.RST_CNT  
+       ,(SELECT FNAME FROM CDDB.KCH102D WHERE CODE_GB = 'HSG01' AND CODE = :as_hakgi) AS hakgi
+	  ,A.YEAR                
+from HAKSA.SUM150TL A
+,cddb.kch102d B
+where B.code_gb='SUM24'
+AND A.PGM_CD = B.CODE
+AND A.PGM_TP = :as_tp
+AND A.YEAR = :as_year
+AND A.HAKGI = :as_hakgi
+AND ( A.RST_DT BETWEEN :as_fr_dt AND :as_to_dt)
+AND A.ACT_TP = '3'" arguments=(("as_year", string),("as_hakgi", string),("as_tp", string),("as_fr_dt", string),("as_to_dt", string)) )
+group(level=1 header.height=0 trailer.height=0 by=("" ) header.color="536870912" trailer.color="536870912" )
+compute(band=header alignment="2" expression="IF(as_tp = '1', '집단프로그램 실시 현황(통계)', if(as_tp = '2', '집단영상프로그램 실시 현황(통계)', '소집단대화활동 실시 현황(통계)'))"border="0" color="0" x="0" y="80" height="92" width="4910" format="[GENERAL]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-14" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=header x1="1175" y1="376" x2="1175" y2="464"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2103" y1="376" x2="2103" y2="464"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3515" y1="376" x2="3515" y2="464"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="4256" y1="376" x2="4256" y2="464"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="4649" y1="376" x2="4649" y2="464"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="차수" border="0" color="33554432" x="960" y="384" height="76" width="210" html.valueishtml="0"  name=name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="실시일정" border="0" color="33554432" x="1184" y="384" height="56" width="914" html.valueishtml="0"  name=compute_0003_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="실시내용" border="0" color="33554432" x="2112" y="384" height="56" width="1399" html.valueishtml="0"  name=compute_0004_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="실시장소" border="0" color="33554432" x="3525" y="384" height="56" width="727" html.valueishtml="0"  name=compute_0005_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="대상" border="0" color="33554432" x="4265" y="388" height="76" width="379" html.valueishtml="0"  name=compute_0006_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="참가인원" border="0" color="33554432" x="4658" y="388" height="76" width="251" html.valueishtml="0"  name=compute_0007_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="프로그램명" border="0" color="33554432" x="229" y="384" height="76" width="718" html.valueishtml="0"  name=t_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="NO" border="0" color="33554432" x="0" y="384" height="56" width="219" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=header x1="224" y1="376" x2="224" y2="464"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="0" y1="376" x2="4914" y2="376"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="951" y1="380" x2="951" y2="468"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="0" y1="448" x2="4914" y2="448"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=header id=10 alignment="0" tabsequence=32766 border="0" color="33554432" x="398" y="288" height="76" width="329" format="[general]" html.valueishtml="0"  name=hakgi visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=header id=11 alignment="1" tabsequence=32766 border="0" color="33554432" x="50" y="288" height="76" width="146" format="[general]" html.valueishtml="0"  name=sum150tl_year visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="학년도" border="0" color="0" x="206" y="288" height="76" width="165" html.valueishtml="0"  name=t_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=detail x1="0" y1="80" x2="4914" y2="80"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=detail alignment="2" expression="getrow()"border="0" color="33554432" x="0" y="12" height="84" width="219" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="33554432" x="229" y="12" height="84" width="718" format="[general]" html.valueishtml="0"  name=kch102d_fname visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="960" y="12" height="84" width="215" format="[general]" html.valueishtml="0"  name=compute_0002 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="33554432" x="1189" y="12" height="84" width="485" format="[general]" html.valueishtml="0"  name=sum150tl_rst_dt visible="1" editmask.mask="####년##월##일" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="33554432" x="1687" y="12" height="84" width="201" format="[general]" html.valueishtml="0"  name=sum150tl_rst_start_time visible="1" editmask.mask="##:00 -" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="33554432" x="1906" y="12" height="84" width="187" format="[general]" html.valueishtml="0"  name=sum150tl_rst_end_time visible="1" editmask.mask="##:00" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="33554432" x="2112" y="12" height="84" width="1399" format="[general]" html.valueishtml="0"  name=sum150tl_rst_context visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="33554432" x="3525" y="12" height="84" width="727" format="[general]" html.valueishtml="0"  name=sum150tl_rst_place visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="33554432" x="4265" y="12" height="84" width="379" format="[general]" html.valueishtml="0"  name=sum150tl_target_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=detail x1="3515" y1="0" x2="3515" y2="80"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="4256" y1="0" x2="4256" y2="80"  name=l_17 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="4649" y1="0" x2="4649" y2="80"  name=l_18 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2103" y1="0" x2="2103" y2="80"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1175" y1="0" x2="1175" y2="80"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="951" y1="0" x2="951" y2="84"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="224" y1="0" x2="224" y2="80"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="33554432" x="4658" y="12" height="84" width="251" format="[general]" html.valueishtml="0"  name=sum150tl_rst_cnt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

@@ -1,0 +1,163 @@
+﻿$PBExportHeader$d_dhwsu203a_p.srd
+$PBExportComments$[대학원학적] 성적평가표
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=1060 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=180 color="536870912" )
+detail(height=116 color="536870912" )
+table(column=(type=char(4) updatewhereclause=yes name=d_gaesul_gwamok_year dbname="d_gaesul_gwamok.year" dbalias=".year" )
+ column=(type=char(1) updatewhereclause=yes name=d_gaesul_gwamok_hakgi dbname="d_gaesul_gwamok.hakgi" dbalias=".hakgi" )
+ column=(type=char(3) updatewhereclause=yes name=d_gaesul_gwamok_gwa_id dbname="d_gaesul_gwamok.gwa_id" dbalias=".gwa_id" )
+ column=(type=char(6) updatewhereclause=yes name=d_gaesul_gwamok_gwamok_id dbname="d_gaesul_gwamok.gwamok_id" dbalias=".gwamok_id" )
+ column=(type=char(5) updatewhereclause=yes name=d_gaesul_gwamok_member_no dbname="d_gaesul_gwamok.member_no" dbalias=".member_no" )
+ column=(type=decimal(0) updatewhereclause=yes name=d_gaesul_gwamok_hakjum dbname="d_gaesul_gwamok.hakjum" dbalias=".hakjum" )
+ column=(type=char(3) updatewhereclause=yes name=d_hakjuk_gwa_id dbname="d_hakjuk.gwa_id" dbalias=".gwa_id" )
+ column=(type=char(1) updatewhereclause=yes name=d_hakjuk_s_hakgicha dbname="d_hakjuk.s_hakgicha" dbalias=".s_hakgicha" )
+ column=(type=char(9) updatewhereclause=yes name=d_sugang_trans_hakbun dbname="d_sugang_trans.hakbun" dbalias=".hakbun" )
+ column=(type=char(20) updatewhereclause=yes name=d_hakjuk_hname dbname="d_hakjuk.hname" dbalias=".hname" )
+ column=(type=decimal(1) updatewhereclause=yes name=d_sugang_trans_jumsu dbname="d_sugang_trans.jumsu" dbalias=".jumsu" )
+ column=(type=decimal(1) updatewhereclause=yes name=d_sugang_trans_pyengjum dbname="d_sugang_trans.pyengjum" dbalias=".pyengjum" )
+ column=(type=char(2) updatewhereclause=yes name=d_sugang_trans_hwansan dbname="d_sugang_trans.hwansan" dbalias=".hwansan" )
+ retrieve="  SELECT HAKSA.D_GAESUL_GWAMOK.YEAR,   
+         HAKSA.D_GAESUL_GWAMOK.HAKGI,   
+         HAKSA.D_GAESUL_GWAMOK.GWA_ID,   
+         HAKSA.D_GAESUL_GWAMOK.GWAMOK_ID,   
+         HAKSA.D_GAESUL_GWAMOK.MEMBER_NO,   
+         HAKSA.D_GAESUL_GWAMOK.HAKJUM,   
+         HAKSA.D_HAKJUK.GWA_ID,   
+         HAKSA.D_HAKJUK.S_HAKGICHA,   
+         HAKSA.D_SUGANG_TRANS.HAKBUN,   
+         HAKSA.D_HAKJUK.HNAME,   
+         HAKSA.D_SUGANG_TRANS.JUMSU,   
+         HAKSA.D_SUGANG_TRANS.PYENGJUM,   
+         HAKSA.D_SUGANG_TRANS.HWANSAN  
+    FROM HAKSA.D_GAESUL_GWAMOK,   
+         HAKSA.D_SUGANG_TRANS,   
+         HAKSA.D_HAKJUK  
+   WHERE ( HAKSA.D_GAESUL_GWAMOK.YEAR = HAKSA.D_SUGANG_TRANS.YEAR ) and  
+         ( HAKSA.D_GAESUL_GWAMOK.HAKGI = HAKSA.D_SUGANG_TRANS.HAKGI ) and  
+         ( HAKSA.D_GAESUL_GWAMOK.GWAMOK_ID = HAKSA.D_SUGANG_TRANS.GWAMOK_ID ) and  
+         ( HAKSA.D_SUGANG_TRANS.HAKBUN = HAKSA.D_HAKJUK.HAKBUN ) and  
+         ( HAKSA.D_GAESUL_GWAMOK.MEMBER_NO = HAKSA.D_SUGANG_TRANS.MEMBER_NO ) and  
+         ( HAKSA.D_GAESUL_GWAMOK.GWAJUNG_ID = HAKSA.D_SUGANG_TRANS.GWAJUNG_ID ) and  
+         ( HAKSA.D_GAESUL_GWAMOK.GWA_ID = HAKSA.D_SUGANG_TRANS.GWA_ID ) and  
+         ( ( HAKSA.D_GAESUL_GWAMOK.YEAR = :as_year ) AND  
+         ( HAKSA.D_GAESUL_GWAMOK.HAKGI = :as_hakgi ) AND  
+         ( HAKSA.D_GAESUL_GWAMOK.GWAJUNG_ID = :as_gwajung ) AND  
+         ( HAKSA.D_GAESUL_GWAMOK.GWA_ID = :as_hakgwa ) AND  
+         ( HAKSA.D_GAESUL_GWAMOK.GWAMOK_ID = :as_gwamok ) AND  
+         ( HAKSA.D_GAESUL_GWAMOK.MEMBER_NO = :as_prof ) )    
+" arguments=(("as_year", string),("as_hakgi", string),("as_gwajung", string),("as_hakgwa", string),("as_gwamok", string),("as_prof", string))  sort="d_gaesul_gwamok_gwa_id A d_gaesul_gwamok_gwamok_id A d_gaesul_gwamok_member_no A d_hakjuk_gwa_id A d_hakjuk_s_hakgicha D d_sugang_trans_hakbun A " )
+group(level=1 header.height=0 trailer.height=4 by=("d_gaesul_gwamok_gwa_id" , "d_gaesul_gwamok_gwamok_id" , "d_gaesul_gwamok_member_no" ) newpage=yes header.color="536870912" trailer.color="536870912" )
+line(band=header x1="343" y1="608" x2="343" y2="900"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2080" y1="608" x2="2080" y2="900"  name=l_10 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2985" y1="516" x2="3383" y2="516"  name=l_13 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="성  적  평  가  표" border="1" color="0" x="1042" y="248" height="112" width="1344" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-18" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="담당교수인" border="0" color="0" x="3017" y="536" height="60" width="329" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학    과" border="0" color="0" x="46" y="636" height="60" width="279" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="1202" y1="608" x2="1202" y2="900"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1518" y1="608" x2="1518" y2="900"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1728" y1="804" x2="1728" y2="900"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="학 기 생" border="0" color="0" x="1221" y="636" height="60" width="279" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="교과목명" border="0" color="0" x="46" y="732" height="60" width="279" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학수번호" border="0" color="0" x="1221" y="732" height="60" width="279" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1545" y="732" height="60" width="375" format="[general]" html.valueishtml="0"  name=d_gaesul_gwamok_gwamok_id visible="1" edit.limit=6 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=3 alignment="0" tabsequence=32766 border="0" color="0" x="366" y="636" height="60" width="814" format="[general]" html.valueishtml="0"  name=d_gaesul_gwamok_gwa_id visible="1" dddw.name=d_dddw_d_hakgwa dddw.displaycolumn=gwa_hname dddw.datacolumn=gwa_id dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=4 alignment="0" tabsequence=32766 border="0" color="0" x="366" y="732" height="60" width="814" format="[general]" html.valueishtml="0"  name=d_gaesul_gwamok_gwamok_id_1 visible="1" dddw.name=d_dddw_d_gwamok dddw.displaycolumn=gwamok_hname dddw.datacolumn=gwamok_id dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="담당교수" border="0" color="0" x="46" y="828" height="52" width="279" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=5 alignment="0" tabsequence=32766 border="0" color="0" x="366" y="828" height="52" width="814" format="[general]" html.valueishtml="0"  name=d_gaesul_gwamok_member_no visible="1" dddw.name=d_dddw_prof dddw.displaycolumn=name dddw.datacolumn=member_no dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학    점" border="0" color="0" x="1221" y="828" height="52" width="279" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=6 alignment="2" tabsequence=32766 border="0" color="0" x="1577" y="828" height="52" width="91" format="[general]" html.valueishtml="0"  name=d_gaesul_gwamok_hakjum visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=1 alignment="1" tabsequence=32766 border="0" color="0" x="37" y="544" height="52" width="174" format="[general]" html.valueishtml="0"  name=d_gaesul_gwamok_year visible="1" edit.limit=4 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="학년도 제" border="0" color="0" x="233" y="544" height="60" width="393" html.valueishtml="0"  name=t_9 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=2 alignment="0" tabsequence=32766 border="0" color="0" x="558" y="544" height="52" width="55" format="[general]" html.valueishtml="0"  name=d_gaesul_gwamok_hakgi visible="1" edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="학기" border="0" color="0" x="635" y="544" height="60" width="320" html.valueishtml="0"  name=t_10 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="27" y1="612" x2="3383" y2="612"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="27" y1="900" x2="3383" y2="900"  name=l_4 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="27" y1="920" x2="3383" y2="920"  name=l_14 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="27" y1="708" x2="2990" y2="708"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="27" y1="804" x2="2990" y2="804"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="일련
+번호" border="0" color="0" x="46" y="940" height="104" width="128" html.valueishtml="0"  name=t_11 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="중간
+(30%)" border="0" color="0" x="1705" y="940" height="104" width="151" html.valueishtml="0"  name=t_16 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="기말
+(40%)" border="0" color="0" x="1879" y="940" height="104" width="151" html.valueishtml="0"  name=t_17 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="과제
+(20%)" border="0" color="0" x="2053" y="940" height="104" width="151" html.valueishtml="0"  name=t_18 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="출석
+(20%)" border="0" color="0" x="2226" y="940" height="104" width="155" html.valueishtml="0"  name=t_19 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="실기실습
+(20%)" border="0" color="0" x="2405" y="940" height="104" width="256" html.valueishtml="0"  name=t_20 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="실점수
+(20%)" border="0" color="0" x="2683" y="940" height="104" width="192" html.valueishtml="0"  name=t_21 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="석차" border="0" color="0" x="3241" y="972" height="60" width="133" html.valueishtml="0"  name=t_24 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성  명" border="0" color="0" x="1390" y="972" height="60" width="288" html.valueishtml="0"  name=t_15 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학 번" border="0" color="0" x="1001" y="972" height="60" width="366" html.valueishtml="0"  name=t_13 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="수업
+학기" border="0" color="0" x="832" y="940" height="104" width="142" html.valueishtml="0"  name=t_14 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="183" y1="916" x2="183" y2="1132"  name=l_17 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="818" y1="916" x2="818" y2="1132"  name=l_18 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="983" y1="916" x2="983" y2="1132"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1376" y1="916" x2="1376" y2="1132"  name=l_20 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1687" y1="916" x2="1687" y2="1132"  name=l_21 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1865" y1="916" x2="1865" y2="1132"  name=l_22 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2039" y1="916" x2="2039" y2="1132"  name=l_23 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2213" y1="916" x2="2213" y2="1132"  name=l_24 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2391" y1="916" x2="2391" y2="1132"  name=l_25 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2665" y1="916" x2="2665" y2="1132"  name=l_26 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2885" y1="916" x2="2885" y2="1132"  name=l_27 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3054" y1="916" x2="3054" y2="1132"  name=l_28 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3227" y1="916" x2="3227" y2="1132"  name=l_29 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="27" y1="1056" x2="3383" y2="1056"  name=l_31 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=header alignment="2" expression="'Page:' + page() "border="0" color="0" x="1755" y="828" height="52" width="302" format="[general]" html.valueishtml="0"  name=page_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="평가
+코드" border="0" color="0" x="2898" y="940" height="104" width="146" html.valueishtml="0"  name=t_22 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="평가
+점수" border="0" color="0" x="3067" y="940" height="104" width="146" html.valueishtml="0"  name=t_23 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학     과" border="0" color="0" x="201" y="972" height="60" width="608" html.valueishtml="0"  name=t_12 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="3383" y1="516" x2="3383" y2="896"  name=l_6 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="27" y1="612" x2="27" y2="900"  name=l_5 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2985" y1="516" x2="2985" y2="900"  name=l_12 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3383" y1="920" x2="3383" y2="1132"  name=l_30 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="27" y1="920" x2="27" y2="1132"  name=l_16 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="27" y1="0" x2="27" y2="216"  name=l_32 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="183" y1="0" x2="183" y2="216"  name=l_33 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="818" y1="0" x2="818" y2="216"  name=l_34 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="983" y1="0" x2="983" y2="216"  name=l_35 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1376" y1="0" x2="1376" y2="216"  name=l_36 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1687" y1="0" x2="1687" y2="216"  name=l_37 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1865" y1="0" x2="1865" y2="216"  name=l_38 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2039" y1="0" x2="2039" y2="216"  name=l_39 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2213" y1="0" x2="2213" y2="216"  name=l_40 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2391" y1="0" x2="2391" y2="216"  name=l_41 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2665" y1="0" x2="2665" y2="216"  name=l_42 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2885" y1="0" x2="2885" y2="216"  name=l_43 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3054" y1="0" x2="3054" y2="216"  name=l_44 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3227" y1="0" x2="3227" y2="216"  name=l_45 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3383" y1="0" x2="3383" y2="216"  name=l_46 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="0" x="1001" y="28" height="64" width="366" format="[general]" html.valueishtml="0"  name=d_sugang_trans_hakbun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="getrow() - first(getrow() for group 1) + 1"border="0" color="0" x="55" y="28" height="64" width="101" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="27" y1="112" x2="3383" y2="112"  name=l_47 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="0" x="1390" y="28" height="64" width="288" format="[general]" html.valueishtml="0"  name=d_hakjuk_hname visible="1" edit.limit=10 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="0" x="2720" y="28" height="64" width="137" format="[general]" html.valueishtml="0"  name=d_sugang_trans_jumsu visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="2" tabsequence=32766 border="0" color="0" x="2898" y="28" height="64" width="146" format="[general]" html.valueishtml="0"  name=d_sugang_trans_hwansan visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="2" tabsequence=32766 border="0" color="0" x="3067" y="28" height="64" width="146" format="[general]" html.valueishtml="0"  name=d_sugang_trans_pyengjum visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="832" y="28" height="64" width="142" format="[general]" html.valueishtml="0"  name=d_hakjuk_s_hakgicha visible="1" edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="201" y="28" height="64" width="608" format="[general]" html.valueishtml="0"  name=d_hakjuk_gwa_id visible="1" dddw.name=d_dddw_d_hakgwa_short dddw.displaycolumn=gwa_sname dddw.datacolumn=gwa_id dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=trailer.1 x1="23" y1="4" x2="3383" y2="4"  name=l_15 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=footer alignment="0" text="1. 성적정정기간이 만료된 후 성적평가표 1부를 출력하여 담당교수 싸인을 한 후" border="0" color="0" x="50" y="8" height="48" width="2885" html.valueishtml="0"  name=t_25 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=footer alignment="0" text="지정기일까지 교학처에 제출해 주시기 바랍니다." border="0" color="0" x="146" y="64" height="48" width="2885" html.valueishtml="0"  name=t_26 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=footer alignment="0" text="2. 누락된 학생이 있을경우 교학처로 연락 바랍니다." border="0" color="0" x="50" y="128" height="48" width="2885" html.valueishtml="0"  name=t_27 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

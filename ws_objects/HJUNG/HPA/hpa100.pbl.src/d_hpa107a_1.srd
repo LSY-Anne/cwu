@@ -1,0 +1,61 @@
+﻿$PBExportHeader$d_hpa107a_1.srd
+$PBExportComments$세금계산과세기준 관리
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(4) update=yes updatewhereclause=yes key=yes name=tax_year dbname="hpa013m.tax_year" dbalias=".tax_year" )
+ column=(type=number update=yes updatewhereclause=yes key=yes name=seq_no dbname="hpa013m.seq_no" dbalias=".seq_no" initial="0" )
+ column=(type=number update=yes updatewhereclause=yes name=tax_from_date dbname="hpa013m.tax_from_date" dbalias=".tax_from_date" initial="0" )
+ column=(type=number update=yes updatewhereclause=yes name=tax_to_date dbname="hpa013m.tax_to_date" dbalias=".tax_to_date" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=tax_rate dbname="hpa013m.tax_rate" dbalias=".tax_rate" initial="0" )
+ column=(type=number update=yes updatewhereclause=yes name=tax_sum_amt dbname="hpa013m.tax_sum_amt" dbalias=".tax_sum_amt" initial="0" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hpa013m.worker" dbalias=".worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hpa013m.ipaddr" dbalias=".ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hpa013m.work_date" dbalias=".work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hpa013m.job_uid" dbalias=".job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hpa013m.job_add" dbalias=".job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hpa013m.job_date" dbalias=".job_date" )
+ retrieve="  SELECT PADB.HPA013M.TAX_YEAR,   
+         PADB.HPA013M.SEQ_NO,   
+         PADB.HPA013M.TAX_FROM_DATE,   
+         PADB.HPA013M.TAX_TO_DATE,   
+         PADB.HPA013M.TAX_RATE,   
+         PADB.HPA013M.TAX_SUM_AMT,   
+         PADB.HPA013M.WORKER,   
+         PADB.HPA013M.IPADDR,   
+         PADB.HPA013M.WORK_DATE,   
+         PADB.HPA013M.JOB_UID,   
+         PADB.HPA013M.JOB_ADD,   
+         PADB.HPA013M.JOB_DATE  
+    FROM PADB.HPA013M  
+   WHERE PADB.HPA013M.TAX_YEAR like :as_year || '%'   
+ORDER BY PADB.HPA013M.TAX_YEAR ASC,   
+         PADB.HPA013M.SEQ_NO ASC   
+" update="PADB.HPA013M" updatewhere=1 updatekeyinplace=no arguments=(("as_year", string)) )
+text(band=header alignment="2" text="순번" border="0" color="0" x="590" y="12" height="56" width="498" html.valueishtml="0"  name=seq_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="과세기준금액(F)" border="0" color="0" x="1097" y="12" height="56" width="649" html.valueishtml="0"  name=tax_from_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="과세기준금액(T)" border="0" color="0" x="1755" y="12" height="56" width="649" html.valueishtml="0"  name=tax_to_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="세율" border="0" color="0" x="2414" y="12" height="56" width="649" html.valueishtml="0"  name=tax_rate_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="누진공제액" border="0" color="0" x="3072" y="12" height="56" width="649" html.valueishtml="0"  name=tax_sum_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="해당년도" border="0" color="0" x="9" y="12" height="56" width="571" html.valueishtml="0"  name=tax_year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=10 border="0" color="0" x="9" y="4" height="72" width="571" format="[general]" html.valueishtml="0"  name=tax_year visible="1" editmask.autoskip=yes editmask.spin=yes editmask.mask="####" editmask.spinrange="1900~~2999" editmask.spinincr=1 editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=20 border="0" color="0" x="590" y="4" height="72" width="498" format="[general]" html.valueishtml="0"  name=seq_no visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="1" tabsequence=60 border="0" color="0" x="3072" y="4" height="72" width="649" format="#,##0" html.valueishtml="0"  name=tax_sum_amt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240 )" )
+column(band=detail id=3 alignment="1" tabsequence=30 border="0" color="0" x="1097" y="4" height="72" width="649" format="#,##0" html.valueishtml="0"  name=tax_from_date visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240 )" )
+column(band=detail id=4 alignment="1" tabsequence=40 border="0" color="0" x="1755" y="4" height="72" width="649" format="#,##0" html.valueishtml="0"  name=tax_to_date visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240 )" )
+column(band=detail id=5 alignment="1" tabsequence=50 border="0" color="0" x="2414" y="4" height="72" width="649" format="#,##0" html.valueishtml="0"  name=tax_rate visible="1" edit.limit=3 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240 )" )
+
+sparse(names="tax_year")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,87 @@
+﻿$PBExportHeader$d_sch214a_1.srd
+$PBExportComments$전체호실 배정표
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 225 print.margin.right = 225 print.margin.top = 150 print.margin.bottom = 150 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no rows_per_detail = 4 )
+header(height=536 color="536870912" )
+summary(height=8 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=124 color="536870912" )
+table(column=(type=char(9) updatewhereclause=yes name=hakbun dbname="saz220t.hakbun" )
+ column=(type=char(20) updatewhereclause=yes name=hname dbname="saz220t.hname" )
+ column=(type=char(1) updatewhereclause=yes name=house_gb dbname="saz250t.house_gb" )
+ column=(type=char(60) updatewhereclause=yes name=house_cd dbname="house_cd" )
+ column=(type=char(6) updatewhereclause=yes name=room_cd dbname="saz250t.room_cd" )
+ column=(type=char(1) updatewhereclause=yes name=door_gb dbname="saz250t.door_gb" )
+ column=(type=char(2) updatewhereclause=yes name=door_no dbname="saz250t.door_no" )
+ column=(type=number updatewhereclause=yes name=floor dbname="floor" )
+ retrieve="  SELECT A.HAKBUN,   
+         A.HNAME,   
+         B.HOUSE_GB,   
+         (SELECT HOUSE_NM FROM SCH.SAZ110M WHERE HOUSE_GB = B.HOUSE_GB AND HOUSE_CD = B.HOUSE_CD) AS HOUSE_CD,   
+         B.ROOM_CD,   
+         B.DOOR_GB,   
+         B.DOOR_NO  ,
+        (SELECT FLOOR FROM SCH.SAZ120D WHERE HOUSE_GB = B.HOUSE_GB AND STD_YEAR = B.STD_YEAR
+				 AND HOUSE_CD = B.HOUSE_CD AND ROOM_CD = B.ROOM_CD 
+				AND DOOR_GB = B.DOOR_GB) AS FLOOR
+    FROM SCH.SAZ220T A,   
+         SCH.SAZ250T B 
+   WHERE ( A.HOUSE_GB = B.HOUSE_GB ) and  
+         ( A.STD_YEAR = B.STD_YEAR ) and  
+         ( A.HOUSE_REQ_NO = B.HOUSE_REQ_NO ) and  
+         ( A.HAKBUN = B.HAKBUN ) and  
+         ( ( B.STAT_CD = '1' ) AND  
+         ( A.HOUSE_GB = :as_gb ) AND  
+         ( A.STD_YEAR = :as_year ) AND  
+         ( B.HOUSE_CD = :as_cd ) 
+         )    
+" arguments=(("as_gb", string),("as_year", string),("as_cd", string)) )
+compute(band=header alignment="2" expression=" house_cd "border="0" color="0" x="23" y="136" height="96" width="3141" format="< [GENERAL] >" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-16" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=header x1="23" y1="532" x2="3163" y2="532"  name=l_2 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="23" y1="404" x2="23" y2="1800"  name=l_14 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3163" y1="408" x2="3163" y2="1804"  name=l_16 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="352" y1="404" x2="352" y2="1800"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="695" y1="404" x2="695" y2="1800"  name=l_17 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1111" y1="404" x2="1111" y2="1800"  name=l_18 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1627" y1="404" x2="1627" y2="1800"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2651" y1="404" x2="2651" y2="1800"  name=l_21 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2139" y1="404" x2="2139" y2="1800"  name=l_20 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="층" border="0" color="33554432" x="37" y="440" height="56" width="297" html.valueishtml="0"  name=room_cd_t_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="이름1" border="0" color="33554432" x="1134" y="440" height="56" width="475" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="이름4" border="0" color="33554432" x="2670" y="440" height="56" width="475" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="이름2" border="0" color="33554432" x="1646" y="440" height="56" width="475" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="이름3" border="0" color="33554432" x="2158" y="440" height="56" width="475" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="세대" border="0" color="33554432" x="370" y="440" height="56" width="306" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="호" border="0" color="33554432" x="713" y="440" height="56" width="379" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="23" y1="408" x2="3163" y2="408"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=detail alignment="2" expression=" room_cd "border="0" color="0" x="41" y="708" height="72" width="256" format="< [GENERAL] >" html.valueishtml="0"  name=compute_3 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=detail x1="23" y1="0" x2="23" y2="1396"  name=l_4 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="352" y1="0" x2="352" y2="1396"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3163" y1="0" x2="3163" y2="1396"  name=l_7 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="695" y1="0" x2="695" y2="1396"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1111" y1="0" x2="1111" y2="1396"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1627" y1="0" x2="1627" y2="1396"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2139" y1="0" x2="2139" y2="1396"  name=l_22 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2651" y1="0" x2="2651" y2="1396"  name=l_23 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="23" y1="120" x2="3163" y2="120"  name=l_6 visible="1~tif( floor <> floor[1], 1, 0)" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=detail alignment="2" expression=" floor "border="0" color="0" x="37" y="32" height="72" width="297" format="[GENERAL]" html.valueishtml="0"  name=compute_2 visible="1~tIf (currentrow() = 1 , 1,if( floor <> floor[-1], 1, 0))"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression=" room_cd "border="0" color="33554432" x="370" y="32" height="72" width="306" format="[GENERAL]" html.valueishtml="0"  name=compute_4 visible="1~tIf (currentrow() = 1 , 1,if(  room_cd  <>  room_cd[-1], 1, 0))"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression=" door_gb "border="0" color="33554432" x="713" y="32" height="72" width="379" format="[GENERAL]" html.valueishtml="0"  name=compute_5 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="1134" y="32" height="72" width="475" format="[general]" html.valueishtml="0" row_in_detail=1  name=hname_1  tag="성명" visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="1646" y="32" height="72" width="475" format="[general]" html.valueishtml="0" row_in_detail=2  name=hname_2  tag="성명" visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="2158" y="32" height="72" width="475" format="[general]" html.valueishtml="0" row_in_detail=3  name=hname_3  tag="성명" visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="2670" y="32" height="72" width="475" format="[general]" html.valueishtml="0" row_in_detail=4  name=hname_4  tag="성명" visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=summary x1="18" y1="4" x2="3163" y2="4"  name=l_13 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="366" y1="120" x2="3163" y2="120"  name=l_5 visible="1~tif(  room_cd  <>  room_cd [1], 1, 0)" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1120" y1="120" x2="3159" y2="120"  name=l_11 visible="1~tif(  door_gb   <>  door_gb  [1], 1, 0)" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,93 @@
+﻿$PBExportHeader$d_hfn108a_3.srd
+$PBExportComments$어음 조회
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(20) updatewhereclause=yes key=yes name=notes_no dbname="hfn004m.notes_no" )
+ column=(type=decimal(0) updatewhereclause=yes name=acct_class dbname="hfn004m.acct_class" )
+ column=(type=decimal(0) updatewhereclause=yes name=notes_class dbname="hfn004m.notes_class" )
+ column=(type=decimal(0) updatewhereclause=yes name=bal_bank_code dbname="hfn004m.bal_bank_code" )
+ column=(type=datetime updatewhereclause=yes name=su_date dbname="hfn004m.su_date" )
+ column=(type=datetime updatewhereclause=yes name=note_issue_date dbname="hfn004m.note_issue_date" )
+ column=(type=datetime updatewhereclause=yes name=note_close_date dbname="hfn004m.note_close_date" )
+ column=(type=decimal(0) updatewhereclause=yes name=note_amt dbname="hfn004m.note_amt" )
+ column=(type=char(1) updatewhereclause=yes name=close_yn dbname="hfn004m.close_yn" values="만기	Y/미만기	N/" )
+ column=(type=char(10) updatewhereclause=yes name=cust_no dbname="hfn004m.cust_no" )
+ column=(type=char(4) updatewhereclause=yes name=gwa dbname="hfn004m.gwa" )
+ column=(type=char(100) updatewhereclause=yes name=remark dbname="hfn004m.remark" )
+ column=(type=char(8) updatewhereclause=yes name=acct_date dbname="hfn004m.acct_date" )
+ column=(type=decimal(0) updatewhereclause=yes name=back_class dbname="hfn004m.back_class" )
+ column=(type=decimal(2) updatewhereclause=yes name=discount_rate dbname="hfn004m.discount_rate" )
+ column=(type=datetime updatewhereclause=yes name=accept_date dbname="hfn004m.accept_date" )
+ column=(type=decimal(0) updatewhereclause=yes name=su_bank_code dbname="hfn004m.su_bank_code" )
+ column=(type=char(20) updatewhereclause=yes name=back_person1 dbname="hfn004m.back_person1" )
+ column=(type=char(20) updatewhereclause=yes name=back_person2 dbname="hfn004m.back_person2" )
+ column=(type=char(20) updatewhereclause=yes name=back_person3 dbname="hfn004m.back_person3" )
+ column=(type=char(5) updatewhereclause=yes name=worker dbname="hfn004m.worker" )
+ column=(type=char(20) updatewhereclause=yes name=ipaddr dbname="hfn004m.ipaddr" )
+ column=(type=datetime updatewhereclause=yes name=work_date dbname="hfn004m.work_date" )
+ column=(type=char(5) updatewhereclause=yes name=job_uid dbname="hfn004m.job_uid" )
+ column=(type=char(20) updatewhereclause=yes name=job_add dbname="hfn004m.job_add" )
+ column=(type=datetime updatewhereclause=yes name=job_date dbname="hfn004m.job_date" )
+ retrieve="SELECT	A.NOTES_NO,
+			A.ACCT_CLASS,
+			A.NOTES_CLASS,
+			A.BAL_BANK_CODE,
+			A.SU_DATE,
+			A.NOTE_ISSUE_DATE,
+			A.NOTE_CLOSE_DATE,
+			A.NOTE_AMT,
+			A.CLOSE_YN,
+			A.CUST_NO,
+			A.GWA,
+			A.REMARK,
+			A.ACCT_DATE,
+			A.BACK_CLASS,
+			A.DISCOUNT_RATE,
+			A.ACCEPT_DATE,
+			A.SU_BANK_CODE,
+			A.BACK_PERSON1,
+			A.BACK_PERSON2,
+			A.BACK_PERSON3,
+			A.WORKER,
+			A.IPADDR,
+			A.WORK_DATE,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE
+FROM		FNDB.HFN004M A
+WHERE		A.ACCT_CLASS = :AI_ACCT_CLASS
+AND		DECODE(:AI_NOTES_CLASS,0,0,A.NOTES_CLASS) = :AI_NOTES_CLASS
+ORDER BY A.NOTES_NO" update="FNDB.HFN004M" updatewhere=0 updatekeyinplace=no arguments=(("ai_acct_class", number),("ai_notes_class", number)) )
+text(band=header alignment="2" text="구분" border="0" color="0" x="9" y="8" height="56" width="343" html.valueishtml="0"  name=notes_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="수표어음번호" border="0" color="0" x="1019" y="8" height="56" width="631" html.valueishtml="0"  name=notes_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="발행은행" border="0" color="0" x="361" y="8" height="56" width="649" html.valueishtml="0"  name=bal_bank_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="발행일자" border="0" color="0" x="1664" y="8" height="56" width="347" html.valueishtml="0"  name=note_issue_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="만기일자" border="0" color="0" x="2021" y="8" height="56" width="352" html.valueishtml="0"  name=note_close_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="발행금액" border="0" color="0" x="2638" y="8" height="56" width="581" html.valueishtml="0"  name=note_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="만기여부" border="0" color="0" x="2382" y="8" height="56" width="247" html.valueishtml="0"  name=close_yn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="거래처" border="0" color="0" x="3227" y="8" height="56" width="425" html.valueishtml="0"  name=cust_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="발행내역" border="0" color="0" x="3666" y="8" height="56" width="1527" html.valueishtml="0"  name=remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="343" format="[general]" html.valueishtml="0"  name=notes_class visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="1019" y="4" height="72" width="631" format="[general]" html.valueishtml="0"  name=notes_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="361" y="4" height="72" width="649" format="[general]" html.valueishtml="0"  name=bal_bank_code visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1664" y="4" height="72" width="347" format="yyyy/mm/dd" html.valueishtml="0"  name=note_issue_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="2021" y="4" height="72" width="352" format="yyyy/mm/dd" html.valueishtml="0"  name=note_close_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="2638" y="4" height="72" width="581" format="#,###" html.valueishtml="0"  name=note_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="2382" y="4" height="72" width="247" format="[general]" html.valueishtml="0"  name=close_yn visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="3227" y="4" height="72" width="425" format="[general]" html.valueishtml="0"  name=cust_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="3666" y="4" height="72" width="1527" format="[general]" html.valueishtml="0"  name=remark visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

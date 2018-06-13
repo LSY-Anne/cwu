@@ -1,0 +1,131 @@
+﻿$PBExportHeader$d_hge505a_1.srd
+$PBExportComments$주별 시수 산출 내역(리스트)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes name=member_no dbname="hpa112t.member_no" )
+ column=(type=char(40) updatewhereclause=yes name=name dbname="hpa112t.name" )
+ column=(type=number updatewhereclause=yes name=jikjong_code dbname="hpa112t.jikjong_code" )
+ column=(type=char(4) updatewhereclause=yes name=hpa111m_duty_code dbname="hpa112t.duty_code" )
+ column=(type=char(6) updatewhereclause=yes name=hpa111m_gwa dbname="hpa112t.gwa" )
+ column=(type=char(10) updatewhereclause=yes name=hpa111m_trans_member_no dbname="hpa112t.trans_member_no" )
+ column=(type=char(20) updatewhereclause=yes name=trans_name dbname="hpa112t.trans_name" )
+ column=(type=char(1) updatewhereclause=yes name=old_duty_yn dbname="old_duty_yn" values="	0/Y	9/" )
+ column=(type=number updatewhereclause=yes name=num_of_time dbname="hpa112t.num_of_time" )
+ column=(type=number updatewhereclause=yes name=num_of_general dbname="hpa112t.num_of_general" )
+ column=(type=number updatewhereclause=yes name=num_of_middle dbname="hpa112t.num_of_middle" )
+ column=(type=number updatewhereclause=yes name=num_of_large dbname="hpa112t.num_of_large" )
+ column=(type=number updatewhereclause=yes name=limit_time dbname="hpa112t.limit_time" )
+ column=(type=char(1) updatewhereclause=yes name=gubun dbname="gubun" values="Y	1/ 	2/" )
+ retrieve="select	distinct cc.member_no		as member_no, 
+				dd.name 							as name, 
+				ee.jikjong_code 				as jikjong_code, 
+				dd.duty_code 					as duty_code, 
+				dd.gwa 							as gwa,
+				aa.trans_member_no			as	trans_member_no, 
+				aa.trans_name					as	trans_name,
+				nvl(aa.old_duty_yn, '0')	as	old_duty_yn,
+				aa.num_of_time,
+				aa.num_of_general,
+				aa.num_of_middle,
+				aa.num_of_large,
+				aa.limit_time,
+				'1'	as	gubun
+from		(	select	a.member_no 			as member_no, 
+								a.name 					as name, 
+								a.jikjong_code 		as jikjong_code, 
+								a.duty_code 			as duty_code, 
+								a.gwa 					as gwa,
+								a.trans_member_no		as	trans_member_no, 
+								a.trans_name			as	trans_name,
+								nvl(c.old_duty_yn, '0')	old_duty_yn,
+								a.num_of_time as num_of_time, 
+								a.num_of_general as num_of_general, 
+								a.num_of_middle as num_of_middle , 
+								a.num_of_large as num_of_large ,
+								a.limit_time as limit_time,
+								'1' gubun
+					from		GEDB.hpa111m a, GEDB.hpa112t b, indb.hin001m c
+					where		a.year			=		:as_year
+					and		a.hakgi			=		:as_hakgi
+					and		a.jikjong_code	>=		:ai_str_jikjong
+					and		a.jikjong_code	<=		:ai_end_jikjong
+					and		a.gwa				like	:as_gwa
+					and		b.week_weekend	>=		:ai_str_week
+					and		b.week_weekend	<=		:ai_end_week
+					and		b.year			=		a.year
+					and		b.hakgi			=		a.hakgi
+					and		b.member_no		=		a.member_no
+					and		a.member_no		=		c.member_no	)	aa,
+				GEDB.hpa112t	cc, 
+				indb.hin001m	dd,
+				indb.v_hin003m_1	ee
+	where		cc.member_no		=	aa.member_no (+)
+	and		cc.year		 		=	:as_year
+	and		cc.hakgi				=	:as_hakgi
+	and		AA.JIKJONG_CODE	>=	:ai_str_jikjong
+	and		AA.JIKJONG_CODE	<=	:ai_end_jikjong
+	and		cc.week_weekend	>=	:ai_str_week
+	and		cc.week_weekend	<=	:ai_end_week
+   and      dd.duty_code      like :as_duty_code||'%'
+	and		cc.member_no		=	dd.member_no
+	and		dd.duty_code		=	ee.duty_code
+union
+	select	a.member_no, a.name, a.jikjong_code, a.duty_code, 
+				a.gwa 		as gwa,
+				''				as	trans_member_no,
+				''				as	trans_name,
+				nvl(c.old_duty_yn, '0')	old_duty_yn,
+				a.num_of_time,
+				a.num_of_general,
+				a.num_of_middle,
+				a.num_of_large,
+				a.limit_time,
+				'2' gubun
+	from		GEDB.hpa111m a, indb.hin001m c
+	where		a.year			=		:as_year
+	and		a.hakgi			=		:as_hakgi
+	and		a.jikjong_code	>=		:ai_str_jikjong
+	and		a.jikjong_code	<=		:ai_end_jikjong
+	and		a.gwa				like	:as_gwa
+   and      a.duty_code    like  :as_duty_code||'%'
+	and		a.member_no		=		c.member_no
+	and		a.member_no		not in	(	select	a.member_no
+													from		GEDB.hpa111m a, GEDB.hpa112t b
+													where		a.year			=		:as_year
+													and		a.hakgi			=		:as_hakgi
+													and		a.jikjong_code	>=		:ai_str_jikjong
+													and		a.jikjong_code	<=		:ai_end_jikjong
+													and		a.gwa				like	:as_gwa
+													and		b.week_weekend	>=		:ai_str_week
+													and		b.week_weekend	<=		:ai_end_week
+													and		b.year			=		a.year
+													and		b.hakgi			=		a.hakgi
+													and		b.member_no		=		a.member_no	)
+ORDER		BY	GWA,	MEMBER_NO" arguments=(("as_year", string),("as_hakgi", string),("ai_str_week", number),("ai_end_week", number),("ai_str_jikjong", number),("ai_end_jikjong", number),("as_gwa", string),("as_duty_code", string)) )
+text(band=header alignment="2" text="개인번호" border="0" color="0" x="9" y="12" height="56" width="293" html.valueishtml="0"  name=member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="성  명" border="0" color="0" x="311" y="12" height="56" width="334" html.valueishtml="0"  name=name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직급명" border="0" color="0" x="654" y="12" height="56" width="306" html.valueishtml="0"  name=hpa111m_duty_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="학 과 명" border="0" color="0" x="969" y="12" height="56" width="416" html.valueishtml="0"  name=hpa111m_gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="생성" border="0" color="0" x="1664" y="12" height="56" width="128" html.valueishtml="0"  name=gubun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="대체자" border="0" color="0" x="1394" y="12" height="56" width="261" html.valueishtml="0"  name=trans_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="293" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( gubun = '1', 78682240, 12639424)" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="311" y="4" height="72" width="334" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( gubun = '1', 78682240, 12639424)" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="654" y="4" height="72" width="306" format="[general]" html.valueishtml="0"  name=hpa111m_duty_code visible="1" dddw.name=dddw_duty_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( gubun = '1', 78682240, 12639424)" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="969" y="4" height="72" width="416" format="[general]" html.valueishtml="0"  name=hpa111m_gwa visible="1" dddw.name=dddw_sosok501 dddw.displaycolumn=dept_name dddw.datacolumn=dept_code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( gubun = '1', 78682240, 12639424)" )
+column(band=detail id=14 alignment="2" tabsequence=32766 border="0" color="0" x="1664" y="4" height="72" width="128" format="[general]" html.valueishtml="0"  name=gubun visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( gubun = '1', 78682240, 12639424)" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="1394" y="4" height="72" width="261" format="[general]" html.valueishtml="0"  name=trans_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( gubun = '1', 78682240, 12639424)" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

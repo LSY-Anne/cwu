@@ -1,0 +1,157 @@
+﻿$PBExportHeader$d_hac000_temp_1.srd
+$PBExportComments$결의서 배정예산 집행,가집행금액 확인용
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(4) updatewhereclause=yes name=gwa dbname="hac001m.gwa" dbalias=".gwa" )
+ column=(type=char(6) updatewhereclause=yes key=yes name=acct_code dbname="hac001m.acct_code" dbalias=".acct_code" )
+ column=(type=char(30) updatewhereclause=yes name=acct_name dbname="hac001m.acct_name" dbalias="bbb.acct_name" )
+ column=(type=char(40) updatewhereclause=yes name=slip_class dbname="hac001m.slip_class" dbalias=".slip_class" values="수입	1/지출	2/대체	3/" )
+ column=(type=number updatewhereclause=yes name=temp_gyul_amt dbname="temp_gyul_amt" )
+ column=(type=number updatewhereclause=yes name=real_gyul_amt dbname="real_gyul_amt" )
+ column=(type=number updatewhereclause=yes name=temp_bae_amt dbname="temp_bae_amt" )
+ column=(type=number updatewhereclause=yes name=real_bae_amt dbname="real_bae_amt" )
+ column=(type=number updatewhereclause=yes name=temp_jun_amt dbname="temp_jun_amt" )
+ column=(type=number updatewhereclause=yes name=real_jun_amt dbname="real_jun_amt" )
+ retrieve="select 	aaa.gwa							gwa,
+			aaa.acct_code					acct_code,
+			bbb.acct_name					acct_name,
+			aaa.slip_class					slip_class,
+			sum(aaa.temp_gyul_amt)		temp_gyul_amt,
+			sum(aaa.real_gyul_amt)		real_gyul_amt,
+			sum(aaa.temp_bae_amt)		temp_bae_amt,
+			sum(aaa.real_bae_amt)		real_bae_amt,
+			sum(aaa.temp_jun_amt)		temp_jun_amt,
+			sum(aaa.real_jun_amt)		real_jun_amt
+from	(
+			select 	a.resol_gwa				gwa,
+						b.acct_code				acct_code,
+						to_char(a.slip_class)			slip_class,
+						sum(b.resol_amt)		temp_gyul_amt,
+						0							real_gyul_amt,
+						0							temp_bae_amt,
+						0							real_bae_amt,
+						0							temp_jun_amt,
+						0							real_jun_amt
+			from 		fndb.hfn101m a, fndb.hfn102m b
+			where 	a.resol_date||a.resol_no = b.resol_date||b.resol_no
+			and		a.resol_gwa like 	:gwa
+			and		a.bdgt_year = 		:year
+			and		a.step_opt	<> 	'5'
+			group by a.resol_gwa, b.acct_code, a.slip_class
+			
+			union
+			
+			select 	a.resol_gwa				gwa,
+						b.acct_code				acct_code,
+						to_char(a.slip_class)			slip_class,
+						0							temp_gyul_amt,
+						sum(b.resol_amt)		real_gyul_amt, 
+						0							temp_bae_amt,
+						0							real_bae_amt,
+						0							temp_jun_amt,
+						0							real_jun_amt
+			from 		fndb.hfn101m a, fndb.hfn102m b
+			where 	a.resol_date||a.resol_no = b.resol_date||b.resol_no
+			and		a.resol_gwa like 	:gwa
+			and		a.bdgt_year = 		:year
+			and		a.step_opt	= 		'5'
+			group by a.resol_gwa, b.acct_code, a.slip_class
+			
+			union
+			
+			select	gwa						gwa,
+						acct_code				acct_code,
+						io_gubun					slip_class,
+						0							temp_gyul_amt,
+						0							real_gyul_amt, 
+						nvl(assn_temp_amt,0)	temp_bae_amt,
+						nvl(assn_real_amt,0)	real_bae_amt,
+						0							temp_jun_amt,
+						0							real_jun_amt
+			from		acdb.hac012m
+			where		gwa			like	:gwa
+			and		bdgt_year	=		:year
+
+			union
+
+			select 	a.slip_gwa					gwa,
+						b.acct_code					acct_code,
+						to_char(a.slip_class)	slip_class,
+						0								temp_gyul_amt,
+						0								real_gyul_amt,
+						0								temp_bae_amt,
+						0								real_bae_amt,
+						sum(b.slip_amt)			temp_jun_amt,
+						0								real_jun_amt
+			from 		fndb.hfn201m a, fndb.hfn202m b
+			where 	a.slip_date||a.slip_no = b.slip_date||b.slip_no
+			and		a.slip_gwa like 	:gwa
+			and		a.bdgt_year = 		:year
+			and		a.step_opt	<> 	'5'
+			and		a.resol_date is null		
+			group by a.slip_gwa, b.acct_code, a.slip_class
+			
+			union
+			
+			select 	a.slip_gwa					gwa,
+						b.acct_code					acct_code,
+						to_char(a.slip_class)	slip_class,
+						0								temp_gyul_amt,
+						0								real_gyul_amt, 
+						0								temp_bae_amt,
+						0								real_bae_amt,
+						0								temp_jun_amt,
+						sum(b.slip_amt)			real_jun_amt
+			from 		fndb.hfn201m a, fndb.hfn202m b
+			where 	a.slip_date||a.slip_no = b.slip_date||b.slip_no
+			and		a.slip_gwa like 	:gwa
+			and		a.bdgt_year = 		:year
+			and		a.step_opt	= 		'5'
+			and		a.resol_date is null		
+			group by a.slip_gwa, b.acct_code, a.slip_class
+
+		)	aaa, 
+		acdb.hac001m	bbb
+where	aaa.acct_code  = bbb.acct_code
+and	aaa.slip_class <> '3'			
+group by	aaa.gwa, aaa.acct_code, bbb.acct_name, aaa.slip_class
+" update="acdb.hac001m" updatewhere=0 updatekeyinplace=no filter=" compute_1  = compute_2"arguments=(("gwa", string),("year", string))  sort="gwa A acct_code A slip_class A " )
+text(band=header alignment="2" text="부서" border="0" color="0" x="9" y="16" height="56" width="603" html.valueishtml="0"  name=gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계정코드" border="0" color="33554432" x="773" y="16" height="56" width="242" html.valueishtml="0"  name=acct_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계정명" border="0" color="33554432" x="1024" y="16" height="56" width="750" html.valueishtml="0"  name=acct_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="가집행금액(결의서)" border="0" color="0" x="1783" y="16" height="56" width="512" html.valueishtml="0"  name=temp_gyul_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="집행금액(결의서)" border="0" color="0" x="2304" y="16" height="56" width="466" html.valueishtml="0"  name=real_gyul_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="가집행금액(배정예산)" border="0" color="0" x="2779" y="16" height="56" width="562" html.valueishtml="0"  name=temp_bae_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="집행금액(배정예산)" border="0" color="0" x="3351" y="16" height="56" width="507" html.valueishtml="0"  name=real_bae_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="합계(결의서)" border="0" color="0" x="3867" y="16" height="56" width="443" html.valueishtml="0"  name=compute_1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="합계(배정예산)" border="0" color="0" x="4320" y="16" height="56" width="462" html.valueishtml="0"  name=compute_2_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="구분" border="0" color="33554432" x="622" y="16" height="56" width="142" html.valueishtml="0"  name=slip_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="가집행금액(전표)" border="0" color="0" x="4791" y="16" height="56" width="443" html.valueishtml="0"  name=temp_jun_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="집행금액(전표)" border="0" color="0" x="5243" y="16" height="56" width="425" html.valueishtml="0"  name=real_jun_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="773" y="8" height="68" width="242" format="[general]" html.valueishtml="0"  name=acct_code visible="1" edit.limit=6 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="1024" y="8" height="68" width="750" format="[general]" html.valueishtml="0"  name=acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="1" expression=" temp_bae_amt  +  real_bae_amt "border="0" color="33554432" x="4320" y="8" height="68" width="462" format="#,###" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="9" y="8" height="68" width="603" format="[general]" html.valueishtml="0"  name=gwa visible="1" dddw.name=dddw_hakgwa_all dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="33554432" x="3351" y="8" height="68" width="507" format="#,###" html.valueishtml="0"  name=real_bae_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="33554432" x="2304" y="8" height="68" width="466" format="#,###" html.valueishtml="0"  name=real_gyul_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="33554432" x="5243" y="8" height="68" width="425" format="#,###" html.valueishtml="0"  name=real_jun_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="622" y="8" height="68" width="142" format="[general]" html.valueishtml="0"  name=slip_class visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="33554432" x="2779" y="8" height="68" width="562" format="#,###" html.valueishtml="0"  name=temp_bae_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="33554432" x="1783" y="8" height="68" width="512" format="#,###" html.valueishtml="0"  name=temp_gyul_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="1" expression=" temp_gyul_amt + real_gyul_amt + temp_jun_amt + real_jun_amt"border="0" color="33554432" x="3867" y="8" height="68" width="443" format="#,###" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="33554432" x="4791" y="8" height="68" width="443" format="#,###" html.valueishtml="0"  name=temp_jun_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,54 @@
+﻿$PBExportHeader$f_datareplace.srf
+$PBExportComments$특정한 값을 특정한 부의의 값으로 치환한다.
+global type f_datareplace from function_object
+end type
+
+forward prototypes
+global function string f_datareplace (string as_temp, string as_char, string as_replace)
+end prototypes
+
+global function string f_datareplace (string as_temp, string as_char, string as_replace);//////////////////////////////////////////////////////////////////
+// 	작성목적 : 어떤 특정한 값을 다른 값으로 치한한다.
+//    적 성 인 : 이현수
+//		작성일자 : 2002.10
+//    변 경 인 :
+//    변경일자 :
+//    변경사유 :
+//////////////////////////////////////////////////////////////////
+int i = 1,i_len,i_asc
+string s_data,s_temp,s_buffer
+
+s_data = Trim(as_temp)
+i_len  = len(s_data)
+
+do while true 
+   s_temp    = mid(s_data,i,1)
+	i_asc     = ASC(s_temp)
+	IF i_asc > 125 then
+		i++
+      s_temp    = s_temp + mid(s_data,i,1)		
+		IF i = 2 then
+			 s_buffer = s_temp								
+		else
+			 s_buffer += s_temp														
+		end IF
+	else
+	   IF s_temp = as_char then
+	 	   s_buffer = s_buffer +  as_replace
+	   else
+   	   If i = 1 then 
+			 s_buffer = s_temp					
+		   else
+			 s_buffer += s_temp											
+		  end IF
+  	   end IF		
+	end IF
+
+	i++
+	IF i_len < i then exit
+loop 
+
+return s_buffer
+
+end function
+

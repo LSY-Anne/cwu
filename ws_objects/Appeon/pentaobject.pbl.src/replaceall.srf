@@ -1,0 +1,37 @@
+﻿$PBExportHeader$replaceall.srf
+global type replaceall from function_object
+end type
+
+forward prototypes
+global function integer replaceall (ref string as_msg, string as_char, string as_changechar)
+end prototypes
+
+global function integer replaceall (ref string as_msg, string as_char, string as_changechar);Integer li_pos
+Long		ll_cnt
+String	ls_temp
+
+do while true
+	
+	li_pos = Pos(as_msg, as_char)
+	
+	IF li_pos = 0 THEN 
+		ls_temp += as_msg
+		exit
+	END IF
+	
+	ll_cnt++
+	
+	as_msg = Replace( as_msg, li_pos, Len(as_char), as_changechar)
+	
+	ls_temp += Left(as_msg, li_pos + len(as_changechar) - 1)
+	
+	as_msg = Mid(as_msg, li_pos + len(as_changechar) )
+	
+loop
+
+as_msg = ls_temp
+
+return ll_cnt
+	
+end function
+

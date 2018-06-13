@@ -1,0 +1,113 @@
+﻿$PBExportHeader$d_sch219p_1.srd
+$PBExportComments$기숙사룸메이트 신청현황
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 225 print.margin.right = 225 print.margin.top = 150 print.margin.bottom = 150 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=752 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=128 color="536870912" )
+table(column=(type=char(9) updatewhereclause=yes name=saz220t_hakbun dbname="saz220t.hakbun" )
+ column=(type=char(20) updatewhereclause=yes name=saz220t_hname dbname="saz220t.hname" )
+ column=(type=char(50) updatewhereclause=yes name=gwa dbname="gwa" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=req_dt dbname="saz260t.req_dt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=req_no dbname="saz260t.req_no" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=house_gb dbname="saz260t.house_gb" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=std_year dbname="saz260t.std_year" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=house_req_no dbname="saz260t.house_req_no" )
+ column=(type=char(60) update=yes updatewhereclause=yes name=door_gb dbname="door_gb" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=door_per dbname="saz260t.door_per" )
+ column=(type=char(9) update=yes updatewhereclause=yes name=rm_hakbun dbname="saz260t.rm_hakbun" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=rm_hname dbname="saz260t.rm_hname" )
+ column=(type=char(50) update=yes updatewhereclause=yes name=rm_gwa dbname="rm_gwa" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=rm_hakyun dbname="saz260t.rm_hakyun" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=rm_cellno dbname="saz260t.rm_cellno" )
+ retrieve="  SELECT B.HAKBUN, 
+B.HNAME,
+(SELECT FNAME FROM CDDB.KCH003M WHERE GWA = B.GWA) AS  GWA,
+A.REQ_DT,   
+         A.REQ_NO,   
+         A.HOUSE_GB,   
+         A.STD_YEAR,   
+         A.HOUSE_REQ_NO,   
+         (SELECT FNAME FROM CDDB.KCH102D WHERE UPPER(CODE_GB) = 'SAZ36' AND  CODE = A.DOOR_GB  )  AS DOOR_GB,   
+         A.DOOR_PER,   
+         A.RM_HAKBUN,   
+         A.RM_HNAME,   
+       (SELECT FNAME FROM CDDB.KCH003M WHERE GWA = A.RM_GWA)   AS RM_GWA,   
+         A.RM_HAKYUN,   
+         A.RM_CELLNO
+    FROM SCH.SAZ260T  A, SCH.SAZ220T B
+   WHERE A.HOUSE_GB = B.HOUSE_GB AND
+A.STD_YEAR = B.STD_YEAR AND
+A.HOUSE_REQ_NO = B.HOUSE_REQ_NO AND
+ ( A.HOUSE_GB = :as_house_gb ) AND  
+         ( A.STD_YEAR = :as_std_year ) AND  
+         (:as_hakbun = '%' Or B.HAKBUN = :as_hakbun )    
+" arguments=(("as_house_gb", string),("as_std_year", string),("as_hakbun", string)) )
+text(band=header alignment="2" text="기숙사룸메이트 신청현황" border="0" color="0" x="14" y="140" height="96" width="4658" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-16" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=header x1="14" y1="748" x2="4672" y2="748"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="룸메이트 정보" border="0" color="33554432" x="2665" y="556" height="56" width="1989" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="14" y1="124" x2="4672" y2="124"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2656" y1="636" x2="4672" y2="636"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=15 alignment="0" tabsequence=100 border="0" color="33554432" x="4270" y="24" height="68" width="379" format="[general]" html.valueishtml="0"  name=rm_cellno  tag="룸메이트연락처" visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=90 border="0" color="33554432" x="4027" y="24" height="68" width="224" format="[general]" html.valueishtml="0"  name=rm_hakyun  tag="룸메이트학년" visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=80 border="0" color="33554432" x="3429" y="24" height="68" width="581" format="[general]" html.valueishtml="0"  name=rm_gwa  tag="룸메이트학과" visible="1" dddw.name=d_dddw_hakgwa dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=70 border="0" color="33554432" x="3049" y="24" height="68" width="366" format="[general]" html.valueishtml="0"  name=rm_hname  tag="룸메이트성명" visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=60 border="0" color="33554432" x="2665" y="24" height="68" width="370" format="[general]" html.valueishtml="0"  name=rm_hakbun  tag="룸메이트학번" visible="1" edit.limit=9 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="실구성인원" border="0" color="33554432" x="2313" y="620" height="56" width="329" html.valueishtml="0"  name=door_per_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=50 border="0" color="33554432" x="2313" y="24" height="68" width="329" format="[general]" html.valueishtml="0"  name=door_per  tag="실구성인원" visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="실구분" border="0" color="33554432" x="2066" y="620" height="56" width="238" html.valueishtml="0"  name=door_gb_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=40 border="0" color="33554432" x="2066" y="24" height="68" width="238" format="[general]" html.valueishtml="0"  name=door_gb  tag="실구분" visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="신청순번" border="0" color="33554432" x="1810" y="620" height="56" width="247" html.valueishtml="0"  name=req_no_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="33554432" x="1810" y="24" height="68" width="247" format="[general]" html.valueishtml="0"  name=req_no  tag="신청순번" visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="신청일자" border="0" color="33554432" x="1472" y="620" height="56" width="329" html.valueishtml="0"  name=req_dt_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="33554432" x="1472" y="24" height="68" width="329" format="@@@@.@@.@@" html.valueishtml="0"  name=req_dt  tag="신청일자" visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학과" border="0" color="33554432" x="695" y="620" height="56" width="768" html.valueishtml="0"  name=gwa_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=30 border="0" color="33554432" x="695" y="24" height="68" width="768" format="[general]" html.valueishtml="0"  name=gwa visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성명" border="0" color="33554432" x="361" y="620" height="56" width="325" html.valueishtml="0"  name=saz220t_hname_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="0" color="33554432" x="361" y="24" height="68" width="325" format="[general]" html.valueishtml="0"  name=saz220t_hname visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학번" border="0" color="33554432" x="23" y="620" height="56" width="329" html.valueishtml="0"  name=saz220t_hakbun_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=10 border="0" color="33554432" x="23" y="24" height="68" width="329" format="[general]" html.valueishtml="0"  name=saz220t_hakbun visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학번" border="0" color="33554432" x="2665" y="668" height="56" width="370" html.valueishtml="0"  name=rm_hakbun_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성명" border="0" color="33554432" x="3049" y="668" height="56" width="366" html.valueishtml="0"  name=rm_hname_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학과" border="0" color="33554432" x="3429" y="668" height="56" width="581" html.valueishtml="0"  name=rm_gwa_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학년" border="0" color="33554432" x="4027" y="668" height="56" width="224" html.valueishtml="0"  name=rm_hakyun_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="연락처" border="0" color="33554432" x="4270" y="668" height="56" width="379" html.valueishtml="0"  name=rm_cellno_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="2651" y1="524" x2="2651" y2="932"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2651" y1="0" x2="2651" y2="408"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2304" y1="524" x2="2304" y2="932"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2304" y1="0" x2="2304" y2="408"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2057" y1="524" x2="2057" y2="932"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2057" y1="0" x2="2057" y2="408"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1801" y1="524" x2="1801" y2="932"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1801" y1="0" x2="1801" y2="408"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1463" y1="524" x2="1463" y2="932"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1463" y1="0" x2="1463" y2="408"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="690" y1="524" x2="690" y2="932"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="690" y1="0" x2="690" y2="408"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="357" y1="524" x2="357" y2="932"  name=l_17 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="357" y1="0" x2="357" y2="408"  name=l_18 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="14" y1="524" x2="14" y2="932"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="0" x2="14" y2="408"  name=l_20 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="14" y1="524" x2="4672" y2="524"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="4672" y1="524" x2="4672" y2="932"  name=l_21 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="4672" y1="0" x2="4672" y2="408"  name=l_22 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="4256" y1="636" x2="4256" y2="1044"  name=l_23 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="4256" y1="0" x2="4256" y2="408"  name=l_24 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="4014" y1="636" x2="4014" y2="1044"  name=l_25 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="4014" y1="0" x2="4014" y2="408"  name=l_26 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3419" y1="636" x2="3419" y2="1044"  name=l_27 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3419" y1="0" x2="3419" y2="408"  name=l_28 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3040" y1="636" x2="3040" y2="1044"  name=l_29 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3040" y1="0" x2="3040" y2="408"  name=l_30 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

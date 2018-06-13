@@ -1,0 +1,39 @@
+﻿$PBExportHeader$d_role_empcode.srd
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=char(5) updatewhereclause=yes name=dept_code dbname="pf_employee.dept_code" )
+ column=(type=char(20) updatewhereclause=yes name=dept_name dbname="pf_department.dept_name" )
+ column=(type=char(12) updatewhereclause=yes name=emp_code dbname="pf_employee.emp_code" )
+ column=(type=char(20) updatewhereclause=yes name=emp_name dbname="pf_employee.emp_name" )
+ retrieve="Select	 	Distinct a.dept_code  as dept_code
+			,b.dept_name		as dept_name
+			,a.emp_code		as emp_code	
+			,a.emp_name 		as emp_name
+  From	 cddb.pf_employee			a
+			,cddb.pf_department			b
+			,cddb.pf_pgm_role		c
+			,cddb.pf_userrole			d
+ Where	a.dept_code	= b.dept_code
+	and 	c.role_no		= d.role_no
+	and 	a.emp_code	= d.emp_code
+	and 	c.pgm_no	= :as_pgmno" arguments=(("as_pgmno", string))  sort="dept_code A " )
+text(band=header alignment="2" text="부서" border="0" color="23027551" x="23" y="12" height="60" width="503" html.valueishtml="0"  name=dept_name_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="사원코드" border="0" color="23027551" x="539" y="12" height="60" width="325" html.valueishtml="0"  name=emp_code_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="사원명" border="0" color="23027551" x="878" y="12" height="60" width="549" html.valueishtml="0"  name=emp_name_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="23027551" x="23" y="24" height="56" width="503" format="[general]" html.valueishtml="0"  name=dept_name visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="23027551" x="539" y="24" height="56" width="325" format="[general]" html.valueishtml="0"  name=emp_code visible="1" edit.limit=12 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="23027551" x="878" y="24" height="56" width="549" format="[general]" html.valueishtml="0"  name=emp_name visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

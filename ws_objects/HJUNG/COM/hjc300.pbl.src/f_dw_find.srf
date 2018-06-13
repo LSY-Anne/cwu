@@ -1,0 +1,57 @@
+﻿$PBExportHeader$f_dw_find.srf
+$PBExportComments$두개의 데이타윈도우에서 각각 같은 자료를 찾는다
+global type f_dw_find from function_object
+end type
+
+forward prototypes
+global subroutine f_dw_find (datawindow adw_source, datawindow adw_target, string as_column)
+end prototypes
+
+global subroutine f_dw_find (datawindow adw_source, datawindow adw_target, string as_column);// ---------------------------------------------------------------------------------
+// Function Name	:	f_dw_find
+// Function 설명	:	자료를 Find 한다.
+//	Argument			:	adw_source, adw_target, as_column
+//	Return			:
+// ---------------------------------------------------------------------------------
+
+long		ll_find_row, ll_source_row, ll_target_row
+string	ls_type, ls_source_data, ls_target_data
+
+if adw_source.getrow() < 1 then return
+
+ls_type 	= adw_source.describe(as_column + ".coltype")
+
+if adw_target.getrow() > 0 then
+	ll_source_row	=	adw_source.getrow()
+	ll_target_row	=	adw_target.getrow()
+	
+	if left(ls_type, 6) = 'number' or left(ls_type, 7) = 'decimal' then
+		ls_source_data = string(adw_source.getitemnumber(ll_source_row, as_column))
+		ls_target_data = string(adw_target.getitemnumber(ll_target_row, as_column))
+	elseif ls_type = 'date' then
+		ls_source_data = string(adw_source.getitemdate(ll_source_row, as_column), 'yyyymmdd')
+		ls_target_data = string(adw_target.getitemdate(ll_target_row, as_column), 'yyyymmdd')
+	else	
+		ls_source_data = adw_source.getitemstring(ll_source_row, as_column)
+		ls_target_data = adw_target.getitemstring(ll_target_row, as_column)
+	end if
+
+	if ls_source_data = ls_target_data then	return
+end if
+
+if left(ls_type, 6) = 'number' or left(ls_type, 7) = 'decimal' then
+	ll_find_row = adw_target.find(as_column + " = " + ls_source_data + "	", 1, adw_target.rowcount())
+elseif ls_type = 'date' then
+	ll_find_row = adw_target.find(as_column + " = string(" + ls_source_data + "', 'yyyymmdd')	", 1, adw_target.rowcount())
+else
+	ll_find_row = adw_target.find(as_column + " = '" + ls_source_data + "'	", 1, adw_target.rowcount())
+end if
+
+if ll_find_row < 1 then
+	adw_target.selectrow(0, false)
+else
+	adw_target.scrolltorow(ll_find_row)
+end if
+
+end subroutine
+

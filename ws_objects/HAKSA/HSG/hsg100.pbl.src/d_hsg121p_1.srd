@@ -1,0 +1,99 @@
+﻿$PBExportHeader$d_hsg121p_1.srd
+$PBExportComments$학년별 통계
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=4 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no  crosstab.dynamic = yes grid.lines=0 grid.columnmove=no selected.mouse=no )
+header[1](height=0 color="536870912" )
+header[2](height=0 color="536870912" )
+header[3](height=76 color="32299726" )
+summary(height=64 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(20) updatewhereclause=yes name=gwa_nm dbname="gwa_nm" )
+ column=(type=number updatewhereclause=yes name=cnt dbname="cnt" )
+ retrieve="SELECT GWA_NM, 
+TO_NUMBER(SUBSTR(COUNSEL_DT, 5, 2)) || '월'  AS MM ,
+TO_NUMBER(TO_NUMBER(SUBSTR(COUNSEL_DT, 5, 2)) || '0') AS SORTNO,  
+COUNT(*) AS CNT 
+FROM HAKSA.SUM140TL
+WHERE YEAR = :AS_YEAR
+AND HAKGI = :AS_HAKGI
+AND (:AS_PURPOSE = '%' OR PURPOSE = :AS_PURPOSE)
+AND (:AS_TP = '%' OR COUNSEL_TP = :AS_TP)
+AND COUNSEL_DT IS NOT NULL
+AND GWA_NM IS NOT NULL
+GROUP BY GWA_NM, COUNSEL_DT
+UNION ALL
+SELECT GWA_NM, 
+'합계'  AS MM ,
+0 AS SORTNO,  
+COUNT(*) AS CNT 
+FROM HAKSA.SUM140TL
+WHERE YEAR = :AS_YEAR
+AND HAKGI = :AS_HAKGI
+AND (:AS_PURPOSE = '%' OR PURPOSE = :AS_PURPOSE)
+AND (:AS_TP = '%' OR COUNSEL_TP = :AS_TP)
+AND COUNSEL_DT IS NOT NULL
+AND GWA_NM IS NOT NULL
+GROUP BY GWA_NM
+UNION ALL
+SELECT GWA_NM,
+ (CASE WHEN TO_NUMBER(SUBSTR(COUNSEL_DT, 5, 2)) IN (1,2,3) THEN 1    
+                     WHEN TO_NUMBER(SUBSTR(COUNSEL_DT, 5, 2)) IN (4,5,6) THEN 2    
+                     WHEN TO_NUMBER(SUBSTR(COUNSEL_DT, 5, 2)) IN (7,8,9) THEN 3
+                     ELSE 4
+                 END) || '분기'  AS MM , 
+ TO_NUMBER((CASE WHEN TO_NUMBER(SUBSTR(COUNSEL_DT, 5, 2)) IN (1,2,3) THEN 3    
+                     WHEN TO_NUMBER(SUBSTR(COUNSEL_DT, 5, 2)) IN (4,5,6) THEN 6    
+                     WHEN TO_NUMBER(SUBSTR(COUNSEL_DT, 5, 2)) IN (7,8,9) THEN 9
+                     ELSE 12
+                 END) || '1')  AS SORTNO ,                  
+ COUNT(*) AS CNT 
+FROM HAKSA.SUM140TL
+WHERE YEAR = :AS_YEAR
+AND HAKGI = :AS_HAKGI
+AND (:AS_PURPOSE = '%' OR PURPOSE = :AS_PURPOSE)
+AND (:AS_TP = '%' OR COUNSEL_TP = :AS_TP)
+AND COUNSEL_DT IS NOT NULL
+AND GWA_NM IS NOT NULL
+GROUP BY GWA_NM, COUNSEL_DT
+UNION ALL
+SELECT '컴퓨터학과(주간)' AS GWA_NM, ROWNUM || '월' AS CNT,
+TO_NUMBER(ROWNUM || '0') AS SORTNO,
+0 AS CNT  
+FROM INDB.HIN001M
+WHERE ROWNUM <= 12 
+UNION ALL 
+SELECT '컴퓨터학과(주간)' AS GWA_NM, (CASE WHEN ROWNUM IN (1,2,3) THEN 1    
+                     WHEN ROWNUM IN (4,5,6) THEN 2    
+                     WHEN ROWNUM IN (7,8,9) THEN 3
+                     ELSE 4
+                 END) || '분기'  AS MM , 
+ TO_NUMBER((CASE WHEN ROWNUM IN (1,2,3) THEN 3    
+                     WHEN ROWNUM IN (4,5,6) THEN 6    
+                     WHEN ROWNUM IN (7,8,9) THEN 9
+                     ELSE 12
+                 END) || '1')  AS SORTNO ,     
+0 AS CNT  
+FROM INDB.HIN001M
+WHERE ROWNUM <= 12 " arguments=(("as_year", string),("as_hakgi", string),("as_purpose", string),("as_tp", string))  sort="gwa_nm A " )
+text(band=header[1] alignment="0" text="Sum Of Cnt" border="0" color="33554432" x="9" y="4" height="56" width="850" html.valueishtml="0"  name=t_1 visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header[1] alignment="0" text="Sortno" border="0" color="33554432" x="869" y="4" height="56" width="242" html.valueishtml="0"  name=t_2 visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header[2] alignment="0" text="@sortno" border="0" color="33554432" x="869" y="4" height="56" width="242" html.valueishtml="0"  name=t_4 visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header[3] alignment="2" text="학과" border="0" color="33554432" x="9" y="4" height="56" width="850" html.valueishtml="0"  name=gwa_nm_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header[3] alignment="2" text="@mm" border="0" color="33554432" x="869" y="4" height="56" width="238" html.valueishtml="0"  name=cnt_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="33554432" x="9" y="0" height="68" width="850" format="[general]" html.valueishtml="0"  name=gwa_nm visible="1" edit.limit=60 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="873" y="4" height="68" width="233" format="###,##0" html.valueishtml="0"  name=cnt visible="1" editmask.mask="###,##0" editmask.focusrectangle=no crosstab.repeat=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="~"계~""border="0" color="33554432" x="9" y="4" height="68" width="850" format="[general]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="tahoma" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="32299726" )
+compute(band=summary alignment="2" expression="sum(cnt for all )"border="0" color="33554432" x="869" y="0" height="68" width="238" format="###,##0" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+ crosstab(band = foreground  crosstabonly = yes 
+ columns = "sortno, mm" rows = "gwa_nm" values = "sum(cnt for crosstab)" sourcenames = "gwa_nm, mm, sortno, cnt")htmltable(border="0" cellpadding="1" cellspacing="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

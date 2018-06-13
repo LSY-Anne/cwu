@@ -1,0 +1,63 @@
+﻿$PBExportHeader$d_hac104a_2.srd
+$PBExportComments$주관부서별 계정 관리(주관부서별 계정 생성)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(4) update=yes updatewhereclause=yes key=yes name=bdgt_year dbname="hac005m.bdgt_year" )
+ column=(type=char(4) update=yes updatewhereclause=yes key=yes name=gwa dbname="hac005m.gwa" )
+ column=(type=char(6) update=yes updatewhereclause=yes key=yes name=acct_code dbname="hac005m.acct_code" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=acct_class dbname="hac005m.acct_class" )
+ column=(type=char(1) update=yes updatewhereclause=yes key=yes name=io_gubun dbname="hac005m.io_gubun" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=use_yn dbname="hac005m.use_yn" initial="9" values="Y	9/	0/" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=work_gbn dbname="hac005m.work_gbn" initial="I" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hac005m.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hac005m.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hac005m.work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hac005m.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hac005m.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hac005m.job_date" )
+ column=(type=char(50) updatewhereclause=yes name=fname dbname="hac005m.fname" )
+ column=(type=char(30) updatewhereclause=yes name=acct_name dbname="compute_0015" )
+ retrieve="SELECT	A.BDGT_YEAR,
+			A.GWA,
+			A.ACCT_CODE,
+			A.ACCT_CLASS,
+			A.IO_GUBUN,
+			A.USE_YN,
+			A.WORK_GBN,
+			A.WORKER,
+			A.IPADDR,
+			A.WORK_DATE,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE,
+			B.FNAME,
+			DECODE(:AS_IO_GUBUN,'1',C.ACCT_INAME,'2',C.ACCT_ONAME,C.ACCT_NAME)
+FROM		ACDB.HAC005M A, CDDB.KCH003M B, ACDB.HAC001M C
+WHERE		A.GWA = B.GWA (+)
+AND		A.ACCT_CODE = C.ACCT_CODE (+)
+AND		A.BDGT_YEAR = :AS_BDGT_YEAR
+AND		A.GWA = :AS_GWA
+AND		A.ACCT_CLASS = :AI_ACCT_CLASS
+AND		A.IO_GUBUN = :AS_IO_GUBUN
+" update="ACDB.HAC005M" updatewhere=0 updatekeyinplace=no arguments=(("as_bdgt_year", string),("as_gwa", string),("ai_acct_class", number),("as_io_gubun", string))  sort="gwa A acct_code A " )
+text(band=header alignment="2" text="주관부서명" border="0" color="0" x="9" y="8" height="56" width="1088" html.valueishtml="0"  name=fname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계정코드" border="0" color="0" x="1106" y="8" height="56" width="407" html.valueishtml="0"  name=acct_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계정코드명" border="0" color="0" x="1522" y="8" height="56" width="1120" html.valueishtml="0"  name=acct_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="1088" format="[general]" html.valueishtml="0"  name=fname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="1106" y="4" height="72" width="407" format="@@@@-@@" html.valueishtml="0"  name=acct_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="1522" y="4" height="72" width="1120" format="[general]" html.valueishtml="0"  name=acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

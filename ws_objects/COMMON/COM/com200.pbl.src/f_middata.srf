@@ -1,0 +1,39 @@
+﻿$PBExportHeader$f_middata.srf
+$PBExportComments$문자열을 글자를 기준 문자를 기준으로 분리한다.
+global type f_middata from function_object
+end type
+
+forward prototypes
+global function string f_middata (ref string as_data, string as_char)
+end prototypes
+
+global function string f_middata (ref string as_data, string as_char);//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// 	작성목적 : args를 처음 으로 만나는 문자를 잘라서 리턴한다
+//    적 성 인 : 이현수
+//		작성일자 : 2002.10
+//    변 경 인 :
+//    변경일자 :
+//    변경사유 :
+//////////////////////////////////////////////////////////////////
+
+//문자의 값을 리턴한다.
+String s_temp,s_data,s_return
+Int    i_len,i_pos,i_chrlen
+
+
+s_data   = trim(as_data)
+i_len    = len(s_data)
+i_pos    = pos(s_data, as_char)
+i_chrlen = len(as_char)
+IF i_pos > 0 then
+	s_return = left(s_data,i_pos - 1) //설정 데이타
+	s_data   = mid(s_data ,i_pos + i_chrlen,i_len - i_pos - 1 + i_chrlen) //나머지 데이타
+else
+	s_return = s_data
+	s_data   = ''
+end IF
+as_data   = s_data
+return    s_return
+end function
+

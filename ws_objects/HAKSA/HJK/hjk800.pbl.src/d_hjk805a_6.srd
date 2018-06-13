@@ -1,0 +1,47 @@
+﻿$PBExportHeader$d_hjk805a_6.srd
+$PBExportComments$[청운대]병무청파일생성(학부-신입생-후기)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(206) updatewhereclause=yes name=boungmu dbname="boungmu" )
+ retrieve="SELECT	RPAD(A.HNAME, 8, ' ')||
+			A.JUMIN_NO||
+			'63410000'||
+			RPAD(A.HAKBUN, 10, ' ')||
+			RPAD(DECODE(SUBSTR(A.GWA, 1, 3), 'AAA', '9749', 'AAB', '8232', 'AAC', '0268', 'AAD', 'A946',
+				'AAE', '7040', 'AAF', 'B131',	'AAG', '7492', 'AAH', 'A308', 'AAI', '2224', 'AAJ', 'C650',
+				'AAK', '4160', 'BAA', '0508', 'BAB', '8164', 'BAC', '9816', 'BAD', '1308', 'BAE', '1012', 
+				'BAF', '4792', 'BAG', '6832', 'BAH', '2672', 'BAJ', 'C856', 'CAA', '9246', 'CAB', '2576',
+				'CAC', 'A938', 'CAD', 'C440', '    '), 4, ' ')||
+			'4'||
+			' '||
+			A.DR_HAKYUN||
+			SUBSTR(A.IPHAK_DATE,1,4)||
+			DECODE(A.DR_HAKYUN, '1', TO_CHAR(TO_NUMBER(SUBSTR(A.IPHAK_DATE,1,4)) + 4), '2', TO_CHAR(TO_NUMBER(SUBSTR(A.IPHAK_DATE,1,4)) + 3), '3', TO_CHAR(TO_NUMBER(SUBSTR(A.IPHAK_DATE,1,4)) + 2), '4', TO_CHAR(TO_NUMBER(SUBSTR(A.IPHAK_DATE,1,4)) + 1)) ||
+			DECODE(A.IPHAK_GUBUN, '04', '1', ' ')||
+			A.JUYA_GUBUN||
+			DECODE(A.IPHAK_JUNHYUNG, '06', '재외', '국내')||
+			RPAD(A.EMAIL, 40, ' ')		AS	boungmu
+FROM		HAKSA.JAEHAK_HAKJUK	A
+WHERE		(A.SANGTAE IN ('01', '02') OR		A.HJMOD_ID = 'I')
+AND	   A.SEX = '1'
+AND		(SUBSTR(A.IPHAK_DATE,1,4) = SUBSTR(to_char(SYSDATE,'YYYYMMDD'), 1, 4)
+OR			SUBSTR(A.JAEIPHAK_DATE,1,4) = SUBSTR(to_char(SYSDATE,'YYYYMMDD'), 1, 4))
+AND		SUBSTR(A.JAEIPHAK_DATE,5,4) > '07'
+
+" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="0" y="4" height="76" width="4293" format="[general]" html.valueishtml="0"  name=boungmu visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

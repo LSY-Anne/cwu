@@ -1,0 +1,46 @@
+﻿$PBExportHeader$gf_setopencontrol.srf
+global type gf_setopencontrol from function_object
+end type
+
+forward prototypes
+global function boolean gf_setopencontrol (string winname, dragobject obj, ref vector avc_data)
+end prototypes
+
+global function boolean gf_setopencontrol (string winname, dragobject obj, ref vector avc_data);Vector	vc
+Boolean	lb_rtn
+Long		ll_cnt
+vc = Create Vector
+
+vc.setproperty('x', String(obj.pointerx()))
+vc.setproperty('y', String(obj.height - obj.pointery()))
+vc.setproperty('width', String(obj.width))
+vc.setproperty('height', String(obj.height))
+
+IF IsValid(avc_data) THEN
+	ll_cnt = avc_data.getkeycount()
+	IF ll_cnt > 0 THEN
+		String ls_keyname
+		
+		Ls_keyname = avc_data.getfirstproperty()
+		Do while ls_keyname <> ""
+			vc.setproperty(ls_keyname, avc_data.getProperty(ls_keyname))
+			ls_keyname = avc_data.getnextproperty()
+		Loop
+	END IF
+END IF
+
+w_anccontrol   lwc_data
+
+OpenWithParm(lwc_data, vc, winname)
+
+IF  IsValid(Message.PowerObjectParm)  THEN
+	 avc_data = Message.PowerObjectParm
+	 lb_rtn = True
+END IF
+
+Destroy lwc_data
+
+Return lb_rtn
+
+end function
+

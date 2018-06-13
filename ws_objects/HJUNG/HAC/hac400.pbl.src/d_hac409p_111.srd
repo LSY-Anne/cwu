@@ -1,0 +1,54 @@
+﻿$PBExportHeader$d_hac409p_111.srd
+$PBExportComments$계정별 배정예산 현황07/28
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=520 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=108 color="536870912" )
+table(column=(type=char(6) updatewhereclause=yes name=acct_code dbname="hac012m.acct_code" )
+ column=(type=char(4) updatewhereclause=yes name=hac001m_mok_acct dbname="hac012m.mok_acct" )
+ column=(type=char(30) updatewhereclause=yes name=com_acct_name dbname="com_acct_name" )
+ column=(type=number updatewhereclause=yes name=com_assn_used_amt dbname="com_assn_used_amt" )
+ column=(type=char(1) updatewhereclause=yes name=hac012m_io_gubun dbname="hac012m.io_gubun" )
+ retrieve="SELECT	distinct A.ACCT_CODE	,																				
+	      B.MOK_ACCT,
+	     	DECODE(A.IO_GUBUN,'1',B.ACCT_INAME,'2',B.ACCT_ONAME,B.ACCT_NAME)			COM_ACCT_NAME,
+			NVL(A.ASSN_USED_AMT,0)																	COM_ASSN_USED_AMT,
+			A.IO_GUBUN																					
+FROM		ACDB.HAC012M A, ACDB.HAC001M B
+WHERE		A.ACCT_CODE		=	B.ACCT_CODE (+)
+AND		A.BDGT_YEAR		=	:AS_BDGT_YEAR
+AND		A.ACCT_CLASS	=	:AI_ACCT_CLASS
+and     	A.IO_GUBUN = 2
+ORDER	BY	A.ACCT_CODE" arguments=(("as_bdgt_year", string),("ai_acct_class", number)) )
+group(level=1 header.height=0 trailer.height=0 by=("hac001m_mok_acct" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text="목별 배정예산현황" border="0" color="33554432" x="389" y="116" height="140" width="1691" html.valueishtml="0"  name=t_4 visible="1"  font.face="Arial" font.height="-18" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="비고" border="0" color="33554432" x="1563" y="444" height="60" width="855" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="계정코드명" border="0" color="33554432" x="87" y="444" height="60" width="453" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="배정예산액" border="0" color="33554432" x="823" y="444" height="60" width="512" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="Page() + ' / '  + PageCount()"border="0" color="0" x="2281" y="320" height="72" width="215" format="[General]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="96" y="20" height="60" width="407" format="[general]" html.valueishtml="0"  name=hac001m_mok_acct visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="1" expression="sum(  com_assn_used_amt  for group 1)"border="0" color="0" x="791" y="12" height="60" width="594" format="#,##0" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=header x1="32" y1="408" x2="2464" y2="408"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2464" y1="4" x2="2464" y2="100"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="686" y1="4" x2="686" y2="96"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1495" y1="0" x2="1495" y2="96"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="32" y1="516" x2="2464" y2="516"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="32" y1="96" x2="2464" y2="96"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="32" y1="408" x2="32" y2="516"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="32" y1="4" x2="32" y2="96"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="686" y1="408" x2="686" y2="516"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1495" y1="408" x2="1495" y2="516"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2459" y1="408" x2="2459" y2="516"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

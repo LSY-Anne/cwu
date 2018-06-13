@@ -1,0 +1,84 @@
+﻿$PBExportHeader$d_hpa304b_1.srd
+$PBExportComments$월 세금계산 생성(급여기초자료)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(10) update=yes updatewhereclause=yes name=member_no dbname="hpa005d.member_no" )
+ column=(type=char(20) updatewhereclause=yes name=name dbname="hpa001m.name" )
+ column=(type=decimal(0) updatewhereclause=yes name=wife_num dbname="hpa001m.wife_num" values="Y	1/	0/" )
+ column=(type=decimal(0) updatewhereclause=yes name=support_20 dbname="hpa001m.support_20" )
+ column=(type=decimal(0) updatewhereclause=yes name=support_60 dbname="hpa001m.support_60" )
+ column=(type=decimal(0) updatewhereclause=yes name=handycap dbname="hpa001m.handycap" )
+ column=(type=decimal(0) updatewhereclause=yes name=old_num dbname="hpa001m.old_num" )
+ column=(type=char(1) updatewhereclause=yes name=woman dbname="hpa001m.woman" values="Y	9/	0/" )
+ column=(type=number updatewhereclause=yes name=contribution dbname="hpa001m.contribution" )
+ column=(type=number updatewhereclause=yes name=amt_sum dbname="amt_sum" )
+ column=(type=number updatewhereclause=yes name=nontax_sum dbname="nontax_sum" )
+ column=(type=number updatewhereclause=yes name=medi_amt dbname="medi_amt" )
+ column=(type=number updatewhereclause=yes name=jaejik_opt dbname="jaejik_opt" )
+ retrieve="  	select	a.member_no,
+				b.name, b.wife_num, b.support_20, b.support_60, b.handycap, b.old_num, b.woman, b.contribution,
+				sum(a.pay_amt) as amt_sum,
+				sum(a.nontax_amt) as nontax_sum,
+				nvl(d.pay_amt, 0) as medi_amt,
+				b.jaejik_opt as jaejik_opt
+	from		padb.hpa005d a, padb.hpa001m b, padb.hpa003m c,
+				(	select	year_month, member_no, code, pay_amt 
+					from		padb.hpa005d
+					where		code = :as_item	) d
+	where		a.year_month	=		:as_yearmonth
+	and		b.gwa		like	:as_gwa || '%'
+	and		b.pay_opt		=		'9'
+	and		c.pay_opt		=		'1'
+	and		c.trans_gbn		=		'9'
+	and		(a.pay_amt > 0 or a.nontax_amt > 0)
+	and		a.year_month	=		b.year_month
+	and		a.member_no		=		b.member_no
+	and		a.code			=		c.code
+	and		a.year_month	=		d.year_month (+)
+	and		a.member_no		=		d.member_no  (+)
+	and		c.sort			>		0
+	and		b.jikjong_code	>=		:ai_str_jikjong
+	and		b.jikjong_code	<=		:ai_end_jikjong
+	group by a.member_no,
+				b.name, b.wife_num, b.support_20, b.support_60, b.handycap, b.old_num, b.woman, b.contribution,
+				d.pay_amt, b.jaejik_opt
+	order by a.member_no" arguments=(("as_yearmonth", string),("as_gwa", string),("as_item", string),("ai_str_jikjong", number),("ai_end_jikjong", number))  sort="member_no A " )
+text(band=header alignment="2" text="개인번호" border="0" color="0" x="9" y="12" height="56" width="302" html.valueishtml="0"  name=member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="성 명" border="0" color="0" x="320" y="12" height="56" width="448" html.valueishtml="0"  name=hpa001m_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="배우자" border="0" color="0" x="1618" y="12" height="56" width="206" html.valueishtml="0"  name=wife_num_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="부양자20세" border="0" color="0" x="1833" y="12" height="56" width="320" html.valueishtml="0"  name=support_20_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="부양자60세" border="0" color="0" x="2162" y="12" height="56" width="325" html.valueishtml="0"  name=support_60_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="장애자" border="0" color="0" x="2496" y="12" height="56" width="206" html.valueishtml="0"  name=handycap_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="경로우대" border="0" color="0" x="2711" y="12" height="56" width="256" html.valueishtml="0"  name=old_num_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="부녀자세대주" border="0" color="0" x="2976" y="12" height="56" width="389" html.valueishtml="0"  name=woman_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="총금액" border="0" color="0" x="777" y="12" height="56" width="439" html.valueishtml="0"  name=amt_sum_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="비과세총금액" border="0" color="0" x="1225" y="12" height="56" width="384" html.valueishtml="0"  name=nontax_sum_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="기부금공제" border="0" color="0" x="3374" y="12" height="56" width="384" html.valueishtml="0"  name=contribution_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="의료보험료" border="0" color="0" x="3767" y="12" height="56" width="407" html.valueishtml="0"  name=medi_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="302" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="1" tabsequence=32766 border="0" color="0" x="3767" y="4" height="72" width="407" format="#,##0" html.valueishtml="0"  name=medi_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="0" x="777" y="4" height="72" width="439" format="#,##0" html.valueishtml="0"  name=amt_sum visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="3374" y="4" height="72" width="384" format="#,##0" html.valueishtml="0"  name=contribution visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="2496" y="4" height="72" width="206" format="[general]" html.valueishtml="0"  name=handycap visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="320" y="4" height="72" width="448" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="1" tabsequence=32766 border="0" color="0" x="1225" y="4" height="72" width="384" format="#,##0" html.valueishtml="0"  name=nontax_sum visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="2711" y="4" height="72" width="256" format="[general]" html.valueishtml="0"  name=old_num visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="1833" y="4" height="72" width="320" format="[General]" html.valueishtml="0"  name=support_20 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="2162" y="4" height="72" width="325" format="[General]" html.valueishtml="0"  name=support_60 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="1618" y="4" height="72" width="206" format="[General]" html.valueishtml="0"  name=wife_num visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="2976" y="4" height="72" width="389" format="[general]" html.valueishtml="0"  name=woman visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

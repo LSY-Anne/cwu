@@ -1,0 +1,170 @@
+﻿$PBExportHeader$uf_dungrok_cwu.srf
+$PBExportComments$[대학원등록] 등록금계산 - 정정이 일어날 경우(본교장학생인 경우)
+global type uf_dungrok_cwu from function_object
+end type
+
+forward prototypes
+global function integer uf_dungrok_cwu (string as_year, string as_hakgi, string as_hakbun, string as_gwajung, string as_hakgwa, string as_jungong, string as_chk)
+end prototypes
+
+global function integer uf_dungrok_cwu (string as_year, string as_hakgi, string as_hakbun, string as_gwajung, string as_hakgwa, string as_jungong, string as_chk);//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//	본교교직원인 경우
+// 장학금은 총 등록금이 백만원 초과이면 백만원 정액
+//                      백만원 이하이면 등록금의 30%
+// 2010년 2월 16수정
+// 학기제 전환 2010학번이상은 50%
+//             2009학번이하는 45% 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+string	ls_gwajung, ls_hakgwa, ls_jungong, ls_janghak
+string	ls_chuga, ls_hwan
+long		ll_iphak_m, ll_dungrok_m, ll_wonwoo_m, ll_dungrok, ll_janghak, ll_dugnrok_before, ll_janghak_before, ll_dungrok_all
+long		ll_hakjum,	ll_hakjum_before, ll_hakjum_sugang, ll_chasu
+
+//등록금모델 가져오기
+SELECT	IPHAK,
+			DUNGROK,
+			WONWOO
+INTO		:ll_iphak_m,
+			:ll_dungrok_m,
+			:ll_wonwoo_m
+FROM		HAKSA.D_DUNGROK_MODEL
+WHERE		YEAR			=	:as_year
+AND		HAKGI			=	:as_hakgi
+AND		GWA_ID		=	:as_hakgwa
+AND		JUNGONG_ID	=	:as_jungong	
+USING SQLCA ;
+
+if sqlca.sqlcode <> 0 then
+	messagebox("오류","등록금모델 적용중 오류발생~r~n(uf_dungrok_cwu)" + sqlca.sqlerrtext)
+	return 2
+end if
+
+//수강학점 가져오기
+SELECT	SUM(HAKJUM)
+INTO	:ll_hakjum_sugang
+FROM	HAKSA.D_SUGANG_TRANS
+WHERE	HAKBUN	=	:as_hakbun
+AND	YEAR		=	:as_year	
+AND	HAKGI		=	:as_hakgi
+USING SQLCA ;
+
+if sqlca.sqlcode = 100 then
+	return 1
+//	ll_hakjum_sugang = 0
+	
+elseif sqlca.sqlcode = -1 then
+	messagebox("오류","수강신청학점 계산중 오류발생~r~n" + sqlca.sqlerrtext)
+	return 2
+end if
+
+SELECT	NVL(SUM(HAKJUM), 0),
+			NVL(SUM(DUNGROK), 0),
+			NVL(SUM(D_JANGHAK), 0)
+INTO	:ll_hakjum_before,
+		:ll_dugnrok_before,
+		:ll_janghak_before
+FROM	HAKSA.D_DUNGROK
+WHERE	HAKBUN	=	:as_hakbun
+AND	YEAR		=	:as_year	
+AND	HAKGI		=	:as_hakgi
+USING SQLCA ;
+
+if as_chk	=	'1' then 		//2006학번 이상인자(학기제)
+	ll_hakjum = 0
+elseif as_chk	=	'0'	then	//2005학번 이하인자(학점제)		
+	ll_hakjum = ll_hakjum_sugang - ll_hakjum_before
+end if
+
+if ll_hakjum = 0 then
+	return 1
+	
+elseif ll_hakjum > 0 then			//추가신청이 이루어진 경우
+
+	//	if ll_dugnrok_before > 1000000 then
+//		ll_dungrok	=	ll_hakjum * ll_dungrok_m
+//				
+//	else
+//		ll_dungrok_all = ll_hakjum_sugang * ll_dungrok_m
+//		
+//		if ll_dungrok_all > 1000000 then
+//						
+//			ll_dungrok	=	ll_hakjum * ll_dungrok_m
+//			ll_janghak	=	1000000 - ll_janghak_before
+//			
+//		else
+//			ll_dungrok	=	ll_hakjum * ll_dungrok_m
+			if mid(as_hakbun, 3, 4) >= '2010' then
+				ll_dungrok	=	ll_hakjum * ll_dungrok_m				
+				ll_janghak	=	(ll_hakjum * ll_dungrok_m) * 0.5
+			else       		
+				ll_dungrok	=	ll_hakjum * ll_dungrok_m					
+				ll_janghak	=	(ll_hakjum * ll_dungrok_m) * 0.45
+			end if				
+//		end if
+//
+//	end if
+
+elseif ll_hakjum < 0 then			//학점취소가 이루어진 경우(환불)
+	
+//	//이전 납입금이 백만원을 초과한 경우
+//	if ll_dugnrok_before > 1000000 then
+//		ll_dungrok_all = ll_hakjum_sugang * ll_dungrok_m
+//		
+//		if ll_dungrok_all > 1000000 then								//재계산한 금액이 백만원 초과인 경우
+//						
+//			ll_dungrok	=	ll_hakjum * ll_dungrok_m
+//						
+//		else																	//재계산한 금액이 백만원 이하인 경우
+		if mid(as_hakbun, 3, 4) >= '2010' then
+			ll_dungrok	=	ll_hakjum * ll_dungrok_m
+			//이전장학금에서 환불할 장학금의 차액만큼 환수됨.(실재 수강신청된 학점으로 장학금을 계산함.-등록금은 차액학점만큼 감하면 됨.)
+			ll_janghak	=	ABS((ll_hakjum_sugang * ll_dungrok_m) * 0.5) - ll_janghak_before
+		else
+			ll_dungrok	=	ll_hakjum * ll_dungrok_m
+			//이전장학금에서 환불할 장학금의 차액만큼 환수됨.(실재 수강신청된 학점으로 장학금을 계산함.-등록금은 차액학점만큼 감하면 됨.)
+			ll_janghak	=	ABS((ll_hakjum_sugang * ll_dungrok_m) * 0.45) - ll_janghak_before			
+			
+		end if
+	//이전납입금이 백만원 이하인 경우
+//	else
+//		//대학원 최소학점이 3학점이므로 이경우는 발생할 수 없슴.- 그러나 프로그램을 맹글어 놓았으니 경우가 발생할 경우 확인해 보세요.
+//		ll_dungrok	=	ll_hakjum * ll_dungrok_m - ((ll_hakjum * ll_dungrok_m) * 0.3)
+////		ll_janghak	=	ABS((ll_hakjum_sugang * ll_dungrok_m) * 0.3) - ll_janghak_before
+//	end if	
+//
+end if
+
+
+if ll_dungrok > 0 then
+	ls_hwan	= '0'
+	ls_chuga	= '1'
+else
+	ls_hwan	= '1'
+	ls_chuga	= '0'
+end if
+
+ll_chasu	=	uf_chasu(as_year, as_hakgi, as_hakbun)
+
+//추가내역에서는 원우회비는 0원
+if ll_chasu > 1 then
+	ll_wonwoo_m = 0
+end if
+
+//Table Insert
+INSERT INTO	HAKSA.D_DUNGROK
+		(	HAKBUN,		YEAR,				HAKGI,		CHASU,		HAKJUM,
+			IPHAK,		DUNGROK,			WONWOO,		D_JANGHAK,	BANK_ID,
+			WAN_YN,		DUNG_YN,			BUN_YN,		CHU_YN,		HWAN_YN	)
+VALUES(	:as_hakbun,	:as_year,		:as_hakgi,	:ll_chasu,	:ll_hakjum,
+			null,			:ll_dungrok,	NULL,			:ll_janghak,	NULL,
+			'0',			'0',				'0',			:ls_chuga,	:ls_hwan		)	USING SQLCA ;
+			
+if sqlca.sqlcode = 0 then
+	return 0
+else
+	messagebox("오류","등록내역 생성중 오류발생~r~n" + sqlca.sqlerrtext)
+	return 2
+end if
+end function
+

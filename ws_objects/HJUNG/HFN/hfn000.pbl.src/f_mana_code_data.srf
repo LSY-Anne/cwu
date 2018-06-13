@@ -1,0 +1,85 @@
+﻿$PBExportHeader$f_mana_code_data.srf
+$PBExportComments$관리항목 Data 표기
+global type f_mana_code_data from function_object
+end type
+
+forward prototypes
+global function string f_mana_code_data (integer ai_mana_code1, string as_mana_data1, integer ai_mana_code2, string as_mana_data2, integer ai_mana_code3, string as_mana_data3, integer ai_mana_code4, string as_mana_data4)
+end prototypes
+
+global function string f_mana_code_data (integer ai_mana_code1, string as_mana_data1, integer ai_mana_code2, string as_mana_data2, integer ai_mana_code3, string as_mana_data3, integer ai_mana_code4, string as_mana_data4);// ==========================================================================================
+// Function Name	:	f_mana_code_data
+// Function 설명	:	전표 출력의 관리항목 내용을 표기
+// Argument			:	ai_mana_code1(관리항목코드1)
+// 						ai_mana_data1(관리항목내용1)
+// 						ai_mana_code2(관리항목코드2)
+// 						ai_mana_data2(관리항목내용2)
+// 						ai_mana_code3(관리항목코드3)
+// 						ai_mana_data3(관리항목내용3)
+// 						ai_mana_code4(관리항목코드4)
+// 						ai_mana_data4(관리항목내용4)
+// Return			:	string
+// ==========================================================================================
+string	ls_mana_name
+string	ls_mana_data
+string	ls_mana_data_name
+
+if ai_mana_code1 = 0 then return ls_mana_data
+
+select	mana_name	into	:ls_mana_name
+from		fndb.hfn001m
+where		mana_code = :ai_mana_code1 ;
+
+ls_mana_data = trim(ls_mana_name) + ':' + trim(as_mana_data1)
+
+// (거래처/인사번호/은행)인 경우 명표기
+ls_mana_data_name = f_mana_data_name_proc(ai_mana_code1, as_mana_data1)
+if not isnull(ls_mana_data_name) and trim(ls_mana_data_name) <> '' then
+	ls_mana_data = ls_mana_data + '(' + trim(ls_mana_data_name) + ')'
+end if
+
+if ai_mana_code2 = 0 then return ls_mana_data
+
+select	mana_name	into	:ls_mana_name
+from		fndb.hfn001m
+where		mana_code = :ai_mana_code2 ;
+
+ls_mana_data = ls_mana_data + ', ' + trim(ls_mana_name) + ':' + trim(as_mana_data2)
+
+// (거래처/인사번호/은행)인 경우 명표기
+ls_mana_data_name = f_mana_data_name_proc(ai_mana_code2, as_mana_data2)
+if not isnull(ls_mana_data_name) and trim(ls_mana_data_name) <> '' then
+	ls_mana_data = ls_mana_data + '(' + trim(ls_mana_data_name) + ')'
+end if
+
+if ai_mana_code3 = 0 then return ls_mana_data
+
+select	mana_name	into	:ls_mana_name
+from		fndb.hfn001m
+where		mana_code = :ai_mana_code3 ;
+
+ls_mana_data = ls_mana_data + ', ' + trim(ls_mana_name) + ':' + trim(as_mana_data3)
+
+// (거래처/인사번호/은행)인 경우 명표기
+ls_mana_data_name = f_mana_data_name_proc(ai_mana_code3, as_mana_data3)
+if not isnull(ls_mana_data_name) and trim(ls_mana_data_name) <> '' then
+	ls_mana_data = ls_mana_data + '(' + trim(ls_mana_data_name) + ')'
+end if
+
+if ai_mana_code4 = 0 then return ls_mana_data
+
+select	mana_name	into	:ls_mana_name
+from		fndb.hfn001m
+where		mana_code = :ai_mana_code4 ;
+
+ls_mana_data = ls_mana_data + ', ' + trim(ls_mana_name) + ':' + trim(as_mana_data4)
+
+// (거래처/인사번호/은행)인 경우 명표기
+ls_mana_data_name = f_mana_data_name_proc(ai_mana_code4, as_mana_data4)
+if not isnull(ls_mana_data_name) and trim(ls_mana_data_name) <> '' then
+	ls_mana_data = ls_mana_data + '(' + trim(ls_mana_data_name) + ')'
+end if
+
+return ls_mana_data
+end function
+

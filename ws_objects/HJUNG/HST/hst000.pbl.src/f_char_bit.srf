@@ -1,0 +1,24 @@
+﻿$PBExportHeader$f_char_bit.srf
+global type f_char_bit from function_object
+end type
+
+forward prototypes
+global function boolean f_char_bit (character value, integer bitnum)
+end prototypes
+
+global function boolean f_char_bit (character value, integer bitnum);uint i_value
+string  hex[] = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"}
+boolean bit
+int i
+
+bit = FALSE
+i_value = ASC(value)
+FOR i =1 TO bitnum
+  bit = mod(i_value,2) = 1 
+  i_value = i_value / 2
+NEXT
+
+return bit
+
+end function
+

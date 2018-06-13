@@ -1,0 +1,281 @@
+﻿$PBExportHeader$d_hfn506p_1.srd
+$PBExportComments$회계원장
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 200 print.margin.right = 0 print.margin.top = 300 print.margin.bottom = 0 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=512 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=136 color="536870912" )
+table(column=(type=char(6) updatewhereclause=yes name=com_acct_code dbname="hst001m.com_acct_code" )
+ column=(type=char(30) updatewhereclause=yes name=com_acct_name dbname="hst001m.com_acct_name" )
+ column=(type=char(30) updatewhereclause=yes name=com_mok_name dbname="hac001m.com_mok_name" )
+ column=(type=char(1) updatewhereclause=yes name=com_drcr_class dbname="hst001m.com_drcr_class" )
+ column=(type=char(8) updatewhereclause=yes name=com_acct_date dbname="hst001m.com_acct_date" )
+ column=(type=char(16) updatewhereclause=yes name=com_slip_date dbname="hst001m.com_slip_date" )
+ column=(type=number updatewhereclause=yes name=com_slip_no dbname="hst001m.com_slip_no" )
+ column=(type=number updatewhereclause=yes name=com_slip_seq dbname="hst001m.com_slip_seq" )
+ column=(type=char(4) updatewhereclause=yes name=com_gwa dbname="hst001m.com_gwa" )
+ column=(type=char(100) updatewhereclause=yes name=com_remark dbname="hst001m.com_remark" )
+ column=(type=char(20) updatewhereclause=yes name=com_cust_no dbname="hst001m.com_cust_no" )
+ column=(type=char(60) updatewhereclause=yes name=cust_name dbname="hst001m.cust_name" )
+ column=(type=number updatewhereclause=yes name=com_dr_amt dbname="hst001m.com_dr_amt" )
+ column=(type=number updatewhereclause=yes name=com_cr_amt dbname="hst001m.com_cr_amt" )
+ column=(type=number updatewhereclause=yes name=com_mana_code1 dbname="hst001m.com_mana_code1" )
+ column=(type=char(20) updatewhereclause=yes name=com_mana_data1 dbname="hst001m.com_mana_data1" )
+ column=(type=number updatewhereclause=yes name=com_mana_code2 dbname="hst001m.com_mana_code2" )
+ column=(type=char(20) updatewhereclause=yes name=com_mana_data2 dbname="hst001m.com_mana_data2" )
+ column=(type=number updatewhereclause=yes name=com_mana_code3 dbname="hst001m.com_mana_code3" )
+ column=(type=char(20) updatewhereclause=yes name=com_mana_data3 dbname="hst001m.com_mana_data3" )
+ column=(type=number updatewhereclause=yes name=com_mana_code4 dbname="hst001m.com_mana_code4" )
+ column=(type=char(20) updatewhereclause=yes name=com_mana_data4 dbname="hst001m.com_mana_data4" )
+ column=(type=char(40) updatewhereclause=yes name=member_name dbname="hst001m.member_name" )
+ column=(type=char(50) updatewhereclause=yes name=resol_gwa dbname="hst001m.resol_gwa" )
+ column=(type=char(31) updatewhereclause=yes name=title_dt dbname="title_dt" )
+ retrieve="SELECT	A.COM_ACCT_CODE,
+			A.COM_ACCT_NAME,
+			C.ACCT_NAME	COM_MOK_NAME,
+			A.COM_DRCR_CLASS,
+			A.COM_ACCT_DATE,
+			A.COM_SLIP_DATE,
+			A.COM_SLIP_NO,
+			A.COM_SLIP_SEQ,
+			A.COM_GWA,
+			A.COM_REMARK,
+			A.COM_CUST_NO,
+			B.CUST_NAME,
+			A.COM_DR_AMT,
+			A.COM_CR_AMT,
+			A.COM_MANA_CODE1,
+			A.COM_MANA_DATA1,
+			A.COM_MANA_CODE2,
+			A.COM_MANA_DATA2,
+			A.COM_MANA_CODE3,
+			A.COM_MANA_DATA3,
+			A.COM_MANA_CODE4,
+			A.COM_MANA_DATA4,
+			A.MEMBER_NAME,
+			A.RESOL_GWA,
+'기간 : ' || to_char(to_date(:AS_FROM_DATE), 'yyyy/mm/dd')  || ' ∼ ' ||  to_char(to_date(:as_to_date), 'yyyy/mm/dd') as title_dt
+FROM		(	SELECT	A.ACCT_CODE															COM_ACCT_CODE,
+							B.ACCT_NAME															COM_ACCT_NAME,
+							B.DRCR_CLASS														COM_DRCR_CLASS,
+							SUBSTR(:AS_FROM_DATE,1,6)||'00'								COM_ACCT_DATE,
+							''																		COM_SLIP_DATE,
+							0																		COM_SLIP_NO,
+							0																		COM_SLIP_SEQ,
+							''																		COM_GWA,
+							''																		COM_REMARK,
+							''																		COM_CUST_NO,
+							NVL(SUM(A.DR_ALT_AMT),0) + NVL(SUM(A.DR_CASH_AMT),0)	COM_DR_AMT,
+							NVL(SUM(A.CR_ALT_AMT),0) + NVL(SUM(A.CR_CASH_AMT),0)	COM_CR_AMT,
+							0																		COM_MANA_CODE1,
+							''																		COM_MANA_DATA1,
+							0																		COM_MANA_CODE2,
+							''																		COM_MANA_DATA2,
+							0																		COM_MANA_CODE3,
+							''																		COM_MANA_DATA3,
+							0																		COM_MANA_CODE4,
+							''																		COM_MANA_DATA4,
+							''																		MEMBER_NAME,
+							''																		RESOL_GWA
+				FROM		FNDB.HFN502H A, ACDB.HAC001M B
+				WHERE		A.ACCT_CODE = B.ACCT_CODE (+)
+				AND		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+				AND		A.BDGT_YEAR = :AS_BDGT_YEAR
+				AND		A.ACCT_DATE < :AS_FROM_DATE
+				AND		DECODE(:AS_GUBUN,'1','Y',B.JG_GUBUN) = 'Y'
+				AND		SUBSTR(A.ACCT_CODE,1,4) LIKE :AS_ACCT_CODE||'%'
+				GROUP BY A.ACCT_CODE, B.ACCT_NAME, B.DRCR_CLASS
+				UNION ALL
+				SELECT	B.ACCT_CODE										COM_ACCT_CODE,
+							C.ACCT_NAME										COM_ACCT_NAME,
+							C.DRCR_CLASS									COM_DRCR_CLASS,
+							A.ACCT_DATE										COM_ACCT_DATE,
+
+							CASE	
+								WHEN	:AS_BDGT_YEAR > '2003'	THEN
+									CASE	
+										WHEN	(	SELECT	DISTINCT BB.RESOL_DATE
+													FROM    	FNDB.HFN201M AA, FNDB.HFN202M BB
+													WHERE   	AA.ACCT_CLASS	=	BB.ACCT_CLASS
+													AND		AA.SLIP_DATE 	=	BB.SLIP_DATE
+													AND		AA.SLIP_NO		=	BB.SLIP_NO
+													AND     	AA.ACCT_CLASS	=  A.ACCT_CLASS 
+													AND     	AA.SLIP_DATE	=  A.SLIP_DATE 
+													AND     	AA.SLIP_NO		=  A.SLIP_NO  
+													AND     	BB.DRCR_CLASS	<> B.DRCR_CLASS
+													AND		BB.RESOL_DATE	IS NOT NULL    	)||B.RESOL_DATE IS NULL
+										THEN	B.SLIP_DATE		
+										ELSE	(	SELECT 	DISTINCT BB.RESOL_DATE
+													FROM    	FNDB.HFN201M AA, FNDB.HFN202M BB
+													WHERE   	AA.ACCT_CLASS 	= 	BB.ACCT_CLASS
+													AND	   AA.SLIP_DATE 	=	BB.SLIP_DATE
+													AND	   AA.SLIP_NO		=	BB.SLIP_NO
+													AND     	AA.ACCT_CLASS  =  A.ACCT_CLASS 
+													AND     	AA.SLIP_DATE   =  A.SLIP_DATE 
+													AND     	AA.SLIP_NO     =  A.SLIP_NO  
+													AND     	BB.DRCR_CLASS  <> B.DRCR_CLASS
+													AND		BB.RESOL_DATE	IS NOT NULL    	)||B.RESOL_DATE
+									END
+								ELSE	B.SLIP_DATE
+							END												COM_SLIP_DATE,
+							CASE	
+								WHEN	:AS_BDGT_YEAR > '2003'	THEN
+									CASE	
+										WHEN	(	SELECT 	DISTINCT BB.RESOL_DATE
+													FROM    	FNDB.HFN201M AA, FNDB.HFN202M BB
+													WHERE   	AA.ACCT_CLASS 	= 	BB.ACCT_CLASS
+													AND	   AA.SLIP_DATE 	=	BB.SLIP_DATE
+													AND	   AA.SLIP_NO		=	BB.SLIP_NO
+													AND     	AA.ACCT_CLASS  =  A.ACCT_CLASS 
+													AND     	AA.SLIP_DATE   =  A.SLIP_DATE 
+													AND     	AA.SLIP_NO     =  A.SLIP_NO  
+													AND     	BB.DRCR_CLASS  <> B.DRCR_CLASS
+													AND		BB.RESOL_DATE	IS NOT NULL    	)||B.RESOL_DATE IS NULL
+										THEN	B.SLIP_NO
+										ELSE	NVL((	SELECT	DISTINCT BB.RESOL_NO
+														FROM    	FNDB.HFN201M AA, FNDB.HFN202M BB
+														WHERE   	AA.ACCT_CLASS 	= 	BB.ACCT_CLASS
+														AND	   AA.SLIP_DATE 	=	BB.SLIP_DATE
+														AND	   AA.SLIP_NO		=	BB.SLIP_NO
+														AND     	AA.ACCT_CLASS  =  A.ACCT_CLASS 
+														AND     	AA.SLIP_DATE   =  A.SLIP_DATE 
+														AND     	AA.SLIP_NO     =  A.SLIP_NO  
+														AND     	BB.DRCR_CLASS  <> B.DRCR_CLASS
+														AND		BB.RESOL_NO		<> 0 					),0)+B.RESOL_NO			
+										END
+								ELSE	B.SLIP_NO
+							END												COM_SLIP_NO,
+							CASE	
+								WHEN	:AS_BDGT_YEAR > '2003'	THEN
+									CASE	
+										WHEN	(	SELECT 	DISTINCT BB.RESOL_DATE
+													FROM    	FNDB.HFN201M AA, FNDB.HFN202M BB
+													WHERE   	AA.ACCT_CLASS 	= 	BB.ACCT_CLASS
+													AND	   AA.SLIP_DATE 	=	BB.SLIP_DATE
+													AND	   AA.SLIP_NO		=	BB.SLIP_NO
+													AND     	AA.ACCT_CLASS  =  A.ACCT_CLASS 
+													AND     	AA.SLIP_DATE   =  A.SLIP_DATE 
+													AND     	AA.SLIP_NO     =  A.SLIP_NO  
+													AND     	BB.DRCR_CLASS  <> B.DRCR_CLASS
+													AND		BB.RESOL_DATE	IS NOT NULL			)||B.RESOL_DATE IS NULL
+										THEN	B.SLIP_SEQ		
+										ELSE	(	SELECT 	NVL(MIN(BB.RESOL_SEQ),0)
+													FROM    	FNDB.HFN201M AA, FNDB.HFN202M BB
+													WHERE   	AA.ACCT_CLASS 	= 	BB.ACCT_CLASS
+													AND	   AA.SLIP_DATE 	=	BB.SLIP_DATE
+													AND	   AA.SLIP_NO		=	BB.SLIP_NO
+													AND     	AA.ACCT_CLASS  =  A.ACCT_CLASS 
+													AND     	AA.SLIP_DATE   =  A.SLIP_DATE 
+													AND     	AA.SLIP_NO     =  A.SLIP_NO  
+													AND     	BB.DRCR_CLASS  <> B.DRCR_CLASS
+													AND		BB.RESOL_SEQ	<>	0					)+B.RESOL_SEQ
+									END
+								ELSE	B.SLIP_SEQ
+							END												COM_SLIP_SEQ,
+							B.USED_GWA										COM_GWA,
+							B.REMARK											COM_REMARK,
+							DECODE(B.MANA_CODE1,2,B.MANA_DATA1,DECODE(B.MANA_CODE2,2,B.MANA_DATA2,DECODE(B.MANA_CODE3,2,B.MANA_DATA3,DECODE(B.MANA_CODE4,2,B.MANA_DATA4,''))))	COM_CUST_NO,
+							DECODE(B.DRCR_CLASS,'D',B.SLIP_AMT,0)	COM_DR_AMT,
+							DECODE(B.DRCR_CLASS,'C',B.SLIP_AMT,0)	COM_CR_AMT,
+							B.MANA_CODE1									COM_MANA_CODE1,
+							B.MANA_DATA1									COM_MANA_DATA1,
+							B.MANA_CODE2									COM_MANA_CODE2,
+							B.MANA_DATA2									COM_MANA_DATA2,
+							B.MANA_CODE3									COM_MANA_CODE3,
+							B.MANA_DATA3									COM_MANA_DATA3,
+							B.MANA_CODE4									COM_MANA_CODE4,
+							B.MANA_DATA4									COM_MANA_DATA4,
+							(
+								SELECT	NAME
+								FROM		INDB.HIN001M
+								WHERE		MEMBER_NO = B.MANA_DATA1
+							)	MEMBER_NAME,
+							(
+								SELECT 	BB.FNAME
+								FROM    	FNDB.HFN101M AA, 
+											CDDB.KCH003M BB
+								WHERE   	AA.RESOL_GWA (+)	=	BB.GWA
+								AND		AA.ACCT_CLASS  	=  A.ACCT_CLASS 
+								AND     	AA.RESOL_DATE  	=  A.RESOL_DATE 
+								AND     	AA.RESOL_NO    	=  A.RESOL_NO  
+							)	RESOL_GWA
+				FROM		FNDB.HFN201M A, FNDB.HFN202M B, ACDB.HAC001M C
+				WHERE		A.ACCT_CLASS = B.ACCT_CLASS
+				AND		A.SLIP_DATE  = B.SLIP_DATE
+				AND		A.SLIP_NO    = B.SLIP_NO
+				AND		B.ACCT_CODE  = C.ACCT_CODE (+)
+				AND		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+				AND		A.ACCT_DATE BETWEEN :AS_FROM_DATE AND :AS_TO_DATE
+				AND		A.CLOSE_YN = 'Y'
+				AND		DECODE(:AS_GUBUN,'1','Y',C.JG_GUBUN) = 'Y'
+				AND		SUBSTR(B.ACCT_CODE,1,4) LIKE :AS_ACCT_CODE||'%'	) A, STDB.HST001M B, ACDB.HAC001M C
+WHERE		SUBSTR(A.COM_ACCT_CODE,1,4)||'00' = C.ACCT_CODE (+)
+AND		A.COM_CUST_NO = B.CUST_NO (+)
+ORDER BY A.COM_ACCT_CODE, A.COM_ACCT_NAME, A.COM_ACCT_DATE, A.COM_SLIP_DATE, A.COM_SLIP_NO, A.COM_SLIP_SEQ
+" arguments=(("ai_acct_class", number),("as_bdgt_year", string),("as_from_date", string),("as_to_date", string),("as_acct_code", string),("as_gubun", string)) )
+group(level=1 header.height=0 trailer.height=0 by=("com_acct_code" ) newpage=yes header.color="536870912" trailer.color="536870912" )
+group(level=2 header.height=0 trailer.height=164 by=("left( com_acct_date , 6 )" ) header.color="536870912" trailer.color="536870912" )
+column(band=header id=25 alignment="1" tabsequence=32766 border="0" color="0" x="3003" y="300" height="60" width="1746" format="[general]" html.valueishtml="0"  name=title_dt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=header x1="9" y1="372" x2="9" y2="508"  name=l_80 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="9" y1="376" x2="4750" y2="372"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="회   계   원   장" border="0" color="0" x="9" y="8" height="132" width="4741" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-22" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" font.underline="1" background.mode="1" background.color="536870912" )
+column(band=header id=3 alignment="0" tabsequence=32766 border="0" color="0" x="357" y="300" height="60" width="960" format="[general]" html.valueishtml="0"  name=com_mok_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="계정과목 :" border="0" color="0" x="9" y="300" height="60" width="325" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="세목 : " border="0" color="0" x="1367" y="300" height="60" width="197" html.valueishtml="0"  name=t_17 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="4750" y1="376" x2="4750" y2="508"  name=l_10 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="9" y1="508" x2="4750" y2="508"  name=l_3 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="357" y1="376" x2="357" y2="512"  name=l_32 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="일자" border="0" color="0" x="23" y="416" height="60" width="325" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="적                  요" border="0" color="0" x="370" y="416" height="60" width="2857" html.valueishtml="0"  name=t_11 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="4242" y1="376" x2="4242" y2="512"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="잔액" border="0" color="0" x="4256" y="416" height="60" width="480" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="3739" y1="376" x2="3739" y2="512"  name=l_18 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="대변" border="0" color="0" x="3753" y="416" height="60" width="480" html.valueishtml="0"  name=t_9 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="3237" y1="376" x2="3237" y2="512"  name=l_21 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="차변" border="0" color="0" x="3250" y="416" height="60" width="480" html.valueishtml="0"  name=t_10 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=2 alignment="0" tabsequence=32766 border="0" color="0" x="1586" y="300" height="60" width="960" format="[general]" html.valueishtml="0"  name=com_acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=header alignment="1" expression="'( ' + page() + ' / ' + pagecount() + ' )'"border="0" color="0" x="3360" y="228" height="60" width="1390" format="[General]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=detail x1="9" y1="128" x2="9" y2="208"  name=l_15 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="9" y1="0" x2="9" y2="152"  name=ln_a visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="4750" y1="0" x2="4750" y2="152"  name=l_19 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="5" y1="132" x2="4745" y2="132"  name=l_11 visible="1" pen.style="0" pen.width="5~tif ( getrow() = last(getrow() for page) or getrow() = last(getrow() for group 1),10,5)" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="357" y1="0" x2="357" y2="152"  name=l_22 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=detail alignment="2" expression="if( right( com_acct_date, 2) = '00', '', string( right( com_acct_date , 6 ) , '@@/@@/@@' ) )"border="0" color="0" x="23" y="4" height="56" width="325" format="[GENERAL]" html.valueishtml="0"  name=compute_6 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="2" expression="if( right( com_acct_date, 2 ) = '00' , '', right( com_slip_date, 6 ) + '-' + string( com_slip_no ) + '-' + string( com_slip_seq ) )"border="0" color="0" x="370" y="4" height="56" width="448" format="[GENERAL]" html.valueishtml="0"  name=compute_8 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=detail x1="3237" y1="0" x2="3237" y2="152"  name=l_25 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3739" y1="0" x2="3739" y2="152"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=13 alignment="1" tabsequence=32766 border="0" color="0" x="3250" y="4" height="56" width="480" format="#,###" html.valueishtml="0"  name=com_dr_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=detail x1="4242" y1="0" x2="4242" y2="152"  name=l_26 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=14 alignment="1" tabsequence=32766 border="0" color="0" x="3753" y="4" height="56" width="480" format="#,###" html.valueishtml="0"  name=com_cr_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="1" expression="if( com_drcr_class = 'D', com_dr_amt - com_cr_amt , com_cr_amt - com_dr_amt )"border="0" color="0" x="4256" y="4" height="56" width="480" format="#,###" html.valueishtml="0"  name=compute_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression="f_mana_code_data( com_mana_code1 ,  com_mana_data1 ,  com_mana_code2 ,  com_mana_data2 , com_mana_code3, com_mana_data3, com_mana_code4, com_mana_data4 )"border="0" color="0" x="370" y="64" height="60" width="2857" format="[GENERAL]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression="if( right( com_acct_date , 2 ) = '00', '전기(월) 이월', com_remark )"border="0" color="0" x="841" y="4" height="56" width="2386" format="[GENERAL]" html.valueishtml="0"  name=compute_9 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="2587" y="4" height="56" width="640" format="[general]" html.valueishtml="0"  name=cust_name visible="1~tif ( len( cust_name ) > 0 , 1, 0 )" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=24 alignment="0" tabsequence=32766 border="0" color="0" x="2587" y="4" height="60" width="640" format="[general]" html.valueishtml="0"  name=resol_gwa visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=trailer.2 x1="9" y1="0" x2="9" y2="160"  name=l_2 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.2 x1="4750" y1="0" x2="4750" y2="160"  name=l_6 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.2 x1="9" y1="76" x2="4750" y2="76"  name=l_16 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.2 x1="9" y1="160" x2="4750" y2="160"  name=l_8 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.2 x1="4242" y1="0" x2="4242" y2="160"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=trailer.2 alignment="1" expression="if( com_drcr_class = 'D',  com_dr_mon_tot -  com_cr_mon_tot ,  com_cr_mon_tot - com_dr_mon_tot )"border="0" color="0" x="4256" y="8" height="56" width="480" format="#,###" html.valueishtml="0"  name=compute_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=trailer.2 alignment="1" expression="if( com_drcr_class = 'D',  com_dr_nu_tot -  com_cr_nu_tot ,  com_cr_nu_tot - com_dr_nu_tot )"border="0" color="0" x="4256" y="92" height="56" width="480" format="#,###" html.valueishtml="0"  name=compute_7 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=trailer.2 x1="3739" y1="0" x2="3739" y2="160"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=trailer.2 alignment="1" expression="cumulativeSum( if( right( com_acct_date , 2) <> '00', com_cr_amt, 0 )  for group 2 )"border="0" color="0" x="3753" y="8" height="56" width="480" format="#,###" html.valueishtml="0"  name=com_cr_mon_tot visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=trailer.2 alignment="1" expression="cumulativeSum( com_cr_amt  for group 1 )"border="0" color="0" x="3753" y="92" height="56" width="480" format="#,###" html.valueishtml="0"  name=com_cr_nu_tot visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=trailer.2 x1="3237" y1="0" x2="3237" y2="160"  name=l_20 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=trailer.2 alignment="1" expression="cumulativeSum( if( right( com_acct_date , 2) <> '00', com_dr_amt, 0 )  for group 2 )"border="0" color="0" x="3250" y="8" height="56" width="480" format="#,###" html.valueishtml="0"  name=com_dr_mon_tot visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=trailer.2 alignment="1" expression="cumulativeSum( com_dr_amt  for group 1 )"border="0" color="0" x="3250" y="92" height="56" width="480" format="#,###" html.valueishtml="0"  name=com_dr_nu_tot visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=trailer.2 alignment="2" text="월     계" border="0" color="0" x="23" y="8" height="56" width="3205" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=trailer.2 alignment="2" text="누     계" border="0" color="0" x="23" y="92" height="56" width="3205" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

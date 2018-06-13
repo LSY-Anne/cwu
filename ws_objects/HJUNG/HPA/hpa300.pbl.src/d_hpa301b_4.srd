@@ -1,0 +1,119 @@
+﻿$PBExportHeader$d_hpa301b_4.srd
+$PBExportComments$월 지급급여 생성(급여계산기준정보)(hpa003d)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=80263581 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=84 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=char(2) updatewhereclause=yes key=yes name=code dbname="hpa003d.code" )
+ column=(type=char(3) updatewhereclause=yes key=yes name=calc_code dbname="hpa003d.calc_code" )
+ column=(type=char(30) updatewhereclause=yes name=calc_name dbname="hpa003d.calc_name" )
+ column=(type=decimal(0) updatewhereclause=yes name=jikjong_code dbname="hpa003d.jikjong_code" )
+ column=(type=char(20) updatewhereclause=yes name=calc_gbn dbname="hpa003d.calc_gbn" )
+ column=(type=char(3) updatewhereclause=yes name=duty_code dbname="hpa003d.duty_code" )
+ column=(type=decimal(0) updatewhereclause=yes name=jikwi_code dbname="hpa003d.jikwi_code" )
+ column=(type=decimal(0) updatewhereclause=yes name=jikmu_code dbname="hpa003d.jikmu_code" )
+ column=(type=char(4) updatewhereclause=yes name=bojik_code dbname="hpa003d.bojik_code" )
+ column=(type=decimal(0) updatewhereclause=yes name=year_f dbname="hpa003d.year_f" )
+ column=(type=decimal(0) updatewhereclause=yes name=year_t dbname="hpa003d.year_t" )
+ column=(type=char(1) updatewhereclause=yes name=gubun_chk dbname="hpa003d.gubun_chk" )
+ column=(type=decimal(0) updatewhereclause=yes name=amt dbname="hpa003d.amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=rate dbname="hpa003d.rate" )
+ column=(type=char(1) updatewhereclause=yes name=use_yn dbname="hpa003d.use_yn" )
+ column=(type=char(5) updatewhereclause=yes name=worker dbname="hpa003d.worker" )
+ column=(type=datetime updatewhereclause=yes name=work_date dbname="hpa003d.work_date" )
+ column=(type=char(1) updatewhereclause=yes name=pay_opt dbname="hpa003d.pay_opt" )
+ retrieve="  SELECT CODE,   
+         CALC_CODE,   
+         CALC_NAME,   
+         JIKJONG_CODE,   
+         CALC_GBN,   
+         DUTY_CODE,   
+         JIKWI_CODE,   
+         JIKMU_CODE,   
+         BOJIK_CODE,   
+         YEAR_F,   
+         YEAR_T,   
+         GUBUN_CHK,   
+         AMT,   
+         RATE,   
+         USE_YN,   
+         WORKER,   
+         WORK_DATE,   
+         PAY_OPT  
+    FROM PADB.HPA003D  
+   WHERE ( USE_YN = '9' ) AND  
+         ( CODE = :as_code ) AND  
+         ( JIKJONG_CODE = :ai_jikjong_code OR JIKJONG_CODE = 0 )   
+	and	(	(	decode(rtrim(calc_gbn), 	'jikwi_code', 	:ai_jikwi_code, 
+													'jikmu_code', 	:ai_jikmu_code, 
+													'work_year', 	:ai_work_year 	) >= 
+					decode(rtrim(calc_gbn), 	'jikwi_code', 	jikwi_code, 
+													'jikmu_code', 	jikmu_code, 
+													'work_year', 	year_f	) 
+	and  	 		decode(rtrim(calc_gbn), 	'jikwi_code', 	:ai_jikwi_code, 
+													'jikmu_code', 	:ai_jikmu_code, 
+													'work_year', 	:ai_work_year	) <= 
+			 		decode(rtrim(calc_gbn), 	'jikwi_code', 	jikwi_code, 
+													'jikmu_code', 	jikmu_code, 
+													'work_year', 	year_t	) )
+	or		(		decode(rtrim(calc_gbn), 	'duty_code', 	rtrim(:as_duty_code), 
+													'bojik_code', 	:as_bojik_code	) >= 
+					decode(rtrim(calc_gbn), 	'duty_code', 	duty_code, 
+													'bojik_code', 	bojik_code	) 
+	and  	 		decode(rtrim(calc_gbn), 	'duty_code', 	rtrim(:as_duty_code), 
+													'bojik_code', 	:as_bojik_code	) <= 
+			 		decode(rtrim(calc_gbn), 	'duty_code', 	rtrim(duty_code), 
+													'bojik_code', 	bojik_code	) )
+	or		(	calc_gbn = '0' ) )
+
+ORDER BY calc_gbn ASC, CALC_CODE ASC   
+" update="PADB.HPA003D" updatewhere=1 updatekeyinplace=no arguments=(("as_code", string),("ai_jikjong_code", number),("as_duty_code", string),("ai_jikwi_code", number),("ai_jikmu_code", number),("as_bojik_code", string),("ai_work_year", number)) )
+text(band=header alignment="2" text="Code" border="6" color="0" x="9" y="12" height="60" width="105" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Calc Code" border="6" color="0" x="123" y="12" height="60" width="105" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Name" border="6" color="0" x="238" y="12" height="60" width="430" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Jikjong Code" border="6" color="0" x="677" y="12" height="60" width="494" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Calc Gbn" border="6" color="0" x="1179" y="12" height="60" width="297" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Duty Code" border="6" color="0" x="1486" y="12" height="60" width="128" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Jikwi Code" border="6" color="0" x="1623" y="12" height="60" width="352" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Jikmu Code" border="6" color="0" x="1984" y="12" height="60" width="347" html.valueishtml="0"  name=t_9 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Bojik Code" border="6" color="0" x="2341" y="12" height="60" width="151" html.valueishtml="0"  name=t_10 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Year F" border="6" color="0" x="2501" y="12" height="60" width="352" html.valueishtml="0"  name=t_11 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Year T" border="6" color="0" x="2862" y="12" height="60" width="471" html.valueishtml="0"  name=t_12 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Gubun Chk" border="6" color="0" x="3342" y="12" height="60" width="421" html.valueishtml="0"  name=t_13 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Amt" border="6" color="0" x="3771" y="12" height="60" width="443" html.valueishtml="0"  name=t_14 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Rate" border="6" color="0" x="4224" y="12" height="60" width="370" html.valueishtml="0"  name=t_15 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Use Yn" border="6" color="0" x="4603" y="12" height="60" width="78" html.valueishtml="0"  name=t_16 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Worker" border="6" color="0" x="4690" y="12" height="60" width="311" html.valueishtml="0"  name=t_17 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Work Date" border="6" color="0" x="5010" y="12" height="60" width="471" html.valueishtml="0"  name=t_18 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Pay Opt" border="6" color="0" x="5490" y="12" height="60" width="338" html.valueishtml="0"  name=t_19 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="105" format="[general]" html.valueishtml="0"  name=code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="123" y="4" height="72" width="105" format="[general]" html.valueishtml="0"  name=calc_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="238" y="4" height="72" width="430" format="[general]" html.valueishtml="0"  name=calc_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="677" y="4" height="72" width="494" format="[General]" html.valueishtml="0"  name=jikjong_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="1179" y="4" height="72" width="297" format="[general]" html.valueishtml="0"  name=calc_gbn visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1486" y="4" height="72" width="128" format="[general]" html.valueishtml="0"  name=duty_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="1623" y="4" height="72" width="352" format="[General]" html.valueishtml="0"  name=jikwi_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="1984" y="4" height="72" width="347" format="[General]" html.valueishtml="0"  name=jikmu_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="2341" y="4" height="72" width="151" format="[general]" html.valueishtml="0"  name=bojik_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="2501" y="4" height="72" width="352" format="[General]" html.valueishtml="0"  name=year_f visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="2862" y="4" height="72" width="471" format="[General]" html.valueishtml="0"  name=year_t visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="3342" y="4" height="72" width="421" format="[general]" html.valueishtml="0"  name=gubun_chk visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="0" x="3771" y="4" height="72" width="443" format="[General]" html.valueishtml="0"  name=amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="4224" y="4" height="72" width="370" format="[General]" html.valueishtml="0"  name=rate visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="4603" y="4" height="72" width="78" format="[general]" html.valueishtml="0"  name=use_yn visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="0" x="4690" y="4" height="72" width="311" format="[general]" html.valueishtml="0"  name=worker visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="0" x="5010" y="4" height="72" width="471" format="[shortdate] [time]" html.valueishtml="0"  name=work_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="0" color="0" x="5490" y="4" height="56" width="338" format="[general]" html.valueishtml="0"  name=pay_opt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,23 @@
+﻿$PBExportHeader$f_int_to_hex.srf
+global type f_int_to_hex from function_object
+end type
+
+forward prototypes
+global function string f_int_to_hex (unsignedinteger value)
+end prototypes
+
+global function string f_int_to_hex (unsignedinteger value);uint l_value
+string  hex[] = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"}
+string  result
+int i
+
+l_value = value
+FOR i = 1 TO 4
+  result = hex[mod(l_value,16) + 1] + result 
+  l_value = l_value / 16
+NEXT
+result = "0x"+result 
+return result
+
+end function
+

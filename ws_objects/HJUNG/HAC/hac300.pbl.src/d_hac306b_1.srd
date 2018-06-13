@@ -1,0 +1,114 @@
+﻿$PBExportHeader$d_hac306b_1.srd
+$PBExportComments$주관부서 자료이관(주관부서용)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(1) updatewhereclause=yes name=io_gubun dbname="hac011h.io_gubun" values="수입	1/지출	2/" )
+ column=(type=char(30) updatewhereclause=yes name=acct_name dbname="acct_name" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=bdgt_year dbname="hac011h.bdgt_year" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=gwa dbname="hac011h.gwa" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=acct_code dbname="hac011h.acct_code" )
+ column=(type=decimal(0) updatewhereclause=yes name=hac012h_acct_class dbname="hac011h.acct_class" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=bdgt_class dbname="hac011h.bdgt_class" )
+ column=(type=number updatewhereclause=yes name=hac012h_bdgt_seq dbname="hac011h.bdgt_seq" )
+ column=(type=decimal(0) updatewhereclause=yes name=hac012h_grp dbname="hac011h.grp" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=sort dbname="hac011h.sort" initial="0" )
+ column=(type=char(100) updatewhereclause=yes name=hac012h_calc_remark dbname="hac011h.calc_remark" )
+ column=(type=char(100) updatewhereclause=yes name=hac012h_remark dbname="hac011h.remark" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hac011h.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hac011h.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hac011h.work_date" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=work_gbn dbname="hac011h.work_gbn" )
+ column=(type=char(4) updatewhereclause=yes name=hac011h_bdgt_year dbname="hac011h.bdgt_year" )
+ column=(type=char(4) updatewhereclause=yes name=hac011h_gwa dbname="hac011h.gwa" )
+ column=(type=char(6) updatewhereclause=yes name=hac011h_acct_code dbname="hac011h.acct_code" )
+ column=(type=decimal(0) updatewhereclause=yes name=hac011h_acct_class dbname="hac011h.acct_class" )
+ column=(type=char(1) updatewhereclause=yes name=hac011h_io_gubun dbname="hac011h.io_gubun" values="수입	1/지출	2/" )
+ column=(type=decimal(0) updatewhereclause=yes name=hac011h_bdgt_class dbname="hac011h.bdgt_class" )
+ column=(type=decimal(0) updatewhereclause=yes name=hac011h_sort dbname="hac011h.sort" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=req_amt dbname="hac011h.req_amt" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=stat_class dbname="hac011h.stat_class" )
+ column=(type=char(5) updatewhereclause=yes name=hac011h_worker dbname="hac011h.worker" )
+ column=(type=char(20) updatewhereclause=yes name=hac011h_ipaddr dbname="hac011h.ipaddr" )
+ column=(type=datetime updatewhereclause=yes name=hac011h_work_date dbname="hac011h.work_date" )
+ column=(type=char(1) updatewhereclause=yes name=hac011h_work_gbn dbname="hac011h.work_gbn" )
+ column=(type=decimal(0) updatewhereclause=yes name=hac011h_adjust_amt dbname="hac011h.adjust_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=hac011h_confirm_amt dbname="hac011h.confirm_amt" )
+ column=(type=char(1) updatewhereclause=yes name=hac011h_control_yn dbname="hac011h.control_yn" )
+ column=(type=char(6) updatewhereclause=yes name=hac011h_mgr_gwa dbname="hac011h.mgr_gwa" )
+ retrieve="SELECT	C.IO_GUBUN,
+			DECODE(A.IO_GUBUN,'1',B.ACCT_INAME,'2',B.ACCT_ONAME,B.ACCT_NAME)	ACCT_NAME,
+			C.BDGT_YEAR,
+			C.GWA,
+			C.ACCT_CODE,
+			C.ACCT_CLASS,
+			C.BDGT_CLASS,
+			C.BDGT_SEQ,
+			C.GRP,
+			C.SORT,
+			C.CALC_REMARK,
+			C.REMARK,
+			C.WORKER,
+			C.IPADDR,
+			C.WORK_DATE,
+			C.WORK_GBN,
+			A.BDGT_YEAR,
+			A.GWA,
+			A.ACCT_CODE,
+			A.ACCT_CLASS,
+			A.IO_GUBUN,
+			A.BDGT_CLASS,
+			A.SORT,
+			A.REQ_AMT,
+			A.STAT_CLASS,
+			A.WORKER,
+			A.IPADDR,
+			A.WORK_DATE,
+			A.WORK_GBN,
+			A.ADJUST_AMT,
+			A.CONFIRM_AMT,
+			A.CONTROL_YN,
+			A.MGR_GWA
+FROM		ACDB.HAC011H A, ACDB.HAC001M B, ACDB.HAC012H C
+WHERE		A.BDGT_YEAR = C.BDGT_YEAR (+)
+AND		A.GWA = C.GWA (+)
+AND		A.ACCT_CODE = C.ACCT_CODE (+)
+AND		A.ACCT_CLASS = C.ACCT_CLASS (+)
+AND		A.IO_GUBUN = C.IO_GUBUN (+)
+AND		A.BDGT_CLASS = C.BDGT_CLASS (+)
+AND		A.ACCT_CODE = B.ACCT_CODE (+)
+AND		A.BDGT_YEAR = :AS_BDGT_YEAR
+AND		A.MGR_GWA = :AS_GWA
+AND		A.ACCT_CLASS = :AI_ACCT_CLASS
+AND		A.BDGT_CLASS = :AI_BDGT_CLASS
+ORDER BY	A.SORT, A.IO_GUBUN, A.ACCT_CODE, C.SORT, C.BDGT_SEQ
+" arguments=(("as_bdgt_year", string),("as_gwa", string),("ai_acct_class", number),("ai_bdgt_class", number)) )
+text(band=header alignment="2" text="산출근거" border="0" color="0" x="2565" y="12" height="56" width="1701" html.valueishtml="0"  name=hac012h_calc_remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="요구금액" border="0" color="0" x="1783" y="12" height="56" width="462" html.valueishtml="0"  name=req_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="상태구분" border="0" color="0" x="2254" y="12" height="56" width="302" html.valueishtml="0"  name=stat_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계정과목" border="0" color="0" x="1047" y="12" height="56" width="727" html.valueishtml="0"  name=acct_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="순위" border="0" color="0" x="859" y="12" height="56" width="178" html.valueishtml="0"  name=hac011h_sort_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="구분" border="0" color="0" x="658" y="12" height="56" width="192" html.valueishtml="0"  name=hac011h_io_gubun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="요구부서" border="0" color="0" x="9" y="12" height="56" width="640" html.valueishtml="0"  name=hac011h_gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="640" format="[general]" html.valueishtml="0"  name=hac011h_gwa visible="1" dddw.name=dddw_sosok501_group_opt1 dddw.displaycolumn=dept_name dddw.datacolumn=dept_code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=24 alignment="1" tabsequence=32766 border="0" color="0" x="1783" y="4" height="72" width="462" format="#,##0" html.valueishtml="0"  name=req_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=25 alignment="2" tabsequence=32766 border="0" color="0" x="2254" y="4" height="72" width="302" format="[general]" html.valueishtml="0"  name=stat_class visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="1047" y="4" height="72" width="727" format="[general]" html.valueishtml="0"  name=acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="2565" y="4" height="72" width="1701" format="[general]" html.valueishtml="0"  name=hac012h_calc_remark visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=21 alignment="2" tabsequence=32766 border="0" color="0" x="658" y="4" height="72" width="192" format="[general]" html.valueishtml="0"  name=hac011h_io_gubun visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=23 alignment="2" tabsequence=32766 border="0" color="0" x="859" y="4" height="72" width="178" format="[general]" html.valueishtml="0"  name=hac011h_sort visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+
+sparse(names="hac011h_gwa	hac011h_io_gubun	hac011h_sort	acct_name	req_amt	stat_class")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

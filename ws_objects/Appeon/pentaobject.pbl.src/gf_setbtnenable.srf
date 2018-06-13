@@ -1,0 +1,75 @@
+﻿$PBExportHeader$gf_setbtnenable.srf
+global type gf_setbtnenable from function_object
+end type
+
+forward prototypes
+global function integer gf_setbtnenable (ref powerobject apo_obj, string as_btnlist)
+end prototypes
+
+global function integer gf_setbtnenable (ref powerobject apo_obj, string as_btnlist);Long	ll_rowcnt, ll_ctr_cnt, i
+String	ls_classname
+
+as_btnlist = Lower(as_btnlist)
+ls_classname = "'" + Lower(apo_obj.classname()) + "'"
+
+Choose Case apo_obj.typeof()
+	Case CommandButton!
+		CommandButton  lcb
+		lcb = apo_obj
+		IF Pos(as_btnlist, ls_classname, 1) > 0 THEN 
+			lcb.Enabled = True
+		ELSE
+			lcb.Enabled = False
+		END IF
+	Case PictureButton!
+		PictureButton lpb
+		lpb = apo_obj
+		IF Pos(as_btnlist, ls_classname, 1) > 0 THEN 
+			lpb.Enabled = True
+		ELSE
+			lpb.Enabled = False
+		END IF
+	Case Picture!
+		Picture  lp
+		lp  = apo_obj
+		IF Upper(lp.Tag) = 'PICTUREBUTTON' THEN
+			IF Pos(as_btnlist, ls_classname, 1) > 0 THEN 
+				lp.Dynamic setroleenabled( True )
+			ELSE
+				lp.Dynamic setroleenabled(False)
+			END IF
+		END IF
+	Case UserObject!
+		UserObject  luo
+		luo = apo_obj
+		IF Upper(luo.tag) = 'TEXTSTYLEPICTUREBUTTON' THEN
+			IF Pos(as_btnlist, ls_classname, 1) > 0 THEN 
+				luo.Dynamic setroleenabled(True)
+			ELSE
+				luo.Dynamic setroleenabled(False)
+			END IF
+		ELSE
+			ll_ctr_cnt = UpperBound(luo.control)
+			FOR i = ll_ctr_cnt TO 1 Step -1
+				gf_setbtnenable(luo.control[i], as_btnlist)
+			NEXT
+		END IF
+	Case Tab!
+		Tab  lt
+		lt = apo_obj
+		ll_ctr_cnt = UpperBound(lt.control)
+		FOR i = ll_ctr_cnt TO 1 Step -1
+			gf_setbtnenable(lt.control[i], as_btnlist)
+		NEXT
+	Case Window!
+		window	lw
+		lw = apo_obj
+		ll_ctr_cnt = UpperBound(lw.control)
+		FOR i = ll_ctr_cnt TO 1 Step -1
+			gf_setbtnenable(lw.control[i], as_btnlist)
+		NEXT
+End Choose
+
+return 0
+end function
+

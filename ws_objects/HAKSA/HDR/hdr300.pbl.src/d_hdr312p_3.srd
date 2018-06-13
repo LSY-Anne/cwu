@@ -1,0 +1,377 @@
+﻿$PBExportHeader$d_hdr312p_3.srd
+$PBExportComments$[청운대]등록금수납집계표(학년별)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=828 color="536870912" )
+summary(height=156 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=156 color="536870912" )
+table(column=(type=number updatewhereclause=yes name=gyeyeal dbname="gyeyeal" )
+ column=(type=char(1) updatewhereclause=yes name=hakyun dbname="hakyun" )
+ column=(type=number updatewhereclause=yes name=iphak dbname="iphak" )
+ column=(type=number updatewhereclause=yes name=dungrok dbname="dungrok" )
+ column=(type=number updatewhereclause=yes name=i_jang dbname="i_jang" )
+ column=(type=number updatewhereclause=yes name=d_jang dbname="d_jang" )
+ column=(type=number updatewhereclause=yes name=inwon dbname="inwon" )
+ column=(type=number updatewhereclause=yes name=sil_n dbname="sil_n" )
+ retrieve="SELECT	T.GYEYEAL													AS GYEYEAL,
+			T.HAKYUN														AS HAKYUN,
+			NVL(SUM(T.IPHAK),0) 										AS	IPHAK,
+			NVL(SUM(T.DUNGROK),0)									AS	DUNGROK,
+			NVL(SUM(T.I_JANG),0)										AS	I_JANG,
+			NVL(SUM(T.D_JANG),0)										AS	D_JANG,
+			NVL(TA.INWON,0)											AS	INWON,
+			NVL(SUM(T.SIL_N), 0)									 	AS SIL_N
+FROM	(	SELECT	T3.GROUP1_CODE				AS GYEYEAL,
+						T1.SU_HAKYUN				AS HAKYUN,
+						NVL(SUM(T1.IPHAK),0) + NVL(SUM(T1.I_JANG), 0)		AS	IPHAK,
+						NVL(SUM(T1.DUNGROK),0) + NVL(SUM(T1.D_JANG), 0)		AS	DUNGROK,
+						NVL(SUM(T1.I_JANG),0)	AS	I_JANG,
+						NVL(SUM(T1.D_JANG),0)	AS	D_JANG,
+						NVL(SUM(T1.IPHAK), 0) + NVL(SUM(T1.DUNGROK), 0) AS SIL_N
+			FROM		(	SELECT	HAKBUN,
+										SU_HAKYUN,
+										SUM(IPHAK)			AS	T_IP,
+										SUM(DUNGROK)		AS	T_DR,
+										SUM(HAKSENGWHE)	AS	T_HSW,
+										SUM(GYOJAE)			AS	T_GYO,
+										SUM(ALBUM)			AS T_ALB,
+										SUM(MEMORIAL)		AS T_MMR,
+										SUM(DONGCHANGWHE) AS T_DCW,
+										SUM(DECODE(WAN_YN, 'Y', I_JANGHAK, 0))	AS	I_JANG,
+										SUM(DECODE(WAN_YN, 'Y', D_JANGHAK, 0))	AS	D_JANG,
+										SUM(IPHAK_N)		AS	IPHAK,
+										SUM(DUNGROK_N)		AS	DUNGROK,
+										SUM(HAKSENGWHE_N)	AS	HSW,
+										SUM(GYOJAE_N)		AS GYO,
+										SUM(ALBUM_N)		AS ALB,
+										SUM(MEMORIAL_N) 	AS MMR,
+										SUM(DONGCHANGWHE_N) AS DCW,
+										SUM(DECODE(DUNG_YN, 'Y', 1, 0)) AS INWON
+							FROM		HAKSA.DUNGROK_GWANRI
+							WHERE		YEAR	=	:as_year
+							AND		HAKGI	=	:as_hakgi
+							AND		NAPBU_DATE	BETWEEN	:as_start	AND	:as_end
+							AND		( WAN_YN = 'Y' AND BUN_YN = 'N')
+							GROUP BY HAKBUN,
+										SU_HAKYUN
+
+							UNION
+			
+							SELECT	A.HAKBUN					AS	HAKBUN,
+										A.SU_HAKYUN,
+										SUM(A.IPHAK)			AS	T_IP,
+										SUM(A.DUNGROK)			AS	T_DR,
+										SUM(A.HAKSENGWHE)		AS	T_HSW,
+										SUM(A.GYOJAE)			AS T_GYO,
+										SUM(A.ALBUM)			AS T_ALB,
+										SUM(A.MEMORIAL)		AS T_MMR,
+										SUM(A.DONGCHANGWHE)	AS T_DCW,
+										SUM(DECODE(A.WAN_YN, 'Y',  I_JANGHAK)) AS	I_JANG,
+										SUM(DECODE(A.WAN_YN, 'Y',  D_JANGHAK)) AS	D_JANG,
+										SUM(B.IPHAK)			AS	IPHAK,
+										SUM(B.DUNGROK)			AS	DUNGROK,
+										SUM(B.HAKSENGWHE)		AS HSW,
+										SUM(B.GYOJAE)			AS GYO,
+										SUM(B.ALBUM)			AS ALB,
+										SUM(B.MEMORIAL)		AS MMR,
+										SUM(B.DONGCHANGWHE)	AS	DCW,
+										SUM(DECODE(B.CHASU, 1, 1, 0))	AS	INWON
+								FROM	(	SELECT	YEAR,
+														HAKGI,
+														HAKBUN,
+														SU_HAKYUN,
+														SUM(HAKJUM)			AS HAKJUM,
+														SUM(IPHAK)			AS	IPHAK,
+														SUM(DUNGROK)		AS	DUNGROK,
+														SUM(HAKSENGWHE)	AS	HAKSENGWHE,
+														SUM(GYOJAE)		   AS	GYOJAE,
+														SUM(ALBUM)			AS	ALBUM,
+														SUM(MEMORIAL)	   AS	MEMORIAL,
+														SUM(DONGCHANGWHE)  AS DONGCHANGWHE,
+														SUM(DECODE(WAN_YN, 'Y',  I_JANGHAK,0)) AS	I_JANGHAK,
+														SUM(DECODE(WAN_YN, 'Y',  D_JANGHAK,0)) AS	D_JANGHAK,
+														MAX(WAN_YN)				AS	WAN_YN,
+														MAX(DUNGROK_GUBUN)	AS	DUNGROK_GUBUN
+											FROM	HAKSA.DUNGROK_GWANRI
+											WHERE		YEAR	=	:as_year
+											AND		HAKGI	=	:as_hakgi
+											AND		BUN_YN	=	'Y'
+											GROUP BY	YEAR,
+														HAKGI,
+														HAKBUN,
+														SU_HAKYUN
+										)	A,
+										(	SELECT	HAKBUN,
+														SUM(IPHAK)			AS	IPHAK,
+														SUM(DUNGROK)		AS	DUNGROK,
+														SUM(HAKSENGWHE)	AS	HAKSENGWHE,
+														SUM(GYOJAE)			AS GYOJAE,
+														SUM(ALBUM)			AS ALBUM,
+														SUM(MEMORIAL)		AS MEMORIAL,
+														SUM(DONGCHANGWHE) AS DONGCHANGWHE,
+														MAX(NAPBU_DATE)	AS	N_DATE,
+														MIN(CHASU)			AS CHASU
+											FROM		HAKSA.DUNGROK_BUNNAP
+											WHERE		YEAR	=	:as_year
+											AND		HAKGI	=	:as_hakgi
+											AND		NAPBU_DATE	BETWEEN	:as_start	AND	:as_end
+											GROUP BY HAKBUN
+										)  B
+							WHERE		A.HAKBUN	=	B.HAKBUN
+							AND		A.YEAR	=	:as_year
+							AND		A.HAKGI	=	:as_hakgi
+							GROUP BY A.YEAR,
+										A.HAKGI,
+										A.HAKBUN,
+										A.SU_HAKYUN
+
+						)	T1,
+						HAKSA.JAEHAK_HAKJUK	T2,
+						CDDB.KCH003M T3
+			WHERE		T1.HAKBUN	=	T2.HAKBUN
+			AND		T2.GWA		= 	T3.GWA
+			AND		T3.USE_GUBUN = 'Y' 
+			GROUP BY T3.GROUP1_CODE,
+						T1.SU_HAKYUN
+			
+			UNION
+			
+			SELECT	T3.GROUP1_CODE				AS GYEYEAL,
+						T1.SU_HAKYUN				AS HAKYUN,
+						NVL(SUM(T1.IPHAK),0) + NVL(SUM(T1.I_JANG), 0)		AS	IPHAK,
+						NVL(SUM(T1.DUNGROK),0) + NVL(SUM(T1.D_JANG), 0)		AS	DUNGROK,
+						NVL(SUM(T1.I_JANG),0)	AS	I_JANG,
+						NVL(SUM(T1.D_JANG),0)	AS	D_JANG,
+						NVL(SUM(T1.IPHAK), 0) + NVL(SUM(T1.DUNGROK), 0) AS SIL_N
+			FROM		(	SELECT	HAKBUN,
+										SU_HAKYUN,
+										SUM(IPHAK)			AS	T_IP,
+										SUM(DUNGROK)		AS	T_DR,
+										SUM(HAKSENGWHE)	AS	T_HSW,
+										SUM(GYOJAE)			AS	T_GYO,
+										SUM(ALBUM)			AS T_ALB,
+										SUM(MEMORIAL)		AS T_MMR,
+										SUM(DONGCHANGWHE) AS T_DCW,
+										SUM(DECODE(WAN_YN, 'Y', I_JANGHAK, 0))	AS	I_JANG,
+										SUM(DECODE(WAN_YN, 'Y', D_JANGHAK, 0))	AS	D_JANG,
+										SUM(IPHAK_N)		AS	IPHAK,
+										SUM(DUNGROK_N)		AS	DUNGROK,
+										SUM(HAKSENGWHE_N)	AS	HSW,
+										SUM(GYOJAE_N)		AS GYO,
+										SUM(ALBUM_N)		AS ALB,
+										SUM(MEMORIAL_N) 	AS MMR,
+										SUM(DONGCHANGWHE_N) AS DCW,
+										SUM(DECODE(DUNG_YN, 'Y', 1, 0)) AS INWON
+							FROM		HAKSA.DUNGROK_GWANRI
+							WHERE		YEAR	=	:as_year
+							AND		HAKGI	=	:as_hakgi
+							AND		NAPBU_DATE	BETWEEN	:as_start	AND	:as_end
+							AND		( WAN_YN = 'Y' AND BUN_YN = 'N')
+							GROUP BY HAKBUN,
+										SU_HAKYUN
+	
+							UNION
+			
+							SELECT	A.HAKBUN					AS	HAKBUN,
+										A.SU_HAKYUN,
+										SUM(A.IPHAK)			AS	T_IP,
+										SUM(A.DUNGROK)			AS	T_DR,
+										SUM(A.HAKSENGWHE)		AS	T_HSW,
+										SUM(A.GYOJAE)			AS T_GYO,
+										SUM(A.ALBUM)			AS T_ALB,
+										SUM(A.MEMORIAL)		AS T_MMR,
+										SUM(A.DONGCHANGWHE)	AS T_DCW,
+										SUM(DECODE(A.WAN_YN, 'Y',  I_JANGHAK)) AS	I_JANG,
+										SUM(DECODE(A.WAN_YN, 'Y',  D_JANGHAK)) AS	D_JANG,
+										SUM(B.IPHAK)			AS	IPHAK,
+										SUM(B.DUNGROK)			AS	DUNGROK,
+										SUM(B.HAKSENGWHE)		AS HSW,
+										SUM(B.GYOJAE)			AS GYO,
+										SUM(B.ALBUM)			AS ALB,
+										SUM(B.MEMORIAL)		AS MMR,
+										SUM(B.DONGCHANGWHE)	AS	DCW,
+										SUM(DECODE(B.CHASU, 1, 1, 0))	AS	INWON
+								FROM	(	SELECT	YEAR,
+														HAKGI,
+														HAKBUN,
+														SU_HAKYUN,
+														SUM(HAKJUM)			AS HAKJUM,
+														SUM(IPHAK)			AS	IPHAK,
+														SUM(DUNGROK)		AS	DUNGROK,
+														SUM(HAKSENGWHE)	AS	HAKSENGWHE,
+														SUM(GYOJAE)		   AS	GYOJAE,
+														SUM(ALBUM)			AS	ALBUM,
+														SUM(MEMORIAL)	   AS	MEMORIAL,
+														SUM(DONGCHANGWHE)  AS DONGCHANGWHE,
+														SUM(DECODE(WAN_YN, 'Y',  I_JANGHAK,0)) AS	I_JANGHAK,
+														SUM(DECODE(WAN_YN, 'Y',  D_JANGHAK,0)) AS	D_JANGHAK,
+														MAX(WAN_YN)				AS	WAN_YN,
+														MAX(DUNGROK_GUBUN)	AS	DUNGROK_GUBUN
+											FROM	HAKSA.DUNGROK_GWANRI
+											WHERE		YEAR	=	:as_year
+											AND		HAKGI	=	:as_hakgi
+											AND		BUN_YN	=	'Y'
+											GROUP BY	YEAR,
+														HAKGI,
+														HAKBUN,
+														SU_HAKYUN
+										)	A,
+										(	SELECT	HAKBUN,
+														SUM(IPHAK)			AS	IPHAK,
+														SUM(DUNGROK)		AS	DUNGROK,
+														SUM(HAKSENGWHE)	AS	HAKSENGWHE,
+														SUM(GYOJAE)			AS GYOJAE,
+														SUM(ALBUM)			AS ALBUM,
+														SUM(MEMORIAL)		AS MEMORIAL,
+														SUM(DONGCHANGWHE) AS DONGCHANGWHE,
+														MAX(NAPBU_DATE)	AS	N_DATE,
+														MIN(CHASU)			AS CHASU
+											FROM		HAKSA.DUNGROK_BUNNAP
+											WHERE		YEAR	=	:as_year
+											AND		HAKGI	=	:as_hakgi
+											AND		NAPBU_DATE	BETWEEN	:as_start	AND	:as_end
+											GROUP BY HAKBUN
+										)  B
+							WHERE		A.HAKBUN	=	B.HAKBUN
+							AND		A.YEAR	=	:as_year
+							AND		A.HAKGI	=	:as_hakgi
+							GROUP BY A.YEAR,
+										A.HAKGI,
+										A.HAKBUN,
+										A.SU_HAKYUN
+
+						)	T1,
+						HAKSA.JOLUP_HAKJUK	T2,
+						CDDB.KCH003M T3
+			WHERE		T1.HAKBUN	=	T2.HAKBUN
+			AND		T2.GWA		= 	T3.GWA
+			AND		T3.USE_GUBUN = 'Y' 
+			GROUP BY T3.GROUP1_CODE,
+						T1.SU_HAKYUN
+			)	T,
+			(	SELECT 	T1.GROUP1_CODE		AS GYEYEAL,
+							T.SU_HAKYUN			AS	HAKYUN,
+							COUNT(T.HAKBUN)	AS	INWON
+				FROM 		(	SELECT	A.YEAR,
+											A.HAKGI,
+											B.GWA,
+											B.JUYA_GUBUN,
+											A.SU_HAKYUN,
+											A.HAKBUN
+								FROM		HAKSA.DUNGROK_GWANRI	A,
+											HAKSA.JAEHAK_HAKJUK	B
+								WHERE		A.HAKBUN 		= 	B.HAKBUN
+								AND		A.YEAR			=	:as_year
+								AND		A.HAKGI			=	:as_hakgi
+								AND		A.NAPBU_DATE	BETWEEN	:as_start	AND	:as_end
+								AND		A.DUNG_YN		=	'Y'
+					
+								UNION
+					
+								SELECT	A.YEAR,
+											A.HAKGI,
+											B.GWA,
+											B.JUYA_GUBUN,
+											A.SU_HAKYUN,
+											A.HAKBUN
+								FROM		HAKSA.DUNGROK_GWANRI	A,
+											HAKSA.JOLUP_HAKJUK	B
+								WHERE		A.HAKBUN 		= 	B.HAKBUN
+								AND		A.YEAR			=	:as_year
+								AND		A.HAKGI			=	:as_hakgi							
+								AND		A.NAPBU_DATE	BETWEEN	:as_start	AND	:as_end
+								AND		A.DUNG_YN		=	'Y'
+							) 	T,
+							CDDB.KCH003M T1
+				WHERE		T.GWA		= 	T1.GWA
+				AND		T1.USE_GUBUN = 'Y' 
+				GROUP BY T1.GROUP1_CODE,
+							T.SU_HAKYUN
+			)	TA
+WHERE		T.GYEYEAL	=	TA.GYEYEAL
+AND		T.HAKYUN		=	TA.HAKYUN
+GROUP BY T.GYEYEAL,
+			T.HAKYUN,
+			TA.INWON" arguments=(("as_year", string),("as_hakgi", string),("as_start", string),("as_end", string))  sort="gyeyeal A hakyun A " )
+group(level=1 header.height=0 trailer.height=164 by=("gyeyeal" ) header.color="536870912" trailer.color="536870912" )
+compute(band=header alignment="2" expression=" as_year + '학년도 ' + as_hakgi  + '학기 등록금 수납집계표'"border="0" color="0" x="462" y="268" height="120" width="2450" format="[GENERAL]" html.valueishtml="0"  name=compute_9 visible="1"  font.face="굴림" font.height="-16" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="1742" y1="716" x2="2834" y2="716"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="27" y1="612" x2="27" y2="832"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3383" y1="612" x2="3383" y2="832"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1737" y1="612" x2="1737" y2="832"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2286" y1="612" x2="2286" y2="832"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2834" y1="612" x2="2834" y2="832"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1312" y1="612" x2="1312" y2="832"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="498" y1="612" x2="498" y2="832"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="입학금" border="0" color="0" x="1742" y="636" height="56" width="544" html.valueishtml="0"  name=iphak_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="등록금" border="0" color="0" x="2290" y="636" height="56" width="544" html.valueishtml="0"  name=dungrok_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="입학장학금" border="0" color="0" x="1742" y="740" height="56" width="544" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="등록장학금" border="0" color="0" x="2290" y="740" height="56" width="544" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="등록인원" border="0" color="0" x="1317" y="688" height="56" width="421" html.valueishtml="0"  name=inwon_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="구분" border="0" color="0" x="32" y="688" height="56" width="466" html.valueishtml="0"  name=gwa_sym_gyeyul_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="27" y1="608" x2="3383" y2="608"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="27" y1="824" x2="3383" y2="824"  name=l_34 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=header alignment="2" expression="left( as_start , 4) + '.' + mid( as_start , 5, 2) + '.' + right( as_start , 2) + ' - ' + left( as_end , 4) + '.' + mid( as_end , 5, 2) + '.' + right( as_end , 2)"border="0" color="0" x="1230" y="544" height="56" width="960" format="[GENERAL]" html.valueishtml="0"  name=compute_17 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="" border="0" color="0" x="32" y="544" height="60" width="261" html.valueishtml="0"  name=t_gubun visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="학년" border="0" color="0" x="503" y="688" height="56" width="809" html.valueishtml="0"  name=dungrok_gwanri_hakyun_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="실납입액합계" border="0" color="0" x="2839" y="688" height="56" width="544" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="503" y1="152" x2="3383" y2="152"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="498" y1="0" x2="498" y2="216"  name=l_18 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3383" y1="0" x2="3383" y2="216"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1737" y1="0" x2="1737" y2="216"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2286" y1="0" x2="2286" y2="216"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2834" y1="0" x2="2834" y2="216"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1312" y1="0" x2="1312" y2="216"  name=l_17 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="27" y1="0" x2="27" y2="216"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="1742" y="4" height="60" width="517" format="#,##0" html.valueishtml="0"  name=iphak visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="2290" y="4" height="60" width="517" format="#,##0" html.valueishtml="0"  name=dungrok visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="1742" y="84" height="60" width="517" format="#,##0" html.valueishtml="0"  name=i_jang visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="2290" y="84" height="60" width="517" format="#,##0" html.valueishtml="0"  name=d_jang visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="41" y="44" height="60" width="448" format="[general]" html.valueishtml="0"  name=gyeyeal visible="1" dddw.name=d_dddw_gyonae_gyeyeul dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="1742" y1="72" x2="2834" y2="72"  name=l_35 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="503" y="44" height="60" width="809" format="[general]" html.valueishtml="0"  name=hakyun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="1317" y="44" height="60" width="421" format="[general]" html.valueishtml="0"  name=inwon visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="2839" y="48" height="56" width="517" format="#,##0" html.valueishtml="0"  name=sil_n visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=trailer.1 x1="3383" y1="0" x2="3383" y2="212"  name=l_20 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="1737" y1="0" x2="1737" y2="212"  name=l_21 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="2286" y1="0" x2="2286" y2="212"  name=l_22 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="2834" y1="0" x2="2834" y2="212"  name=l_23 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="1312" y1="0" x2="1312" y2="212"  name=l_24 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="27" y1="0" x2="27" y2="212"  name=l_26 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="1" expression="sum(iphak for group 1)"border="0" color="0" x="1742" y="12" height="60" width="517" format="#,##0" html.valueishtml="0"  name=compute_3 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(dungrok for group 1)"border="0" color="0" x="2290" y="12" height="60" width="517" format="#,##0" html.valueishtml="0"  name=compute_4 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(i_jang for group 1)"border="0" color="0" x="1742" y="92" height="60" width="517" format="#,##0" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(d_jang for group 1)"border="0" color="0" x="2290" y="92" height="60" width="517" format="#,##0" html.valueishtml="0"  name=compute_11 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="2" expression="sum(inwon for group 1)"border="0" color="0" x="1317" y="52" height="60" width="421" format="#,##0" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=trailer.1 x1="27" y1="0" x2="3383" y2="0"  name=l_38 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="27" y1="160" x2="3383" y2="160"  name=l_25 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="1742" y1="80" x2="2834" y2="80"  name=l_36 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=trailer.1 alignment="2" text="소계" border="0" color="0" x="41" y="52" height="56" width="1262" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression=" sum(  sil_n  for group 1) "border="0" color="0" x="2839" y="52" height="60" width="517" format="#,##0" html.valueishtml="0"  name=compute_5 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=summary x1="27" y1="152" x2="3387" y2="152"  name=l_32 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="1742" y1="72" x2="2834" y2="72"  name=l_37 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=summary alignment="1" expression="sum(iphak for all)"border="0" color="0" x="1742" y="4" height="60" width="517" format="#,##0" html.valueishtml="0"  name=compute_7 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(dungrok for all)"border="0" color="0" x="2290" y="4" height="60" width="517" format="#,##0" html.valueishtml="0"  name=compute_8 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(i_jang for ALL)"border="0" color="0" x="1742" y="84" height="60" width="517" format="#,##0" html.valueishtml="0"  name=compute_12 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(d_jang for ALL)"border="0" color="0" x="2290" y="84" height="60" width="517" format="#,##0" html.valueishtml="0"  name=compute_13 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression=" sum(  sil_n   for all) "border="0" color="0" x="2839" y="44" height="60" width="517" format="#,##0" html.valueishtml="0"  name=compute_10 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(inwon for all)"border="0" color="0" x="1317" y="44" height="60" width="421" format="#,##0" html.valueishtml="0"  name=compute_6 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=summary x1="27" y1="0" x2="27" y2="152"  name=l_33 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="1312" y1="0" x2="1312" y2="152"  name=l_31 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="1737" y1="0" x2="1737" y2="152"  name=l_28 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="2286" y1="0" x2="2286" y2="152"  name=l_29 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="2834" y1="0" x2="2834" y2="152"  name=l_30 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="3383" y1="0" x2="3383" y2="152"  name=l_27 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=summary alignment="2" text="합계" border="0" color="0" x="41" y="44" height="56" width="1262" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+
+sparse(names="gyeyeal")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

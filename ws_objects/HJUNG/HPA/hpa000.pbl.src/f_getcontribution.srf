@@ -1,0 +1,45 @@
+﻿$PBExportHeader$f_getcontribution.srf
+$PBExportComments$기부금공제를 구한다(A:member_no,R:contribution) ---> 수정해야한다.
+global type f_getcontribution from function_object
+end type
+
+forward prototypes
+global function decimal f_getcontribution (string as_member_no, string as_yearmonth)
+end prototypes
+
+global function decimal f_getcontribution (string as_member_no, string as_yearmonth);// ==========================================================================================
+// 기    능 : 	기부금공제를 구한다.
+// 작 성 인 : 	안금옥
+// 작성일자 : 	2002.04
+// 함수원형 : 	f_getcontribution(string as_member_no, string as_yearmont)	return	decimal
+// 인    수 :	as_member_no	-	개인번호
+//					as_yearmonth	-	기준년월
+// 되 돌 림 :	공제기부금
+// 주의사항 :	
+// 수정사항 :
+// ==========================================================================================
+
+dec{0}	ld_amt = 0
+
+if isnull(as_member_no) or trim(as_member_no) = '' then	return	0
+
+// 기부금공제를 구한다.
+select	nvl(sum(b.napip_amt), 0)
+into		:ld_amt
+from		dndb.hdn001m a, dndb.hdn003h b
+where		a.member_no		=	:as_member_no
+and		b.wolgup_month	=	:as_yearmonth
+and		a.dm_no			=	b.dm_no	;
+
+return	ld_amt
+
+
+//select	nvl(sum(inamt), 0)
+//into		:ld_amt
+//from		dndb.hdm003t
+//where		member_no	=	:as_member_no
+//and		substr(indate, 1, 6)		=	:as_yearmonth	;
+//
+
+end function
+

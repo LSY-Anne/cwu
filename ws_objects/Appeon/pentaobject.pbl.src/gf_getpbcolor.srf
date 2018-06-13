@@ -1,0 +1,31 @@
+﻿$PBExportHeader$gf_getpbcolor.srf
+global type gf_getpbcolor from function_object
+end type
+
+forward prototypes
+global function string gf_getpbcolor (string rgb)
+end prototypes
+
+global function string gf_getpbcolor (string rgb);Integer					i
+Integer					li_rgb[3]
+Integer	li_pos
+
+IF IsNull(rgb) OR Trim(rgb) = "" THEN
+	li_rgb[] = {255,255,255}
+ELSE
+	Do while Len(rgb) > 0
+		i++
+		li_pos = Pos(rgb, ',')
+		IF li_pos = 0 THEN
+			li_rgb[i] = Integer(rgb)
+			rgb = ''
+		ELSE
+			li_rgb[i] = Integer(Left(rgb, li_pos - 1))
+		END IF
+		rgb = Mid(rgb, li_pos + Len(','))
+	Loop
+END IF
+
+return String(RGB(li_rgb[1],li_rgb[2],li_rgb[3]))
+end function
+

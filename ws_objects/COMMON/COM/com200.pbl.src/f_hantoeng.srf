@@ -1,0 +1,38 @@
+﻿$PBExportHeader$f_hantoeng.srf
+$PBExportComments$키보드의 한영 변환
+global type f_hantoeng from function_object
+end type
+
+forward prototypes
+global function integer f_hantoeng (window aw_handle, string ac_flag)
+end prototypes
+
+global function integer f_hantoeng (window aw_handle, string ac_flag);//////////////////////////////////////////////////////////////////
+// 	작성목적 : 한영키를 변환한다.
+//    적 성 인 : 이현수
+//		작성일자 : 2002.10
+//    변 경 인 :
+//    변경일자 :
+//    변경사유 :
+//////////////////////////////////////////////////////////////////
+
+LONG l_he_mode
+Long	ll_handle
+cuo_hangul lu_hangul
+lu_hangul = CREATE cuo_hangul
+/* 한영키 제어 */
+//l_he_mode = IMMGetLanguage(ll_handle)
+ll_handle = Handle(aw_handle)
+l_he_mode = lu_hangul.ImmGetContext(ll_handle)
+iF AC_FLAG = 'h' OR AC_FLAG = 'H' THEN //한글로 변환
+   lu_hangul.ImmSetConversionStatus(l_he_mode, 1, 0)
+ELSE
+   lu_hangul.ImmSetConversionStatus(l_he_mode, 0, 0)
+end IF
+
+lu_hangul.ImmReleaseContext(ll_handle, l_he_mode )
+DESTROY lu_hangul
+
+RETURN 1
+end function
+

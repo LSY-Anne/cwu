@@ -1,0 +1,83 @@
+﻿$PBExportHeader$d_hfn904a_1.srd
+$PBExportComments$자금이체관리
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(8) update=yes updatewhereclause=yes key=yes name=yyyymmdd dbname="hfn402h.yyyymmdd" )
+ column=(type=char(10) update=yes updatewhereclause=yes key=yes name=mem_cust_no dbname="hfn402h.mem_cust_no" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=seq dbname="hfn402h.seq" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=mem_cust_gubun dbname="hfn402h.mem_cust_gubun" values="교직원	1/거래처	2/학  생	3/" )
+ column=(type=char(60) updatewhereclause=yes name=mem_cust_name dbname="mem_cust_name" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=trans_amt dbname="hfn402h.trans_amt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=bank_code dbname="hfn402h.bank_code" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=acct_no dbname="hfn402h.acct_no" )
+ column=(type=char(50) update=yes updatewhereclause=yes name=trans_name dbname="hfn402h.trans_name" )
+ column=(type=char(50) update=yes updatewhereclause=yes name=remark dbname="hfn402h.remark" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hfn402h.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hfn402h.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hfn402h.work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hfn402h.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hfn402h.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hfn402h.job_date" )
+ retrieve="SELECT	A.YYYYMMDD,
+			A.MEM_CUST_NO,
+			A.SEQ,
+			A.MEM_CUST_GUBUN,
+			CASE	WHEN	MEM_CUST_GUBUN = '1'
+					THEN	(	SELECT	B.NAME
+								FROM		INDB.HIN001M B
+								WHERE		B.MEMBER_NO = A.MEM_CUST_NO	)
+					WHEN	MEM_CUST_GUBUN = '2'
+					THEN	(	SELECT	C.CUST_NAME
+								FROM		STDB.HST001M C
+								WHERE		C.CUST_NO = A.MEM_CUST_NO	)
+					ELSE	(	SELECT	D.MEMBER_NAME
+								FROM		DEVELOPER.V_LOGIN_INFO D
+								WHERE		D.MEMBER_NO = A.MEM_CUST_NO	)
+			END	MEM_CUST_NAME,
+			A.TRANS_AMT,
+			A.BANK_CODE,
+			A.ACCT_NO,
+			A.TRANS_NAME,
+			A.REMARK,
+			A.WORKER,
+			A.IPADDR,
+			A.WORK_DATE,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE
+FROM		FNDB.HFN402H A
+WHERE		A.YYYYMMDD = :AS_YYYYMMDD
+ORDER BY A.JOB_DATE
+
+" update="FNDB.HFN402H" updatewhere=1 updatekeyinplace=no arguments=(("as_yyyymmdd", string)) )
+text(band=header alignment="2" text="구분" border="0" color="0" x="9" y="8" height="56" width="297" html.valueishtml="0"  name=mem_cust_gubun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="코드번호" border="0" color="0" x="315" y="8" height="56" width="366" html.valueishtml="0"  name=mem_cust_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="교직원/거래처명" border="0" color="0" x="690" y="8" height="56" width="553" html.valueishtml="0"  name=mem_cust_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="금액" border="0" color="0" x="1253" y="8" height="56" width="416" html.valueishtml="0"  name=trans_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="은행" border="0" color="0" x="1678" y="8" height="56" width="462" html.valueishtml="0"  name=bank_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계좌번호" border="0" color="0" x="2149" y="8" height="56" width="594" html.valueishtml="0"  name=acct_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="예금주" border="0" color="0" x="2752" y="8" height="56" width="567" html.valueishtml="0"  name=trans_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="비     고" border="0" color="0" x="3328" y="8" height="56" width="1591" html.valueishtml="0"  name=remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=10 border="0" color="0" x="9" y="4" height="76" width="297" format="[general]" html.valueishtml="0"  name=mem_cust_gubun visible="1" ddlb.limit=0 ddlb.allowedit=yes ddlb.case=any ddlb.useasborder=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="0" color="0" x="315" y="4" height="76" width="366" format="[general]" html.valueishtml="0"  name=mem_cust_no visible="1" edit.limit=10 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=30 border="0" color="0" x="690" y="4" height="76" width="553" format="[general]" html.valueishtml="0"  name=mem_cust_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="1" tabsequence=40 border="0" color="0" x="1257" y="4" height="76" width="411" format="[general]" html.valueishtml="0"  name=trans_amt visible="1" editmask.autoskip=yes editmask.mask="###,###,###,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="0" tabsequence=50 border="0" color="0" x="1678" y="4" height="76" width="462" format="[general]" html.valueishtml="0"  name=bank_code visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=250 dddw.lines=10 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="0" tabsequence=60 border="0" color="0" x="2149" y="4" height="76" width="594" format="[general]" html.valueishtml="0"  name=acct_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="0" tabsequence=70 border="0" color="0" x="2752" y="4" height="76" width="567" format="[general]" html.valueishtml="0"  name=trans_name visible="1" edit.limit=50 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=80 border="0" color="0" x="3328" y="4" height="76" width="1591" format="[general]" html.valueishtml="0"  name=remark visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

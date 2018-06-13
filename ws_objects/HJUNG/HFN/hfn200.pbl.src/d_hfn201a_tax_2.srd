@@ -1,0 +1,89 @@
+﻿$PBExportHeader$d_hfn201a_tax_2.srd
+$PBExportComments$발의서등록(부서용)_부가세 등록
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=12 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=468 color="536870912" )
+table(column=(type=decimal(0) updatewhereclause=yes name=acct_class dbname="hfn007m.acct_class" )
+ column=(type=char(10) updatewhereclause=yes name=tax_no dbname="hfn007m.tax_no" )
+ column=(type=char(1) updatewhereclause=yes name=tax_type dbname="hfn007m.tax_type" )
+ column=(type=char(1) updatewhereclause=yes name=tax_gubun dbname="hfn007m.tax_gubun" )
+ column=(type=char(8) updatewhereclause=yes name=tax_date dbname="hfn007m.tax_date" )
+ column=(type=char(10) updatewhereclause=yes name=tax_cust_no dbname="hfn007m.tax_cust_no" )
+ column=(type=decimal(0) updatewhereclause=yes name=tax_amt dbname="hfn007m.tax_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=tax_vat dbname="hfn007m.tax_vat" )
+ column=(type=char(100) updatewhereclause=yes name=remark dbname="hfn007m.remark" )
+ column=(type=char(5) updatewhereclause=yes name=worker dbname="hfn007m.worker" )
+ column=(type=char(20) updatewhereclause=yes name=ipaddr dbname="hfn007m.ipaddr" )
+ column=(type=datetime updatewhereclause=yes name=work_date dbname="hfn007m.work_date" )
+ column=(type=char(5) updatewhereclause=yes name=job_uid dbname="hfn007m.job_uid" )
+ column=(type=char(20) updatewhereclause=yes name=job_add dbname="hfn007m.job_add" )
+ column=(type=datetime updatewhereclause=yes name=job_date dbname="hfn007m.job_date" )
+ column=(type=char(60) updatewhereclause=yes name=cust_name dbname="hfn007m.cust_name" )
+ column=(type=char(10) updatewhereclause=yes name=business_no dbname="hfn007m.business_no" )
+ column=(type=char(12) updatewhereclause=yes name=resol_no dbname="hfn007m.resol_no" )
+ column=(type=decimal(0) updatewhereclause=yes name=resol_seq dbname="hfn007m.resol_seq" )
+ column=(type=char(0) updatewhereclause=yes name=del dbname="del" values="	Y/	N" )
+ column=(type=number updatewhereclause=yes name=com_row dbname="com_row" )
+ retrieve="SELECT	A.ACCT_CLASS,
+			A.TAX_NO,
+			A.TAX_TYPE,
+			A.TAX_GUBUN,
+			A.TAX_DATE,
+			A.TAX_CUST_NO,
+			A.TAX_AMT,
+			A.TAX_VAT,
+			A.REMARK,
+			A.WORKER,
+			A.IPADDR,
+			A.WORK_DATE,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE,
+			B.CUST_NAME,
+			B.BUSINESS_NO,
+			A.RESOL_NO,
+			A.RESOL_SEQ,
+			''	del,
+			0	com_row
+FROM		FNDB.HFN007M A, STDB.HST001M B
+WHERE		A.TAX_CUST_NO 							= B.CUST_NO (+)
+AND		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+AND		A.TAX_TYPE 								= :AS_TAX_TYPE
+AND		A.TAX_GUBUN 							= :AS_TAX_GUBUN
+AND		A.RESOL_NO								= :as_resol_no
+AND		A.RESOL_SEQ								= :ai_resol_seq
+ORDER	BY	A.TAX_NO
+" arguments=(("AI_ACCT_CLASS", number),("AS_TAX_TYPE", string),("AS_TAX_GUBUN", string),("as_resol_no", string),("ai_resol_seq", number)) )
+compute(band=detail alignment="0" expression="getrow()"border="0" color="0" x="3858" y="208" height="60" width="256" format="[GENERAL]" html.valueishtml="0"  name=com_getrow visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=19 alignment="0" tabsequence=32766 border="0" color="0" x="4133" y="208" height="60" width="375" format="[general]" html.valueishtml="0"  name=resol_seq visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=21 alignment="2" tabsequence=32766 border="2" color="0" x="55" y="144" height="68" width="155" format="[general]" html.valueishtml="0"  name=com_row visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="계산서일자" border="6" color="33554432" x="229" y="48" height="68" width="425" html.valueishtml="0"  name=hfn007m_tax_date_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="거래처" border="6" color="33554432" x="229" y="144" height="68" width="425" html.valueishtml="0"  name=hfn007m_tax_cust_no_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="적요" border="6" color="33554432" x="229" y="336" height="68" width="425" html.valueishtml="0"  name=hfn007m_remark_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=20 alignment="2" tabsequence=60 border="0" color="16711680" x="55" y="336" height="72" width="155" format="[general]" html.valueishtml="0"  name=del visible="1" checkbox.text="" checkbox.on="Y" checkbox.off="N" checkbox.scale=yes checkbox.threed=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="No" border="6" color="33554432" x="55" y="48" height="68" width="155" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="삭제" border="6" color="33554432" x="55" y="240" height="68" width="155" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="공급가액" border="6" color="33554432" x="229" y="240" height="68" width="425" html.valueishtml="0"  name=hfn007m_tax_amt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="55" y1="460" x2="3026" y2="460"  name=l_1 visible="1" pen.style="2" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="1" tabsequence=30 border="2" color="33554432" x="677" y="240" height="68" width="571" format="#,##0" html.valueishtml="0"  name=tax_amt visible="1" editmask.mask="#,###,###,###,###" editmask.focusrectangle=no  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="2" tabsequence=20 border="2" color="33554432" x="677" y="144" height="68" width="571" format="[general]" html.valueishtml="0"  name=tax_cust_no pointer="Help!" visible="1" edit.limit=7 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="2" tabsequence=10 border="2" color="33554432" x="677" y="48" height="68" width="571" format="@@@@.@@.@@" html.valueishtml="0"  name=tax_date visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=17 alignment="2" tabsequence=32766 border="2" color="255" x="1271" y="144" height="68" width="457" format="@@@-@@-@@@@@" html.valueishtml="0"  name=business_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="2" background.color="12639424" )
+text(band=detail alignment="2" text="부가세액" border="6" color="33554432" x="1271" y="240" height="68" width="457" html.valueishtml="0"  name=hfn007m_tax_vat_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=40 border="2" color="33554432" x="1751" y="240" height="68" width="549" format="#,##0" html.valueishtml="0" protect="0~tif( tax_type = '1', 1, 0 )"  name=tax_vat visible="1" editmask.mask="###,###,###,###" editmask.focusrectangle=no  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="0" background.color="16777215~tif( tax_type = '1', 81324524, 16777215 )" )
+column(band=detail id=9 alignment="0" tabsequence=50 border="2" color="33554432" x="677" y="336" height="68" width="2350" format="[general]" html.valueishtml="0"  name=remark visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="2" color="33554432" x="1751" y="144" height="68" width="1275" format="[general]" html.valueishtml="0"  name=cust_name visible="1" edit.limit=60 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="1" font.charset="129" background.mode="2" background.color="12639424" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

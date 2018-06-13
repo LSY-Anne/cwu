@@ -1,0 +1,86 @@
+﻿$PBExportHeader$d_hgm404i_3.srd
+$PBExportComments$비품수리신청발주
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(40) updatewhereclause=yes name=itm_nm dbname="itm_nm" )
+ column=(type=char(60) updatewhereclause=yes name=cust_name dbname="cust_name" )
+ column=(type=char(10) updatewhereclause=yes name=req_no dbname="req_no" )
+ column=(type=char(10) updatewhereclause=yes name=ord_no dbname="ord_no" )
+ column=(type=number updatewhereclause=yes name=item_seq dbname="item_seq" )
+ column=(type=char(10) updatewhereclause=yes name=cust_no dbname="cust_no" )
+ column=(type=number updatewhereclause=yes name=quot_num dbname="quot_num" )
+ column=(type=decimal(0) updatewhereclause=yes name=sheet_price dbname="sheet_price" )
+ column=(type=decimal(0) updatewhereclause=yes name=confirm_opt dbname="confirm_opt" values="	1/	0" )
+ column=(type=number updatewhereclause=yes name=ff dbname="ff" )
+ retrieve="select	ITM_NM, 
+			c.cust_name, 
+			a.req_no, 
+         a.ord_no,
+			a.item_seq, 
+			a.cust_no CUST_NO, 
+			a.quot_num,
+			a.sheet_price, 
+			a.confirm_opt,
+         ff
+from 		stdb.hst031h a, stdb.hst030h b, stdb.hst001m c, 
+		  (
+			select  	kk.item_name ITM_NM ,
+						cc.cust_name XX, 
+						aa.req_no YY, 
+						aa.cust_no MM, 
+						aa.item_seq ZZ,  
+						MAX(aa.quot_num) DD,
+                  jj.purchase_qty ff
+			from 		stdb.hst031h aa, stdb.hst030h bb, stdb.hst001m cc,stdb.hst004m kk, stdb.hst027m	  jj
+			where 	TRIM(aa.req_no) = TRIM(bb.req_no)
+						and 	   trim(aa.req_no) =	:as_req_no
+						and	   bb.id_no		 =	jj.id_no
+						and	   bb.item_class	 =	jj.item_class
+						and	   jj.item_no	 =	kk.item_no		
+						and   	aa.item_seq = bb.item_seq
+						and   	aa.cust_no = cc.cust_no
+			group by  kk.item_name, cc.cust_name, aa.req_no, aa.cust_no, aa.item_seq,jj.purchase_qty
+     		)
+where 	TRIM(a.req_no) = TRIM(b.req_no)
+			and   trim(a.req_no) =	:as_req_no
+			and	a.item_seq =		ZZ
+			and   a.cust_no = c.cust_no
+			and   c.cust_name = XX
+			and   TRIM(a.req_no) = TRIM(YY)
+			and   a.cust_no = MM
+			and   a.quot_num = DD
+group by  		ITM_NM,c.cust_name, a.req_no, a.ord_no,a.ITEM_SEQ,  a.cust_no, a.quot_num, a.sheet_price, a.confirm_opt,ff
+order by 		a.cust_no asc
+
+" arguments=(("as_req_no", string)) )
+group(level=1 header.height=0 trailer.height=84 by=("cust_name" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text="접수번호" border="0" color="0" x="9" y="4" height="56" width="480" html.valueishtml="0"  name=req_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="업체명" border="0" color="0" x="498" y="4" height="56" width="1673" html.valueishtml="0"  name=cust_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="품목명" border="0" color="0" x="2181" y="4" height="56" width="814" html.valueishtml="0"  name=itm_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="견적단가" border="0" color="0" x="3003" y="4" height="56" width="402" html.valueishtml="0"  name=sheet_price_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="선정구분" border="0" color="0" x="3415" y="4" height="56" width="325" html.valueishtml="0"  name=confirm_opt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=trailer.1 alignment="2" text="" border="0" color="0" x="9" y="8" height="60" width="480" html.valueishtml="0"  name=t_4 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=trailer.1 alignment="2" text="합계" border="0" color="0" x="498" y="8" height="60" width="1673" html.valueishtml="0"  name=t_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=trailer.1 alignment="1" expression="sum(  sheet_price  for group 1 )"border="0" color="0" x="3003" y="8" height="64" width="402" format="#,###,##0" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=trailer.1 alignment="2" text="" border="0" color="0" x="2181" y="8" height="60" width="814" html.valueishtml="0"  name=t_5 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=trailer.1 alignment="2" text="" border="0" color="0" x="3415" y="8" height="60" width="325" html.valueishtml="0"  name=t_6 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="8" height="68" width="480" format="[general]" html.valueishtml="0"  name=req_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="498" y="8" height="68" width="1673" format="[general]" html.valueishtml="0"  name=cust_name visible="1" edit.limit=60 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="3003" y="8" height="68" width="402" format="#,###,##0" html.valueishtml="0"  name=sheet_price visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="2" tabsequence=10 border="0" color="0" x="3415" y="8" height="68" width="325" format="[general]" html.valueishtml="0"  name=confirm_opt visible="1" checkbox.text="" checkbox.on="1" checkbox.off="0" checkbox.scale=no checkbox.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="2181" y="8" height="68" width="814" format="[general]" html.valueishtml="0"  name=itm_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

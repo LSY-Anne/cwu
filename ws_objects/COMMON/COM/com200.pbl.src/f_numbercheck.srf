@@ -1,0 +1,34 @@
+﻿$PBExportHeader$f_numbercheck.srf
+$PBExportComments$리턴되어지는 숫자를 수자만리턴한다
+global type f_numbercheck from function_object
+end type
+
+forward prototypes
+global function string f_numbercheck (string string_code)
+end prototypes
+
+global function string f_numbercheck (string string_code);//////////////////////////////////////////////////////////////////
+// 	작성목적 : 숫자값만 리턴한다.
+//    적 성 인 : 이현수
+//		작성일자 : 2002.10
+//    변 경 인 :
+//    변경일자 :
+//    변경사유 :
+//////////////////////////////////////////////////////////////////
+Integer SLen,i
+String Buffer,Temp='',Char1
+
+Buffer = Trim(String_Code)
+SLen   = Len(Buffer)
+
+For I = 1 to SLen 
+	Char1 =  Mid(Buffer,i,1)
+	If Char1 = '0' or Char1 = '1' or Char1 = '2' or Char1 = '3' or  &
+	   Char1 = '4' or Char1 = '5' or Char1 = '6' or Char1 = '7' or &
+		Char1 = '8' or Char1 = '9'  Then
+		Temp  = Temp + Char1
+   End If		
+Next	
+Return Temp
+end function
+

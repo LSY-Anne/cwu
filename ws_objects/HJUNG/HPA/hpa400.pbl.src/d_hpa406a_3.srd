@@ -1,0 +1,91 @@
+﻿$PBExportHeader$d_hpa406a_3.srd
+$PBExportComments$부양가족 내역관리(출력)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 2 print.margin.left = 200 print.margin.right = 200 print.margin.top = 400 print.margin.bottom = 0 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=620 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=92 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes name=member_no dbname="hpa024m.member_no" )
+ column=(type=char(4) updatewhereclause=yes name=year dbname="hpa024m.year" )
+ column=(type=char(13) updatewhereclause=yes name=jumin_no dbname="hpa024m.jumin_no" )
+ column=(type=decimal(0) updatewhereclause=yes name=gwangae_code dbname="hpa024m.gwangae_code" )
+ column=(type=char(20) updatewhereclause=yes name=name dbname="hpa024m.name" )
+ column=(type=char(5) updatewhereclause=yes name=worker dbname="hpa024m.worker" )
+ column=(type=datetime updatewhereclause=yes name=work_date dbname="hpa024m.work_date" )
+ column=(type=char(20) updatewhereclause=yes name=ipaddr dbname="hpa024m.ipaddr" )
+ column=(type=char(5) updatewhereclause=yes name=hpa024m_job_uid dbname="hpa024m.job_uid" )
+ column=(type=char(20) updatewhereclause=yes name=job_add dbname="hpa024m.job_add" )
+ column=(type=datetime updatewhereclause=yes name=job_date dbname="hpa024m.job_date" )
+ column=(type=char(20) updatewhereclause=yes name=hin001m_name dbname="hpa024m.name" )
+ retrieve="SELECT	A.MEMBER_NO,
+			A.YEAR,
+			A.JUMIN_NO,
+			A.GWANGAE_CODE,
+			A.NAME,
+			A.WORKER,
+			A.WORK_DATE,
+			A.IPADDR,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE,
+			C.NAME
+FROM PADB.HPA024M  A,
+	  PADB.HPA019H  B,
+	  INDB.HIN001M	 C
+WHERE  A.MEMBER_NO	= B.MEMBER_NO
+AND    A.MEMBER_NO	= C.MEMBER_NO(+)
+AND 	A.YEAR  =   B.YEAR
+AND	A.YEAR	=	:AS_YEAR
+AND	A.MEMBER_NO 	LIKE  :AS_MEMBER_NO||'%' 
+ORDER BY A.MEMBER_NO,A.JUMIN_NO
+" arguments=(("as_year", string),("as_member_no", string)) )
+group(level=1 header.height=0 trailer.height=0 by=("member_no" ) header.color="536870912" trailer.color="536870912" )
+line(band=header x1="613" y1="376" x2="613" y2="624"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="325" y1="376" x2="325" y2="624"  name=l_2 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="987" y1="376" x2="987" y2="624"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="부양가족 공제 내역" border="0" color="0" x="334" y="8" height="132" width="2523" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-22" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" font.underline="1" background.mode="1" background.color="536870912" )
+line(band=header x1="1600" y1="376" x2="1600" y2="624"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2290" y1="376" x2="2290" y2="624"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2866" y1="376" x2="2866" y2="624"  name=l_8 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="325" y1="620" x2="2862" y2="620"  name=l_18 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="325" y1="376" x2="2862" y2="376"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="년도 :" border="0" color="0" x="375" y="284" height="76" width="151" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림" font.height="-10" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=2 alignment="2" tabsequence=32766 border="0" color="0" x="535" y="284" height="76" width="251" format="[general]" html.valueishtml="0"  name=year visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=header alignment="0" expression="page() + ' OF ' + pageCount()"border="0" color="0" x="2464" y="304" height="60" width="393" format="[general]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="PAGE : " border="0" color="0" x="2231" y="304" height="60" width="219" html.valueishtml="0"  name=t_14 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="TIME : " border="0" color="0" x="2231" y="232" height="60" width="219" html.valueishtml="0"  name=t_13 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="DATE : " border="0" color="0" x="2231" y="160" height="60" width="219" html.valueishtml="0"  name=t_12 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="비고" border="0" color="0" x="2309" y="476" height="60" width="544" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="관계" border="0" color="0" x="1618" y="476" height="60" width="663" html.valueishtml="0"  name=voltage_t visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="주민번호" border="0" color="0" x="1006" y="476" height="60" width="581" html.valueishtml="0"  name=capacity_t visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="부양자" border="0" color="0" x="626" y="476" height="60" width="352" html.valueishtml="0"  name=pum_name_t visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성명" border="0" color="0" x="343" y="476" height="60" width="256" html.valueishtml="0"  name=buil_no_t visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="613" y1="0" x2="613" y2="248"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="325" y1="0" x2="325" y2="248"  name=l_11 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="987" y1="0" x2="987" y2="248"  name=l_20 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1600" y1="0" x2="1600" y2="248"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2290" y1="0" x2="2290" y2="248"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1006" y="8" height="64" width="581" format="[general]" html.valueishtml="0"  name=jumin_no visible="1" editmask.mask="######-#######" editmask.focusrectangle=no  font.face="굴림" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="3" tabsequence=32766 border="0" color="0" x="1618" y="8" height="64" width="663" format="[general]" html.valueishtml="0"  name=gwangae_code visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="626" y="8" height="64" width="352" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=detail x1="2866" y1="0" x2="2866" y2="248"  name=l_10 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="613" y1="84" x2="2871" y2="84"  name=l_3 visible="1~tIf( (   member_no =  member_no [1] ) 
+and ( GetRow() <> long( Describe( ~"datawindow.LastRowOnpage~" ) ) ), 1, 0 )" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="329" y1="88" x2="2857" y2="88"  name=l_7 visible="1~tIf ( GetRow() = long( Describe( ~"datawindow.LastRowOnpage~" ) ) , 1, 0 )" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="343" y="12" height="60" width="256" format="[general]" html.valueishtml="0"  name=hin001m_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=detail x1="329" y1="84" x2="2862" y2="84"  name=l_13 visible="1~tIf ((  member_no <>  member_no [1] ) 
+and ( GetRow() <> long( Describe( ~"datawindow.LastRowOnpage~" ) ) ), 1, 0 )" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=header alignment="0" expression="string(f_sysdate(), 'yyyy/mm/dd')"border="0" color="0" x="2464" y="160" height="60" width="393" format="[GENERAL]" html.valueishtml="0"  name=compute_12 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=header alignment="0" expression="string(f_sysdate(), 'hh:mm:ss')"border="0" color="0" x="2464" y="232" height="60" width="393" format="[GENERAL]" html.valueishtml="0"  name=compute_11 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

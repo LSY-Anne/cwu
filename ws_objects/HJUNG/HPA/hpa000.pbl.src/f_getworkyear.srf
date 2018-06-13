@@ -1,0 +1,148 @@
+﻿$PBExportHeader$f_getworkyear.srf
+$PBExportComments$근무년월수를 구한다(A:member_no, as_yearmonth, as_today, R:work_year(decimal))
+global type f_getworkyear from function_object
+end type
+
+forward prototypes
+global function decimal f_getworkyear (string as_member_no, string as_yearmonth, string as_first_date, string as_retire_date, string as_today)
+end prototypes
+
+global function decimal f_getworkyear (string as_member_no, string as_yearmonth, string as_first_date, string as_retire_date, string as_today);// ==========================================================================================
+// 기    능 : 	근무년수를 구한다.
+// 작 성 인 : 	안금옥
+// 작성일자 : 	2002.04
+// 함수원형 : 	f_getworkyear(string as_member_no, string as_yearmonth, string as_first_date, string retire_date, string as_today)
+//					return	integer
+// 인    수 :	as_member_no 	- 	개인번호
+//					as_yearmonth	- 	지급년월
+//					as_first_date	-	최초임용일자
+//					as_retire_date	- 	퇴직일자
+//					as_today			-	계산기준일자
+// 되 돌 림 :	근무년수
+// 주의사항 :
+// 수정사항 :
+// ==========================================================================================
+
+integer	li_work_year = 0, li_hwan_year = 0, li_sub_cnt = 0
+string	ls_firstdate, ls_last_date
+dec		ldb_workyearmonth
+
+if isnull(as_member_no) or trim(as_member_no) = '' then	return	0
+
+ls_firstdate	=	''
+
+if isnull(as_retire_date) or trim(as_retire_date) = '' then
+	ls_last_date	=	as_today
+else
+	ls_last_date	=	as_retire_date
+end if
+
+//SELECT	nvl(trunc(	(	FLOOR(NVL(CAREER_YM,0) +
+//								FLOOR(ROUND(MONTHS_BETWEEN(:as_today, firsthire_date),0) / 12)	+
+//									((MOD(ROUND(MONTHS_BETWEEN(:as_today, firsthire_date),0),12) * 0.01)))	+
+//
+//							FLOOR(((NVL(CAREER_YM,0) +
+//								FLOOR(ROUND(MONTHS_BETWEEN(:as_today, firsthire_date),0) / 12)	+
+//									((MOD(ROUND(MONTHS_BETWEEN(:as_today, firsthire_date),0),12) * 0.01))) -
+//							(FLOOR(NVL(CAREER_YM,0) +
+//										FLOOR(ROUND(MONTHS_BETWEEN(:as_today, firsthire_date),0) / 12)	+
+//											((MOD(ROUND(MONTHS_BETWEEN(:as_today, firsthire_date),0),12) * 0.01))))) * 100/12) +
+//				
+//							MOD(((NVL(CAREER_YM,0) +
+//								FLOOR(ROUND(MONTHS_BETWEEN(:as_today, firsthire_date),0) / 12)	+
+//									((MOD(ROUND(MONTHS_BETWEEN(:as_today, firsthire_date),0),12) * 0.01))) -
+//							(FLOOR(NVL(CAREER_YM,0) +
+//										FLOOR(ROUND(MONTHS_BETWEEN(:as_today, firsthire_date),0) / 12)	+
+//											((MOD(ROUND(MONTHS_BETWEEN(:as_today, firsthire_date),0),12) * 0.01))))) * 100,12) * 0.01), 0), 0)
+//into		:li_work_year
+//FROM		INDB.HIN001M
+//WHERE		MEMBER_NO	=	:as_member_no	;
+
+
+// 인사변동사항에서 휴직일수를 구한다.(근무년수에서 휴직기간은 제외된다.)
+// 최초임용일자에서 휴직일수를 합한 날짜를 구한다.
+select	nvl(to_char(to_date(:as_first_date) + 
+			(	select	nvl(sum(to_date(to_date) - to_date(from_date) + 1), 0)
+				from		indb.hin007h
+				where		member_no	=	a.member_no
+				and		change_opt	=	71	), 'yyyymmdd'), '')
+into		:ls_firstdate
+from		indb.hin001m a
+where		member_no	=	:as_member_no
+and		(jaejik_opt	=	1	or	(jaejik_opt	=	3 and	substr(:ls_last_date, 1, 6) >=	:as_yearmonth))	;
+
+if sqlca.sqlcode <> 0	then	ls_firstdate	=	as_first_date
+
+// 최초임용일자와 휴직일수를 합한 날에서 기준날까지 구한다.(년수.월수)
+// 경력근무년수.월수를 더한다.
+select	nvl(NVL(CAREER_YM, 0) + 
+			(FLOOR(TRUNC(MONTHS_BETWEEN(to_date(:ls_last_date, 'yyyymmdd') + 1, :ls_firstdate), 0) / 12)	+
+			((MOD(ROUND(MONTHS_BETWEEN(to_date(:ls_last_date, 'yyyymmdd') + 1, :ls_firstdate), 0), 12) * 0.01))), 0) as yearmonth
+into		:ldb_workyearmonth
+from		indb.hin001m
+where		member_no	=	:as_member_no	;
+
+if sqlca.sqlcode <> 0	then	return	0.0
+
+// 최초임용일자가 15일보다 크면 한달은 삭제한다.
+if integer(right(as_first_date, 2)) > 15 then
+	ldb_workyearmonth	-=	0.01
+end if
+									
+// 월이 12가 넘으면 년수를 하나 더 추가시킨다.
+if (mod(ldb_workyearmonth, 1)) - 0.12 > 0.0 then
+	ldb_workyearmonth	=	(truncate(ldb_workyearmonth, 0) + 1.0) + (mod(ldb_workyearmonth, 1) - 0.12)
+end if
+
+return	ldb_workyearmonth
+
+
+
+//// 재직중인 또는 퇴직예정자인 개인의 최초임용일을 구한다.
+//select	nvl(firsthire_date, '')
+//into		:ls_firstdate
+//from		indb.hin001m
+//where		member_no	=	:as_member_no	
+//and		(jaejik_opt	=	1	or (jaejik_opt = 3 and substr(retire_date, 1, 6) >= :as_yearmonth))	;
+
+//if isnull(ls_firstdate) or trim(ls_firstdate) = '' then	return 0
+
+//// 다시 복귀
+////// 인사변동사항에서 휴직일수를 구한다.(근무년수에서 휴직기간은 제외된다.)
+////select	nvl(sum(to_date(to_date) - to_date(from_date)), 0)
+////into		:li_sub_cnt
+////from		indb.hin007h
+////where		member_no	=	:as_member_no
+////and		change_opt	=	71	;
+////
+////// 최초임용일에서 휴직일수를 합한 날짜를 구한다.
+////if li_sub_cnt > 0 then	as_first_date	=	string(RelativeDate(date(string(as_first_date, '@@@@/@@/@@')), li_sub_cnt), 'yyyymmdd')
+//// 다시 복귀
+
+////ls_today	=	as_today
+////
+////li_work_year	=	integer(left(ls_today, 4)) - integer(left(as_first_date, 4))
+////
+////if li_work_year < 1 then
+////	li_work_year	=	0
+////else
+////	if right(as_first_date, 6) > right(ls_today, 6) then
+////		li_work_year --
+////	end if
+////end if
+////
+//// 다시 복귀
+////// 경력사항에서 환산율이 100%인 사람만 환산년수를 구한다.
+////select	nvl(sum(nvl(hwan_year, 0)), 0)
+////into		:li_hwan_year
+////from		indb.hin009h
+////where		member_no	=	:as_member_no	
+////and		hwan_rate	=	100.0	;
+////
+////li_work_year += li_hwan_year
+//// 다시 복귀
+//
+//return	li_work_year
+//
+end function
+

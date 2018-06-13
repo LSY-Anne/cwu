@@ -1,0 +1,136 @@
+﻿$PBExportHeader$d_hjk406p_6.srd
+$PBExportComments$[청운대]영문 성적표(해외유학생용)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=3388 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=200 color="536870912" height.autosize=yes )
+table(column=(type=char(10) updatewhereclause=yes key=yes name=hakbun dbname="jaehak_hakjuk.hakbun" )
+ column=(type=char(40) updatewhereclause=yes name=ename dbname="jaehak_hakjuk.ename" )
+ column=(type=char(4) updatewhereclause=yes name=gwa dbname="jaehak_hakjuk.gwa" )
+ column=(type=datetime update=yes updatewhereclause=yes name=birthday dbname="birthday" )
+ column=(type=char(1) updatewhereclause=yes name=sex dbname="jaehak_hakjuk.sex" )
+ column=(type=datetime updatewhereclause=yes name=iphak_date dbname="iphak_date" )
+ column=(type=char(1) updatewhereclause=yes name=su_hakyun dbname="jaehak_hakjuk.su_hakyun" )
+ column=(type=char(2) updatewhereclause=yes name=iphak_gubun dbname="jaehak_hakjuk.iphak_gubun" )
+ column=(type=char(4) updatewhereclause=yes name=iphak_gwa dbname="jaehak_hakjuk.iphak_gwa" )
+ column=(type=datetime updatewhereclause=yes name=jolup_date dbname="jolup_date" )
+ column=(type=char(100) updatewhereclause=yes name=hakwi_ename dbname="jaehak_hakjuk.hakwi_ename" )
+ column=(type=char(200) updatewhereclause=yes name=addr_e dbname="jaehak_hakjuk.addr_e" )
+ column=(type=char(3) updatewhereclause=yes name=injung_hakjum dbname="injung_hakjum" )
+ retrieve="SELECT  	A.HAKBUN ,
+			A.ENAME ,
+			A.GWA,
+			to_date(('19'||SUBSTR(A.JUMIN_NO,1,6))) BIRTHDAY,
+			A.SEX ,
+			to_date(A.IPHAK_DATE)IPHAK_DATE ,
+			A.SU_HAKYUN ,
+			A.IPHAK_GUBUN ,
+			A.IPHAK_GWA,
+			TO_DATE(A.JOLUP_DATE) JOLUP_DATE,
+			A.HAKWI_ENAME,
+			A.ADDR_E,
+			nvl(A.INJUNG_HAKJUM, 0) INJUNG_HAKJUM      
+FROM 		HAKSA.JAEHAK_HAKJUK A     
+WHERE 	( A.HAKBUN 		like :as_hakbun 	)
+AND		( A.HNAME		like :as_name		)
+AND		( A.JUMIN_NO 	like :as_jumin		) 
+
+union
+
+SELECT  	A.HAKBUN ,
+			A.ENAME ,
+			A.GWA,
+			to_date(('19'||SUBSTR(A.JUMIN_NO,1,6))) BIRTHDAY,
+			A.SEX ,
+			to_date(A.IPHAK_DATE)IPHAK_DATE ,
+			A.SU_HAKYUN ,
+			A.IPHAK_GUBUN ,
+			A.IPHAK_GWA,
+			TO_DATE(A.JOLUP_DATE) JOLUP_DATE,
+			A.HAKWI_ENAME,
+			A.ADDR_E,
+			nvl(A.INJUNG_HAKJUM, 0) INJUNG_HAKJUM            
+FROM 		HAKSA.JOLUP_HAKJUK A      
+WHERE 	( A.HAKBUN 		like :as_hakbun	)  
+AND		( A.HNAME		like :as_name		)
+AND		( A.JUMIN_NO 	like :as_jumin		) " update="HAKSA.JAEHAK_HAKJUK" updatewhere=1 updatekeyinplace=no arguments=(("as_hakbun", string),("as_name", string),("as_jumin", string)) )
+group(level=1 header.height=0 trailer.height=0 by=("hakbun" ) newpage=yes header.color="536870912" trailer.color="536870912" )
+text(band=background alignment="2" text="Undergraduate Academic Record" border="0" color="0" x="306" y="772" height="88" width="2939" html.valueishtml="0"  name=t_32 visible="1"  font.face="바탕체" font.height="-14" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=background alignment="2" text="CHUNGWOON UNIVERSITY" border="0" color="0" x="306" y="212" height="112" width="2939" html.valueishtml="0"  name=t_1 visible="1"  font.face="바탕체" font.height="-18" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" font.italic="1" background.mode="1" background.color="536870912" )
+text(band=background alignment="2" text="San 29, Namjang-ri, Hongseong-eup, Hongseong-gun, Chungnam-do, 350-701" border="0" color="0" x="306" y="348" height="68" width="2939" html.valueishtml="0"  name=t_2 visible="1"  font.face="바탕체" font.height="-11" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" font.italic="1" background.mode="1" background.color="553648127" )
+text(band=background alignment="2" text="Republic of Korea" border="0" color="0" x="306" y="440" height="88" width="2939" html.valueishtml="0"  name=t_3 visible="1"  font.face="바탕체" font.height="-14" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" font.italic="1" background.mode="1" background.color="553648127" )
+text(band=background alignment="2" text="E-mail : webmaster@mail.chungwoon.ac.kr" border="0" color="0" x="306" y="552" height="68" width="2939" html.valueishtml="0"  name=t_4 visible="1"  font.face="바탕체" font.height="-11" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" font.italic="1" background.mode="1" background.color="553648127" )
+text(band=background alignment="2" text="Tel (041) 630 - 3114" border="0" color="0" x="306" y="644" height="68" width="2939" html.valueishtml="0"  name=t_5 visible="1"  font.face="바탕체" font.height="-11" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" font.italic="1" background.mode="1" background.color="553648127" )
+text(band=background alignment="0" text="Lihyung Lee, Ph.D." border="0" color="0" x="2094" y="3916" height="72" width="919" html.valueishtml="0"  name=t_20 visible="1"  font.face="바탕체" font.height="-12" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="0" text="President" border="0" color="0" x="2094" y="4012" height="72" width="1029" html.valueishtml="0"  name=t_6 visible="1"  font.face="바탕체" font.height="-12" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="0" text="Chungwoon  University" border="0" color="0" x="2094" y="4108" height="72" width="1029" html.valueishtml="0"  name=t_7 visible="1"  font.face="바탕체" font.height="-12" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=background x1="2098" y1="3880" x2="3127" y2="3880"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=background alignment="0" text="Degree : " border="0" color="0" x="1600" y="1140" height="56" width="242" html.valueishtml="0"  name=t_14 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="0" text="Gender : " border="0" color="0" x="2624" y="912" height="56" width="242" html.valueishtml="0"  name=t_15 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="0" text="" border="0" color="0" x="535" y="800" height="60" width="498" html.valueishtml="0"  name=t_num visible="1"  font.face="바탕체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="0" text="Name in Full : " border="0" color="0" x="210" y="912" height="56" width="411" html.valueishtml="0"  name=t_8 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="0" text="Major :  " border="0" color="0" x="210" y="988" height="56" width="215" html.valueishtml="0"  name=t_11 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="0" text="Date of Birth : " border="0" color="0" x="210" y="1064" height="56" width="434" html.valueishtml="0"  name=t_16 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="0" text="Student Number : " border="0" color="0" x="1600" y="912" height="56" width="462" html.valueishtml="0"  name=t_10 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="0" text="Date of Admission : " border="0" color="0" x="1600" y="1064" height="56" width="567" html.valueishtml="0"  name=t_17 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="2" text="COURSE TITLE" border="0" color="0" x="201" y="1324" height="56" width="654" html.valueishtml="0"  name=t_23 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="2" text="COURSE TITLE" border="0" color="0" x="1239" y="1324" height="56" width="654" html.valueishtml="0"  name=t_9 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="2" text="COURSE TITLE" border="0" color="0" x="2277" y="1324" height="56" width="654" html.valueishtml="0"  name=t_22 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="2" text="Grade" border="0" color="0" x="1070" y="1324" height="56" width="146" html.valueishtml="0"  name=t_25 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="2" text="Credit" border="0" color="0" x="1915" y="1324" height="56" width="169" html.valueishtml="0"  name=t_13 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="2" text="Grade" border="0" color="0" x="2107" y="1324" height="56" width="146" html.valueishtml="0"  name=t_18 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="2" text="Credit" border="0" color="0" x="2953" y="1324" height="56" width="169" html.valueishtml="0"  name=t_26 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="2" text="Grade" border="0" color="0" x="3145" y="1324" height="56" width="146" html.valueishtml="0"  name=t_27 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=background x1="187" y1="900" x2="187" y2="3588"  name=l_41 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=background x1="3296" y1="900" x2="3296" y2="3588"  name=l_21 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=background alignment="0" expression="today()"border="0" color="0" x="613" y="3604" height="56" width="567" format="mmm dd, yyyy" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=background alignment="0" text="Date Printed : " border="0" color="0" x="197" y="3604" height="56" width="411" html.valueishtml="0"  name=t_28 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=background id=2 alignment="0" tabsequence=32766 border="0" color="0" x="640" y="912" height="56" width="919" format="[general]" html.valueishtml="0"  name=ename visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=background id=3 alignment="0" tabsequence=32766 border="0" color="0" x="443" y="988" height="56" width="2830" format="[general]" html.valueishtml="0"  name=gwa visible="1" dddw.name=d_dddw_hakgwa_eng dddw.displaycolumn=ename dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=background id=1 alignment="0" tabsequence=32766 border="0" color="0" x="2080" y="912" height="56" width="466" format="[general]" html.valueishtml="0"  name=hakbun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=background id=5 alignment="0" tabsequence=32766 border="0" color="0" x="2885" y="912" height="56" width="389" format="[general]~tif( sex = '1', 'Male', 'Female')" html.valueishtml="0"  name=sex visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=background id=6 alignment="0" tabsequence=32766 border="0" color="0" x="2185" y="1064" height="56" width="1088" format="MMMM DD, YYYY" html.valueishtml="0"  name=iphak_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=background x1="608" y1="3412" x2="608" y2="3584"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=background alignment="2" text="REMARKS " border="0" color="0" x="201" y="3472" height="56" width="398" html.valueishtml="0"  name=t_29 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="0" text="* Required Credits for Bachelors's Degree : 140" border="0" color="0" x="622" y="3432" height="40" width="2665" html.valueishtml="0"  name=t_21 visible="1"  font.face="굴림체" font.height="-7" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=background alignment="0" text="* System of Grade : A+(4.5:95-100)  A0(4.0:90-94)  B+(3.5:85-89)  B0(3.0:80-84)
+                    C+(2.5:75-79)  C0(2.0:70-74)  D+(1.5:65-69)  D0(1.0:60-64)  F(0:0-59) P:Pass W:Withdraw" border="0" color="0" x="622" y="3488" height="80" width="2665" html.valueishtml="0"  name=t_30 visible="1"  font.face="굴림체" font.height="-7" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=background x1="3131" y1="1316" x2="3131" y2="3412"  name=l_17 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=background x1="2939" y1="1316" x2="2939" y2="3412"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=background x1="2263" y1="1316" x2="2263" y2="3412"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=background x1="2094" y1="1316" x2="2094" y2="3412"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=background x1="1902" y1="1316" x2="1902" y2="3412"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=background x1="1225" y1="1316" x2="1225" y2="3412"  name=l_24 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=background x1="1056" y1="1316" x2="1056" y2="3412"  name=l_23 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=background x1="864" y1="1316" x2="864" y2="3412"  name=l_22 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=background alignment="2" text="Credit" border="0" color="0" x="878" y="1324" height="56" width="169" html.valueishtml="0"  name=t_24 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="2" text="Date of Graduation : " border="0" color="0" x="210" y="1140" height="56" width="576" html.valueishtml="0"  name=t_12 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=background alignment="2" text="Present Address : " border="0" color="0" x="210" y="1216" height="56" width="521" html.valueishtml="0"  name=t_19 visible="1"  font.face="바탕체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=background x1="192" y1="900" x2="3296" y2="900"  name=l_34 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=background x1="192" y1="976" x2="3296" y2="976"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=background x1="192" y1="1052" x2="3296" y2="1052"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=background x1="192" y1="1128" x2="3296" y2="1128"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=background x1="192" y1="1204" x2="3296" y2="1204"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=background x1="192" y1="1312" x2="3296" y2="1312"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=background x1="192" y1="1388" x2="3296" y2="1388"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=background x1="192" y1="3588" x2="3296" y2="3588"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=background x1="192" y1="3412" x2="3296" y2="3412"  name=l_18 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+report(band=header dataobject="d_hjk406p_6_neast" x="178" y="1448" height="1952" width="3127" border="0" criteria="" nest_arguments=((" hakbun ")) trail_footer = yes  name=dw_1 visible="1"  slideup=directlyabove )
+column(band=header id=4 alignment="0" tabsequence=32766 border="0" color="0" x="663" y="1064" height="56" width="896" format="mmmm dd, yyyy" html.valueishtml="0"  name=birthday visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=12 alignment="0" tabsequence=32766 border="0" color="0" x="750" y="1216" height="88" width="2523" format="[general]" html.valueishtml="0"  name=addr_e visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="FILE NO : " border="0" color="0" x="210" y="800" height="60" width="320" html.valueishtml="0"  name=t_31 visible="1"  font.face="바탕체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Units transffered from other Univ" border="0" color="0" x="215" y="1404" height="36" width="617" html.valueishtml="0"  name=t_33 visible="1~tif( injung_hakjum = '0', 0, if(isnull(injung_hakjum), 0, 1))"  font.face="굴림체" font.height="-6" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=header id=13 alignment="2" tabsequence=32766 border="0" color="0" x="878" y="1400" height="44" width="169" format="[general]" html.valueishtml="0"  name=injung_hakjum visible="1~tif( injung_hakjum = '0', 0, 1)" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-7" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

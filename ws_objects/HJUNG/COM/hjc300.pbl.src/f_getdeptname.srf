@@ -1,0 +1,28 @@
+﻿$PBExportHeader$f_getdeptname.srf
+$PBExportComments$특정부서명칭 구하기(A:부서코드, R:부서명)
+global type f_getdeptname from function_object
+end type
+
+forward prototypes
+global function string f_getdeptname (string as_dept_code)
+end prototypes
+
+global function string f_getdeptname (string as_dept_code);// ------------------------------------------------------------------------------------------
+// Function Name	:	f_getdeptname
+//	Function 설명	:	특정 부서명 찾아오기
+// Argument			:  String(부서코드)
+// Return			:	String(부서명)
+// ------------------------------------------------------------------------------------------
+
+string	ls_dept_name
+
+// 특정 부서명 찾아오기
+select	rtrim(nvl(fname, ' '))
+into		:ls_dept_name
+from		cddb.kch003m
+where		trim(gwa)	=	:as_dept_code	;
+
+return	trim(ls_dept_name)
+
+end function
+

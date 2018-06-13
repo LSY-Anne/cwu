@@ -1,0 +1,85 @@
+﻿$PBExportHeader$d_hin208p_014.srd
+$PBExportComments$인사기록카드_기본사항_주요보직
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 2 print.margin.left = 110 print.margin.right = 110 print.margin.top = 300 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=400 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=112 color="536870912" )
+table(column=(type=char(5) updatewhereclause=yes key=yes name=member_no dbname="hin008h.member_no" )
+ column=(type=char(4) updatewhereclause=yes key=yes name=bojik_code dbname="hin008h.bojik_code" )
+ column=(type=char(8) updatewhereclause=yes key=yes name=from_date dbname="hin008h.from_date" )
+ column=(type=decimal(0) updatewhereclause=yes name=day_opt dbname="hin008h.day_opt" )
+ column=(type=char(4) updatewhereclause=yes name=gwa dbname="hin008h.gwa" )
+ column=(type=char(8) updatewhereclause=yes name=to_date dbname="hin008h.to_date" )
+ column=(type=char(40) updatewhereclause=yes name=announce_reason dbname="hin008h.announce_reason" )
+ column=(type=char(40) updatewhereclause=yes name=announce_con dbname="hin008h.announce_con" )
+ column=(type=number updatewhereclause=yes name=sort dbname="hin008h.sort" )
+ column=(type=number updatewhereclause=yes name=appoint_fee dbname="hin008h.appoint_fee" )
+ column=(type=decimal(0) updatewhereclause=yes name=sign_opt dbname="hin008h.sign_opt" )
+ column=(type=char(5) updatewhereclause=yes name=worker dbname="hin008h.worker" )
+ column=(type=datetime updatewhereclause=yes name=work_date dbname="hin008h.work_date" )
+ column=(type=char(20) updatewhereclause=yes name=ipaddr dbname="hin008h.ipaddr" )
+ column=(type=char(5) updatewhereclause=yes name=job_uid dbname="hin008h.job_uid" )
+ column=(type=char(20) updatewhereclause=yes name=job_add dbname="hin008h.job_add" )
+ column=(type=datetime updatewhereclause=yes name=job_date dbname="hin008h.job_date" )
+ column=(type=char(4000) updatewhereclause=yes name=com_bojik_nm dbname="com_bojik_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_dept_nm dbname="com_dept_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_sign_opt_nm dbname="com_sign_opt_nm" )
+ column=(type=number updatewhereclause=yes name=com_year_nm dbname="com_year_nm" )
+ retrieve="SELECT	A.MEMBER_NO,
+			A.BOJIK_CODE,
+			A.FROM_DATE,
+			A.DAY_OPT,
+			A.GWA,
+			A.TO_DATE,
+			A.ANNOUNCE_REASON,
+			A.ANNOUNCE_CON,
+			A.SORT,
+			A.APPOINT_FEE,
+			A.SIGN_OPT,
+			A.WORKER,
+			A.WORK_DATE,
+			A.IPADDR,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE,
+			FU_BOJIK_NM(A.BOJIK_CODE,'K')						COM_BOJIK_NM,
+			FU_DEPT_NM(A.GWA,'K')								COM_DEPT_NM,
+			FU_CODE_NM('COMM','SIGN_OPT',A.SIGN_OPT,'K')	COM_SIGN_OPT_NM,
+			FU_RTN_YEAR_MONTH(A.FROM_DATE,A.TO_DATE) 					COM_YEAR_NM
+FROM		INDB.HIN008H A
+WHERE		A.MEMBER_NO = :as_MemberNo
+AND		A.BOJIK_CODE NOT IN ('0066','0077')
+ORDER BY A.FROM_DATE
+" update="INDB.HIN008H" updatewhere=0 updatekeyinplace=no arguments=(("as_MemberNo", string)) )
+line(band=header x1="9" y1="232" x2="3392" y2="232"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="9" y1="396" x2="3392" y2="396"  name=l_3 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="9" y1="232" x2="9" y2="468"  name=l_80 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3392" y1="232" x2="3392" y2="468"  name=l_10 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="주요보직" border="0" color="0" x="23" y="280" height="60" width="311" html.valueishtml="0"  name=decision_opt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="347" y1="236" x2="347" y2="400"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="보직명" border="0" color="0" x="379" y="284" height="60" width="901" html.valueishtml="0"  name=certify_no_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="임면일" border="0" color="0" x="1865" y="284" height="60" width="402" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="임명일" border="0" color="0" x="1385" y="284" height="60" width="402" html.valueishtml="0"  name=get_date_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="비고" border="0" color="0" x="3013" y="284" height="60" width="357" html.valueishtml="0"  name=organ_name_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="임명기간(년.월)" border="0" color="0" x="2418" y="284" height="60" width="494" html.valueishtml="0"  name=content_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="2" expression="if ( isnull ( to_date ) , string( ' 현재' ) , '' )"border="0" color="0" x="1870" y="20" height="60" width="411" format="[GENERAL]" html.valueishtml="0"  name=to_date_14 visible="1~tif(  from_date  > '1', 1, 0)"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=detail x1="347" y1="108" x2="3392" y2="108"  name=l_4 visible="1" pen.style="0" pen.width="5~tif(getrow() = last(getrow() for page), 10, 5)" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="347" y1="0" x2="347" y2="136"  name=l_9 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3392" y1="0" x2="3392" y2="136"  name=l_14 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="0" color="0" x="379" y="20" height="60" width="901" format="[general]" html.valueishtml="0"  name=com_bojik_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="2" expression="if ( string(com_year_nm) > '0' , string(com_year_nm)  , '' )"border="0" color="0" x="2418" y="20" height="60" width="494" format="[GENERAL]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="1385" y="20" height="60" width="402" format="@@@@.@@.@@" html.valueishtml="0"  name=from_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="1865" y="20" height="60" width="402" format="@@@@.@@.@@" html.valueishtml="0"  name=to_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

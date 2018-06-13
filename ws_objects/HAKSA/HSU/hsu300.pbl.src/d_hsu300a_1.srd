@@ -1,0 +1,68 @@
+﻿$PBExportHeader$d_hsu300a_1.srd
+$PBExportComments$[청운대]개설과목조회
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=88 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(4) updatewhereclause=yes name=gwa dbname="gaesul_gwamok.gwa" )
+ column=(type=char(1) updatewhereclause=yes name=hakyun dbname="gaesul_gwamok.hakyun" )
+ column=(type=char(2) updatewhereclause=yes name=bunban dbname="gaesul_gwamok.bunban" )
+ column=(type=char(1) updatewhereclause=yes name=juya_gubun dbname="gaesul_gwamok.juya_gubun" values="주	1/야	2/" )
+ column=(type=char(7) updatewhereclause=yes name=gwamok_id dbname="gaesul_gwamok.gwamok_id" )
+ column=(type=decimal(0) updatewhereclause=yes name=gwamok_seq dbname="gaesul_gwamok.gwamok_seq" )
+ column=(type=char(1) updatewhereclause=yes name=pyungga_gubun dbname="gaesul_gwamok.pyungga_gubun" values="A형	A/B형	B/" )
+ column=(type=char(5) updatewhereclause=yes name=member_no dbname="gaesul_gwamok.member_no" )
+ column=(type=char(4) updatewhereclause=yes name=year dbname="gaesul_gwamok.year" )
+ column=(type=char(1) updatewhereclause=yes name=hakgi dbname="gaesul_gwamok.hakgi" )
+ column=(type=char(1) updatewhereclause=yes name=ban dbname="gaesul_gwamok.ban" )
+ column=(type=char(47) updatewhereclause=yes name=gwamok dbname="gwamok" )
+ column=(type=char(1) updatewhereclause=yes name=pass_gubun dbname="gaesul_gwamok.pass_gubun" )
+ column=(type=decimal(0) updatewhereclause=yes name=gwa_sym_order_seq dbname="gwa_sym.order_seq" )
+ retrieve="SELECT 	HAKSA.GAESUL_GWAMOK.GWA,   
+			HAKSA.GAESUL_GWAMOK.HAKYUN,   
+			HAKSA.GAESUL_GWAMOK.BUNBAN,   
+			HAKSA.GAESUL_GWAMOK.JUYA_GUBUN,   
+			HAKSA.GAESUL_GWAMOK.GWAMOK_ID,   
+			HAKSA.GAESUL_GWAMOK.GWAMOK_SEQ,   
+			HAKSA.GAESUL_GWAMOK.PYUNGGA_GUBUN,   
+			HAKSA.GAESUL_GWAMOK.MEMBER_NO,   
+			HAKSA.GAESUL_GWAMOK.YEAR,   
+			HAKSA.GAESUL_GWAMOK.HAKGI,   
+			HAKSA.GAESUL_GWAMOK.BAN,   
+			HAKSA.GAESUL_GWAMOK.GWAMOK_ID||HAKSA.GAESUL_GWAMOK.GWAMOK_SEQ  AS GWAMOK,   
+			HAKSA.GAESUL_GWAMOK.PASS_GUBUN,
+			HAKSA.GWA_SYM.ORDER_SEQ       
+FROM 		HAKSA.GAESUL_GWAMOK,
+			HAKSA.GWA_SYM   
+WHERE 	HAKSA.GAESUL_GWAMOK.GWA	=	TRIM(HAKSA.GWA_SYM.GWA)
+AND		HAKSA.GAESUL_GWAMOK.YEAR = :as_year
+AND  		HAKSA.GAESUL_GWAMOK.HAKGI = :as_hakgi
+AND  		HAKSA.GAESUL_GWAMOK.MEMBER_NO = :as_id 
+AND  		HAKSA.GAESUL_GWAMOK.GWAMOK_ID <> 'TAA9999'    
+
+" arguments=(("as_year", string),("as_hakgi", string),("as_id", string))  sort="gwa_sym_order_seq A hakyun A ban A gwamok A bunban A " )
+text(band=header alignment="2" text="학년" border="0" color="8388608" x="393" y="4" height="80" width="142" html.valueishtml="0"  name=hakyun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="반" border="0" color="8388608" x="539" y="4" height="80" width="137" html.valueishtml="0"  name=ban_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학과" border="0" color="8388608" x="5" y="4" height="80" width="384" html.valueishtml="0"  name=gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="393" y="4" height="76" width="142" format="[general]" html.valueishtml="0"  name=hakyun visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="0" x="539" y="4" height="76" width="137" format="[general]" html.valueishtml="0"  name=ban visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="384" format="[general]" html.valueishtml="0"  name=gwa visible="1" dddw.name=d_dddw_shorthakgwa dddw.displaycolumn=sname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="과목명" border="0" color="8388608" x="681" y="4" height="80" width="905" html.valueishtml="0"  name=gwamok_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="681" y="4" height="76" width="905" format="[general]" html.valueishtml="0"  name=gwamok visible="1" dddw.name=d_dddw_gwamokcode dddw.displaycolumn=gwamok_gubun dddw.datacolumn=gwamok dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="평가" border="0" color="8388608" x="1755" y="4" height="80" width="151" html.valueishtml="0"  name=pyungga_gubun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="분반" border="0" color="8388608" x="1591" y="4" height="80" width="160" html.valueishtml="0"  name=bunban_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="1760" y="4" height="76" width="146" format="[general]" html.valueishtml="0"  name=pyungga_gubun visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="1591" y="4" height="76" width="160" format="[general]" html.valueishtml="0"  name=bunban visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

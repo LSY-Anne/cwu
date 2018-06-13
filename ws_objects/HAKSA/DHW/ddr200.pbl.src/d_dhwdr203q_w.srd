@@ -1,0 +1,52 @@
+﻿$PBExportHeader$d_dhwdr203q_w.srd
+$PBExportComments$[대학원등록] 은행파일생성 - 우리
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(208) updatewhereclause=yes name=woori dbname="woori" )
+ retrieve="SELECT	RPAD(A.HAKBUN, 9, ' ' )||
+			RPAD(A.D_HAKGICHA, 1, ' ')||
+			RPAD(A.GWA_ID, 4, ' ' )||
+			LPAD(NVL(B.HAKJUM, 0), 1, ' ')||
+			LPAD(NVL(B.IPHAK, 0), 7, ' ')||
+			LPAD(NVL(B.DUNGROK, 0), 7, ' ')||
+			LPAD(NVL(B.I_JANGHAK, 0), 7, ' ')||
+			LPAD(NVL(B.D_JANGHAK, 0), 7, ' ')||
+			LPAD(NVL(B.IPHAK, 0) + NVL(B.DUNGROK, 0) - (NVL(B.I_JANGHAK, 0) + NVL(B.D_JANGHAK, 0)), 7, ' ')||
+			LPAD(NVL(B.WONWOO, 0), 7, ' ')||	
+			'      0'||
+			LPAD(NVL(B.WONWOO, 0), 7, ' ')||	
+			RPAD(A.HNAME, 16, ' ')||	
+			LPAD(C.GASANG_NO, 14, ' ')
+			AS	WOORI
+FROM		HAKSA.D_HAKJUK		A,
+			HAKSA.D_DUNGROK	B,
+			HAKSA.D_GASANG		C
+WHERE		A.HAKBUN		=	B.HAKBUN
+AND		B.HAKBUN		=	C.HAKBUN(+)
+AND		B.YEAR		=	C.YEAR(+)
+AND		B.HAKGI		=	C.HAKGI(+)
+AND		B.YEAR		=	:as_year
+AND		B.HAKGI		=	:as_hakgi
+AND		B.HAKJUM		> 	0
+AND		B.WAN_YN		=	'0'
+AND		B.DUNG_YN	=	'0'
+AND		B.HWAN_YN	=	'0'
+ORDER BY A.HAKBUN
+
+" arguments=(("as_year", string),("as_hakgi", string)) )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="3840" format="[general]" html.valueishtml="0"  name=woori visible="1" edit.limit=139 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

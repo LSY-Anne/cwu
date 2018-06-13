@@ -1,0 +1,97 @@
+﻿$PBExportHeader$f_gettransamt.srf
+$PBExportComments$***************************미사용전기이월, 미사용차기이월자금을 구한다.(년도(S), 월(S), 회계단위(S), 대체구분(S), R:0/1 + 금액)
+global type f_gettransamt from function_object
+end type
+
+forward prototypes
+global function string f_gettransamt (string as_year, string as_month, string as_slip_class)
+end prototypes
+
+global function string f_gettransamt (string as_year, string as_month, string as_slip_class);// ------------------------------------------------------------------------------------------
+// Function Name : f_gettransamt
+// Function 설명 : 미사용전기이월자금 또는 미사용차기이월자금을 구한다.
+// Argument      : string(as_year)			- 당기년도
+//						 string(as_month)			- 해당월('99' Or '' 일 경우는 회계기간까지를 의미한다.)
+//						 string(as_acct_class)	- 회계단위
+//						 string(as_slip_class)	- 수입/지출구분
+// Return        : string(성공0/실패1 + 미사용전기이월자금(or 미사용차기이월자금))
+// ------------------------------------------------------------------------------------------
+
+string	ls_return, ls_stryymm, ls_endyymm, ls_tran_date
+string	ls_acct[] =	{'3131', '111%', '112%', '212%', '213%', '214%'}
+dec		ld_amt[]
+integer	i
+
+
+// 조회년도/년월에 대한 회계기간 구하기
+ls_stryymm		=	f_getacctyear(as_year)
+ls_tran_date	=	as_year + '0000'
+
+if left(ls_stryymm, 1) = '1' then return	'1'
+
+// '99' 이거나 '' 이면 당기년도의 회계기간을 의미한다.	(년월)
+// 월이 표시가 되어 있으면 당기년도 + 해당월을 의미한다.	(년월)
+if as_month = '99' or as_month = '' or len(as_month) < 2 then
+	ls_endyymm = right(ls_stryymm, 8)
+	ls_stryymm = mid(ls_stryymm, 2, 8)
+	
+	ls_stryymm = left(ls_stryymm, 6)
+	ls_endyymm = left(ls_endyymm, 6)
+else
+	ls_stryymm = mid(ls_stryymm, 2, 8)
+	
+	ls_stryymm = left(ls_stryymm, 6)
+	ls_endyymm = as_year + left(as_month, 2)
+end if
+
+// 수입/지출구분이 수입(1)일 경우는 미사용 전기이월자금을 구한다.
+if as_slip_class = '1' then
+
+	// 전년도의 이월(당년 + '0000')
+	// (유동자금(111%) + 기타유동자산(112%)) - (예수금(212%) + 선수금(213%) + 기타유동부채(214%))
+	for	i = 2 to 6
+		ld_amt[i] = 0
+	
+		select	decode(substr(acct_code, 2, 1), '1', (nvl(sum(dr_cash_amt), 0) + nvl(sum(dr_alt_amt), 0)) - (nvl(sum(cr_cash_amt), 0) + nvl(sum(cr_alt_amt), 0)),
+															  '4', (nvl(sum(dr_cash_amt), 0) + nvl(sum(dr_alt_amt), 0)) - (nvl(sum(cr_cash_amt), 0) + nvl(sum(cr_alt_amt), 0)),
+															  		 (nvl(sum(cr_cash_amt), 0) + nvl(sum(cr_alt_amt), 0)) - (nvl(sum(dr_cash_amt), 0) + nvl(sum(dr_alt_amt), 0)))
+		into		:ld_amt[i]
+		from		acdb.hac038h
+		where		gen_year		=	:as_year
+		and		gen_day		=	'0000'
+		and		substr(acct_code, 2, 4) like	:ls_acct[i]
+		group		substr(acct_code, 2, 1)	;
+	next	
+	
+	ld_amt[1] = (ld_amt[2] + ld_amt[3]) - (ld_amt[4] + ld_amt[5] + ld_amt[6])
+
+// 수입/지출구분이 지출(2)일 경우는 미사용 차기이월자금을 구한다.
+else
+
+	// 전년도의 이월(당년 + '0000')
+	// (유동자금(111%) + 기타유동자산(112%)) - (예수금(212%) + 선수금(213%) + 기타유동부채(214%))
+	for	i = 2 to 6
+		ld_amt[i] = 0
+		
+		select	decode(substr(acct_code, 2, 1), '1', (nvl(sum(dr_cash_amt), 0) + nvl(sum(dr_alt_amt), 0)) - (nvl(sum(cr_cash_amt), 0) + nvl(sum(cr_alt_amt), 0)),
+															  '4', (nvl(sum(dr_cash_amt), 0) + nvl(sum(dr_alt_amt), 0)) - (nvl(sum(cr_cash_amt), 0) + nvl(sum(cr_alt_amt), 0)),
+															  		 (nvl(sum(cr_cash_amt), 0) + nvl(sum(cr_alt_amt), 0)) - (nvl(sum(dr_cash_amt), 0) + nvl(sum(dr_alt_amt), 0)))
+		into		:ld_amt[i]
+		from		acdb.hac038h
+		where		((	gen_year || substr(gen_day, 1, 2) >= :ls_stryymm
+		and			gen_year || substr(gen_day, 1, 2) <= :ls_endyymm
+		and			gen_day	<>		'0000')
+		or			 (	gen_year || gen_day	=	:ls_tran_date	))
+		and		substr(acct_code, 2, 4) like	:ls_acct[i]
+		group		substr(acct_code, 2, 1)	;
+	next	
+
+	ld_amt[1] = (ld_amt[2] + ld_amt[3]) - (ld_amt[4] + ld_amt[5] + ld_amt[6])
+end if
+
+ls_return	= '0' + string(ld_amt[1])
+
+return	ls_return
+
+end function
+

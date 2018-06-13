@@ -1,0 +1,38 @@
+﻿$PBExportHeader$f_getacctyear.srf
+$PBExportComments$년도별 회계기간을 체크한다.(A:년도, R:from_dt + to_dt)
+global type f_getacctyear from function_object
+end type
+
+forward prototypes
+global function string f_getacctyear (string as_year)
+end prototypes
+
+global function string f_getacctyear (string as_year);// ------------------------------------------------------------------------------------------
+//  Funtion Name :  f_getacctyear
+//  개요         :  년도별 기간을 체크한다.(예산기간, 회계기간)
+//  Argument     :  string(년도)
+//  Return Value :  string(0:정상/1:실패) + from_dt[8] + to_dt[8])
+// ------------------------------------------------------------------------------------------
+
+string	ls_from_dt, ls_to_dt
+
+select	nvl(from_date, ''), nvl(to_date, '')
+into		:ls_from_dt, :ls_to_dt
+from		acdb.hac003m
+where		bdgt_year	=	:as_year
+and		bdgt_class	=	0
+and		stat_class	=	0	;
+
+if sqlca.sqlcode <> 0 or trim(ls_from_dt) = '' or trim(ls_to_dt) = '' then
+	f_messagebox('3', '회계기간이 정확하지 않습니다.~n~n전산실에 문의하시기 바랍니다!')
+	return	'1'
+end if
+
+if not isdate(string(ls_from_dt, '@@@@-@@-@@')) or not isdate(string(ls_to_dt, '@@@@-@@-@@')) then
+	f_messagebox('3', '회계기간이 정확하지 않습니다.~n~n전산실에 문의하시기 바랍니다!')
+	return	'1'
+end if
+
+return	'0' + ls_from_dt + ls_to_dt
+end function
+

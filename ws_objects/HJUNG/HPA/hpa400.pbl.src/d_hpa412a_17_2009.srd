@@ -1,0 +1,61 @@
+﻿$PBExportHeader$d_hpa412a_17_2009.srd
+$PBExportComments$기부금명세서-상세
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=char(60) updatewhereclause=yes name=p45codnm dbname="p45codnm" )
+ column=(type=char(2) updatewhereclause=yes name=p45cod dbname="p45cod" )
+ column=(type=char(50) updatewhereclause=yes name=p45dtl dbname="p45dtl" )
+ column=(type=char(6) updatewhereclause=yes name=p45yrm dbname="p45yrm" )
+ column=(type=char(50) updatewhereclause=yes name=p45bnm dbname="p45bnm" )
+ column=(type=char(13) updatewhereclause=yes name=p45bno dbname="p45bno" )
+ column=(type=decimal(0) updatewhereclause=yes name=p45ptl dbname="p45ptl" )
+ column=(type=char(1) updatewhereclause=yes name=p45rls dbname="p45rls" )
+ column=(type=char(10) updatewhereclause=yes name=p45chm dbname="p45chm" )
+ column=(type=char(13) updatewhereclause=yes name=p45rno dbname="p45rno" )
+ retrieve="SELECT
+(SELECT FNAME FROM CDDB.KCH102D
+ WHERE UPPER(CODE_GB) = 'GIBO_OPT' AND CODE = A.P45COD) 
+ AS P45CODNM,
+A.P45COD,
+A.P45DTL,
+A.P45YRM,
+A.P45BNM,
+A.P45BNO,
+A.P45PTL,
+A.P45RLS,
+A.P45CHM, 
+A.P45RNO
+FROM 
+(
+SELECT A.*, ROW_NUMBER() OVER (ORDER BY P45RLS ASC, P45RNO ASC , P45COD ASC) AS ROWNUMBER  
+FROM PADB.HPAP45T A
+WHERE A.P45YAR = :AS_YEAR
+AND A.P45NNO = :AS_P44NNO
+) A
+WHERE  A.ROWNUMBER <= 18" arguments=(("AS_YEAR", string),("AS_P44NNO", string)) )
+line(band=detail x1="55" y1="0" x2="55" y2="3944"  name=l_3 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="33554432" x="64" y="16" height="52" width="261" format="[general]" html.valueishtml="0"  name=p45codnm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-7" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="334" y="16" height="52" width="123" format="[general]" html.valueishtml="0"  name=p45cod visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-7" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="480" y="16" height="52" width="261" format="[general]" html.valueishtml="0"  name=p45dtl visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-7" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="33554432" x="754" y="16" height="52" width="183" format="[general]" html.valueishtml="0"  name=p45yrm visible="1" editmask.mask="####/##" editmask.focusrectangle=no  font.face="굴림" font.height="-7" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="33554432" x="960" y="16" height="52" width="503" format="[general]" html.valueishtml="0"  name=p45bnm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-7" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="33554432" x="1486" y="16" height="52" width="512" format="[general]" html.valueishtml="0"  name=p45bno visible="1" editmask.mask="####-##-####" editmask.focusrectangle=no  font.face="굴림" font.height="-7" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="33554432" x="2016" y="16" height="52" width="320" format="#,##0" html.valueishtml="0"  name=p45ptl visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-7" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="33554432" x="2354" y="16" height="52" width="197" format="[general]" html.valueishtml="0"  name=p45rls visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-7" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="33554432" x="2565" y="16" height="52" width="251" format="[general]" html.valueishtml="0"  name=p45chm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-7" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="33554432" x="2821" y="16" height="52" width="343" format="[general]" html.valueishtml="0"  name=p45rno visible="1" editmask.mask="######-#######" editmask.focusrectangle=no  font.face="굴림" font.height="-7" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

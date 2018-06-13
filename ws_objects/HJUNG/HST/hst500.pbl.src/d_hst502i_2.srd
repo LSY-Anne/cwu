@@ -1,0 +1,118 @@
+﻿$PBExportHeader$d_hst502i_2.srd
+$PBExportComments$자산폐기처리 - 처리 취소(저장)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(11) update=yes updatewhereclause=yes key=yes name=id_no dbname="hst029h.id_no" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=item_class dbname="hst029h.item_class" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=loss_apply_member_no dbname="hst029h.loss_apply_member_no" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=loss_use_opt dbname="hst029h.loss_use_opt" initial="1" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=loss_class dbname="hst029h.loss_class" values="	1/	2" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=loss_date dbname="hst029h.loss_date" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=loss_amt dbname="hst029h.loss_amt" initial="0" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=slip_yn dbname="hst029h.slip_yn" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=acct_date dbname="hst029h.acct_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=loss_member_no dbname="hst029h.loss_member_no" )
+ column=(type=char(200) update=yes updatewhereclause=yes name=loss_remark dbname="hst029h.loss_remark" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=req_gwa dbname="hst029h.req_gwa" )
+ column=(type=char(200) update=yes updatewhereclause=yes name=item_remark dbname="hst029h.item_remark" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=loss_apply_date dbname="hst029h.loss_apply_date" )
+ column=(type=char(7) updatewhereclause=yes name=item_no dbname="hst029h.item_no" )
+ column=(type=char(40) updatewhereclause=yes name=item_name dbname="hst029h.item_name" )
+ column=(type=char(100) updatewhereclause=yes name=item_stand_size dbname="hst029h.item_stand_size" )
+ column=(type=char(100) updatewhereclause=yes name=model dbname="hst029h.model" )
+ column=(type=number updatewhereclause=yes name=purchase_qty dbname="hst029h.purchase_qty" )
+ column=(type=number updatewhereclause=yes name=purchase_amt dbname="hst029h.purchase_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=revenue_opt dbname="hst029h.revenue_opt" )
+ column=(type=number updatewhereclause=yes name=purchase_price dbname="hst029h.purchase_price" )
+ column=(type=number updatewhereclause=yes name=nation_amt dbname="hst029h.nation_amt" )
+ column=(type=number updatewhereclause=yes name=replace_amt dbname="hst029h.replace_amt" )
+ column=(type=number updatewhereclause=yes name=school_amt dbname="hst029h.school_amt" )
+ column=(type=number updatewhereclause=yes name=prepare_amt dbname="hst029h.prepare_amt" )
+ column=(type=char(4) updatewhereclause=yes name=gwa dbname="hst029h.gwa" )
+ column=(type=char(12) updatewhereclause=yes name=room_code dbname="hst029h.room_code" )
+ column=(type=decimal(0) updatewhereclause=yes name=purchase_opt dbname="hst029h.purchase_opt" )
+ column=(type=number updatewhereclause=yes name=in_no dbname="hst029h.in_no" )
+ column=(type=decimal(0) updatewhereclause=yes name=tool_class dbname="hst029h.tool_class" )
+ retrieve="SELECT	A.ID_NO,
+			A.ITEM_CLASS,
+			A.LOSS_APPLY_MEMBER_NO,
+			A.LOSS_USE_OPT,
+			A.LOSS_CLASS,
+			A.LOSS_DATE,
+			A.LOSS_AMT,
+			A.SLIP_YN,
+			A.ACCT_DATE,
+			A.LOSS_MEMBER_NO,
+			A.LOSS_REMARK,
+			A.REQ_GWA,
+			A.ITEM_REMARK,
+			A.LOSS_APPLY_DATE,
+			B.ITEM_NO,
+			C.ITEM_NAME,
+			B.ITEM_STAND_SIZE,
+			B.MODEL,
+         B.PURCHASE_QTY,
+         B.PURCHASE_AMT,
+         B.revenue_opt,   
+         B.purchase_price, 
+			B.nation_amt,    
+			B.replace_amt,   
+			B.school_amt,    
+			B.prepare_amt,  
+			B.gwa,           
+			B.room_code,          
+			B.purchase_opt,  
+		   B.in_no,        
+		   B.tool_class   
+FROM		STDB.HST029H	A,
+			STDB.HST027M	B,
+			STDB.HST004M   C
+WHERE   A.ID_NO      = B.ID_NO
+AND		A.ITEM_CLASS = B.ITEM_CLASS
+AND      B.ITEM_NO    = C.ITEM_NO(+)
+AND		A.ID_NO     LIKE :as_id_no
+AND		nvl(B.ITEM_NO,' ')   LIKE  :as_item_no
+AND		nvl(C.ITEM_NAME,' ') LIKE  :as_item_name
+AND		nvl(TO_CHAR(A.ITEM_CLASS),' ') LIKE :as_item_class
+AND		A.LOSS_APPLY_DATE >= :as_date_f
+AND		A.LOSS_APPLY_DATE <= :as_date_t
+AND		nvl(A.REQ_GWA,' ') LIKE :as_dept_code
+AND		A.LOSS_CLASS = 2
+" update="STDB.HST029H" updatewhere=0 updatekeyinplace=no arguments=(("as_id_no", string),("as_item_no", string),("as_item_name", string),("as_item_class", string),("as_date_f", string),("as_date_t", string),("as_dept_code", string))  sort="loss_date A id_no A item_class A " )
+text(band=header alignment="2" text="" border="0" color="0" x="9" y="8" height="56" width="69" html.valueishtml="0"  name=loss_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="처리 일자" border="0" color="0" x="87" y="8" height="56" width="361" html.valueishtml="0"  name=loss_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="신청 일자" border="0" color="0" x="457" y="8" height="56" width="357" html.valueishtml="0"  name=loss_apply_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="등재 번호" border="0" color="0" x="823" y="8" height="56" width="366" html.valueishtml="0"  name=id_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="물품구분" border="0" color="0" x="1198" y="8" height="56" width="457" html.valueishtml="0"  name=item_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="품목명" border="0" color="0" x="1664" y="8" height="56" width="704" html.valueishtml="0"  name=item_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="구입수량" border="0" color="0" x="2377" y="8" height="56" width="261" html.valueishtml="0"  name=purchase_qty_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="구입금액" border="0" color="0" x="2647" y="8" height="56" width="416" html.valueishtml="0"  name=purchase_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="폐기용도구분" border="0" color="0" x="3072" y="8" height="56" width="430" html.valueishtml="0"  name=loss_use_opt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="요구부서" border="0" color="0" x="3511" y="8" height="56" width="462" html.valueishtml="0"  name=req_gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="내 역" border="0" color="0" x="3982" y="8" height="56" width="928" html.valueishtml="0"  name=item_remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=10 border="0" color="0" x="9" y="12" height="64" width="69" format="[general]" html.valueishtml="0"  name=loss_class visible="1" checkbox.text="" checkbox.on="1" checkbox.off="2" checkbox.scale=no checkbox.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="823" y="8" height="68" width="366" format="[general]" html.valueishtml="0"  name=id_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="1198" y="8" height="68" width="457" format="[general]" html.valueishtml="0"  name=item_class visible="1" dddw.name=dddw_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="0" x="1664" y="8" height="68" width="704" format="[general]" html.valueishtml="0"  name=item_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="3072" y="8" height="68" width="430" format="[general]" html.valueishtml="0"  name=loss_use_opt visible="1" dddw.name=dddw_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="2" tabsequence=32766 border="0" color="0" x="457" y="8" height="68" width="357" format="@@@@/@@/@@" html.valueishtml="0"  name=loss_apply_date visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="87" y="8" height="68" width="361" format="@@@@/@@/@@" html.valueishtml="0"  name=loss_date visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="3511" y="8" height="68" width="462" format="[general]" html.valueishtml="0"  name=req_gwa visible="1" dddw.name=dddw_dept_code_apply dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="0" x="3982" y="8" height="68" width="928" format="[general]" html.valueishtml="0"  name=item_remark visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=19 alignment="1" tabsequence=32766 border="0" color="0" x="2377" y="8" height="68" width="261" format="#,##0" html.valueishtml="0"  name=purchase_qty visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=20 alignment="1" tabsequence=32766 border="0" color="0" x="2647" y="8" height="68" width="416" format="#,##0" html.valueishtml="0"  name=purchase_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

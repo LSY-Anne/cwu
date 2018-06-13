@@ -1,0 +1,123 @@
+﻿$PBExportHeader$d_hgm101i_2.srd
+$PBExportComments$거래처 관리 - 저장
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=3408 color="536870912" )
+table(column=(type=char(7) update=yes updatewhereclause=yes key=yes name=cust_no dbname="hst001m.cust_no" )
+ column=(type=char(60) update=yes updatewhereclause=yes name=cust_name dbname="hst001m.cust_name" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=cust_gbn dbname="hst001m.cust_gbn" initial="1" values="매입처	1/매출처	2/매입//출처	3/" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=business_opt dbname="hst001m.business_opt" initial="1" values="법인	1/개인	2/" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=business_no dbname="hst001m.business_no" )
+ column=(type=char(13) update=yes updatewhereclause=yes name=corp_no dbname="hst001m.corp_no" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=president_name dbname="hst001m.president_name" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=postno dbname="hst001m.postno" )
+ column=(type=char(60) update=yes updatewhereclause=yes name=addr1 dbname="hst001m.addr1" )
+ column=(type=char(60) update=yes updatewhereclause=yes name=addr2 dbname="hst001m.addr2" )
+ column=(type=char(30) update=yes updatewhereclause=yes name=uptae dbname="hst001m.uptae" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=upjong dbname="hst001m.upjong" )
+ column=(type=char(80) update=yes updatewhereclause=yes name=main_items dbname="hst001m.main_items" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=phoneno dbname="hst001m.phoneno" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=fax dbname="hst001m.fax" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=charge_member_no dbname="hst001m.charge_member_no" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=cell_phoneno dbname="hst001m.cell_phoneno" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=bank_code dbname="hst001m.bank_code" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=acct_no dbname="hst001m.acct_no" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=depositor dbname="hst001m.depositor" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=payment_gbn dbname="hst001m.payment_gbn" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=cust_tax_gbn dbname="hst001m.cust_tax_gbn" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hst001m.worker" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hst001m.work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hst001m.ipaddr" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hst001m.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hst001m.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hst001m.job_date" )
+ column=(type=char(8) updatewhereclause=yes name=large_code dbname="large_code" )
+ retrieve="   SELECT  STDB.HST001M.CUST_NO ,
+           STDB.HST001M.CUST_NAME ,
+           STDB.HST001M.CUST_GBN ,
+           STDB.HST001M.BUSINESS_OPT ,
+           STDB.HST001M.BUSINESS_NO ,
+           STDB.HST001M.CORP_NO ,
+           STDB.HST001M.PRESIDENT_NAME ,
+           STDB.HST001M.POSTNO ,
+           STDB.HST001M.ADDR1 ,
+           STDB.HST001M.ADDR2 ,
+           STDB.HST001M.UPTAE ,
+           STDB.HST001M.UPJONG ,
+           STDB.HST001M.MAIN_ITEMS ,
+           STDB.HST001M.PHONENO ,
+           STDB.HST001M.FAX ,
+           STDB.HST001M.CHARGE_MEMBER_NO ,
+           STDB.HST001M.CELL_PHONENO ,
+           STDB.HST001M.BANK_CODE ,
+           STDB.HST001M.ACCT_NO ,
+           STDB.HST001M.DEPOSITOR ,
+           STDB.HST001M.PAYMENT_GBN ,
+           STDB.HST001M.CUST_TAX_GBN  ,
+           STDB.HST001M.WORKER ,
+           STDB.HST001M.WORK_DATE ,
+           STDB.HST001M.IPADDR,
+           STDB.HST001M.JOB_UID,
+           STDB.HST001M.JOB_ADD,
+           STDB.HST001M.JOB_DATE,
+			  SUBSTR(STDB.HST001M.CUST_NO,1,4) AS LARGE_CODE
+        FROM STDB.HST001M   
+        WHERE  STDB.HST001M.CUST_NO = :as_cust_no" update="STDB.HST001M" updatewhere=1 updatekeyinplace=no arguments=(("as_cust_no", string)) )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="411" y="20" height="64" width="608" format="[general]" html.valueishtml="0"  name=cust_no visible="1" edit.limit=7 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="거래처 코드" border="0" color="0" x="9" y="24" height="56" width="384" html.valueishtml="0"  name=cust_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="0" color="0" x="411" y="104" height="64" width="1486" format="[general]" html.valueishtml="0"  name=cust_name visible="1" edit.limit=60 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=30 border="0" color="0" x="411" y="188" height="64" width="1490" format="[general]" html.valueishtml="0"  name=cust_gbn visible="1" radiobuttons.columns=4 radiobuttons.scale=no radiobuttons.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=40 border="0" color="0" x="411" y="272" height="64" width="608" format="[general]" html.valueishtml="0"  name=business_opt visible="1" radiobuttons.columns=2 radiobuttons.scale=no radiobuttons.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="거래처명" border="0" color="0" x="9" y="104" height="56" width="384" html.valueishtml="0"  name=cust_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="구 분" border="0" color="0" x="9" y="188" height="56" width="384" html.valueishtml="0"  name=cust_gbn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="법인 구분" border="0" color="0" x="9" y="276" height="56" width="384" html.valueishtml="0"  name=business_opt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="사업자 번호" border="0" color="0" x="9" y="360" height="56" width="384" html.valueishtml="0"  name=business_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="법인 번호" border="0" color="0" x="9" y="440" height="56" width="384" html.valueishtml="0"  name=corp_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="대표자" border="0" color="0" x="9" y="524" height="56" width="384" html.valueishtml="0"  name=president_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="우편 번호" border="0" color="0" x="9" y="612" height="56" width="384" html.valueishtml="0"  name=postno_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="주 소" border="0" color="0" x="9" y="724" height="56" width="384" html.valueishtml="0"  name=cust_address_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="업 태" border="0" color="0" x="9" y="860" height="56" width="384" html.valueishtml="0"  name=uptae_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="업 종" border="0" color="0" x="9" y="944" height="56" width="384" html.valueishtml="0"  name=upjong_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="주종목" border="0" color="0" x="9" y="1032" height="56" width="384" html.valueishtml="0"  name=main_items_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="전 화" border="0" color="0" x="9" y="1116" height="56" width="384" html.valueishtml="0"  name=phoneno_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="팩 스" border="0" color="0" x="9" y="1200" height="56" width="384" html.valueishtml="0"  name=fax_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="담당자" border="0" color="0" x="9" y="1284" height="56" width="384" html.valueishtml="0"  name=charge_member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="이동 전화" border="0" color="0" x="9" y="1372" height="56" width="384" html.valueishtml="0"  name=cell_phoneno_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="은행지점" border="0" color="0" x="9" y="1452" height="56" width="384" html.valueishtml="0"  name=cust_bank_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="계 좌" border="0" color="0" x="9" y="1536" height="56" width="384" html.valueishtml="0"  name=acct_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="예금자" border="0" color="0" x="9" y="1620" height="56" width="384" html.valueishtml="0"  name=depositor_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="지불 조건" border="0" color="0" x="9" y="1700" height="56" width="384" html.valueishtml="0"  name=payment_gbn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="1" text="세금 구분" border="0" color="0" x="9" y="1784" height="56" width="384" html.valueishtml="0"  name=cust_tax_gbn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=50 border="0" color="0" x="411" y="356" height="64" width="608" format="[general]" html.valueishtml="0"  name=business_no visible="1" editmask.mask="###-##-#####" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=60 border="0" color="0" x="411" y="440" height="64" width="608" format="[general]" html.valueishtml="0"  name=corp_no visible="1" editmask.mask="######-#######" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="0" tabsequence=70 border="0" color="0" x="411" y="524" height="64" width="608" format="[general]" html.valueishtml="0"  name=president_name visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="0" tabsequence=80 border="0" color="0" x="411" y="608" height="64" width="503" format="@@@-@@@" html.valueishtml="0"  name=postno pointer="" visible="1" edit.limit=6 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="0" tabsequence=110 border="0" color="0" x="411" y="860" height="64" width="850" format="[general]" html.valueishtml="0"  name=uptae visible="1" edit.limit=30 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="0" tabsequence=130 border="0" color="0" x="411" y="1028" height="64" width="1486" format="[general]" html.valueishtml="0"  name=main_items visible="1" edit.limit=80 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="0" tabsequence=90 border="0" color="0" x="411" y="692" height="60" width="1486" format="[general]" html.valueishtml="0"  name=addr1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=100 border="0" color="0" x="411" y="772" height="60" width="1486" format="[general]" html.valueishtml="0"  name=addr2 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=21 alignment="1" tabsequence=210 border="0" color="0" x="411" y="1700" height="64" width="608" format="[general]" html.valueishtml="0"  name=payment_gbn pointer="HyperLink!" visible="1" dddw.name=dddw_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=200 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=yes dddw.case=any dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=22 alignment="1" tabsequence=220 border="0" color="0" x="411" y="1784" height="64" width="608" format="[general]" html.valueishtml="0"  name=cust_tax_gbn pointer="HyperLink!" visible="1" dddw.name=dddw_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=200 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=yes dddw.case=any dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+button(band=detail text="?" filename="" enabled=yes action="0" border="0" color="0" x="923" y="600" height="80" width="101" vtextalign="0" htextalign="0"  name=btn_post_no pointer="Help!" visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=20 alignment="0" tabsequence=200 border="0" color="0" x="411" y="1616" height="64" width="850" format="[general]" html.valueishtml="0"  name=depositor visible="1" edit.limit=40 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="0" tabsequence=120 border="0" color="0" x="411" y="944" height="64" width="850" format="[general]" html.valueishtml="0"  name=upjong visible="1" edit.limit=40 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="0" tabsequence=140 border="0" color="0" x="411" y="1112" height="64" width="850" format="[general]" html.valueishtml="0"  name=phoneno visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="0" tabsequence=150 border="0" color="0" x="411" y="1196" height="64" width="850" format="[general]" html.valueishtml="0"  name=fax visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=16 alignment="0" tabsequence=160 border="0" color="0" x="411" y="1280" height="64" width="850" format="[general]" html.valueishtml="0"  name=charge_member_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=17 alignment="0" tabsequence=170 border="0" color="0" x="411" y="1364" height="64" width="850" format="[general]" html.valueishtml="0"  name=cell_phoneno visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=18 alignment="0" tabsequence=180 border="0" color="0" x="407" y="1448" height="64" width="850" format="[general]" html.valueishtml="0"  name=bank_code visible="1" dddw.name=dddw_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=yes dddw.case=any dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=19 alignment="0" tabsequence=190 border="0" color="0" x="411" y="1532" height="64" width="850" format="[general]" html.valueishtml="0"  name=acct_no visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

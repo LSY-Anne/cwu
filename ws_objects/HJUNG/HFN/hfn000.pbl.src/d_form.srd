@@ -1,0 +1,122 @@
+﻿$PBExportHeader$d_form.srd
+$PBExportComments$재무코드의 계산을 위한 자료
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(6) update=yes updatewhereclause=yes key=yes name=form_code dbname="hac006m.form_code" )
+ column=(type=char(60) update=yes updatewhereclause=yes name=form_name dbname="hac006m.form_name" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=acct_class dbname="hac006m.acct_class" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=acct_code dbname="hac006m.acct_code" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=drcr_class dbname="hac006m.drcr_class" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=location dbname="hac006m.location" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=approp_yn dbname="hac006m.approp_yn" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=calc_class dbname="hac006m.calc_class" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=calc_sort dbname="hac006m.calc_sort" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=str_code dbname="hac006m.str_code" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=end_code dbname="hac006m.end_code" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=code1 dbname="hac006m.code1" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=op1 dbname="hac006m.op1" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=code2 dbname="hac006m.code2" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=op2 dbname="hac006m.op2" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=code3 dbname="hac006m.code3" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=op3 dbname="hac006m.op3" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=code4 dbname="hac006m.code4" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=op4 dbname="hac006m.op4" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=code5 dbname="hac006m.code5" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=sum_yn dbname="hac006m.sum_yn" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=used_gbn dbname="hac006m.used_gbn" )
+ column=(type=char(2) updatewhereclause=yes name=used_gbn_1 dbname="used_gbn_1" )
+ column=(type=char(2) updatewhereclause=yes name=used_gbn_2 dbname="used_gbn_2" )
+ column=(type=char(2) updatewhereclause=yes name=used_gbn_3 dbname="used_gbn_3" )
+ column=(type=char(2) updatewhereclause=yes name=used_gbn_4 dbname="used_gbn_4" )
+ column=(type=char(2) updatewhereclause=yes name=used_gbn_5 dbname="used_gbn_5" )
+ retrieve="SELECT	A.FORM_CODE,
+			A.FORM_NAME,
+			A.ACCT_CLASS,
+			A.ACCT_CODE,
+			A.DRCR_CLASS,
+			A.LOCATION,
+			A.APPROP_YN,
+			A.CALC_CLASS,
+			A.CALC_SORT,
+			A.STR_CODE,
+			A.END_CODE,
+			A.CODE1,
+			A.OP1,
+			A.CODE2,
+			A.OP2,
+			A.CODE3,
+			A.OP3,
+         A.CODE4,
+			A.OP4,
+			A.CODE5,
+			A.SUM_YN,
+			A.USED_GBN,
+         SUBSTR(A.USED_GBN,1,1)	USED_GBN_1,
+			SUBSTR(A.USED_GBN,2,1)	USED_GBN_2,
+			SUBSTR(A.USED_GBN,3,1)	USED_GBN_3,
+			SUBSTR(A.USED_GBN,4,1)	USED_GBN_4,
+			SUBSTR(A.USED_GBN,5,1)	USED_GBN_5
+FROM		ACDB.HAC006M A
+WHERE		SUBSTR(A.USED_GBN,:AI_USED_GBN,1) = '9'
+AND		A.ACCT_CLASS = :AI_ACCT_CLASS
+AND		A.CALC_CLASS = :AI_CALC_CLASS
+ORDER BY A.CALC_SORT, A.FORM_CODE" update="ACDB.HAC006M" updatewhere=1 updatekeyinplace=no arguments=(("ai_used_gbn", number),("ai_acct_class", number),("ai_calc_class", number)) )
+text(band=header alignment="2" text="재무코드" border="0" color="0" x="9" y="8" height="56" width="270" html.valueishtml="0"  name=form_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="재무명" border="0" color="0" x="288" y="8" height="56" width="224" html.valueishtml="0"  name=form_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="회계단위" border="0" color="0" x="521" y="8" height="56" width="261" html.valueishtml="0"  name=acct_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계정코드" border="0" color="0" x="791" y="8" height="56" width="270" html.valueishtml="0"  name=acct_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="차대구분" border="0" color="0" x="1070" y="8" height="56" width="256" html.valueishtml="0"  name=drcr_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="출력위치" border="0" color="0" x="1335" y="8" height="56" width="265" html.valueishtml="0"  name=location_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="충당금여부" border="0" color="0" x="1609" y="8" height="56" width="329" html.valueishtml="0"  name=approp_yn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계산구분" border="0" color="0" x="1947" y="8" height="56" width="274" html.valueishtml="0"  name=calc_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계산순서" border="0" color="0" x="2231" y="8" height="56" width="270" html.valueishtml="0"  name=calc_sort_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="시작계정" border="0" color="0" x="2510" y="8" height="56" width="256" html.valueishtml="0"  name=str_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="종료계정" border="0" color="0" x="2775" y="8" height="56" width="256" html.valueishtml="0"  name=end_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="코드1" border="0" color="0" x="3040" y="8" height="56" width="178" html.valueishtml="0"  name=code1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="연산자1" border="0" color="0" x="3227" y="8" height="56" width="224" html.valueishtml="0"  name=op1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="코드2" border="0" color="0" x="3461" y="8" height="56" width="178" html.valueishtml="0"  name=code2_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="연산자2" border="0" color="0" x="3648" y="8" height="56" width="242" html.valueishtml="0"  name=op2_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="코드3" border="0" color="0" x="3899" y="8" height="56" width="183" html.valueishtml="0"  name=code3_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="연산자3" border="0" color="0" x="4091" y="8" height="56" width="247" html.valueishtml="0"  name=op3_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="코드4" border="0" color="0" x="4347" y="8" height="56" width="165" html.valueishtml="0"  name=code4_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="연산자4" border="0" color="0" x="4521" y="8" height="56" width="242" html.valueishtml="0"  name=op4_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="코드5" border="0" color="0" x="4773" y="8" height="56" width="183" html.valueishtml="0"  name=code5_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="재무구분" border="0" color="0" x="4965" y="8" height="56" width="261" html.valueishtml="0"  name=sum_yn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="사용구분" border="0" color="0" x="5234" y="8" height="56" width="256" html.valueishtml="0"  name=used_gbn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=10 border="0" color="0" x="9" y="8" height="72" width="270" format="[general]" html.valueishtml="0"  name=form_code visible="1" edit.limit=6 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="0" color="0" x="288" y="8" height="72" width="224" format="[general]" html.valueishtml="0"  name=form_name visible="1" edit.limit=60 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="1" tabsequence=30 border="0" color="0" x="521" y="8" height="72" width="261" format="[general]" html.valueishtml="0"  name=acct_class visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=40 border="0" color="0" x="791" y="8" height="72" width="270" format="[general]" html.valueishtml="0"  name=acct_code visible="1" edit.limit=7 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=50 border="0" color="0" x="1070" y="8" height="72" width="256" format="[general]" html.valueishtml="0"  name=drcr_class visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="1" tabsequence=60 border="0" color="0" x="1335" y="8" height="72" width="265" format="[general]" html.valueishtml="0"  name=location visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="0" tabsequence=70 border="0" color="0" x="1609" y="8" height="72" width="329" format="[general]" html.valueishtml="0"  name=approp_yn visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="1" tabsequence=80 border="0" color="0" x="1947" y="8" height="72" width="274" format="[general]" html.valueishtml="0"  name=calc_class visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="1" tabsequence=90 border="0" color="0" x="2231" y="8" height="72" width="270" format="[general]" html.valueishtml="0"  name=calc_sort visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=100 border="0" color="0" x="2510" y="8" height="72" width="256" format="[general]" html.valueishtml="0"  name=str_code visible="1" edit.limit=7 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="0" tabsequence=110 border="0" color="0" x="2775" y="8" height="72" width="256" format="[general]" html.valueishtml="0"  name=end_code visible="1" edit.limit=7 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="0" tabsequence=120 border="0" color="0" x="3040" y="8" height="72" width="178" format="[general]" html.valueishtml="0"  name=code1 visible="1" edit.limit=7 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="0" tabsequence=130 border="0" color="0" x="3227" y="8" height="72" width="224" format="[general]" html.valueishtml="0"  name=op1 visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="0" tabsequence=140 border="0" color="0" x="3461" y="8" height="72" width="178" format="[general]" html.valueishtml="0"  name=code2 visible="1" edit.limit=7 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="0" tabsequence=150 border="0" color="0" x="3648" y="8" height="72" width="242" format="[general]" html.valueishtml="0"  name=op2 visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=16 alignment="0" tabsequence=160 border="0" color="0" x="3899" y="8" height="72" width="183" format="[general]" html.valueishtml="0"  name=code3 visible="1" edit.limit=7 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=17 alignment="0" tabsequence=170 border="0" color="0" x="4091" y="8" height="72" width="247" format="[general]" html.valueishtml="0"  name=op3 visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=18 alignment="0" tabsequence=180 border="0" color="0" x="4347" y="8" height="72" width="165" format="[general]" html.valueishtml="0"  name=code4 visible="1" edit.limit=7 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=19 alignment="0" tabsequence=190 border="0" color="0" x="4521" y="8" height="72" width="242" format="[general]" html.valueishtml="0"  name=op4 visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=20 alignment="0" tabsequence=200 border="0" color="0" x="4773" y="8" height="72" width="183" format="[general]" html.valueishtml="0"  name=code5 visible="1" edit.limit=7 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=21 alignment="0" tabsequence=210 border="0" color="0" x="4965" y="8" height="72" width="261" format="[general]" html.valueishtml="0"  name=sum_yn visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=22 alignment="0" tabsequence=220 border="0" color="0" x="5234" y="8" height="72" width="256" format="[general]" html.valueishtml="0"  name=used_gbn visible="1" edit.limit=5 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

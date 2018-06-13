@@ -1,0 +1,156 @@
+﻿$PBExportHeader$d_hac501a_1.srd
+$PBExportComments$배정예산 편성 등록
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=84 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(4) update=yes updatewhereclause=yes key=yes name=bdgt_year dbname="hac012m.bdgt_year" )
+ column=(type=char(4) update=yes updatewhereclause=yes key=yes name=gwa dbname="hac012m.gwa" )
+ column=(type=char(6) update=yes updatewhereclause=yes key=yes name=acct_code dbname="hac012m.acct_code" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=acct_class dbname="hac012m.acct_class" )
+ column=(type=char(1) update=yes updatewhereclause=yes key=yes name=io_gubun dbname="hac012m.io_gubun" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=assn_bdgt_amt dbname="hac012m.assn_bdgt_amt" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=assn_1st_amt dbname="assn_1st_amt" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=assn_2nd_amt dbname="assn_2nd_amt" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=assn_3rd_amt dbname="assn_3rd_amt" initial="0" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=assn_bdgt_date dbname="hac012m.assn_bdgt_date" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=assn_1st_date dbname="assn_1st_date" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=assn_2nd_date dbname="assn_2nd_date" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=assn_3rd_date dbname="assn_3rd_date" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=assn_used_amt dbname="hac012m.assn_used_amt" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=assn_temp_amt dbname="hac012m.assn_temp_amt" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=assn_real_amt dbname="hac012m.assn_real_amt" initial="0" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hac012m.work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hac012m.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hac012m.ipaddr" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hac012m.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hac012m.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hac012m.job_date" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=work_gbn dbname="hac012m.work_gbn" initial="I" values="균등분배	C1/가중치분배	C2/" )
+ column=(type=char(30) updatewhereclause=yes name=acct_name dbname="acct_name" )
+ column=(type=number updatewhereclause=yes name=remain_amt dbname="remain_amt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=assn_tran_amt dbname="hac012m.assn_tran_amt" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=assn_tran_date dbname="hac012m.assn_tran_date" )
+ retrieve="SELECT	A.BDGT_YEAR,
+			A.GWA,
+			A.ACCT_CODE,
+			A.ACCT_CLASS,
+			A.IO_GUBUN,
+			A.ASSN_BDGT_AMT,
+			A.ASSN_1ST_AMT,
+			A.ASSN_2ND_AMT,
+			A.ASSN_3RD_AMT,
+			A.ASSN_BDGT_DATE,
+			A.ASSN_1ST_DATE,
+			A.ASSN_2ND_DATE,
+			A.ASSN_3RD_DATE,
+			A.ASSN_USED_AMT,
+			A.ASSN_TEMP_AMT,
+			A.ASSN_REAL_AMT,
+			A.WORK_DATE,
+			A.WORKER,
+			A.IPADDR,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE,
+			A.WORK_GBN,
+			DECODE(A.IO_GUBUN,'1',B.ACCT_INAME,'2',B.ACCT_ONAME,B.ACCT_NAME)	ACCT_NAME,
+			NVL(A.ASSN_USED_AMT,0) - (NVL(A.ASSN_TEMP_AMT,0) + NVL(A.ASSN_REAL_AMT,0))	REMAIN_AMT,
+			A.ASSN_TRAN_AMT,
+			A.ASSN_TRAN_DATE
+FROM		ACDB.HAC012M A, ACDB.HAC001M B
+WHERE		A.ACCT_CODE 	= 		B.ACCT_CODE (+)
+AND		A.BDGT_YEAR 	= 		:AS_BDGT_YEAR
+AND		A.GWA 			LIKE 	:AS_GWA||'%'
+AND		A.ACCT_CLASS 	= 		:AI_ACCT_CLASS
+AND		A.IO_GUBUN 		= 		:AS_SLIP_CLASS
+ORDER BY	A.GWA, A.IO_GUBUN, A.ACCT_CODE" update="ACDB.HAC012M" updatewhere=0 updatekeyinplace=no arguments=(("as_bdgt_year", string),("as_gwa", string),("ai_acct_class", number),("as_slip_class", string)) )
+group(level=1 header.height=0 trailer.height=84 by=("gwa" ) header.color="536870912" trailer.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="581" format="[general]" html.valueishtml="0"  name=gwa visible="1" dddw.name=dddw_sosok501_group_opt1 dddw.displaycolumn=dept_name dddw.datacolumn=dept_code dddw.percentwidth=200 dddw.lines=10 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=10 border="0" color="0" x="599" y="4" height="72" width="256" format="[general]" html.valueishtml="0" protect="0~tif ( assn_temp_amt <> 0 or assn_real_amt <> 0 , 1, 0)"  name=acct_code visible="1" editmask.autoskip=yes editmask.mask="xxxx-xx" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( ( assn_temp_amt <> 0 or assn_real_amt <> 0 ) or getrow() <> currentrow(), 78682240, rgb ( 255, 255, 255 ) )" )
+column(band=detail id=6 alignment="1" tabsequence=20 border="0" color="0" x="1906" y="4" height="72" width="475" format="#,###" html.valueishtml="0" protect="0~t0
+ "  name=assn_bdgt_amt visible="1" editmask.mask="###,###,###,###"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() <> currentrow(), 78682240, rgb ( 255, 255, 255 ) )
+ 
+" )
+column(band=detail id=10 alignment="2" tabsequence=30 border="0" color="0" x="2391" y="4" height="72" width="352" format="[general]" html.valueishtml="0" protect="0~tif ( assn_temp_amt <> 0 or assn_real_amt <> 0 , 1, 0)"  name=assn_bdgt_date visible="1" editmask.autoskip=yes editmask.mask="####/##/##" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( ( assn_temp_amt <> 0 or assn_real_amt <> 0 ) or getrow() <> currentrow(), 78682240, rgb ( 255, 255, 255 ) )" )
+compute(band=detail alignment="2" expression="if ( work_gbn = 'C', '생성', '입력')"border="0" color="0" x="2752" y="4" height="72" width="165" format="[GENERAL]" html.valueishtml="0"  name=work_gbn_disp visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="1" tabsequence=40 border="0" color="0" x="2930" y="4" height="72" width="361" format="#,###" html.valueishtml="0" protect="0~t0
+ 
+"  name=assn_1st_amt visible="1" editmask.mask="###,###,###,###"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() <> currentrow(), 78682240, rgb ( 255, 255, 255 ) )
+ 
+" )
+column(band=detail id=11 alignment="2" tabsequence=50 border="0" color="0" x="3301" y="4" height="72" width="366" format="@@@@/@@/@@" html.valueishtml="0" protect="0~tif ( assn_temp_amt <> 0 or assn_real_amt <> 0 , 1, 0)"  name=assn_1st_date visible="1" edit.limit=8 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( ( assn_temp_amt <> 0 or assn_real_amt <> 0 ) or getrow() <> currentrow(), 78682240, rgb ( 255, 255, 255 ) )" )
+column(band=detail id=8 alignment="1" tabsequence=60 border="0" color="0" x="3680" y="4" height="72" width="357" format="#,###" html.valueishtml="0" protect="0~t0
+ 
+"  name=assn_2nd_amt visible="1" editmask.mask="###,###,###,###"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() <> currentrow(), 78682240, rgb ( 255, 255, 255 ) )
+ 
+" )
+column(band=detail id=12 alignment="2" tabsequence=70 border="0" color="0" x="4046" y="4" height="72" width="366" format="@@@@/@@/@@" html.valueishtml="0" protect="0~tif ( assn_temp_amt <> 0 or assn_real_amt <> 0 , 1, 0)"  name=assn_2nd_date visible="1" edit.limit=8 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( ( assn_temp_amt <> 0 or assn_real_amt <> 0 ) or getrow() <> currentrow(), 78682240, rgb ( 255, 255, 255 ) )" )
+column(band=detail id=13 alignment="2" tabsequence=90 border="0" color="0" x="4786" y="4" height="72" width="375" format="@@@@/@@/@@" html.valueishtml="0" protect="0~tif ( assn_temp_amt <> 0 or assn_real_amt <> 0 , 1, 0)"  name=assn_3rd_date visible="1" edit.limit=8 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( ( assn_temp_amt <> 0 or assn_real_amt <> 0 ) or getrow() <> currentrow(), 78682240, rgb ( 255, 255, 255 ) )" )
+column(band=detail id=9 alignment="1" tabsequence=80 border="0" color="0" x="4425" y="4" height="72" width="352" format="#,###" html.valueishtml="0" protect="0~t0
+ 
+"  name=assn_3rd_amt visible="1" editmask.mask="###,###,###,###"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() <> currentrow(), 78682240, rgb ( 255, 255, 255 ) )
+ 
+" )
+column(band=detail id=26 alignment="1" tabsequence=100 border="0" color="0" x="5175" y="4" height="72" width="407" format="#,###" html.valueishtml="0" protect="0~t0
+ 
+"  name=assn_tran_amt visible="1" editmask.mask="###,###,###,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() <> currentrow(), 78682240, rgb ( 255, 255, 255 ) )
+ 
+" )
+column(band=detail id=27 alignment="2" tabsequence=110 border="0" color="0" x="5591" y="4" height="72" width="379" format="@@@@/@@/@@" html.valueishtml="0" protect="0~tif ( assn_temp_amt <> 0 or assn_real_amt <> 0 , 1, 0)"  name=assn_tran_date visible="1" edit.limit=8 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( ( assn_temp_amt <> 0 or assn_real_amt <> 0 ) or getrow() <> currentrow(), 78682240, rgb ( 255, 255, 255 ) )" )
+column(band=detail id=14 alignment="1" tabsequence=32766 border="6" color="8388608" x="5979" y="4" height="72" width="480" format="#,##0" html.valueishtml="0"  name=assn_used_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="1" tabsequence=120 border="6" color="0" x="6469" y="4" height="72" width="416" format="[general]" html.valueishtml="0"  name=assn_temp_amt visible="1" editmask.autoskip=yes editmask.mask="###,###,###,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=16 alignment="1" tabsequence=130 border="6" color="0" x="6894" y="4" height="72" width="425" format="[general]" html.valueishtml="0"  name=assn_real_amt visible="1" editmask.autoskip=yes editmask.mask="###,###,###,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=25 alignment="1" tabsequence=32766 border="6" color="0" x="7328" y="4" height="72" width="462" format="#,###" html.valueishtml="0"  name=remain_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=24 alignment="0" tabsequence=32766 border="0" color="0" x="864" y="4" height="72" width="1029" format="[general]" html.valueishtml="0"  name=acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=trailer.1 alignment="2" text="부서별소계" border="0" color="0" x="9" y="12" height="56" width="581" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=trailer.1 alignment="1" expression="sum (  assn_bdgt_amt for group 1)"border="0" color="8388608" x="1902" y="16" height="60" width="480" format="#,##0" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=trailer.1 alignment="1" expression="sum ( assn_1st_amt for group 1)"border="0" color="8388608" x="2926" y="12" height="60" width="366" format="#,##0" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=trailer.1 alignment="1" expression="sum ( assn_2nd_amt for group 1)"border="0" color="8388608" x="3675" y="12" height="60" width="361" format="#,##0" html.valueishtml="0"  name=compute_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=trailer.1 alignment="1" expression="sum ( assn_used_amt for group 1)"border="0" color="8388608" x="5979" y="12" height="60" width="480" format="#,##0" html.valueishtml="0"  name=compute_5 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=trailer.1 alignment="1" expression="sum(assn_temp_amt for group 1)"border="0" color="8388608" x="6469" y="12" height="60" width="416" format="#,###" html.valueishtml="0"  name=compute_12 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=trailer.1 alignment="1" expression="sum(assn_real_amt for group 1)"border="0" color="8388608" x="6894" y="12" height="60" width="425" format="#,###" html.valueishtml="0"  name=compute_13 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=trailer.1 alignment="1" expression="sum( remain_amt for group 1 )"border="0" color="8388608" x="7328" y="12" height="60" width="462" format="#,###" html.valueishtml="0"  name=compute_17 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=trailer.1 alignment="1" expression="sum ( assn_3rd_amt for group 1)"border="0" color="8388608" x="4421" y="12" height="60" width="357" format="#,##0" html.valueishtml="0"  name=compute_4 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=trailer.1 alignment="1" expression="sum ( assn_tran_amt for group 1)"border="0" color="8388608" x="5170" y="12" height="60" width="411" format="#,##0" html.valueishtml="0"  name=compute_11 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=summary alignment="2" text="총  합  계" border="0" color="0" x="9" y="12" height="56" width="581" html.valueishtml="0"  name=t_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum ( assn_used_amt for all)"border="0" color="8388608" x="5979" y="12" height="60" width="480" format="#,##0" html.valueishtml="0"  name=compute_10 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum ( assn_1st_amt for all )"border="0" color="8388608" x="2926" y="12" height="60" width="366" format="#,##0" html.valueishtml="0"  name=compute_7 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum ( assn_2nd_amt for all )"border="0" color="8388608" x="3675" y="12" height="60" width="361" format="#,##0" html.valueishtml="0"  name=compute_8 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum (  assn_bdgt_amt for all )"border="0" color="8388608" x="1902" y="12" height="60" width="480" format="#,##0" html.valueishtml="0"  name=compute_6 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum(assn_temp_amt for all)"border="0" color="8388608" x="6469" y="12" height="60" width="416" format="#,###" html.valueishtml="0"  name=compute_14 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum(assn_real_amt for all)"border="0" color="8388608" x="6894" y="12" height="60" width="425" format="#,###" html.valueishtml="0"  name=compute_15 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum( remain_amt for all )"border="0" color="8388608" x="7328" y="12" height="60" width="462" format="#,###" html.valueishtml="0"  name=compute_18 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum ( assn_3rd_amt for all)"border="0" color="8388608" x="4421" y="12" height="60" width="357" format="#,##0" html.valueishtml="0"  name=compute_9 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum ( assn_tran_amt for all )"border="0" color="8388608" x="5170" y="12" height="60" width="411" format="#,##0" html.valueishtml="0"  name=compute_16 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="단위부서" border="0" color="0" x="9" y="12" height="56" width="581" html.valueishtml="0"  name=gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계정코드" border="0" color="0" x="599" y="12" height="56" width="256" html.valueishtml="0"  name=acct_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="배정예산금액" border="0" color="0" x="1902" y="12" height="56" width="480" html.valueishtml="0"  name=assn_bdgt_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="배정예산일" border="0" color="0" x="2391" y="12" height="56" width="352" html.valueishtml="0"  name=assn_bdgt_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="상태" border="0" color="0" x="2752" y="12" height="56" width="165" html.valueishtml="0"  name=work_gbn_disp_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="1차추경금액" border="0" color="0" x="2926" y="12" height="56" width="366" html.valueishtml="0"  name=assn_1st_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="1차추경일" border="0" color="0" x="3301" y="12" height="56" width="366" html.valueishtml="0"  name=assn_1st_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="2차추경금액" border="0" color="0" x="3675" y="12" height="56" width="361" html.valueishtml="0"  name=assn_2nd_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="2차추경일" border="0" color="0" x="4046" y="12" height="56" width="366" html.valueishtml="0"  name=assn_2nd_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="3차추경금액" border="0" color="0" x="4421" y="12" height="56" width="357" html.valueishtml="0"  name=assn_3rd_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="3차추경일" border="0" color="0" x="4786" y="12" height="56" width="375" html.valueishtml="0"  name=assn_3rd_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="전용금액" border="0" color="0" x="5170" y="12" height="56" width="411" html.valueishtml="0"  name=assn_tran_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="전용일자" border="0" color="0" x="5591" y="12" height="56" width="379" html.valueishtml="0"  name=assn_tran_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="합계금액" border="0" color="0" x="5979" y="12" height="56" width="480" html.valueishtml="0"  name=assn_used_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="가집행금액" border="0" color="0" x="6469" y="12" height="56" width="416" html.valueishtml="0"  name=assn_temp_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="집행금액" border="0" color="0" x="6894" y="12" height="56" width="425" html.valueishtml="0"  name=assn_real_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="잔액" border="0" color="0" x="7328" y="12" height="56" width="462" html.valueishtml="0"  name=remain_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계정코드명" border="0" color="0" x="864" y="12" height="56" width="1029" html.valueishtml="0"  name=acct_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+
+sparse(names="gwa")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

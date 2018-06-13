@@ -1,0 +1,58 @@
+﻿$PBExportHeader$dddw_padb001m_insa.srd
+$PBExportComments$급여마스타의 직종별 인사(직종범위STR(I), 직종범위END(I), 부서(S))
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes name=member_no dbname="hpa001m.member_no" )
+ column=(type=char(20) updatewhereclause=yes name=name dbname="hpa001m.name" )
+ column=(type=char(3) updatewhereclause=yes name=hpa001m_sal_class dbname="hpa001m.sal_class" )
+ column=(type=char(6) updatewhereclause=yes name=gwa dbname="hpa001m.gwa" )
+ column=(type=number updatewhereclause=yes name=jikjong_code dbname="hpa001m.jikjong_code" )
+ column=(type=char(3) updatewhereclause=yes name=duty_code dbname="hpa001m.duty_code" )
+ column=(type=char(50) updatewhereclause=yes name=dept_name dbname="hpa001m.dept_name" )
+ column=(type=char(40) updatewhereclause=yes name=v_hin003m_1_fname dbname="hpa001m.fname" )
+ column=(type=char(20) updatewhereclause=yes name=duty_name dbname="hpa001m.duty_name" )
+ column=(type=number updatewhereclause=yes name=jikwi_code dbname="jikwi_code" )
+ column=(type=number updatewhereclause=yes name=jikmu_code dbname="jikmu_code" )
+ column=(type=char(4) updatewhereclause=yes name=bojik_code1 dbname="bojik_code1" )
+ column=(type=char(13) updatewhereclause=yes name=jumin_no dbname="hpa001m.jumin_no" )
+ column=(type=char(33) updatewhereclause=yes name=member_name dbname="member_name" )
+ retrieve="
+	select	a.member_no, a.name, a.sal_class, a.gwa, a.jikjong_code, b.duty_code, 
+				c.fname as dept_name, b.fname, b.duty_name,
+				nvl(jikwi_code, '') jikwi_code, 
+				nvl(jikmu_code, '') jikmu_code, 
+				nvl(bojik_code, '') bojik_code1,
+				jumin_no,
+				a.member_no || '   ' || rtrim(a.name) as member_name
+	from		padb.hpa001m a, indb.v_hin003m_1 b, cddb.kch003m c
+	where		a.jaejik_opt			=		1
+	and		a.year_month			=		:as_yearmonth
+	and		a.jikjong_code 		>=		:ai_str_jikjong
+	and		a.jikjong_code			<=		:ai_end_jikjong
+	and		rtrim(a.gwa)	like	:as_gwa || '%'
+	and		rtrim(a.duty_code)	=		rtrim(b.duty_code	(+))
+	and		rtrim(a.gwa)	=		rtrim(c.gwa(+))
+	order by b.duty_code, a.member_no" arguments=(("as_yearmonth", string),("ai_str_jikjong", number),("ai_end_jikjong", number),("as_gwa", string)) )
+text(band=header alignment="2" text="개인번호" border="0" color="0" x="9" y="12" height="56" width="274" html.valueishtml="0"  name=member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="성  명" border="0" color="0" x="293" y="12" height="56" width="480" html.valueishtml="0"  name=name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="행정부서/학과명" border="0" color="0" x="782" y="12" height="56" width="663" html.valueishtml="0"  name=dept_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직급명" border="0" color="0" x="1454" y="12" height="56" width="416" html.valueishtml="0"  name=duty_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="274" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="293" y="4" height="72" width="480" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="782" y="4" height="72" width="663" format="[general]" html.valueishtml="0"  name=dept_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="1454" y="4" height="72" width="416" format="[general]" html.valueishtml="0"  name=duty_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

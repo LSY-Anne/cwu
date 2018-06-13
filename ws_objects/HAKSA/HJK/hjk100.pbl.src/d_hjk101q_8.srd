@@ -1,0 +1,100 @@
+﻿$PBExportHeader$d_hjk101q_8.srd
+$PBExportComments$[청운대]졸업생학기별성적이력조회
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=88 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912~tif(  jolup_sugang_hwansan_jumsu = 'W', RGB(150,150,150),  RGB(255,255,255))" )
+table(column=(type=char(10) updatewhereclause=yes name=jolup_sugang_hakbun dbname="jolup_sugang.hakbun" )
+ column=(type=char(4) updatewhereclause=yes name=jolup_sugang_year dbname="jolup_sugang.year" )
+ column=(type=char(1) updatewhereclause=yes name=jolup_sugang_hakyun dbname="jolup_sugang.hakyun" )
+ column=(type=char(1) updatewhereclause=yes name=jolup_sugang_hakgi dbname="jolup_sugang.hakgi" )
+ column=(type=char(4) updatewhereclause=yes name=jolup_sugang_gwa dbname="jolup_sugang.gwa" )
+ column=(type=char(2) updatewhereclause=yes name=jolup_sugang_isu_id dbname="jolup_sugang.isu_id" )
+ column=(type=decimal(0) updatewhereclause=yes name=jolup_sugang_hakjum dbname="jolup_sugang.hakjum" )
+ column=(type=decimal(1) updatewhereclause=yes name=jolup_sugang_jumsu_1 dbname="jolup_sugang.jumsu_1" )
+ column=(type=decimal(1) updatewhereclause=yes name=jolup_sugang_jumsu_2 dbname="jolup_sugang.jumsu_2" )
+ column=(type=decimal(1) updatewhereclause=yes name=jolup_sugang_jumsu_3 dbname="jolup_sugang.jumsu_3" )
+ column=(type=decimal(1) updatewhereclause=yes name=jolup_sugang_jumsu_4 dbname="jolup_sugang.jumsu_4" )
+ column=(type=decimal(1) updatewhereclause=yes name=jolup_sugang_jumsu_5 dbname="jolup_sugang.jumsu_5" )
+ column=(type=decimal(1) updatewhereclause=yes name=jolup_sugang_jumsu dbname="jolup_sugang.jumsu" )
+ column=(type=char(2) updatewhereclause=yes name=jolup_sugang_hwansan_jumsu dbname="jolup_sugang.hwansan_jumsu" )
+ column=(type=decimal(1) updatewhereclause=yes name=jolup_sugang_pyengjum dbname="jolup_sugang.pyengjum" )
+ column=(type=char(1) updatewhereclause=yes name=jolup_sugang_sungjuk_injung dbname="jolup_sugang.sungjuk_injung" values="이수	Y/미이수	N/" )
+ column=(type=char(4) updatewhereclause=yes name=jolup_sugang_jesu_year dbname="jolup_sugang.jesu_year" )
+ column=(type=char(1) updatewhereclause=yes name=jolup_sugang_jesu_hakgi dbname="jolup_sugang.jesu_hakgi" )
+ column=(type=char(7) updatewhereclause=yes name=jolup_sugang_jesu_gwamok_id dbname="jolup_sugang.jesu_gwamok_id" )
+ column=(type=decimal(0) updatewhereclause=yes name=jolup_sugang_jesu_gwamok_seq dbname="jolup_sugang.jesu_gwamok_seq" )
+ column=(type=char(7) updatewhereclause=yes name=jolup_sugang_gwamok_id dbname="jolup_sugang.gwamok_id" )
+ column=(type=char(48) updatewhereclause=yes name=haksu_no dbname="haksu_no" )
+ retrieve="SELECT 	A.HAKBUN,
+			A.YEAR,
+			A.HAKYUN,
+			A.HAKGI,
+			A.GWA,
+			A.ISU_ID,
+			A.HAKJUM,
+			A.JUMSU_1,
+			A.JUMSU_2,
+			A.JUMSU_3,
+			A.JUMSU_4,
+			A.JUMSU_5,
+			A.JUMSU,
+			A.HWANSAN_JUMSU,
+			A.PYENGJUM,
+			A.SUNGJUK_INJUNG,
+			A.JESU_YEAR,
+			A.JESU_HAKGI,
+			A.JESU_GWAMOK_ID,
+			A.JESU_GWAMOK_SEQ,
+			A.GWAMOK_ID,
+			(A.GWAMOK_ID ||'-'|| A.GWAMOK_SEQ) HAKSU_NO
+FROM 		HAKSA.JOLUP_SUGANG A
+WHERE  	( A.HAKBUN 	= :as_hakbun	)
+AND  		( A.YEAR 	= :as_year		)
+AND  		( A.HAKGI 	= :as_hakgi 	)
+" arguments=(("as_hakbun", string),("as_year", string),("as_hakgi", string))  sort="jolup_sugang_isu_id A jolup_sugang_gwamok_id A " )
+text(band=header alignment="2" text="년도" border="0" color="25058105" x="0" y="4" height="80" width="178" html.valueishtml="0"  name=jolup_sugang_year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="학기" border="0" color="25058105" x="187" y="4" height="80" width="146" html.valueishtml="0"  name=jolup_sugang_hakgi_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="학년" border="0" color="25058105" x="343" y="4" height="80" width="146" html.valueishtml="0"  name=jolup_sugang_hakyun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="학과" border="0" color="25058105" x="498" y="4" height="80" width="270" html.valueishtml="0"  name=jolup_sugang_gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="과목명" border="0" color="25058105" x="777" y="4" height="80" width="713" html.valueishtml="0"  name=jolup_sugang_gwamok_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="과목코드" border="0" color="25058105" x="1499" y="4" height="80" width="334" html.valueishtml="0"  name=haksu_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="구분" border="0" color="25058105" x="1842" y="4" height="80" width="261" html.valueishtml="0"  name=jolup_sugang_isu_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="학점" border="0" color="25058105" x="2112" y="4" height="80" width="165" html.valueishtml="0"  name=jolup_sugang_hakjum_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="점수" border="0" color="25058105" x="2286" y="4" height="80" width="165" html.valueishtml="0"  name=jolup_sugang_jumsu_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="환산점수" border="0" color="25058105" x="2459" y="4" height="80" width="261" html.valueishtml="0"  name=jolup_sugang_hwansan_jumsu_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="평점" border="0" color="25058105" x="2729" y="4" height="80" width="169" html.valueishtml="0"  name=jolup_sugang_pyengjum_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="재수강학기" border="0" color="25058105" x="3502" y="4" height="80" width="343" html.valueishtml="0"  name=jolup_sugang_jesu_hakgi_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="이수여부" border="0" color="25058105" x="2907" y="4" height="80" width="265" html.valueishtml="0"  name=jolup_sugang_sungjuk_injung_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="재수강년도" border="0" color="25058105" x="3173" y="4" height="80" width="320" html.valueishtml="0"  name=jolup_sugang_jesu_year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="재수강과목" border="0" color="25058105" x="3854" y="4" height="80" width="512" html.valueishtml="0"  name=jolup_sugang_jesu_gwamok_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="과목순번" border="0" color="25058105" x="4375" y="4" height="80" width="265" html.valueishtml="0"  name=jolup_sugang_jesu_gwamok_seq_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="24276589" x="0" y="4" height="76" width="178" format="[general]" html.valueishtml="0"  name=jolup_sugang_year visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="24276589" x="187" y="4" height="76" width="146" format="[general]" html.valueishtml="0"  name=jolup_sugang_hakgi visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="24276589" x="343" y="4" height="76" width="146" format="[general]" html.valueishtml="0"  name=jolup_sugang_hakyun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="24276589" x="498" y="4" height="76" width="270" format="[general]" html.valueishtml="0"  name=jolup_sugang_gwa visible="1" dddw.name=d_dddw_shorthakgwa dddw.displaycolumn=sname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=21 alignment="0" tabsequence=32766 border="0" color="24276589" x="777" y="4" height="76" width="713" format="[general]" html.valueishtml="0"  name=jolup_sugang_gwamok_id visible="1" dddw.name=d_dddw_gwamokcode dddw.displaycolumn=gwamok_hname dddw.datacolumn=gwamok_id dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=22 alignment="2" tabsequence=32766 border="0" color="24276589" x="1499" y="4" height="76" width="334" format="[general]" html.valueishtml="0"  name=haksu_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="24276589" x="1842" y="4" height="76" width="261" format="[general]" html.valueishtml="0"  name=jolup_sugang_isu_id visible="1" dddw.name=d_dddw_isucode dddw.displaycolumn=isu_name dddw.datacolumn=isu_id dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="24276589" x="2112" y="4" height="76" width="165" format="[general]" html.valueishtml="0"  name=jolup_sugang_hakjum visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="2" tabsequence=32766 border="0" color="24276589" x="2286" y="4" height="76" width="165" format="[general]" html.valueishtml="0"  name=jolup_sugang_jumsu visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="2" tabsequence=32766 border="0" color="24276589" x="2459" y="4" height="76" width="261" format="[general]" html.valueishtml="0"  name=jolup_sugang_hwansan_jumsu visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="2" tabsequence=32766 border="0" color="24276589" x="2729" y="4" height="76" width="169" format="[general]" html.valueishtml="0"  name=jolup_sugang_pyengjum visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=18 alignment="2" tabsequence=32766 border="0" color="24276589" x="3502" y="4" height="76" width="343" format="[general]" html.valueishtml="0"  name=jolup_sugang_jesu_hakgi visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=16 alignment="2" tabsequence=32766 border="0" color="24276589" x="2907" y="4" height="76" width="265" format="[general]" html.valueishtml="0"  name=jolup_sugang_sungjuk_injung visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="24276589" x="3173" y="4" height="76" width="320" format="[general]" html.valueishtml="0"  name=jolup_sugang_jesu_year visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=19 alignment="0" tabsequence=32766 border="0" color="24276589" x="3854" y="4" height="76" width="512" format="[general]" html.valueishtml="0"  name=jolup_sugang_jesu_gwamok_id visible="1" dddw.name=d_dddw_gwamokcode dddw.displaycolumn=gwamok_hname dddw.datacolumn=gwamok_id dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=20 alignment="2" tabsequence=32766 border="0" color="24276589" x="4375" y="4" height="76" width="265" format="[general]" html.valueishtml="0"  name=jolup_sugang_jesu_gwamok_seq visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

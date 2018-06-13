@@ -1,0 +1,43 @@
+﻿$PBExportHeader$d_post_fnamelike.srd
+$PBExportComments$우편번호 리스트를 조회한다.
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=char(5) updatewhereclause=yes name=seq dbname="zipcodes.seq" )
+ column=(type=char(6) updatewhereclause=yes name=post dbname="zipcodes.post" )
+ column=(type=char(153) updatewhereclause=yes name=fjuso dbname="fjuso" )
+ column=(type=char(30) updatewhereclause=yes name=juso2 dbname="zipcodes.juso2" )
+ column=(type=char(20) updatewhereclause=yes name=juso1 dbname="zipcodes.juso1" )
+ column=(type=char(70) updatewhereclause=yes name=juso3 dbname="zipcodes.juso3" )
+ retrieve="SELECT a.SERIAL seq,   
+		 A.ZIP_ID post,   
+		 A.ZIP_NAME1||' '||A.ZIP_NAME2||' '||A.ZIP_NAME3||' '||A.ZIP_NAME4 fjuso,   
+		 A.ZIP_NAME2 juso2, 
+		 A.ZIP_NAME1 juso1, 
+		 A.ZIP_NAME3 juso3
+   FROM   HAKSA.ZIPCODES a
+	where  a.ZIP_NAME3 like :as_Likefname
+order by  a.SERIAL 
+" arguments=(("as_Likefname", string)) )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="2" color="0" x="270" y="0" height="76" width="1440" format="[general]" html.valueishtml="0"  name=fjuso visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="1719" y="0" height="76" width="247" format="[general]" html.valueishtml="0"  name=seq visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="0" height="76" width="251" format="[general]" html.valueishtml="0"  name=post visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1975" y="0" height="76" width="535" format="[general]" html.valueishtml="0"  name=juso2 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="시/군/구" border="0" color="0" x="1975" y="4" height="56" width="535" html.valueishtml="0"  name=t_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="주소" border="0" color="0" x="270" y="4" height="56" width="1440" html.valueishtml="0"  name=t_7 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="순번" border="0" color="0" x="1719" y="4" height="56" width="247" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="우편번호" border="0" color="0" x="9" y="4" height="56" width="251" html.valueishtml="0"  name=t_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

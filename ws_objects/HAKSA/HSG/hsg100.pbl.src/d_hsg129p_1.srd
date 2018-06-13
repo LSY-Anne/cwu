@@ -1,0 +1,90 @@
+﻿$PBExportHeader$d_hsg129p_1.srd
+$PBExportComments$년도별 상담실적
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=4 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no  crosstab.dynamic = yes grid.lines=0 grid.columnmove=no selected.mouse=no )
+header[1](height=76 color="32299726" )
+header[2](height=76 color="32299726" )
+header[3](height=76 color="32299726" )
+summary(height=80 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(20) updatewhereclause=yes name=sum140tl_gwa_nm dbname="sum140tl_gwa_nm" )
+ column=(type=char(20) updatewhereclause=yes name=hin001m_name dbname="hin001m_name" )
+ column=(type=number updatewhereclause=yes name=cnt dbname="cnt" )
+ retrieve="select a.fname, b.year as yr, c.name , b.gwa_nm,count(*) as cnt
+from cddb.kch102d a,
+haksa.sum140tl b,
+indb.hin001m c 
+where a.code_gb = 'HSG01' and
+a.code in ('1','2') and
+b.year  in  (SELECT to_char(:AS_YEAR - (ROWNUM - 1)) AS YEAR FROM INDB.HIN001M 
+WHERE ROWNUM <= 7)  and
+c.member_no = trim(b.counseller)
+and b.hakgi = a.code  
+and (:as_counsel_tp = '%' or b.counsel_tp = :as_counsel_tp)
+and c.name is not null
+and b.gwa_nm is not null
+group by a.fname,b.year, c.name, b.gwa_nm
+union all
+SELECT B.FNAME, A.YEAR ,  t.name as name, t.gwa_nm as gwa_nm, 0 CNT 
+FROM (SELECT to_char(:AS_YEAR - (ROWNUM - 1)) AS YEAR FROM INDB.HIN001M 
+WHERE ROWNUM <= 7) A, cddb.kch102d B,
+(select  c.name , b.gwa_nm
+from cddb.kch102d a,
+haksa.sum140tl b,
+indb.hin001m c 
+where a.code_gb = 'HSG01' and
+a.code in ('1','2') and
+b.year  in  (SELECT to_char(:AS_YEAR - (ROWNUM - 1)) AS YEAR FROM INDB.HIN001M 
+WHERE ROWNUM <= 7)  and
+c.member_no = trim(b.counseller)
+and b.hakgi = a.code  
+and (:as_counsel_tp = '%' or b.counsel_tp = :as_counsel_tp)
+and c.name is not null
+and b.gwa_nm is not null
+and rownum = 1
+group by  c.name, b.gwa_nm 
+having count(*) > 0 ) t
+WHERE B.CODE_GB = 'HSG01'
+AND B.CODE IN ('1','2')
+union all
+select a.fname,'학과별합계' as yr, c.name , b.gwa_nm,count(*) as cnt
+from cddb.kch102d a,
+haksa.sum140tl b,
+indb.hin001m c 
+where a.code_gb = 'HSG01' and
+a.code in ('1','2') and
+b.year  in  (SELECT to_char(:AS_YEAR - (ROWNUM - 1)) AS YEAR FROM INDB.HIN001M 
+WHERE ROWNUM <= 7)  and
+c.member_no = trim(b.counseller)
+and b.hakgi = a.code
+and (:as_counsel_tp = '%' or b.counsel_tp = :as_counsel_tp)
+and c.name is not null
+and b.gwa_nm is not null
+group by a.fname,b.year, c.name, b.gwa_nm" arguments=(("as_year", string),("as_counsel_tp", string))  sort="sum140tl_gwa_nm A hin001m_name A " )
+group(level=1 header.height=0 trailer.height=0 by=("sum140tl_gwa_nm" ) header.color="536870912" trailer.color="536870912" )
+text(band=header[1] alignment="2" text="상담실적" border="0" color="33554432" x="1221" y="4" height="56" width="261" html.valueishtml="0"  name=t_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header[2] alignment="2" text="@sum140tl_yr" border="0" color="33554432" x="1221" y="4" height="56" width="261" html.valueishtml="0"  name=t_4 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header[3] alignment="2" text="학과명" border="0" color="33554432" x="9" y="4" height="56" width="919" html.valueishtml="0"  name=sum140tl_gwa_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header[3] alignment="2" text="교수명" border="0" color="33554432" x="937" y="4" height="56" width="274" html.valueishtml="0"  name=hin001m_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header[3] alignment="2" text="@kch102d_fname" border="0" color="33554432" x="1221" y="4" height="56" width="261" html.valueishtml="0"  name=cnt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="33554432" x="9" y="4" height="68~tif( grand_sum_cnt = 0 , 0, 68)" width="919" format="[general]" html.valueishtml="0"  name=sum140tl_gwa_nm visible="1" height.autosize=yes edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="937" y="4" height="68~tif( grand_sum_cnt = 0 , 0, 68)" width="274" format="[general]" html.valueishtml="0"  name=hin001m_name visible="1" height.autosize=yes edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="33554432" x="1225" y="4" height="68~tif( grand_sum_cnt = 0 , 0, 68)" width="256" format="[general]" html.valueishtml="0"  name=cnt visible="1" height.autosize=yes editmask.mask="###,##0" editmask.focusrectangle=no crosstab.repeat=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="2" expression="sum140tl_gwa_nm + ~"소계~""border="0" color="16711680" x="9" y="4" height="68" width="919" format="[general]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="2" expression="sum(cnt for group 1)"border="0" color="16711680" x="1221" y="4" height="68" width="261" format="[general]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="~"총계~""border="0" color="33554432" x="9" y="4" height="68" width="919" format="[general]" html.valueishtml="0"  name=compute_5 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(cnt for all )"border="0" color="33554432" x="1221" y="4" height="68" width="261" format="[general]" html.valueishtml="0"  name=compute_6 visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+ crosstab(band = foreground  crosstabonly = yes 
+ columns = "sum140tl_yr, kch102d_fname" rows = "sum140tl_gwa_nm, hin001m_name" values = "sum(cnt for crosstab)" sourcenames = "kch102d_fname, sum140tl_yr, hin001m_name, sum140tl_gwa_nm, cnt")
+sparse(names="sum140tl_gwa_nm")htmltable(border="0" cellpadding="1" cellspacing="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,82 @@
+﻿$PBExportHeader$d_hyk206a_10.srd
+$PBExportComments$기타업적 평가자료 등록
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 2 print.margin.left = 174 print.margin.right = 174 print.margin.top = 376 print.margin.bottom = 228 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=572 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=724 color="536870912" )
+detail(height=120 color="536870912" )
+table(column=(type=char(100) updatewhereclause=yes name=prize_nm dbname="hyk205t.prize_nm" dbalias="A.prize_nm" )
+ column=(type=char(8) updatewhereclause=yes name=grant_dt dbname="hyk205t.grant_dt" dbalias="A.grant_dt" )
+ column=(type=char(100) updatewhereclause=yes name=grant_org dbname="hyk205t.grant_org" dbalias="A.grant_org" )
+ column=(type=char(100) updatewhereclause=yes name=prize_memo dbname="hyk205t.prize_memo" dbalias="A.prize_memo" )
+ column=(type=char(100) updatewhereclause=yes name=remark dbname="hyk205t.remark" dbalias="A.remark" )
+ column=(type=char(40) updatewhereclause=yes name=name dbname="hin001m.name" dbalias="B.name" )
+ column=(type=char(50) updatewhereclause=yes name=gwa dbname="gwa" )
+ column=(type=char(60) updatewhereclause=yes name=jikwi_code dbname="jikwi_code" )
+ retrieve="SELECT A.PRIZE_NM
+      ,A.GRANT_DT
+      ,A.GRANT_ORG
+      ,A.PRIZE_MEMO
+      ,A.REMARK
+      ,B.NAME
+      ,(SELECT FNAME FROM CDDB.KCH003M WHERE GWA = B.GWA) AS GWA
+	  ,(SELECT FNAME FROM CDDB.KCH102D WHERE CODE = B.JIKWI_CODE AND CODE_GB = 'jikwi_code') AS JIKWI_CODE
+FROM YGDB.HYK205T A
+         ,INDB.HIN001M B
+WHERE A.EVL_YM = :as_evl_ym
+    AND A.MEMBER_NO = :as_member_no
+	AND A.EVL_AREA = '9'
+	AND A.MEMBER_NO = B.MEMBER_NO" arguments=(("as_evl_ym", string),("as_member_no", string)) )
+text(band=header alignment="2" text="(별지서식 제5호)" border="0" color="0" x="0" y="0" height="56" width="439" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="IV. 기타업적 평가자료" border="0" color="0" x="50" y="108" height="96" width="3387" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-16" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="1. 포상관계" border="0" color="0" x="5" y="372" height="56" width="302" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="명칭" border="0" color="33554432" x="32" y="492" height="56" width="576" html.valueishtml="0"  name=prize_nm_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="수여일자" border="0" color="33554432" x="608" y="492" height="56" width="453" html.valueishtml="0"  name=grant_dt_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="수여기관" border="0" color="33554432" x="1070" y="496" height="56" width="722" html.valueishtml="0"  name=grant_org_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="( 평가기간 :               년        월  ~~              년        월 )" border="0" color="0" x="50" y="232" height="56" width="3387" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=footer alignment="2" text="교원업적평가(기타부문)를 위하여 상기의 자료를 증빙자료와 함께 제출합니다." border="0" color="33554432" x="0" y="44" height="56" width="3278" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=footer alignment="2" expression="gf_sys_datetime()"border="0" color="0" x="0" y="312" height="52" width="3278" format="YYYY년  mm월  dd일" html.valueishtml="0"  name=compute_9 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=footer alignment="2" text="제출자" border="0" color="33554432" x="37" y="632" height="56" width="265" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+rectangle(band=footer x="23" y="600" height="120" width="288"  name=r_6 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="0" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="33554432" x="1070" y="36" height="56" width="722" format="[general]" html.valueishtml="0"  name=grant_org visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="33554432" x="23" y="36" height="56" width="576" format="[general]" html.valueishtml="0"  name=prize_nm visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="608" y="36" height="56" width="453" format="[general]" html.valueishtml="0"  name=grant_dt visible="1" editmask.mask="####/##/##" editmask.focusrectangle=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+rectangle(band=header x="23" y="452" height="120" width="581"  name=r_1 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+rectangle(band=header x="599" y="452" height="120" width="471"  name=r_2 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+rectangle(band=header x="1065" y="452" height="120" width="736"  name=r_3 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+line(band=detail x1="23" y1="0" x2="23" y2="120"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="599" y1="0" x2="599" y2="120"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="1065" y1="0" x2="1065" y2="120"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="1797" y1="0" x2="1797" y2="120"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+text(band=header alignment="2" text="비고" border="0" color="33554432" x="2757" y="496" height="56" width="498" html.valueishtml="0"  name=remark_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="33554432" x="2757" y="36" height="56" width="498" format="[general]" html.valueishtml="0"  name=remark visible="0" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+rectangle(band=header x="2752" y="452" height="120" width="517"  name=r_5 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+line(band=detail x1="2752" y1="0" x2="2752" y2="120"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="3264" y1="0" x2="3264" y2="120"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+text(band=header alignment="2" text="포상내용" border="0" color="33554432" x="1801" y="492" height="56" width="946" html.valueishtml="0"  name=prize_memo_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="1801" y="36" height="56" width="946" format="[general]" html.valueishtml="0"  name=prize_memo visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="23" y1="116" x2="3269" y2="116"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+rectangle(band=header x="1797" y="452" height="120" width="960"  name=r_4 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="1" background.color="553648127" )
+rectangle(band=footer x="306" y="600" height="120" width="1097"  name=r_7 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="0" )
+column(band=footer id=7 alignment="2" tabsequence=32766 border="0" color="33554432" x="320" y="632" height="56" width="1079" format="[general]" html.valueishtml="0"  name=gwa visible="1" dddw.name=d_dddw_hakgwa dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.autoretrieve=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+rectangle(band=footer x="1682" y="600" height="120" width="603"  name=r_9 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="0" )
+text(band=footer alignment="2" text="성명" border="0" color="33554432" x="2299" y="632" height="56" width="251" html.valueishtml="0"  name=t_10 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+rectangle(band=footer x="2281" y="600" height="120" width="288"  name=r_10 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="0" )
+rectangle(band=footer x="1399" y="600" height="120" width="288"  name=r_8 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="0" )
+text(band=footer alignment="2" text="직위" border="0" color="33554432" x="1413" y="632" height="56" width="261" html.valueishtml="0"  name=t_9 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=footer id=8 alignment="2" tabsequence=32766 border="0" color="33554432" x="1691" y="632" height="56" width="585" format="[general]" html.valueishtml="0"  name=jikwi_code visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+rectangle(band=footer x="2565" y="600" height="120" width="704"  name=r_11 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="33554432"  background.mode="2" background.color="0" )
+text(band=footer alignment="2" text="(인)" border="0" color="33554432" x="3150" y="632" height="56" width="96" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=footer id=6 alignment="2" tabsequence=32766 border="0" color="33554432" x="2610" y="632" height="56" width="544" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

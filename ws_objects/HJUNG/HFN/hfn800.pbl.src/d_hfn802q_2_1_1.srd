@@ -1,0 +1,32 @@
+﻿$PBExportHeader$d_hfn802q_2_1_1.srd
+$PBExportComments$세금계산서내역(new)...sub report
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=76 color="536870912" )
+table(column=(type=char(8) updatewhereclause=yes name=hfn201m_acct_date dbname="hfn201m.acct_date" )
+ column=(type=number updatewhereclause=yes name=hfn201m_acct_no dbname="hfn201m.acct_no" )
+ column=(type=char(6) updatewhereclause=yes name=hfn202m_acct_code dbname="hfn201m.acct_code" )
+ retrieve="select  	distinct a.acct_date, a.acct_no, b.acct_code
+from 		fndb.hfn201m a, fndb.hfn202m b
+where   	a.acct_class    = b.acct_class
+and     	a.slip_date     = b.slip_date
+and     	a.slip_no       = b.slip_no
+and     	b.resol_date||b.resol_no||b.resol_seq = :resol_no||:resol_seq
+" arguments=(("resol_no", string),("resol_seq", number)) )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="699" y="12" height="56" width="352" format="[general]" html.valueishtml="0"  name=hfn202m_acct_code visible="1" edit.limit=6 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="9" y="12" height="56" width="288" format="@@@@/@@/@@" html.valueishtml="0"  name=hfn201m_acct_date visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="33554432" x="306" y="12" height="56" width="384" format="[general]" html.valueishtml="0"  name=hfn201m_acct_no visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,68 @@
+﻿$PBExportHeader$d_hfn308q_11.srd
+$PBExportComments$전표 조회 - 전표Master 조회
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=84 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=decimal(0) updatewhereclause=yes name=acct_class dbname="hfn201m.acct_class" )
+ column=(type=char(8) updatewhereclause=yes name=slip_date dbname="hfn201m.slip_date" )
+ column=(type=number updatewhereclause=yes name=slip_no dbname="hfn201m.slip_no" )
+ column=(type=decimal(0) updatewhereclause=yes name=slip_class dbname="hfn201m.slip_class" values="수입	1/지출	2/대체	3/" )
+ column=(type=char(100) updatewhereclause=yes name=remark dbname="hfn201m.remark" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=step_opt dbname="hfn201m.step_opt" )
+ column=(type=char(4) updatewhereclause=yes name=slip_gwa dbname="hfn201m.slip_gwa" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=acct_date dbname="hfn201m.acct_date" )
+ column=(type=char(4) updatewhereclause=yes name=bdgt_year dbname="hfn201m.bdgt_year" )
+ column=(type=number updatewhereclause=yes name=dr_amt dbname="dr_amt" )
+ retrieve="SELECT	DISTINCT
+			A.ACCT_CLASS,
+			A.SLIP_DATE,
+			A.SLIP_NO,
+			A.SLIP_CLASS,
+			A.REMARK,
+			A.STEP_OPT,
+			A.SLIP_GWA,
+			A.ACCT_DATE,
+			A.BDGT_YEAR,
+			(	SELECT	NVL(SUM(B.SLIP_AMT),0)
+				FROM		FNDB.HFN202M B
+				WHERE		A.ACCT_CLASS = B.ACCT_CLASS
+				AND		A.SLIP_DATE  = B.SLIP_DATE
+				AND		A.SLIP_NO    = B.SLIP_NO
+				AND		B.DRCR_CLASS = 'D'	)	DR_AMT
+FROM		FNDB.HFN201M A, FNDB.HFN202M C
+WHERE		A.ACCT_CLASS = C.ACCT_CLASS
+AND		A.SLIP_DATE  = C.SLIP_DATE
+AND		A.SLIP_NO    = C.SLIP_NO
+AND		A.ACCT_CLASS = :AI_ACCT_CLASS
+AND		A.SLIP_DATE BETWEEN :AS_FROM_DATE AND :AS_TO_DATE
+AND		SUBSTR(C.ACCT_CODE,1,4) LIKE :AS_ACCT_CODE
+ORDER BY A.SLIP_DATE, A.SLIP_NO" arguments=(("ai_acct_class", number),("ai_slip_class", number),("as_from_date", string),("as_to_date", string),("ai_step_opt", number),("as_acct_code", string)) )
+text(band=header alignment="2" text="적    요" border="0" color="0" x="1797" y="12" height="56" width="1573" html.valueishtml="0"  name=remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="전표금액" border="0" color="0" x="1317" y="12" height="56" width="471" html.valueishtml="0"  name=dr_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="구분" border="0" color="0" x="9" y="12" height="56" width="123" html.valueishtml="0"  name=slip_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="전표일자" border="0" color="0" x="142" y="12" height="56" width="352" html.valueishtml="0"  name=slip_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="번호" border="0" color="0" x="503" y="12" height="56" width="155" html.valueishtml="0"  name=slip_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="회계일자" border="0" color="0" x="667" y="12" height="56" width="357" html.valueishtml="0"  name=acct_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="전표부서" border="0" color="0" x="1033" y="12" height="56" width="274" html.valueishtml="0"  name=slip_gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum(  dr_amt  for all )"border="0" color="0" x="1317" y="4" height="64" width="471" format="#,##0" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0~tif ( getrow() = currentrow(), 5, 0)" color="0" x="9" y="4" height="72" width="123" format="[general]" html.valueishtml="0"  name=slip_class visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0~tif ( getrow() = currentrow(), 5, 0)" color="0" x="1797" y="4" height="72" width="1573" format="[general]" html.valueishtml="0"  name=remark visible="1" edit.limit=500 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0~tif ( getrow() = currentrow(), 5, 0)" color="0" x="1317" y="4" height="72" width="471" format="#,##0" html.valueishtml="0"  name=dr_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0~tif ( getrow() = currentrow(), 5, 0)" color="0" x="142" y="4" height="72" width="352" format="@@@@/@@/@@" html.valueishtml="0"  name=slip_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0~tif ( getrow() = currentrow(), 5, 0)" color="0" x="503" y="4" height="72" width="155" format="[general]" html.valueishtml="0"  name=slip_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0~tif ( getrow() = currentrow(), 5, 0)" color="0" x="667" y="4" height="72" width="357" format="@@@@/@@/@@" html.valueishtml="0"  name=acct_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0~tif ( getrow() = currentrow(), 5, 0)" color="0" x="1033" y="4" height="72" width="274" format="[general]" html.valueishtml="0"  name=slip_gwa visible="1" dddw.name=dddw_sosok501 dddw.displaycolumn=dept_name dddw.datacolumn=dept_code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

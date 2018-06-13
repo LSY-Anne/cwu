@@ -1,0 +1,70 @@
+﻿$PBExportHeader$d_hml204p_1.srd
+$PBExportComments$마일리지집행내역현황
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(50) updatewhereclause=yes name=gwa dbname="gwa" )
+ column=(type=decimal(0) updatewhereclause=yes name=budget_point dbname="budget_point" )
+ column=(type=decimal(0) updatewhereclause=yes name=assign_point dbname="assign_point" )
+ column=(type=number updatewhereclause=yes name=supply dbname="supply" )
+ column=(type=number updatewhereclause=yes name=exe_point dbname="exe_point" )
+ column=(type=number updatewhereclause=yes name=hak_app_point dbname="hak_app_point" )
+ column=(type=number updatewhereclause=yes name=app dbname="app" )
+ retrieve="SELECT  MAX((SELECT     KCH003M.FNAME
+          FROM      CDDB.KCH003M 
+	WHERE	TRIM(GWA) = TRIM(A.GWA))) AS GWA
+       ,A.BUDGET_POINT      
+       ,A.ASSIGN_POINT       
+       ,NVL(SUM(B.SUPPLY_POINT),0) AS SUPPLY
+       ,C.BENEFIT AS EXE_POINT
+       ,C.REMAIND AS HAK_APP_POINT
+       ,C.APP
+FROM HAKSA.POINT_GWA_BUDGET A
+    ,HAKSA.POINT_GWA_SUPPLY B
+    ,(SELECT SUM(A.BENEFIT_POINT) AS BENEFIT
+            ,SUM(A.REMAIND_POINT) AS REMAIND
+            ,SUM(B.APPROVAL_POINT) AS APP
+            ,B.GWA
+      FROM   HAKSA.POINT_BENEFIT A
+            ,HAKSA.POINT_GWA_USE B
+      WHERE A.HAKBUN = B.HAKBUN
+      GROUP BY B.GWA) C
+WHERE A.BUDGET_YEAR = B.BUDGET_YEAR
+AND   A.BUDGET_YEAR = :as_budget_year
+AND   (:as_gwa = '%' OR A.GWA = :as_gwa)
+AND   A.GWA = B.GWA
+AND   B.GWA = C.GWA
+AND   A.POINT_ITEM = B.POINT_ITEM
+GROUP BY A.GWA, A.BUDGET_POINT ,A.ASSIGN_POINT,C.BENEFIT,C.REMAIND,C.APP" arguments=(("as_budget_year", string),("as_gwa", string)) )
+text(band=header alignment="2" text="부서잔여마일리지" border="0" color="0" x="3890" y="8" height="56" width="494" html.valueishtml="0"  name=gwa_remaind_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학과/부서" border="0" color="0" x="9" y="8" height="56" width="937" html.valueishtml="0"  name=gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="실예산" border="0" color="33554432" x="2185" y="8" height="56" width="361" html.valueishtml="0"  name=sil_point_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="예산신청" border="0" color="33554432" x="955" y="8" height="56" width="402" html.valueishtml="0"  name=budget_point_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="집행마일리지" border="0" color="33554432" x="2555" y="8" height="56" width="411" html.valueishtml="0"  name=exe_point_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="집행잔액마일리지" border="0" color="33554432" x="2981" y="8" height="56" width="503" html.valueishtml="0"  name=hak_app_point_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="예산확정" border="0" color="0" x="1367" y="8" height="56" width="416" html.valueishtml="0"  name=assign_point_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="추경" border="0" color="0" x="1792" y="8" height="56" width="384" html.valueishtml="0"  name=supply_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="승인마일리지" border="0" color="0" x="3497" y="8" height="56" width="384" html.valueishtml="0"  name=app_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="33554432" x="9" y="8" height="68" width="937" format="[general]" html.valueishtml="0"  name=gwa visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression=" assign_point  -  supply  -  app "border="0" color="0" x="3890" y="8" height="68" width="494" format="##,###" html.valueishtml="0"  name=gwa_remaind visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression=" assign_point  -  supply "border="0" color="0" x="2185" y="8" height="68" width="361" format="##,###" html.valueishtml="0"  name=sil_point visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="33554432" x="2555" y="8" height="68" width="411" format="##,###" html.valueishtml="0"  name=exe_point visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="33554432" x="2981" y="8" height="68" width="503" format="##,###" html.valueishtml="0"  name=hak_app_point visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="33554432" x="1792" y="8" height="68" width="384" format="##,###" html.valueishtml="0"  name=supply visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="33554432" x="3497" y="8" height="68" width="384" format="##,###" html.valueishtml="0"  name=app visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="33554432" x="955" y="8" height="68" width="402" format="##,###" html.valueishtml="0"  name=budget_point visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="33554432" x="1367" y="8" height="68" width="416" format="##,###" html.valueishtml="0"  name=assign_point visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

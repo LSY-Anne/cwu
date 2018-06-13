@@ -1,0 +1,39 @@
+﻿$PBExportHeader$f_lastdate.srf
+$PBExportComments$특정년월의 마지막날짜를 리턴한다.
+global type f_lastdate from function_object
+end type
+
+forward prototypes
+global function string f_lastdate (string as_date)
+end prototypes
+
+global function string f_lastdate (string as_date);// ------------------------------------------------------------------------------------------
+// Function Name	:	f_lastdate
+// Function 설명	:	특정날짜의 마지막날짜를 리턴한다.
+// Argument			:	as_date(String)	:	 특정날짜(yyyymm Or yyyymmdd)
+//	Return			:	String	:	특정날짜의 마지막날짜
+// ------------------------------------------------------------------------------------------
+
+date	ldt_date, ldt_lastdate
+integer	li_len
+
+li_len = len(trim(as_date))
+
+if li_len < 6 or li_len > 8 then	return	''
+
+if li_len < 8 then
+	ldt_date	=	date(string(left(trim(as_date), 6), '@@@@-@@') + '-01')
+else
+	ldt_date	=	date(string(left(trim(as_date), 8), '@@@@-@@-@@'))
+end if
+
+select	last_day(:ldt_date)
+into		:ldt_lastdate
+from		dual	;
+
+if sqlca.sqlcode <> 0 then	return ''
+
+return	string(ldt_lastdate, 'yyyymmdd')
+
+end function
+

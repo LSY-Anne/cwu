@@ -1,0 +1,19 @@
+﻿$PBExportHeader$gf_settoggle.srf
+$PBExportComments$한글/영문모드 전환
+global type gf_settoggle from function_object
+end type
+
+forward prototypes
+global subroutine gf_settoggle (long al_handle, integer ai_toggle)
+end prototypes
+
+global subroutine gf_settoggle (long al_handle, integer ai_toggle);//ai_toggle  0/영문      1/한글
+LONG hIMC
+pentaservice		lnv_service
+hIMC = lnv_service.of_ImmGetContext(al_handle) 
+lnv_service.of_ImmSetconversionStatus( hIMC, ai_toggle, 0 ) // 영문
+lnv_service.of_ImmReleaseContext(al_handle, hIMC )
+
+
+end subroutine
+

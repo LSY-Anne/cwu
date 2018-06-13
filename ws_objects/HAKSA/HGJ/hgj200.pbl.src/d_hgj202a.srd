@@ -1,0 +1,80 @@
+﻿$PBExportHeader$d_hgj202a.srd
+$PBExportComments$[청운대]이수예정대상자생성
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=84 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(4) update=yes updatewhereclause=yes name=year dbname="gj_yejungja.year" dbalias=".year" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=jaguk_id dbname="gj_yejungja.jaguk_id" dbalias=".jaguk_id" )
+ column=(type=char(2) update=yes updatewhereclause=yes name=pyosi_id dbname="gj_yejungja.pyosi_id" dbalias=".pyosi_id" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=hakbun dbname="gj_yejungja.hakbun" dbalias=".hakbun" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="gj_yejungja.worker" dbalias=".worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="gj_yejungja.ipaddr" dbalias=".ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="gj_yejungja.work_date" dbalias=".work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="gj_yejungja.job_uid" dbalias=".job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="gj_yejungja.job_add" dbalias=".job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="gj_yejungja.job_date" dbalias=".job_date" )
+ column=(type=decimal(2) updatewhereclause=yes name=pyungjum dbname="gj_yejungja.pyungjum" dbalias=".pyungjum" )
+ column=(type=decimal(1) updatewhereclause=yes name=siljum dbname="gj_yejungja.siljum" dbalias=".siljum" )
+ column=(type=decimal(0) updatewhereclause=yes name=chidk dbname="gj_yejungja.chidk" dbalias=".chidk" )
+ column=(type=char(20) updatewhereclause=yes name=jaehak_hakjuk_hname dbname="jaehak_hakjuk.hname" dbalias=".hname" )
+ column=(type=char(4) updatewhereclause=yes name=jaehak_hakjuk_gwa dbname="jaehak_hakjuk.gwa" dbalias=".gwa" )
+ retrieve="  SELECT HAKSA.GJ_YEJUNGJA.YEAR,   
+         HAKSA.GJ_YEJUNGJA.JAGUK_ID,   
+         HAKSA.GJ_YEJUNGJA.PYOSI_ID,   
+         HAKSA.GJ_YEJUNGJA.HAKBUN,   
+         HAKSA.GJ_YEJUNGJA.WORKER,   
+         HAKSA.GJ_YEJUNGJA.IPADDR,   
+         HAKSA.GJ_YEJUNGJA.WORK_DATE,   
+         HAKSA.GJ_YEJUNGJA.JOB_UID,   
+         HAKSA.GJ_YEJUNGJA.JOB_ADD,   
+         HAKSA.GJ_YEJUNGJA.JOB_DATE,   
+         HAKSA.GJ_YEJUNGJA.PYUNGJUM,   
+         HAKSA.GJ_YEJUNGJA.SILJUM,   
+         HAKSA.GJ_YEJUNGJA.CHIDK,   
+         HAKSA.JAEHAK_HAKJUK.HNAME,   
+         HAKSA.JAEHAK_HAKJUK.GWA  
+    FROM HAKSA.GJ_YEJUNGJA,   
+         HAKSA.JAEHAK_HAKJUK  
+   WHERE ( HAKSA.GJ_YEJUNGJA.HAKBUN = HAKSA.JAEHAK_HAKJUK.HAKBUN ) and  
+         ( ( HAKSA.GJ_YEJUNGJA.YEAR = :year ) AND  
+         ( HAKSA.GJ_YEJUNGJA.JAGUK_ID = :jaguk ) AND  
+         ( HAKSA.GJ_YEJUNGJA.PYOSI_ID like :pyosi ) AND  
+         ( HAKSA.JAEHAK_HAKJUK.GWA like :hakgwa ) )   
+ORDER BY HAKSA.GJ_YEJUNGJA.JAGUK_ID ASC,   
+         HAKSA.GJ_YEJUNGJA.PYOSI_ID ASC,   
+         HAKSA.JAEHAK_HAKJUK.GWA ASC,   
+         HAKSA.GJ_YEJUNGJA.HAKBUN ASC   
+" arguments=(("year", string),("jaguk", string),("pyosi", string),("hakgwa", string)) )
+group(level=1 header.height=0 trailer.height=0 by=("year" , "jaguk_id" , "pyosi_id" , "jaehak_hakjuk_gwa" ) newpage=yes header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text="선발년도" border="0" color="8388608" x="5" y="4" height="80" width="274" html.valueishtml="0"  name=year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="평점" border="0" color="8388608" x="3538" y="4" height="80" width="201" html.valueishtml="0"  name=pyungjum_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="실점" border="0" color="8388608" x="3749" y="4" height="80" width="201" html.valueishtml="0"  name=siljum_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="취득학점" border="0" color="8388608" x="3959" y="4" height="80" width="297" html.valueishtml="0"  name=chidk_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학  과" border="0" color="8388608" x="2309" y="4" height="80" width="1221" html.valueishtml="0"  name=jaehak_hakjuk_gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="성명" border="0" color="8388608" x="1824" y="4" height="80" width="475" html.valueishtml="0"  name=jaehak_hakjuk_hname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학번" border="0" color="8388608" x="1376" y="4" height="80" width="439" html.valueishtml="0"  name=hakbun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="표시과목" border="0" color="8388608" x="983" y="4" height="80" width="384" html.valueishtml="0"  name=pyosi_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="자격명" border="0" color="8388608" x="288" y="4" height="80" width="686" html.valueishtml="0"  name=jaguk_id_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="274" format="[general]" html.valueishtml="0"  name=year visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="0" x="3538" y="4" height="76" width="201" format="[general]" html.valueishtml="0"  name=pyungjum visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="2" tabsequence=32766 border="0" color="0" x="3749" y="4" height="76" width="201" format="[general]" html.valueishtml="0"  name=siljum visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="2" tabsequence=32766 border="0" color="0" x="3959" y="4" height="76" width="297" format="[general]" html.valueishtml="0"  name=chidk visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="2304" y="4" height="76" width="1225" format="[general]" html.valueishtml="0"  name=jaehak_hakjuk_gwa visible="1" dddw.name=d_dddw_hakgwa dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="2" tabsequence=32766 border="0" color="0" x="1824" y="4" height="76" width="475" format="[general]" html.valueishtml="0"  name=jaehak_hakjuk_hname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1376" y="4" height="76" width="439" format="[general]" html.valueishtml="0"  name=hakbun visible="1" edit.limit=10 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="983" y="4" height="76" width="384" format="[general]" html.valueishtml="0"  name=pyosi_id visible="1" dddw.name=d_dddw_gj_pyosi dddw.displaycolumn=pyosi_name dddw.datacolumn=pyosi_id dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="288" y="4" height="76" width="686" format="[general]" html.valueishtml="0"  name=jaguk_id visible="1" dddw.name=d_dddw_gj_jaguk dddw.displaycolumn=jaguk_name dddw.datacolumn=jaguk_id dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,67 @@
+﻿$PBExportHeader$d_hfn303a_1.srd
+$PBExportComments$수입/지출/대체 전표 등록 - 등록 리스트
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=84 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=decimal(0) updatewhereclause=yes name=slip_class dbname="hfn101m.slip_class" values="수입	1/지출	2/" )
+ column=(type=decimal(0) updatewhereclause=yes key=yes name=acct_class dbname="hfn101m.acct_class" )
+ column=(type=char(8) updatewhereclause=yes key=yes name=resol_date dbname="hfn101m.resol_date" )
+ column=(type=number updatewhereclause=yes key=yes name=resol_no dbname="hfn101m.resol_no" )
+ column=(type=char(4) updatewhereclause=yes name=resol_gwa dbname="hfn101m.resol_gwa" )
+ column=(type=char(100) updatewhereclause=yes name=remark dbname="hfn101m.remark" )
+ column=(type=number updatewhereclause=yes name=com_tot_amt dbname="com_tot_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=genesis_gb dbname="hfn101m.genesis_gb" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=step_opt dbname="hfn101m.step_opt" values="	3/	2" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=slip_date dbname="hfn101m.slip_date" )
+ column=(type=number update=yes updatewhereclause=yes name=slip_no dbname="hfn101m.slip_no" )
+ retrieve="SELECT	A.SLIP_CLASS,
+			A.ACCT_CLASS,
+			A.RESOL_DATE,
+			A.RESOL_NO,
+			A.RESOL_GWA,
+			A.REMARK,
+			(	SELECT	NVL(SUM(B.RESOL_AMT),0)
+				FROM		FNDB.HFN102M B
+				WHERE		B.ACCT_CLASS = A.ACCT_CLASS
+				AND		B.RESOL_DATE = A.RESOL_DATE
+				AND		B.RESOL_NO   = A.RESOL_NO	)	COM_TOT_AMT,
+			A.GENESIS_GB,
+			A.STEP_OPT,
+			A.SLIP_DATE,
+			A.SLIP_NO
+FROM		FNDB.HFN101M A
+WHERE		A.ACCT_CLASS = :AI_ACCT_CLASS
+AND		A.SLIP_CLASS = :AI_SLIP_CLASS
+AND		A.RESOL_GWA  LIKE :AS_RESOL_GWA||'%'
+AND		A.RESOL_DATE BETWEEN :AS_FROM_DATE AND :AS_TO_DATE
+AND		A.STEP_OPT   = 2
+ORDER BY A.RESOL_GWA, A.RESOL_DATE, RESOL_NO
+" update="FNDB.HFN101M" updatewhere=0 updatekeyinplace=no arguments=(("ai_acct_class", number),("ai_slip_class", number),("as_resol_gwa", string),("as_from_date", string),("as_to_date", string),("ai_stat_gbn", number)) )
+text(band=header alignment="2" text="결의일자" border="0" color="0" x="9" y="8" height="56" width="402" html.valueishtml="0"  name=resol_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="번호" border="0" color="0" x="421" y="8" height="56" width="302" html.valueishtml="0"  name=resol_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="결의부서명" border="0" color="0" x="1170" y="8" height="56" width="727" html.valueishtml="0"  name=resol_gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="적     요" border="0" color="0" x="2414" y="8" height="56" width="1847" html.valueishtml="0"  name=remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="발생구분" border="0" color="0" x="731" y="8" height="56" width="430" html.valueishtml="0"  name=genesis_gb_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="결의금액" border="0" color="0" x="1906" y="8" height="56" width="498" html.valueishtml="0"  name=com_tot_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="8" height="68" width="402" format="@@@@/@@/@@" html.valueishtml="0"  name=resol_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="421" y="8" height="68" width="302" format="[general]" html.valueishtml="0"  name=resol_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="1170" y="8" height="68" width="727" format="[general]" html.valueishtml="0"  name=resol_gwa visible="1" dddw.name=dddw_sosok501 dddw.displaycolumn=dept_name dddw.datacolumn=dept_code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="2414" y="8" height="68" width="1847" format="[general]" html.valueishtml="0"  name=remark visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="731" y="8" height="68" width="430" format="[general]" html.valueishtml="0"  name=genesis_gb visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="1906" y="8" height="68" width="498" format="#,###" html.valueishtml="0"  name=com_tot_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum(  com_tot_amt  for all )"border="0" color="0" x="1906" y="4" height="56" width="498" format="#,###" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=summary alignment="2" text="합  계" border="0" color="0" x="5" y="4" height="56" width="407" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,52 @@
+﻿$PBExportHeader$d_hsu700p_1.srd
+$PBExportComments$[청운대]교수별 수업평가 결과
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=692 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=344 color="536870912" height.autosize=yes )
+table(column=(type=char(5) updatewhereclause=yes name=member_no dbname="evaluate.member_no" dbalias=".member_no" )
+ column=(type=char(100) updatewhereclause=yes name=gwamok_code_gwamok_hname dbname="gwamok_code.gwamok_hname" dbalias=".gwamok_hname" )
+ column=(type=char(4) updatewhereclause=yes name=prof_sym_gwa dbname="prof_sym.gwa" dbalias=".gwa" )
+ column=(type=char(7) updatewhereclause=yes name=evaluate_gwamok_id dbname="evaluate.gwamok_id" dbalias=".gwamok_id" )
+ column=(type=decimal(0) updatewhereclause=yes name=evaluate_gwamok_seq dbname="evaluate.gwamok_seq" dbalias=".gwamok_seq" )
+ retrieve="  SELECT DISTINCT
+			HAKSA.EVALUATE.MEMBER_NO,   
+         HAKSA.GWAMOK_CODE.GWAMOK_HNAME,
+         HAKSA.PROF_SYM.GWA,
+         HAKSA.EVALUATE.GWAMOK_ID,   
+         HAKSA.EVALUATE.GWAMOK_SEQ  
+    FROM HAKSA.EVALUATE,   
+         HAKSA.GWAMOK_CODE,
+			HAKSA.PROF_SYM
+   WHERE ( HAKSA.EVALUATE.GWAMOK_ID		= 	HAKSA.GWAMOK_CODE.GWAMOK_ID ) and  
+         ( HAKSA.EVALUATE.GWAMOK_SEQ	=	HAKSA.GWAMOK_CODE.GWAMOK_SEQ ) and  
+			(	HAKSA.EVALUATE.MEMBER_NO	=	HAKSA.PROF_SYM.MEMBER_NO ) AND
+         ( ( HAKSA.EVALUATE.YEAR	= :as_year ) AND  
+         ( HAKSA.EVALUATE.HAKGI		= :as_hakgi ) AND  
+         ( HAKSA.EVALUATE.MEMBER_NO like :as_member_no ) )    
+" arguments=(("as_year", string),("as_hakgi", string),("as_member_no", string))  sort="member_no A evaluate_gwamok_id A evaluate_gwamok_seq A " )
+group(level=1 header.height=0 trailer.height=4 by=("member_no" , "evaluate_gwamok_id" , "evaluate_gwamok_seq" ) newpage=yes header.color="536870912" trailer.color="536870912" )
+compute(band=header alignment="2" expression=" as_year + ' 년도' +  as_hakgi + ' 학기 교수별 강의평가 설문결과'"border="1" color="0" x="288" y="168" height="108" width="2651" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-18" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="교수명 :" border="0" color="0" x="155" y="556" height="60" width="302" html.valueishtml="0"  name=member_no_t visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="과목명 :" border="0" color="0" x="155" y="620" height="60" width="302" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=1 alignment="0" tabsequence=32766 border="0" color="0" x="475" y="556" height="60" width="457" format="[general]" html.valueishtml="0"  name=member_no visible="1" dddw.name=d_dddw_prof dddw.displaycolumn=name dddw.datacolumn=member_no dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=2 alignment="0" tabsequence=32766 border="0" color="0" x="475" y="620" height="60" width="814" format="[general]" html.valueishtml="0"  name=gwamok_code_gwamok_hname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="소속학과 :" border="0" color="0" x="2039" y="620" height="60" width="361" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header id=3 alignment="0" tabsequence=32766 border="0" color="0" x="2423" y="620" height="60" width="791" format="[general]" html.valueishtml="0"  name=prof_sym_gwa visible="1" dddw.name=d_dddw_daepyogwa dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+report(band=detail dataobject="d_hsu700p_1_1" x="146" y="8" height="136" width="2999" border="0"  height.autosize=yes criteria="" nest_arguments=((" as_year "),(" as_hakgi "),(" member_no "),(" evaluate_gwamok_id "),(" evaluate_gwamok_seq ")) trail_footer = yes  name=dw_1 visible="1"  slideup=directlyabove )
+report(band=detail dataobject="d_hsu700p_1_2" x="151" y="196" height="136" width="2999" border="0"  height.autosize=yes criteria="" nest_arguments=((" as_year "),(" as_hakgi "),(" member_no "),(" evaluate_gwamok_id "),(" evaluate_gwamok_seq ")) trail_footer = yes  name=dw_2 visible="1"  slideup=directlyabove )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="1883" y="376" height="60" width="512" format="[general]" html.valueishtml="0"  name=evaluate_gwamok_seq visible="1~t0" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="2432" y="376" height="60" width="224" format="[general]" html.valueishtml="0"  name=evaluate_gwamok_id visible="1~t0" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

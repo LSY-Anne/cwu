@@ -1,0 +1,71 @@
+﻿$PBExportHeader$d_hfn801a_2_list.srd
+$PBExportComments$세금계산서 출력 목록
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 grid.columnmove=no selected.mouse=no )
+header(height=76 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes name=tax_no dbname="hfn007m.tax_no" )
+ column=(type=char(1) updatewhereclause=yes name=tax_type dbname="hfn007m.tax_type" )
+ column=(type=char(1) updatewhereclause=yes name=tax_gubun dbname="hfn007m.tax_gubun" )
+ column=(type=char(8) updatewhereclause=yes name=tax_date dbname="hfn007m.tax_date" )
+ column=(type=char(10) updatewhereclause=yes name=tax_cust_no dbname="hfn007m.tax_cust_no" )
+ column=(type=decimal(0) updatewhereclause=yes name=tax_amt dbname="hfn007m.tax_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=tax_vat dbname="hfn007m.tax_vat" )
+ column=(type=char(100) updatewhereclause=yes name=remark dbname="hfn007m.remark" )
+ column=(type=char(1) updatewhereclause=yes name=jumin_gbn dbname="hfn007m.jumin_gbn" )
+ column=(type=char(60) updatewhereclause=yes name=cust_name dbname="cust_name" )
+ column=(type=char(13) updatewhereclause=yes name=cust_no dbname="cust_no" )
+ retrieve="SELECT	A.TAX_NO,
+			A.TAX_TYPE,
+			A.TAX_GUBUN,
+			A.TAX_DATE,
+			A.TAX_CUST_NO,
+			A.TAX_AMT,
+			A.TAX_VAT,
+			A.REMARK,
+			A.JUMIN_GBN,
+			DECODE(A.JUMIN_GBN,'Y',C.CUST_NAME,B.CUST_NAME)		CUST_NAME,
+			DECODE(A.JUMIN_GBN,'Y',C.JUMIN_NO,B.BUSINESS_NO)	CUST_NO
+FROM		FNDB.HFN007M A, 
+			STDB.HST001M B,
+			FNDB.HFN603H C
+WHERE		A.TAX_CUST_NO 				= B.CUST_NO (+)
+AND		A.TAX_CUST_NO 				= C.CUST_NO (+)
+AND		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+AND		A.TAX_TYPE 					= :AS_TAX_TYPE
+AND		A.TAX_GUBUN 				= :AS_TAX_GUBUN
+AND		SUBSTR(A.TAX_DATE,1,4) 	= :AS_YEAR
+ORDER	BY	A.TAX_NO
+" arguments=(("ai_acct_class", number),("as_tax_type", string),("as_tax_gubun", string),("as_year", string)) )
+text(band=header alignment="2" text="일련번호" border="0" color="0" x="9" y="8" height="56" width="347" html.valueishtml="0"  name=compute_2_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계산서일자" border="0" color="0" x="366" y="8" height="56" width="338" html.valueishtml="0"  name=tax_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="거래처" border="0" color="0" x="713" y="8" height="56" width="242" html.valueishtml="0"  name=tax_cust_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="~t'사업자/주민번호'" border="0" color="0" x="965" y="8" height="56" width="475" html.valueishtml="0"  name=compute_1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="거래처명/성명" border="0" color="0" x="1449" y="8" height="56" width="690" html.valueishtml="0"  name=cust_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="공급가액" border="0" color="0" x="2149" y="8" height="56" width="430" html.valueishtml="0"  name=tax_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="부가세액" border="0" color="0" x="2587" y="8" height="56" width="352" html.valueishtml="0"  name=tax_vat_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="적    요 (품목/규격)" border="0" color="0" x="2949" y="8" height="56" width="1266" html.valueishtml="0"  name=remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="2" expression="tax_no
+ "border="0" color="0" x="9" y="4" height="60" width="347" format="[GENERAL]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="366" y="4" height="60" width="338" format="[general]" html.valueishtml="0"  name=tax_date visible="1" editmask.autoskip=yes editmask.mask="xxxx/xx/xx" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="713" y="4" height="60" width="242" format="[general]" html.valueishtml="0"  name=tax_cust_no pointer="" visible="1" editmask.autoskip=yes editmask.mask="xxxxxxx" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="2" expression="if ( len(  cust_no ) = 10, string (  cust_no , '@@@-@@-@@@@@' ) , 
+                                     string (  cust_no , '@@@@@@-@@@@@@@' )
+)
+"border="0" color="0" x="965" y="4" height="60" width="475" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="1449" y="4" height="60" width="690" format="[general]" html.valueishtml="0"  name=cust_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="2149" y="4" height="60" width="430" format="[general]" html.valueishtml="0"  name=tax_amt visible="1" editmask.autoskip=yes editmask.mask="###,###,###,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="2587" y="4" height="60" width="352" format="[general]" html.valueishtml="0" protect="0~tif( tax_type = '1', 1, 0 )"  name=tax_vat visible="1" editmask.autoskip=yes editmask.mask="##,###,###,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="2949" y="4" height="60" width="1266" format="[general]" html.valueishtml="0"  name=remark visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

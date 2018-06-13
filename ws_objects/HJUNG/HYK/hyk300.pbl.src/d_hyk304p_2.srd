@@ -1,0 +1,74 @@
+﻿$PBExportHeader$d_hyk304p_2.srd
+$PBExportComments$교원업적평가표 출력
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 225 print.margin.right = 225 print.margin.top = 150 print.margin.bottom = 150 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" height.autosize=yes )
+footer(height=444 color="536870912" height.autosize=yes )
+detail(height=1252 color="536870912" height.autosize=yes )
+table(column=(type=char(5) updatewhereclause=yes name=member_no dbname="hyk201t.member_no" dbalias="A.member_no" )
+ column=(type=char(40) updatewhereclause=yes name=kname dbname="kname" )
+ column=(type=char(6) updatewhereclause=yes name=evl_ym dbname="hyk201t.evl_ym" dbalias="A.evl_ym" )
+ column=(type=char(1) updatewhereclause=yes name=appoint_gb dbname="hyk201t.appoint_gb" dbalias="A.appoint_gb" )
+ column=(type=char(20) updatewhereclause=yes name=duty_code dbname="duty_code" )
+ column=(type=number updatewhereclause=yes name=tot_point dbname="tot_point" )
+ column=(type=char(50) updatewhereclause=yes name=gwa dbname="gwa" )
+ column=(type=char(100) updatewhereclause=yes name=remark dbname="hyk201t.remark" dbalias="A.remark" )
+ retrieve="  SELECT A.MEMBER_NO,   
+MAX((SELECT NAME FROM INDB.HIN001M WHERE MEMBER_NO = A.MEMBER_NO)) AS KNAME,
+A.EVL_YM,
+A.APPOINT_GB,
+MAX((SELECT DUTY_NAME FROM INDB.HIN003M WHERE DUTY_CODE = A.DUTY_CODE)) AS DUTY_CODE,
+SUM(NVL(B.EVL_POINT, 0))   AS TOT_POINT,
+MAX((SELECT FNAME FROM CDDB.KCH003M WHERE GWA = A.GWA)) AS GWA,
+A.REMARK
+    FROM YGDB.HYK201T  A, YGDB.HYK203T B
+   WHERE  A.EVL_YM = B.EVL_YM
+AND A.APPOINT_GB = B.APPOINT_GB
+AND A.MEMBER_NO = B.MEMBER_NO
+AND A.EVL_YM = :as_ym
+AND A.APPOINT_GB = :as_gb
+AND (:as_member_no = '%' Or A.MEMBER_NO = :as_member_no  )
+GROUP BY A.MEMBER_NO, A.EVL_YM,
+A.APPOINT_GB, A.REMARK
+" arguments=(("as_ym", string),("as_gb", string),("as_member_no", string)) )
+group(level=1 header.height=0 trailer.height=0 by=("member_no" ) newpage=yes header.color="536870912" trailer.color="536870912" )
+rectangle(band=detail x="27" y="388" height="124" width="370"  name=r_2 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="1" background.color="553648127" )
+rectangle(band=detail x="27" y="388" height="124" width="3141"  name=r_1 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="0" )
+text(band=detail alignment="2" text="정년보장교원임용심사 업적평가표" border="0" color="0" x="0" y="132" height="96" width="3168" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-16" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+rectangle(band=detail x="1499" y="388" height="124" width="370"  name=r_3 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="1" background.color="553648127" )
+rectangle(band=detail x="2395" y="388" height="124" width="370"  name=r_4 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="피평가자" border="0" color="0" x="46" y="428" height="56" width="338" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="직   위" border="0" color="0" x="1518" y="428" height="56" width="338" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="성   명" border="0" color="0" x="2409" y="428" height="56" width="338" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="2789" y="428" height="60" width="357" format="[general]" html.valueishtml="0"  name=kname visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="1883" y="428" height="60" width="498" format="[general]" html.valueishtml="0"  name=duty_code visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="411" y="428" height="60" width="1083" format="[general]" html.valueishtml="0"  name=gwa visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+report(band=detail dataobject="d_hyk304p_p3" x="23" y="1104" height="136" width="3145" border="0"  height.autosize=yes criteria="" nest_arguments=((" evl_ym "),(" appoint_gb "),(" member_no "),("'4'")) trail_footer = yes  name=dw_4 visible="1"  slideup=directlyabove )
+report(band=detail dataobject="d_hyk304p_p3" x="23" y="940" height="136" width="3145" border="0"  height.autosize=yes criteria="" nest_arguments=((" evl_ym "),(" appoint_gb "),(" member_no "),("'3'")) trail_footer = yes  name=dw_3 visible="1"  slideup=directlyabove )
+report(band=detail dataobject="d_hyk304p_p2" x="23" y="776" height="136" width="3145" border="0"  height.autosize=yes criteria="" nest_arguments=((" evl_ym "),(" appoint_gb "),(" member_no "),("'1'")) trail_footer = yes  name=dw_2 visible="1"  slideup=directlyabove )
+report(band=detail dataobject="d_hyk304p_p1" x="23" y="616" height="136" width="3145" border="0"  height.autosize=yes criteria="" nest_arguments=((" evl_ym "),(" appoint_gb "),(" member_no "),("'2'")) trail_footer = yes  name=dw_1 visible="1"  slideup=directlyabove )
+rectangle(band=footer x="1765" y="12" height="124" width="370"  name=r_7 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="1" background.color="553648127" )
+rectangle(band=footer x="27" y="12" height="124" width="3141"  name=r_5 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="0" )
+rectangle(band=footer x="27" y="12" height="124" width="370"  name=r_6 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="1" background.color="553648127" )
+text(band=footer alignment="2" text="종합점수" border="0" color="0" x="46" y="52" height="56" width="338" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=footer alignment="2" text="비   고" border="0" color="0" x="1783" y="52" height="56" width="338" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+rectangle(band=footer x="27" y="212" height="192" width="3141"  name=r_8 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="2" background.color="0" )
+rectangle(band=footer x="27" y="212" height="192" width="370"  name=r_9 visible="1" brush.hatch="7" brush.color="553648127" pen.style="0" pen.width="5" pen.color="18751006"  background.mode="1" background.color="553648127" )
+text(band=footer alignment="2" text="확   인" border="0" color="0" x="46" y="288" height="56" width="338" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=footer alignment="2" text="이    리    형" border="0" color="0" x="1440" y="264" height="96" width="759" html.valueishtml="0"  name=t_9 visible="1"  font.face="굴림체" font.height="-16" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=footer alignment="2" text="총      장" border="0" color="0" x="800" y="288" height="56" width="302" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=footer alignment="0" text="(인)" border="0" color="0" x="2693" y="288" height="56" width="302" html.valueishtml="0"  name=t_10 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=footer id=6 alignment="2" tabsequence=32766 border="0" color="0" x="407" y="56" height="60" width="1349" format="[general]" html.valueishtml="0"  name=tot_point visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=footer id=8 alignment="0" tabsequence=32766 border="0" color="0" x="2144" y="56" height="60" width="1015" format="[general]" html.valueishtml="0"  name=remark visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

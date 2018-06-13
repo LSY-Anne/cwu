@@ -1,0 +1,81 @@
+﻿$PBExportHeader$d_hin503a_01.srd
+$PBExportComments$재증명발급관리-등록용
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=76 color="1073741824" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(20) update=yes updatewhereclause=yes name=apply_name dbname="hin013h.apply_name" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=member_no dbname="hin013h.member_no" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=print_opt dbname="hin013h.print_opt" values="재직	1/경력	2/없음	5/" )
+ column=(type=number update=yes updatewhereclause=yes key=yes name=apply_no dbname="hin013h.apply_no" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=member_opt dbname="hin013h.member_opt" )
+ column=(type=char(8) update=yes updatewhereclause=yes key=yes name=apply_date dbname="hin013h.apply_date" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=print_num dbname="hin013h.print_num" )
+ column=(type=number update=yes updatewhereclause=yes name=price dbname="hin013h.price" )
+ column=(type=number update=yes updatewhereclause=yes name=total_amt dbname="hin013h.total_amt" )
+ column=(type=char(60) update=yes updatewhereclause=yes name=use_opt dbname="hin013h.use_opt" )
+ column=(type=number updatewhereclause=yes name=year_amt dbname="hin013h.year_amt" )
+ column=(type=number updatewhereclause=yes name=acc_amt dbname="hin013h.acc_amt" )
+ retrieve="SELECT	APPLY_NAME,	
+			MEMBER_NO,
+			PRINT_OPT,
+			APPLY_NO,
+			MEMBER_OPT,
+			APPLY_DATE,
+			PRINT_NUM,
+			PRICE,
+			TOTAL_AMT,
+			USE_OPT,
+			AA.YEAR_AMT,
+         BB.ACC_AMT
+FROM 		INDB.HIN013H, 
+			(SELECT  SUM(A.TOTAL_AMT) YEAR_AMT
+			  FROM  INDB.HIN013H A, ACDB.HAC003M B
+			 WHERE  B.BDGT_CLASS = 0
+				AND  B.STAT_CLASS = 0  
+				AND  B.BDGT_YEAR  = :as_year
+				AND  A.APPLY_DATE BETWEEN B.FROM_DATE AND B.TO_DATE ) AA, 
+			(SELECT  SUM(A.TOTAL_AMT) ACC_AMT
+				FROM  INDB.HIN013H A, ACDB.HAC003M B
+			  WHERE  B.BDGT_CLASS = 0
+				 AND  B.STAT_CLASS = 0 
+				 AND  B.BDGT_YEAR  = :as_year
+				 AND  A.APPLY_DATE BETWEEN :as_year||'0301' AND :as_apply_date||'31' ) BB
+
+WHERE APPLY_DATE LIKE :as_apply_date||'%'
+ORDER BY APPLY_NO" update="INDB.HIN013H" updatewhere=0 updatekeyinplace=no arguments=(("as_apply_date", string),("as_year", string)) )
+text(band=header alignment="2" text="NO" border="0" color="0" x="9" y="4" height="56" width="251" html.valueishtml="0"  name=compute_1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="성명" border="0" color="0" x="270" y="4" height="56" width="311" html.valueishtml="0"  name=apply_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="인사번호" border="0" color="0" x="590" y="4" height="56" width="480" html.valueishtml="0"  name=member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="증명서구분" border="0" color="0" x="1079" y="4" height="56" width="434" html.valueishtml="0"  name=print_opt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="발급번호" border="0" color="0" x="1522" y="4" height="56" width="439" html.valueishtml="0"  name=apply_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="발급일자" border="0" color="0" x="1970" y="4" height="56" width="480" html.valueishtml="0"  name=apply_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="매수" border="0" color="0" x="2459" y="4" height="56" width="329" html.valueishtml="0"  name=print_num_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="단가" border="0" color="0" x="2798" y="4" height="56" width="329" html.valueishtml="0"  name=price_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="증명료" border="0" color="0" x="3136" y="4" height="56" width="585" html.valueishtml="0"  name=total_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="용도" border="0" color="0" x="3730" y="4" height="56" width="974" html.valueishtml="0"  name=use_opt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="Year Amt" border="0" color="0" x="4713" y="4" height="56" width="1371" html.valueishtml="0"  name=year_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="2" expression="getrow()"border="0" color="0" x="9" y="4" height="72" width="251" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="1522" y="4" height="72" width="439" format="[general]" html.valueishtml="0"  name=apply_no  tag="신청번호" visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="2459" y="4" height="72" width="329" format="[general]" html.valueishtml="0"  name=print_num  tag="매수" visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="270" y="4" height="72" width="311" format="[general]" html.valueishtml="0"  name=apply_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="590" y="4" height="72" width="480" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="1079" y="4" height="72" width="434" format="[general]" html.valueishtml="0"  name=print_opt visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="1970" y="4" height="72" width="480" format="@@@@/@@/@@" html.valueishtml="0"  name=apply_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="2798" y="4" height="72" width="329" format="#,###,###" html.valueishtml="0"  name=price visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="3136" y="0" height="72" width="585" format="#,###,###" html.valueishtml="0"  name=total_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="3730" y="4" height="72" width="974" format="[general]" html.valueishtml="0"  name=use_opt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="4718" y="4" height="68" width="1367" format="[general]" html.valueishtml="0"  name=year_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

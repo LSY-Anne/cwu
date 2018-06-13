@@ -1,0 +1,97 @@
+﻿$PBExportHeader$d_hyd205a_1.srd
+$PBExportComments$연구비수혜 실적등록 리스트
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(6) updatewhereclause=yes name=std_ym dbname="hyd308t.std_ym" dbalias="A.std_ym" )
+ column=(type=char(5) updatewhereclause=yes name=member_no dbname="hyd308t.member_no" dbalias="A.member_no" )
+ column=(type=char(40) updatewhereclause=yes name=name dbname="hin001m.name" dbalias="B.name" )
+ column=(type=char(12) updatewhereclause=yes name=mng_no dbname="hyd308t.mng_no" dbalias="A.mng_no" )
+ column=(type=char(50) updatewhereclause=yes name=sbjt_no dbname="hyd308t.sbjt_no" dbalias="A.sbjt_no" )
+ column=(type=char(300) updatewhereclause=yes name=rsch_sbjt_nm dbname="hyd308t.rsch_sbjt_nm" dbalias="A.rsch_sbjt_nm" )
+ column=(type=char(6) updatewhereclause=yes name=rsch_stt_ym dbname="hyd308t.rsch_stt_ym" dbalias="A.rsch_stt_ym" )
+ column=(type=char(6) updatewhereclause=yes name=rsch_end_ym dbname="hyd308t.rsch_end_ym" dbalias="A.rsch_end_ym" )
+ column=(type=char(150) updatewhereclause=yes name=rsrcct_sppt_agc_nm dbname="hyd308t.rsrcct_sppt_agc_nm" dbalias="A.rsrcct_sppt_agc_nm" )
+ column=(type=char(20) updatewhereclause=yes name=rsrcct_sppt_dvs_cd dbname="hyd308t.rsrcct_sppt_dvs_cd" dbalias="A.rsrcct_sppt_dvs_cd" )
+ column=(type=char(300) updatewhereclause=yes name=biz_nm dbname="hyd308t.biz_nm" dbalias="A.biz_nm" )
+ column=(type=char(1) updatewhereclause=yes name=mny_yr_sbjt_yn dbname="hyd308t.mny_yr_sbjt_yn" dbalias="A.mny_yr_sbjt_yn" )
+ column=(type=char(20) updatewhereclause=yes name=rsch_sbjt_stdy_sphe_cd dbname="hyd308t.rsch_sbjt_stdy_sphe_cd" dbalias="A.rsch_sbjt_stdy_sphe_cd" )
+ column=(type=char(20) updatewhereclause=yes name=appr_dvs_cd dbname="hyd308t.appr_dvs_cd" dbalias="A.appr_dvs_cd" )
+ column=(type=datetime updatewhereclause=yes name=appr_dttm dbname="hyd308t.appr_dttm" dbalias="A.appr_dttm" )
+ column=(type=datetime updatewhereclause=yes name=appr_cncl_dttm dbname="hyd308t.appr_cncl_dttm" dbalias="A.appr_cncl_dttm" )
+ column=(type=char(4000) updatewhereclause=yes name=appr_rtrn_cncl_rsn_cntn dbname="hyd308t.appr_rtrn_cncl_rsn_cntn" dbalias="A.appr_rtrn_cncl_rsn_cntn" )
+ column=(type=char(1) updatewhereclause=yes name=kri_link_yn dbname="hyd308t.kri_link_yn" dbalias="A.kri_link_yn" )
+ column=(type=char(20) updatewhereclause=yes name=worker dbname="hyd308t.worker" dbalias="A.worker" )
+ column=(type=char(20) updatewhereclause=yes name=ipaddr dbname="hyd308t.ipaddr" dbalias="A.ipaddr" )
+ column=(type=datetime updatewhereclause=yes name=work_date dbname="hyd308t.work_date" dbalias="A.work_date" )
+ column=(type=char(20) updatewhereclause=yes name=job_uid dbname="hyd308t.job_uid" dbalias="A.job_uid" )
+ column=(type=char(20) updatewhereclause=yes name=job_add dbname="hyd308t.job_add" dbalias="A.job_add" )
+ column=(type=datetime updatewhereclause=yes name=job_date dbname="hyd308t.job_date" dbalias="A.job_date" )
+ retrieve="  SELECT A.STD_YM,   
+         A.MEMBER_NO,   
+         B.NAME,
+         A.MNG_NO,   
+         A.SBJT_NO,   
+         A.RSCH_SBJT_NM,   
+         A.RSCH_STT_YM,   
+         A.RSCH_END_YM,   
+         A.RSRCCT_SPPT_AGC_NM,   
+         A.RSRCCT_SPPT_DVS_CD,   
+         A.BIZ_NM,   
+         A.MNY_YR_SBJT_YN,   
+         A.RSCH_SBJT_STDY_SPHE_CD,   
+         A.APPR_DVS_CD,   
+         A.APPR_DTTM,   
+         A.APPR_CNCL_DTTM,   
+         A.APPR_RTRN_CNCL_RSN_CNTN,   
+         A.KRI_LINK_YN,   
+         A.WORKER,   
+         A.IPADDR,   
+         A.WORK_DATE,   
+         A.JOB_UID,   
+         A.JOB_ADD,   
+         A.JOB_DATE  
+    FROM YGDB.HYD308T   A,   
+         INDB.HIN001M B  
+   WHERE ( A.MEMBER_NO = B.MEMBER_NO ) and  
+         ( ( A.STD_YM BETWEEN :as_ym AND :as_ym_to ) AND  
+         ( :as_gwa = '%' OR B.GWA = :as_gwa ) AND  
+         ( :as_member_no = '%' OR A.MEMBER_NO = :as_member_no ) AND  
+         ( :as_yn = '%' OR  A.APPR_DVS_CD = :as_yn ) )    
+
+
+" arguments=(("as_ym", string),("as_ym_to", string),("as_gwa", string),("as_member_no", string),("as_yn", string)) )
+text(band=header alignment="2" text="연구과제명" border="0" color="33554432" x="1307" y="8" height="56" width="558" html.valueishtml="0"  name=rsch_sbjt_nm_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="개시년월" border="0" color="33554432" x="1879" y="8" height="56" width="329" html.valueishtml="0"  name=rsch_stt_ym_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="종료년월" border="0" color="33554432" x="2222" y="8" height="56" width="320" html.valueishtml="0"  name=rsch_end_ym_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="지원기관" border="0" color="33554432" x="2555" y="8" height="56" width="805" html.valueishtml="0"  name=rsrcct_sppt_agc_nm_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="사업명" border="0" color="33554432" x="3378" y="8" height="56" width="535" html.valueishtml="0"  name=biz_nm_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="승인여부" border="0" color="33554432" x="3931" y="8" height="56" width="402" html.valueishtml="0"  name=appr_dvs_cd_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="관리번호" border="0" color="33554432" x="896" y="8" height="56" width="393" html.valueishtml="0"  name=mng_no_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성명" border="0" color="0" x="485" y="8" height="56" width="402" html.valueishtml="0"  name=name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="사번" border="0" color="33554432" x="197" y="8" height="56" width="279" html.valueishtml="0"  name=member_no_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="순번" border="0" color="33554432" x="5" y="8" height="56" width="178" html.valueishtml="0"  name=no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="33554432" x="1307" y="8" height="68" width="558" format="[general]" html.valueishtml="0"  name=rsch_sbjt_nm  tag="kor" visible="1" edit.limit=300 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="33554432" x="2555" y="8" height="68" width="805" format="[general]" html.valueishtml="0"  name=rsrcct_sppt_agc_nm  tag="kor" visible="1" edit.limit=150 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="33554432" x="3378" y="8" height="68" width="535" format="[general]" html.valueishtml="0"  name=biz_nm  tag="kor" visible="1" edit.limit=300 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="489" y="8" height="68" width="398" format="[general]" html.valueishtml="0"  name=name  tag="kor" visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="getrow()"border="0" color="0" x="5" y="8" height="68" width="178" format="[GENERAL]" html.valueishtml="0"  name=no visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="197" y="8" height="68" width="279" format="[general]" html.valueishtml="0"  name=member_no  tag="" visible="1" edit.limit=5 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="33554432" x="896" y="8" height="68" width="393" format="[general]" html.valueishtml="0"  name=mng_no visible="1" edit.limit=12 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="2" tabsequence=32766 border="0" color="33554432" x="3931" y="8" height="68" width="402" format="[general]" html.valueishtml="0"  name=appr_dvs_cd  tag="승인구분" visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="33554432" x="1879" y="8" height="68" width="329" format="[general]" html.valueishtml="0"  name=rsch_stt_ym  tag="연구개시년월" visible="1" editmask.mask="####/##" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="33554432" x="2222" y="8" height="68" width="320" format="[general]" html.valueishtml="0"  name=rsch_end_ym  tag="연구종료년월" visible="1" editmask.mask="####/##" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

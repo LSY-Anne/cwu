@@ -1,0 +1,71 @@
+﻿$PBExportHeader$d_hjk707p_1_test.srd
+$PBExportComments$[청운대]정원내/외 제적자 명단 NESTED
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" height.autosize=yes )
+table(column=(type=char(4) updatewhereclause=yes name=jaehak_hakjuk_tr_gwa dbname="jaehak_hakjuk.gwa" )
+ column=(type=char(1) updatewhereclause=yes name=jaehak_hakjuk_juya_gubun dbname="jaehak_hakjuk.juya_gubun" )
+ column=(type=char(20) updatewhereclause=yes name=hn1 dbname="hn1" )
+ column=(type=char(20) updatewhereclause=yes name=hn2 dbname="hn2" )
+ column=(type=char(20) updatewhereclause=yes name=hn3 dbname="hn3" )
+ column=(type=char(20) updatewhereclause=yes name=hn4 dbname="hn4" )
+ column=(type=char(27) updatewhereclause=yes name=jn1 dbname="jn1" )
+ column=(type=char(27) updatewhereclause=yes name=jn2 dbname="jn2" )
+ column=(type=char(27) updatewhereclause=yes name=jn3 dbname="jn3" )
+ column=(type=char(27) updatewhereclause=yes name=jn4 dbname="jn4" )
+ retrieve="SELECT	A.GWA,
+			A.JUYA_GUBUN,
+			DECODE(A.DR_HAKYUN, '1', A.HNAME, '') HN1,
+			DECODE(A.DR_HAKYUN, '2', A.HNAME, '') HN2,
+			DECODE(A.DR_HAKYUN, '3', A.HNAME, '') HN3,
+			DECODE(A.DR_HAKYUN, '4', A.HNAME, '') HN4,
+			DECODE(A.DR_HAKYUN, '1', SUBSTR(A.JUMIN_NO,1,6) || '-' || SUBSTR(A.JUMIN_NO,7,7), '') JN1,
+			DECODE(A.DR_HAKYUN, '2', SUBSTR(A.JUMIN_NO,1,6) || '-' || SUBSTR(A.JUMIN_NO,7,7), '') JN2,
+			DECODE(A.DR_HAKYUN, '3', SUBSTR(A.JUMIN_NO,1,6) || '-' || SUBSTR(A.JUMIN_NO,7,7), '') JN3,
+			DECODE(A.DR_HAKYUN, '4', SUBSTR(A.JUMIN_NO,1,6) || '-' || SUBSTR(A.JUMIN_NO,7,7), '') JN4
+FROM		HAKSA.JAEHAK_HAKJUK A,
+			HAKSA.HAKJUKBYENDONG B,
+			HAKSA.IPHAK_JUNHYUNG C
+WHERE		B.HAKBUN = A.HAKBUN
+AND		A.IPHAK_JUNHYUNG 		= C.JUNHYUNG_ID
+AND		C.INOUT_GUBUN 			= :as_inout
+AND		B.HJMOD_ID 				in ('D','E')
+AND		SUBSTR(A.GWA, 1, 3)	= :as_gwa
+AND		A.JUYA_GUBUN			= :as_juya_gubun
+AND		B.HJMOD_SIJUM 			BETWEEN :as_from AND :as_to
+
+
+" arguments=(("as_from", string),("as_to", string),("as_gwa", string),("as_juya_gubun", string),("as_inout", string))  sort="jaehak_hakjuk_tr_gwa A jaehak_hakjuk_juya_gubun A " )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="50" y="8" height="60" width="315" format="[general]" html.valueishtml="0"  name=hn1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="389" y="8" height="60" width="471" format="[general]" html.valueishtml="0"  name=jn1 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="882" y="8" height="60" width="315" format="[general]" html.valueishtml="0"  name=hn2 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="1221" y="8" height="60" width="471" format="[general]" html.valueishtml="0"  name=jn2 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=detail x1="32" y1="80" x2="3387" y2="80"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2871" y1="0" x2="2871" y2="84"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2533" y1="0" x2="2533" y2="84"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2039" y1="0" x2="2039" y2="84"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1701" y1="0" x2="1701" y2="84"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1207" y1="0" x2="1207" y2="84"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="869" y1="0" x2="869" y2="84"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="375" y1="0" x2="375" y2="84"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="1714" y="8" height="60" width="315" format="[general]" html.valueishtml="0"  name=hn3 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="2546" y="8" height="60" width="315" format="[general]" html.valueishtml="0"  name=hn4 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="2053" y="8" height="60" width="471" format="[general]" html.valueishtml="0"  name=jn3 visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="2885" y="8" height="60" width="485" format="[general]" html.valueishtml="0"  name=jn4 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=detail x1="32" y1="0" x2="32" y2="80"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3383" y1="0" x2="3383" y2="80"  name=l_15 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=footer x1="32" y1="0" x2="32" y2="240"  name=l_4 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

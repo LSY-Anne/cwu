@@ -1,0 +1,141 @@
+﻿$PBExportHeader$d_hpa412a_14.srd
+$PBExportComments$의료비지급명세서
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 2 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=4224 color="536870912" height.autosize=yes )
+table(column=(type=char(5) updatewhereclause=yes name=h01nno dbname="hin001m.h01nno" )
+ column=(type=char(40) updatewhereclause=yes name=h01knm dbname="hin001m.h01knm" )
+ column=(type=char(13) updatewhereclause=yes name=h01rno dbname="hin001m.h01rno" )
+ column=(type=char(181) updatewhereclause=yes name=h01ad dbname="h01ad" )
+ column=(type=number updatewhereclause=yes name=p44cnt dbname="p44cnt" )
+ column=(type=number updatewhereclause=yes name=p44ptl dbname="p44ptl" )
+ column=(type=char(10) updatewhereclause=yes name=saupno dbname="saupno" )
+ column=(type=char(40) updatewhereclause=yes name=saupnm dbname="saupnm" )
+ retrieve="SELECT A.MEMBER_NO    AS H01NNO,
+A.NAME    AS  H01KNM,
+A.JUMIN_NO    AS H01RNO, 
+(SELECT HOME_ADDR1 || ' ' || HOME_ADDR2 FROM INDB.HIN011M WHERE MEMBER_NO = A.MEMBER_NO)  AS H01AD,
+(SELECT 
+	        SUM(NVL(B.P44CNT, 0)) 
+            FROM 
+            (SELECT C.*, ROW_NUMBER() OVER (ORDER BY P44RLS ASC, P44RNO ASC) AS ROWNUMBER  FROM PADB.HPAP44T C
+               WHERE C.P44YAR = :AS_YEAR
+                                AND C.P44NNO = :AS_P44NNO) B
+            WHERE B.P44YAR = :AS_YEAR
+            AND B.P44NNO = A.MEMBER_NO
+            AND B.ROWNUMBER <= 9) AS P44CNT,
+(SELECT 
+            SUM(NVL(B.P44PTL, 0)) 
+            FROM 
+            (SELECT C.*, ROW_NUMBER() OVER (ORDER BY P44RLS ASC, P44RNO ASC) AS ROWNUMBER  FROM PADB.HPAP44T C
+             WHERE C.P44YAR = :AS_YEAR
+                                AND C.P44NNO = :AS_P44NNO) B
+            WHERE B.P44YAR = :AS_YEAR
+            AND B.P44NNO = A.MEMBER_NO
+            AND B.ROWNUMBER <= 9) AS P44PTL,
+(SELECT BUSINESS_NO  FROM CDDB.KCH000M) AS SAUPNO,
+(SELECT CAMPUS_NAME  FROM CDDB.KCH000M)  AS SAUPNM
+FROM 
+INDB.HIN001M  A 
+WHERE A.MEMBER_NO IN (SELECT  P44NNO FROM PADB.HPAP44T
+WHERE P44YAR = :AS_YEAR 
+AND P44NNO LIKE :AS_P44NNO)    " arguments=(("AS_YEAR", string),("AS_P44NNO", string)) )
+report(band=detail dataobject="d_hpa412a_15" x="5" y="1288" height="120" width="3424" border="0"  height.autosize=yes criteria="" nest_arguments=((" AS_YEAR "),(" h01nno ")) trail_footer = yes  name=dw_1 visible="1"  slideup=directlyabove )
+text(band=detail alignment="0" text="[별지 제 43호 서식] (2008.4.29 개정)" border="0" color="33554432" x="32" y="108" height="52" width="1143" html.valueishtml="0"  name=t_173 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="334" y1="568" x2="334" y2="904"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1120" y1="572" x2="1120" y2="804"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="의료비 공제 대상자" border="0" color="0" x="37" y="1032" height="56" width="1344" html.valueishtml="0"  name=t_46 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="1394" y1="1648" x2="1394" y2="1804"  name=l_132 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="의료비지급명세서" border="0" color="0" x="37" y="284" height="88" width="3337" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림" font.height="-14" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="1915" y1="572" x2="1915" y2="800"  name=l_100 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="①성 명" border="0" color="0" x="32" y="608" height="56" width="293" html.valueishtml="0"  name=t_16 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="주    소" border="0" color="0" x="32" y="824" height="56" width="293" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="②주민등록번호(또는 외국인확인번호)" border="0" color="0" x="1134" y="588" height="96" width="773" html.valueishtml="0"  name=t_24 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="(          )년 의료비 지급내역" border="0" color="0" x="1312" y="932" height="56" width="777" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="소득자 인적사항" border="0" color="0" x="1463" y="488" height="56" width="480" html.valueishtml="0"  name=t_18 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="지급내역" border="0" color="0" x="2706" y="1032" height="56" width="667" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="⑤주민등록번호" border="0" color="0" x="37" y="1172" height="56" width="1061" html.valueishtml="0"  name=t_47 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="지급처" border="0" color="0" x="1413" y="1032" height="56" width="1262" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="⑥본인 등 해당여부" border="0" color="0" x="1120" y="1148" height="104" width="256" html.valueishtml="0"  name=t_48 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="⑦사업자 등록번호" border="0" color="0" x="1413" y="1172" height="56" width="997" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="⑨건수" border="0" color="0" x="2702" y="1172" height="56" width="165" html.valueishtml="0"  name=t_9 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="⑩금액" border="0" color="0" x="2894" y="1172" height="56" width="475" html.valueishtml="0"  name=t_10 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="⑧의   료증빙코드" border="0" color="0" x="2437" y="1148" height="112" width="238" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="※ 작성방법" border="0" color="0" x="69" y="2880" height="52" width="270" html.valueishtml="0"  name=t_17 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="1. ③항과 ④항은 「조세특례제한법」제122조의3에 따른 사업자의 경우에 한하여 적으며,        년 1월 1일 이후 발생하는 분부터 적용합니다." border="0" color="0" x="69" y="2940" height="52" width="3200" html.valueishtml="0"  name=t_19 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="2. 의료비 지급내용중 의료비 공제가 가능한 내용만 적고, 동일한 의료비내역을 중복하여 적을 수 없습니다." border="0" color="0" x="69" y="3000" height="52" width="3182" html.valueishtml="0"  name=t_20 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="   (예: 국세청장이 제공하는 의료비자료에 포함된 금액을 별도의 진료비계산서를 첨부하여 중복으로 적는 경우)" border="0" color="0" x="69" y="3060" height="52" width="3182" html.valueishtml="0"  name=t_22 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="3. 본인 등 해당여부란은 본인·장애인·경로우대자인 경우에 ~"○~" 표시를 하며, 그 밖의 기본공제대상자인 경우에는 ~"X~" 표시를 합니다." border="0" color="0" x="69" y="3120" height="52" width="3182" html.valueishtml="0"  name=t_23 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="4. 국세청장이 제공하는 의료비자료의 경우에는 지급처의 사업자등록번호를 적지 않습니다." border="0" color="0" x="69" y="3180" height="52" width="3182" html.valueishtml="0"  name=t_26 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="5. 의료증빙코드란에는 공제대상자 및 지급처별로 다음의 하나만을 선택하여 적습니다." border="0" color="0" x="69" y="3240" height="52" width="3182" html.valueishtml="0"  name=t_27 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="    · 국세청장이 제공하는 의료비 자료 = 1 " border="0" color="0" x="69" y="3300" height="52" width="3182" html.valueishtml="0"  name=t_28 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="       (다만, 신용카드·현금영수증 사용액란의 의료기관사용액자료는 의료비 소득공제용도로 사용하실 수 없습니다.)" border="0" color="0" x="69" y="3360" height="52" width="3182" html.valueishtml="0"  name=t_29 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="    · 국민건강보험공단의 의료비부담명세서 = 2" border="0" color="0" x="69" y="3420" height="52" width="3182" html.valueishtml="0"  name=t_30 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="    · 잔료비계산서, 약제비계산서 = 3" border="0" color="0" x="69" y="3480" height="52" width="3182" html.valueishtml="0"  name=t_31 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="    ·「노인장기요양보험법 시행규칙」 별지 제15호 장기요양급여비용 명세서 = 4" border="0" color="0" x="69" y="3540" height="52" width="3182" html.valueishtml="0"  name=t_32 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="        (장기요양급여비용 명세서의 '⑤ 장기요양급여 본인부담금 합계' 란의 금액만을 적습니다." border="0" color="0" x="69" y="3600" height="52" width="3182" html.valueishtml="0"  name=t_33 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="         장기요양비급여액은 의료비공제대상이 아니므로 적는 금액에 포함할 수 없습니다.)" border="0" color="0" x="69" y="3660" height="52" width="3182" html.valueishtml="0"  name=t_34 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="    · 기타 의료비 영수증 = 5" border="0" color="0" x="69" y="3720" height="52" width="3182" html.valueishtml="0"  name=t_35 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="6. 의료비 지급내역란이 부족할 때에는 별지로 작성합니다." border="0" color="0" x="69" y="3780" height="52" width="3182" html.valueishtml="0"  name=t_36 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="「소득세법」 제52조 및「소득세법 시행령」제110조제3항과 제113조 제113조제1항에 따라 의료비를 공제받고자 의료비지급명세서를 제출합니다." border="0" color="0" x="32" y="2408" height="52" width="3328" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="210㎜×297㎜(신문용지 54g/㎡(재활용품))" border="0" color="0" x="2427" y="4124" height="52" width="960" html.valueishtml="0"  name=t_15 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="※ 구비서류 : 작성방법 5번란의 증빙자료 (     ) 매  (의료비 지급내역 순서와 일치되도록 편철합니다.)" border="0" color="0" x="69" y="4004" height="52" width="3182" html.valueishtml="0"  name=t_37 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="1106" y1="1112" x2="1106" y2="2220"  name=l_22 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2423" y1="1112" x2="2423" y2="2220"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2880" y1="1116" x2="2880" y2="2324"  name=l_21 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="18" y1="176" x2="18" y2="4116"  name=l_3 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3392" y1="180" x2="3392" y2="4116"  name=l_2 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="2907" y="2252" height="52" width="457" format="#,##0" html.valueishtml="0"  name=p44ptl visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="2697" y="2248" height="52" width="169" format="[general]" html.valueishtml="0"  name=p44cnt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="357" y="828" height="52" width="3008" format="[general]" html.valueishtml="0"  name=h01ad visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="년      월      일" border="0" color="0" x="1285" y="2504" height="56" width="599" html.valueishtml="0"  name=t_11 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="(서명 또는 인)" border="0" color="0" x="2066" y="2580" height="56" width="462" html.valueishtml="0"  name=t_13 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="귀하" border="0" color="0" x="1737" y="2644" height="56" width="183" html.valueishtml="0"  name=t_14 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="제출자" border="0" color="0" x="1458" y="2580" height="56" width="183" html.valueishtml="0"  name=t_12 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression=" AS_YEAR "border="0" color="0" x="1381" y="932" height="56" width="160" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression=" AS_YEAR "border="0" color="0" x="2117" y="2940" height="48" width="105" format="[GENERAL]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림" font.height="-8" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="③상 호" border="0" color="0" x="32" y="720" height="56" width="293" html.valueishtml="0"  name=t_21 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="④사업자등록번호" border="0" color="0" x="1134" y="720" height="56" width="773" html.valueishtml="0"  name=t_25 visible="1"  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="2688" y1="1008" x2="2688" y2="2324"  name=l_20 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1394" y1="1008" x2="1394" y2="2324"  name=l_19 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="2519" y="68" height="56" width="137" format="[general]" html.valueishtml="0"  name=h01nno visible="0" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="357" y="724" height="52" width="745" format="[general]" html.valueishtml="0"  name=saupnm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="1938" y="724" height="52" width="1422" format="[general]" html.valueishtml="0"  name=saupno visible="1" editmask.mask="###-##-#####" editmask.focusrectangle=no  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="357" y="608" height="56" width="745" format="[general]" html.valueishtml="0"  name=h01knm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="1938" y="608" height="56" width="1422" format="@@@@@@-@@@@@@@" html.valueishtml="0"  name=h01rno visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림" font.height="-9" font.weight="400"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="14" y1="176" x2="3392" y2="176"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="464" x2="3392" y2="464"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="568" x2="3392" y2="568"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="696" x2="3392" y2="696"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="800" x2="3392" y2="800"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="904" x2="3392" y2="904"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="1008" x2="3392" y2="1008"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="1492" x2="3392" y2="1492"  name=l_105 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="1596" x2="3392" y2="1596"  name=l_28 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="1700" x2="3392" y2="1700"  name=l_29 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="1804" x2="3392" y2="1804"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="1908" x2="3392" y2="1908"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="2012" x2="3392" y2="2012"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="2116" x2="3392" y2="2116"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="2220" x2="3392" y2="2220"  name=l_17 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="2324" x2="3392" y2="2324"  name=l_18 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="2756" x2="3392" y2="2756"  name=l_24 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="3948" x2="3392" y2="3948"  name=l_26 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="18" y1="4116" x2="3387" y2="4116"  name=l_47 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="1112" x2="3392" y2="1112"  name=l_23 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="1284" x2="3392" y2="1284"  name=l_25 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="1388" x2="3392" y2="1388"  name=l_27 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

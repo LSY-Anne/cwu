@@ -1,0 +1,82 @@
+﻿$PBExportHeader$d_hyk201a_1.srd
+$PBExportComments$임용구분별평가대상자생성-대상자
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(6) updatewhereclause=yes name=evl_ym dbname="hyk201t.evl_ym" )
+ column=(type=char(1) updatewhereclause=yes name=appoint_gb dbname="hyk201t.appoint_gb" )
+ column=(type=char(5) updatewhereclause=yes name=member_no dbname="hyk201t.member_no" )
+ column=(type=char(4) updatewhereclause=yes name=duty_code dbname="hyk201t.duty_code" )
+ column=(type=char(4) updatewhereclause=yes name=gwa dbname="hyk201t.gwa" )
+ column=(type=char(8) updatewhereclause=yes name=last_appoint_dt dbname="hyk201t.last_appoint_dt" )
+ column=(type=char(8) updatewhereclause=yes name=evl_str_dt dbname="hyk201t.evl_str_dt" )
+ column=(type=char(8) updatewhereclause=yes name=evl_end_dt dbname="hyk201t.evl_end_dt" )
+ column=(type=char(4) updatewhereclause=yes name=gus_duty_code dbname="hyk201t.gus_duty_code" )
+ column=(type=char(8) updatewhereclause=yes name=gus_appoint_dt dbname="hyk201t.gus_appoint_dt" )
+ column=(type=char(100) updatewhereclause=yes name=remark dbname="hyk201t.remark" )
+ column=(type=char(1) updatewhereclause=yes name=close_yn dbname="hyk201t.close_yn" )
+ column=(type=char(40) updatewhereclause=yes name=name dbname="hyk201t.name" )
+ column=(type=char(50) updatewhereclause=yes name=gwa_name dbname="gwa_name" )
+ column=(type=char(8) updatewhereclause=yes name=hire_date dbname="hyk201t.hire_date" )
+ column=(type=char(0) updatewhereclause=yes name=slt_gb dbname="slt_gb" values="	Y/	N" )
+ retrieve="  SELECT 	A.EVL_YM AS EVL_YM,   
+				A.APPOINT_GB AS APPOINT_GB ,   
+				A.MEMBER_NO AS MEMBER_NO,    
+				A.DUTY_CODE AS DUTY_CODE,
+				A.GWA AS GWA,
+				A.LAST_APPOINT_DT AS LAST_APPOINT_DT,   
+				A.EVL_STR_DT AS EVL_STR_DT,   
+				A.EVL_END_DT AS EVL_END_DT,   
+				A.GUS_DUTY_CODE AS GUS_DUTY_CODE,   
+				A.GUS_APPOINT_DT AS GUS_APPOINT_DT,   
+				A.REMARK AS REMARK,   
+				A.CLOSE_YN AS CLOSE_YN,
+				B.NAME AS NAME,
+				(SELECT C.FNAME FROM CDDB.KCH003M C WHERE C.GWA = A.GWA) AS GWA_NAME,
+				B.HAKWONHIRE_DATE AS HIRE_DATE,
+				'' AS SLT_GB
+    FROM 	YGDB.HYK201T A,
+			  	INDB.HIN001M B
+  WHERE	A.MEMBER_NO = B.MEMBER_NO
+	  AND	A.EVL_YM = :as_evl_ym
+	  AND	A.APPOINT_GB = :as_appoint_gb" arguments=(("as_evl_ym", string),("as_appoint_gb", string)) )
+text(band=header alignment="2" text="적요" border="0" color="33554432" x="4411" y="12" height="56" width="1733" html.valueishtml="0"  name=remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="상태" border="0" color="33554432" x="4155" y="12" height="56" width="247" html.valueishtml="0"  name=close_yn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="사번" border="0" color="33554432" x="183" y="12" height="56" width="247" html.valueishtml="0"  name=member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="현직급" border="0" color="33554432" x="869" y="12" height="56" width="338" html.valueishtml="0"  name=duty_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="최종임용일" border="0" color="33554432" x="1216" y="12" height="56" width="338" html.valueishtml="0"  name=last_appoint_dt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="평가시작일" border="0" color="33554432" x="1563" y="12" height="56" width="334" html.valueishtml="0"  name=evl_str_dt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="평가종료일" border="0" color="33554432" x="1906" y="12" height="56" width="338" html.valueishtml="0"  name=evl_end_dt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="승진예정직급" border="0" color="33554432" x="3378" y="12" height="56" width="421" html.valueishtml="0"  name=gus_duty_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="임용예정일" border="0" color="33554432" x="3808" y="12" height="56" width="338" html.valueishtml="0"  name=gus_appoint_dt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성명" border="0" color="33554432" x="439" y="12" height="56" width="421" html.valueishtml="0"  name=name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학과" border="0" color="33554432" x="2254" y="12" height="56" width="768" html.valueishtml="0"  name=gwa_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="본교임용일" border="0" color="33554432" x="3031" y="12" height="56" width="338" html.valueishtml="0"  name=hire_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="선택" border="0" color="33554432" x="9" y="12" height="56" width="165" html.valueishtml="0"  name=slt_gb_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="183" y="8" height="68" width="247" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=5 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="869" y="8" height="68" width="338" format="[general]" html.valueishtml="0"  name=duty_code visible="1" dddw.name=d_dddw_code dddw.displaycolumn=cd_nm dddw.datacolumn=cd dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.autoretrieve=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="33554432" x="1216" y="8" height="68" width="338" format="@@@@.@@.@@" html.valueishtml="0"  name=last_appoint_dt visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="33554432" x="1563" y="8" height="68" width="334" format="@@@@.@@.@@" html.valueishtml="0"  name=evl_str_dt visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="33554432" x="1906" y="8" height="68" width="338" format="@@@@.@@.@@" html.valueishtml="0"  name=evl_end_dt visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="33554432" x="3378" y="8" height="68" width="421" format="[general]" html.valueishtml="0"  name=gus_duty_code visible="1" dddw.name=d_dddw_code dddw.displaycolumn=cd_nm dddw.datacolumn=cd dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.autoretrieve=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="33554432" x="3808" y="8" height="68" width="338" format="@@@@.@@.@@" html.valueishtml="0"  name=gus_appoint_dt visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="33554432" x="4411" y="8" height="68" width="1733" format="[general]" html.valueishtml="0"  name=remark  tag="kor" visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="33554432" x="4155" y="8" height="68" width="247" format="[general]" html.valueishtml="0"  name=close_yn visible="1" dddw.name=d_dddw_code dddw.displaycolumn=cd_nm dddw.datacolumn=cd dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.autoretrieve=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="33554432" x="439" y="8" height="68" width="421" format="[general]" html.valueishtml="0"  name=name  tag="kor" visible="1" edit.limit=40 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="33554432" x="2254" y="8" height="68" width="768" format="[general]" html.valueishtml="0"  name=gwa_name visible="1" edit.limit=50 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="2" tabsequence=32766 border="0" color="33554432" x="3031" y="8" height="68" width="338" format="@@@@.@@.@@" html.valueishtml="0"  name=hire_date visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="2" tabsequence=32766 border="0" color="33554432" x="9" y="8" height="68" width="165" format="[general]" html.valueishtml="0"  name=slt_gb visible="1" checkbox.text="" checkbox.on="Y" checkbox.off="N" checkbox.scale=yes checkbox.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

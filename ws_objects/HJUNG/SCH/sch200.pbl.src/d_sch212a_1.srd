@@ -1,0 +1,105 @@
+﻿$PBExportHeader$d_sch212a_1.srd
+$PBExportComments$사생검색리스트
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 225 print.margin.right = 225 print.margin.top = 150 print.margin.bottom = 150 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(1) updatewhereclause=yes name=house_gb dbname="saz220t.house_gb" dbalias="B.house_gb" )
+ column=(type=char(4) updatewhereclause=yes name=std_year dbname="saz220t.std_year" dbalias="B.std_year" )
+ column=(type=char(9) updatewhereclause=yes name=hakbun dbname="saz220t.hakbun" dbalias="B.hakbun" )
+ column=(type=char(20) updatewhereclause=yes name=hname dbname="saz220t.hname" dbalias="B.hname" )
+ column=(type=char(1) updatewhereclause=yes name=sex dbname="saz220t.sex" dbalias="B.sex" values="남	1/여	2/" )
+ column=(type=char(20) updatewhereclause=yes name=cell_no dbname="saz220t.cell_no" dbalias="B.cell_no" )
+ column=(type=char(20) updatewhereclause=yes name=parent_nm dbname="saz220t.parent_nm" dbalias="B.parent_nm" )
+ column=(type=char(20) updatewhereclause=yes name=parent_cell dbname="saz220t.parent_cell" dbalias="B.parent_cell" )
+ column=(type=char(50) updatewhereclause=yes name=gwa dbname="gwa" )
+ column=(type=char(1) updatewhereclause=yes name=hakyun dbname="saz220t.hakyun" dbalias="B.hakyun" )
+ column=(type=char(2) updatewhereclause=yes name=enter_term dbname="saz220t.enter_term" dbalias="B.enter_term" )
+ column=(type=char(2) updatewhereclause=yes name=door_gb dbname="saz220t.door_gb" dbalias="B.door_gb" )
+ column=(type=char(2) updatewhereclause=yes name=area_gb dbname="saz220t.area_gb" dbalias="B.area_gb" )
+ column=(type=decimal(4) updatewhereclause=yes name=bef_grade dbname="saz240t.bef_grade" dbalias="C.bef_grade" )
+ column=(type=number updatewhereclause=yes name=tot_point dbname="tot_point" )
+ column=(type=decimal(0) updatewhereclause=yes name=final_rank dbname="saz240t.final_rank" dbalias="C.final_rank" )
+ column=(type=char(1) updatewhereclause=yes name=rm_yn dbname="rm_yn" )
+ column=(type=char(0) updatewhereclause=yes name=sms dbname="sms" )
+ retrieve="SELECT
+B.HOUSE_GB,
+B.STD_YEAR,
+ B.HAKBUN,
+B.HNAME,
+B.SEX ,
+B.CELL_NO ,
+B.PARENT_NM ,
+B.PARENT_CELL ,
+(SELECT FNAME FROM CDDB.KCH003M WHERE GWA = B.GWA) as GWA ,
+B.HAKYUN ,
+B.ENTER_TERM ,
+B.DOOR_GB ,
+B.AREA_GB  ,
+C.BEF_GRADE,
+NVL(C.AREA_RATE, 0) + NVL(C.RECORD_RATE, 0) - NVL(C.DEMERIT_RATE, 0) AS TOT_POINT,
+C.FINAL_RANK,
+(CASE WHEN (SELECT COUNT(*) FROM SCH.SAZ260T D WHERE D.HOUSE_GB = B.HOUSE_GB 
+                                    AND D.STD_YEAR = B.STD_YEAR 
+                                    AND D.HOUSE_REQ_NO = B.HOUSE_REQ_NO
+                                    AND D.DOOR_GB = B.DOOR_GB) >= 1 THEN 'Y' ELSE 'N' END) AS RM_YN,
+'' as SMS
+ FROM SCH.SAZ250T A, SCH.SAZ220T B , SCH.SAZ240T C
+WHERE A.STAT_CD = '1'
+AND ( A.HOUSE_GB = B.HOUSE_GB ) and  
+ ( A.STD_YEAR = B.STD_YEAR ) and  
+      ( A.HAKBUN = B.HAKBUN )    AND
+      A.HOUSE_GB = C.HOUSE_GB(+) AND
+      A.STD_YEAR = C.STD_YEAR(+) AND
+      A.HOUSE_REQ_NO = C.HOUSE_REQ_NO(+) AND
+      A.HOUSE_GB = :as_gb AND
+      A.STD_YEAR = :as_year AND
+      (A.HAKBUN = :as_hakbun Or :as_hakbun = '%') AND
+B.CELL_NO LIKE :as_cell_no
+      
+              " arguments=(("as_gb", string),("as_year", string),("as_hakbun", string),("as_cell_no", string)) )
+text(band=header alignment="2" text="Sms" border="0" color="0" x="4379" y="12" height="56" width="210" html.valueishtml="0"  name=sms_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="No" border="0" color="0" x="0" y="12" height="56" width="206" html.valueishtml="0"  name=no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성명" border="0" color="33554432" x="219" y="12" height="56" width="375" html.valueishtml="0"  name=hname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학년" border="0" color="33554432" x="608" y="12" height="56" width="123" html.valueishtml="0"  name=hakyun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성별" border="0" color="33554432" x="745" y="12" height="56" width="123" html.valueishtml="0"  name=sex_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="핸드폰" border="0" color="33554432" x="882" y="12" height="56" width="366" html.valueishtml="0"  name=cell_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학부모명" border="0" color="33554432" x="1262" y="12" height="56" width="384" html.valueishtml="0"  name=parent_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학부모핸드폰" border="0" color="33554432" x="1659" y="12" height="56" width="402" html.valueishtml="0"  name=parent_cell_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학과" border="0" color="33554432" x="2075" y="12" height="56" width="590" html.valueishtml="0"  name=gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="입사기간" border="0" color="33554432" x="2679" y="12" height="56" width="293" html.valueishtml="0"  name=enter_term_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="지원실" border="0" color="33554432" x="2985" y="12" height="56" width="183" html.valueishtml="0"  name=door_gb_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="지역" border="0" color="33554432" x="3182" y="12" height="56" width="293" html.valueishtml="0"  name=area_gb_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="평점" border="0" color="33554432" x="3488" y="12" height="56" width="165" html.valueishtml="0"  name=bef_grade_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="총점" border="0" color="33554432" x="3666" y="12" height="56" width="187" html.valueishtml="0"  name=tot_point_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="순위" border="0" color="33554432" x="3867" y="12" height="56" width="146" html.valueishtml="0"  name=final_rank_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="룸메이트신청" border="0" color="33554432" x="4032" y="12" height="56" width="338" html.valueishtml="0"  name=rm_yn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="2" tabsequence=32766 border="0" color="33554432" x="4032" y="8" height="68" width="338" format="[general]" html.valueishtml="0"  name=rm_yn visible="1" edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=18 alignment="2" tabsequence=32766 border="0" color="33554432" x="4384" y="8" height="68" width="206" format="[general]" html.valueishtml="0"  name=sms visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="getrow()"border="0" color="0" x="0" y="8" height="68" width="206" format="[GENERAL]" html.valueishtml="0"  name=no visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="33554432" x="219" y="8" height="68" width="375" format="[general]" html.valueishtml="0"  name=hname  tag="성명" visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="33554432" x="608" y="8" height="68" width="123" format="[general]" html.valueishtml="0"  name=hakyun  tag="학년" visible="1" edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="33554432" x="745" y="8" height="68" width="123" format="[general]" html.valueishtml="0"  name=sex  tag="성별" visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="33554432" x="882" y="8" height="68" width="366" format="[general]" html.valueishtml="0"  name=cell_no  tag="핸드폰" visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="33554432" x="1262" y="8" height="68" width="384" format="[general]" html.valueishtml="0"  name=parent_nm  tag="보호자명" visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="33554432" x="1659" y="8" height="68" width="402" format="[general]" html.valueishtml="0"  name=parent_cell  tag="보호자핸드폰" visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="33554432" x="2075" y="8" height="68" width="590" format="[general]" html.valueishtml="0"  name=gwa  tag="학과" visible="1" edit.limit=4 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="33554432" x="2679" y="8" height="68" width="293" format="[general]" html.valueishtml="0"  name=enter_term  tag="입사기간" visible="1" edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="2" tabsequence=32766 border="0" color="33554432" x="2985" y="8" height="68" width="183" format="[general]" html.valueishtml="0"  name=door_gb  tag="실구분" visible="1" edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="2" tabsequence=32766 border="0" color="33554432" x="3182" y="8" height="68" width="293" format="[general]" html.valueishtml="0"  name=area_gb  tag="지역구분" visible="1" edit.limit=2 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="2" tabsequence=32766 border="0" color="33554432" x="3867" y="8" height="68" width="146" format="[general]" html.valueishtml="0"  name=final_rank  tag="평가순위" visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="2" tabsequence=32766 border="0" color="33554432" x="3666" y="8" height="68" width="187" format="[general]" html.valueishtml="0"  name=tot_point visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="2" tabsequence=32766 border="0" color="33554432" x="3488" y="8" height="68" width="165" format="[general]" html.valueishtml="0"  name=bef_grade  tag="전년도평점" visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

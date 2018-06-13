@@ -1,0 +1,432 @@
+﻿$PBExportHeader$d_hpa411a_1.srd
+$PBExportComments$연말정산 기초자료 등록 일자 관리
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=76 color="536870912" )
+summary(height=72 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=72 color="536870912" )
+table(column=(type=char(1) updatewhereclause=yes name=recode dbname="recode" )
+ column=(type=char(1) updatewhereclause=yes name=edu dbname="edu" )
+ column=(type=char(10) updatewhereclause=yes name=sayeb dbname="sayeb" )
+ column=(type=char(13) updatewhereclause=yes name=jumin dbname="jumin" )
+ column=(type=char(61) updatewhereclause=yes name=hname dbname="hname" )
+ column=(type=char(4) updatewhereclause=yes name=year dbname="year" )
+ column=(type=number updatewhereclause=yes name=year_1 dbname="year_1" )
+ column=(type=number updatewhereclause=yes name=year_2 dbname="year_2" )
+ column=(type=number updatewhereclause=yes name=year_3 dbname="year_3" )
+ column=(type=number updatewhereclause=yes name=year_4 dbname="year_4" )
+ column=(type=number updatewhereclause=yes name=year_5 dbname="year_5" )
+ column=(type=number updatewhereclause=yes name=year_6 dbname="year_6" )
+ column=(type=number updatewhereclause=yes name=year_7 dbname="year_7" )
+ column=(type=number updatewhereclause=yes name=year_8 dbname="year_8" )
+ column=(type=number updatewhereclause=yes name=year_9 dbname="year_9" )
+ column=(type=number updatewhereclause=yes name=year_10 dbname="year_10" )
+ column=(type=number updatewhereclause=yes name=year_11 dbname="year_11" )
+ column=(type=number updatewhereclause=yes name=year_12 dbname="year_12" )
+ column=(type=number updatewhereclause=yes name=year_tot dbname="year_tot" )
+ retrieve="SELECT	A.RECODE,
+			A.EDU,
+			A.SAYEB,
+			A.JUMIN,
+			A.HNAME,
+			A.YEAR,
+			NVL(SUM(A.YEAR_1), 0)	YEAR_1,
+			NVL(SUM(A.YEAR_2), 0)	YEAR_2,
+			NVL(SUM(A.YEAR_3), 0)	YEAR_3,
+			NVL(SUM(A.YEAR_4), 0)	YEAR_4,
+			NVL(SUM(A.YEAR_5), 0)	YEAR_5,
+			NVL(SUM(A.YEAR_6), 0)	YEAR_6,
+			NVL(SUM(A.YEAR_7), 0)	YEAR_7,
+			NVL(SUM(A.YEAR_8), 0)	YEAR_8,
+			NVL(SUM(A.YEAR_9), 0)	YEAR_9,
+			NVL(SUM(A.YEAR_10), 0)	YEAR_10,
+			NVL(SUM(A.YEAR_11), 0)	YEAR_11,
+			NVL(SUM(A.YEAR_12), 0)	YEAR_12,
+			NVL(SUM(A.YEAR_TOT), 0)	YEAR_TOT
+FROM 		(	SELECT	'C'				RECODE,
+							'6'				EDU,
+							'3108202880'	SAYEB,
+							(	SELECT	B.JUMIN_NO
+								FROM 		HAKSA.JAEHAK_HAKJUK B
+								WHERE		A.HAKBUN		=	B.HAKBUN
+								GROUP BY B.JUMIN_NO
+				
+								UNION
+				
+								SELECT	B.JUMIN_NO
+								FROM 		HAKSA.JOLUP_HAKJUK B
+								WHERE		A.HAKBUN		=	B.HAKBUN
+								GROUP BY B.JUMIN_NO)						JUMIN,
+							RPAD(	(	SELECT	B.HNAME
+										FROM 		HAKSA.JAEHAK_HAKJUK B
+										WHERE		A.HAKBUN		=	B.HAKBUN
+										GROUP BY B.HNAME
+						
+										UNION
+						
+										SELECT	B.HNAME
+										FROM 		HAKSA.JOLUP_HAKJUK B
+										WHERE		A.HAKBUN		=	B.HAKBUN
+										GROUP BY B.HNAME), 30, ' ')	HNAME,
+							'2008'  year,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200801', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.DUNGROK_GWANRI B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200801'
+																									AND		(B.DUNG_YN = 'Y' OR B.HWAN_YN ='Y' OR B.CHU_YN ='Y' OR B.BUN_YN ='Y')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')		YEAR_1,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200802', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.DUNGROK_GWANRI B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200802'
+																									AND		(B.DUNG_YN = 'Y' OR B.HWAN_YN ='Y' OR B.CHU_YN ='Y' OR B.BUN_YN ='Y')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')		YEAR_2,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200803', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.DUNGROK_GWANRI B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200803'
+																									AND		(B.DUNG_YN = 'Y' OR B.HWAN_YN ='Y' OR B.CHU_YN ='Y' OR B.BUN_YN ='Y')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')		YEAR_3,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200804', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.DUNGROK_GWANRI B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200804'
+																									AND		(B.DUNG_YN = 'Y' OR B.HWAN_YN ='Y' OR B.CHU_YN ='Y' OR B.BUN_YN ='Y')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')		YEAR_4,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200805', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.DUNGROK_GWANRI B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200805'
+																									AND		(B.DUNG_YN = 'Y' OR B.HWAN_YN ='Y' OR B.CHU_YN ='Y' OR B.BUN_YN ='Y')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')		YEAR_5,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200806', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.DUNGROK_GWANRI B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200806'
+																									AND		(B.DUNG_YN = 'Y' OR B.HWAN_YN ='Y' OR B.CHU_YN ='Y' OR B.BUN_YN ='Y')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')		YEAR_6,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200807', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.DUNGROK_GWANRI B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200807'
+																									AND		(B.DUNG_YN = 'Y' OR B.HWAN_YN ='Y' OR B.CHU_YN ='Y' OR B.BUN_YN ='Y')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')		YEAR_7,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200808', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.DUNGROK_GWANRI B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200808'
+																									AND		(B.DUNG_YN = 'Y' OR B.HWAN_YN ='Y' OR B.CHU_YN ='Y' OR B.BUN_YN ='Y')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')		YEAR_8,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200809', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.DUNGROK_GWANRI B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200809'
+																									AND		(B.DUNG_YN = 'Y' OR B.HWAN_YN ='Y' OR B.CHU_YN ='Y' OR B.BUN_YN ='Y')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')		YEAR_9,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200810', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.DUNGROK_GWANRI B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200810'
+																									AND		(B.DUNG_YN = 'Y' OR B.HWAN_YN ='Y' OR B.CHU_YN ='Y' OR B.BUN_YN ='Y')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')		YEAR_10,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200811', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.DUNGROK_GWANRI B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200811'
+																									AND		(B.DUNG_YN = 'Y' OR B.HWAN_YN ='Y' OR B.CHU_YN ='Y' OR B.BUN_YN ='Y')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')		YEAR_11,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200812', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.DUNGROK_GWANRI B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200812'
+																									AND		(B.DUNG_YN = 'Y' OR B.HWAN_YN ='Y' OR B.CHU_YN ='Y' OR B.BUN_YN ='Y')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')		YEAR_12,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 4), '2008', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.DUNGROK_GWANRI B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 4) = :as_year
+																									AND		(B.DUNG_YN = 'Y' OR B.HWAN_YN ='Y' OR B.CHU_YN ='Y' OR B.BUN_YN ='Y')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')		YEAR_TOT
+				FROM 		HAKSA.DUNGROK_GWANRI A
+				WHERE		SUBSTR(A.NAPBU_DATE, 1, 4) =:as_year) A
+GROUP BY A.RECODE,
+			A.EDU,
+			A.SAYEB,
+			A.JUMIN,
+			A.HNAME,
+			A.YEAR
+			
+UNION
+
+SELECT	A.RECODE,
+			A.EDU,
+			A.SAYEB,
+			A.JUMIN,
+			A.HNAME,
+			A.YEAR,
+			NVL(SUM(A.YEAR_1), 0)	YEAR_1,
+			NVL(SUM(A.YEAR_2), 0)	YEAR_2,
+			NVL(SUM(A.YEAR_3), 0)	YEAR_3,
+			NVL(SUM(A.YEAR_4), 0)	YEAR_4,
+			NVL(SUM(A.YEAR_5), 0)	YEAR_5,
+			NVL(SUM(A.YEAR_6), 0)	YEAR_6,
+			NVL(SUM(A.YEAR_7), 0)	YEAR_7,
+			NVL(SUM(A.YEAR_8), 0)	YEAR_8,
+			NVL(SUM(A.YEAR_9), 0)	YEAR_9,
+			NVL(SUM(A.YEAR_10), 0)	YEAR_10,
+			NVL(SUM(A.YEAR_11), 0)	YEAR_11,
+			NVL(SUM(A.YEAR_12), 0)	YEAR_12,
+			NVL(SUM(A.YEAR_TOT), 0)	YEAR_TOT
+FROM 		(	SELECT	'C' 				RECODE,
+							'7' 				EDU,
+							'3108202880' 	SAYEB,
+							(	SELECT	B.JUMIN_NO
+								FROM 		HAKSA.D_HAKJUK B
+								WHERE		A.HAKBUN		=	B.HAKBUN
+								GROUP BY B.JUMIN_NO)						JUMIN,
+							RPAD(	(	SELECT	B.HNAME
+										FROM 		HAKSA.D_HAKJUK B
+										WHERE		A.HAKBUN		=	B.HAKBUN
+										GROUP BY B.HNAME), 30, ' ') 	HNAME,
+							'2008'  year,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200801', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.D_DUNGROK B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200801'
+																									AND		(B.DUNG_YN = '1' OR B.HWAN_YN ='1' OR B.CHU_YN ='1' OR B.BUN_YN ='1')
+																									GROUP BY B.HAKBUN), 0), 10, ' ') YEAR_1,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200802', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.D_DUNGROK B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200802'
+																									AND		(B.DUNG_YN = '1' OR B.HWAN_YN ='1' OR B.CHU_YN ='1' OR B.BUN_YN ='1')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')	YEAR_2,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200803', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.D_DUNGROK B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200803'
+																									AND		(B.DUNG_YN = '1' OR B.HWAN_YN ='1' OR B.CHU_YN ='1' OR B.BUN_YN ='1')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')	YEAR_3,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200804', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.D_DUNGROK B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200804'
+																									AND		(B.DUNG_YN = '1' OR B.HWAN_YN ='1' OR B.CHU_YN ='1' OR B.BUN_YN ='1')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')	YEAR_4,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200805', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.D_DUNGROK B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200805'
+																									AND		(B.DUNG_YN = '1' OR B.HWAN_YN ='1' OR B.CHU_YN ='1' OR B.BUN_YN ='1')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')	YEAR_5,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200806', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.D_DUNGROK B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200806'
+																									AND		(B.DUNG_YN = '1' OR B.HWAN_YN ='1' OR B.CHU_YN ='1' OR B.BUN_YN ='1')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')	YEAR_6,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200807', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.D_DUNGROK B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200807'
+																									AND		(B.DUNG_YN = '1' OR B.HWAN_YN ='1' OR B.CHU_YN ='1' OR B.BUN_YN ='1')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')	YEAR_7,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200808', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.D_DUNGROK B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200808'
+																									AND		(B.DUNG_YN = '1' OR B.HWAN_YN ='1' OR B.CHU_YN ='1' OR B.BUN_YN ='1')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')	YEAR_8,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200809', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.D_DUNGROK B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200809'
+																									AND		(B.DUNG_YN = '1' OR B.HWAN_YN ='1' OR B.CHU_YN ='1' OR B.BUN_YN ='1')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')	YEAR_9,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200810', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.D_DUNGROK B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200810'
+																									AND		(B.DUNG_YN = '1' OR B.HWAN_YN ='1' OR B.CHU_YN ='1' OR B.BUN_YN ='1')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')	YEAR_10,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200811', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.D_DUNGROK B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200811'
+																									AND		(B.DUNG_YN = '1' OR B.HWAN_YN ='1' OR B.CHU_YN ='1' OR B.BUN_YN ='1')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')	YEAR_11,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 6), '200812', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.D_DUNGROK B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 6) ='200812'
+																									AND		(B.DUNG_YN = '1' OR B.HWAN_YN ='1' OR B.CHU_YN ='1' OR B.BUN_YN ='1')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')	YEAR_12,
+							LPAD(DECODE(SUBSTR(A.NAPBU_DATE, 1, 4), '2008', (	SELECT 	NVL(SUM((NVL(B.IPHAK_N, 0) + NVL(B.DUNGROK_N, 0))), 0)
+																									FROM 		HAKSA.D_DUNGROK B
+																									WHERE 	A.HAKBUN 	=	B.HAKBUN
+																									AND		A.YEAR 		=	B.YEAR
+																									AND		A.HAKGI 		=	B.HAKGI
+																									AND		A.NAPBU_DATE=	B.NAPBU_DATE
+																									AND		A.chasu		=	B.chasu
+																									AND		SUBSTR(B.NAPBU_DATE, 1, 4) =:as_year
+																									AND		(B.DUNG_YN = '1' OR B.HWAN_YN ='1' OR B.CHU_YN ='1' OR B.BUN_YN ='1')
+																									GROUP BY B.HAKBUN), 0), 10, ' ')	YEAR_TOT
+							FROM 		HAKSA.D_DUNGROK A
+							WHERE		SUBSTR(A.NAPBU_DATE, 1, 4) =:as_year ) A
+GROUP BY A.RECODE,
+			A.EDU,
+			A.SAYEB,
+			A.JUMIN,
+			A.HNAME,
+			A.YEAR" arguments=(("as_year", string)) )
+text(band=header alignment="2" text="Year" border="0" color="33554432" x="9" y="8" height="56" width="160" html.valueishtml="0"  name=year_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Recode" border="0" color="0" x="178" y="4" height="60" width="201" html.valueishtml="0"  name=recode_t visible="1"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="구분" border="0" color="0" x="389" y="4" height="60" width="151" html.valueishtml="0"  name=edu_t visible="1"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="사업자번호" border="0" color="0" x="549" y="4" height="60" width="311" html.valueishtml="0"  name=sayeb_t visible="1"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="주민번호" border="0" color="0" x="869" y="4" height="60" width="407" html.valueishtml="0"  name=jumin_t visible="1"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="성명" border="0" color="0" x="1285" y="4" height="60" width="270" html.valueishtml="0"  name=hname_t visible="1"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Year 1" border="0" color="33554432" x="1563" y="4" height="56" width="325" html.valueishtml="0"  name=year_1_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Year 2" border="0" color="33554432" x="1897" y="4" height="56" width="261" html.valueishtml="0"  name=year_2_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Year 3" border="0" color="33554432" x="2167" y="4" height="56" width="274" html.valueishtml="0"  name=year_3_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Year 4" border="0" color="33554432" x="2450" y="4" height="56" width="329" html.valueishtml="0"  name=year_4_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Year 5" border="0" color="33554432" x="2789" y="4" height="56" width="265" html.valueishtml="0"  name=year_5_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Year 6" border="0" color="33554432" x="3063" y="4" height="56" width="279" html.valueishtml="0"  name=year_6_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Year 7" border="0" color="33554432" x="3351" y="4" height="56" width="251" html.valueishtml="0"  name=year_7_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Year 8" border="0" color="33554432" x="3611" y="4" height="56" width="256" html.valueishtml="0"  name=year_8_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Year 9" border="0" color="33554432" x="3877" y="4" height="56" width="306" html.valueishtml="0"  name=year_9_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Year 10" border="0" color="33554432" x="4192" y="4" height="56" width="329" html.valueishtml="0"  name=year_10_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Year 11" border="0" color="33554432" x="4530" y="4" height="56" width="233" html.valueishtml="0"  name=year_11_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Year 12" border="0" color="33554432" x="4773" y="4" height="56" width="242" html.valueishtml="0"  name=year_12_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Year Tot" border="0" color="33554432" x="5024" y="4" height="56" width="389" html.valueishtml="0"  name=year_tot_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="33554432" x="9" y="8" height="72" width="160" format="[general]" html.valueishtml="0"  name=year visible="1" edit.limit=4 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="178" y="8" height="72" width="201" format="[general]" html.valueishtml="0"  name=recode visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="389" y="8" height="72" width="151" format="[general]" html.valueishtml="0"  name=edu visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="549" y="8" height="72" width="311" format="[general]" html.valueishtml="0"  name=sayeb visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="869" y="8" height="72" width="407" format="[general]" html.valueishtml="0"  name=jumin visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="33554432" x="1285" y="8" height="72" width="270" format="[general]" html.valueishtml="0"  name=hname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="33554432" x="1563" y="8" height="72" width="325" format="[general]" html.valueishtml="0"  name=year_1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="33554432" x="1897" y="8" height="72" width="261" format="[general]" html.valueishtml="0"  name=year_2 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="33554432" x="2167" y="8" height="72" width="274" format="[general]" html.valueishtml="0"  name=year_3 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="33554432" x="2450" y="8" height="72" width="329" format="[general]" html.valueishtml="0"  name=year_4 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="1" tabsequence=32766 border="0" color="33554432" x="2789" y="8" height="72" width="265" format="[general]" html.valueishtml="0"  name=year_5 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="1" tabsequence=32766 border="0" color="33554432" x="3063" y="8" height="72" width="279" format="[general]" html.valueishtml="0"  name=year_6 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="1" tabsequence=32766 border="0" color="33554432" x="3351" y="8" height="72" width="251" format="[general]" html.valueishtml="0"  name=year_7 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="1" tabsequence=32766 border="0" color="33554432" x="3611" y="8" height="72" width="256" format="[general]" html.valueishtml="0"  name=year_8 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="1" tabsequence=32766 border="0" color="33554432" x="3877" y="8" height="72" width="306" format="[general]" html.valueishtml="0"  name=year_9 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="1" tabsequence=32766 border="0" color="33554432" x="4192" y="8" height="72" width="329" format="[general]" html.valueishtml="0"  name=year_10 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="1" tabsequence=32766 border="0" color="33554432" x="4530" y="8" height="72" width="233" format="[general]" html.valueishtml="0"  name=year_11 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=18 alignment="1" tabsequence=32766 border="0" color="33554432" x="4773" y="8" height="72" width="242" format="[general]" html.valueishtml="0"  name=year_12 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=19 alignment="1" tabsequence=32766 border="0" color="33554432" x="5024" y="8" height="72" width="389" format="[general]" html.valueishtml="0"  name=year_tot visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="0" expression="sum(  year_tot  for all )"border="0" color="0" x="5024" y="8" height="56" width="389" format="[GENERAL]" html.valueishtml="0"  name=sum_tot visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

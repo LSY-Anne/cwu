@@ -1,0 +1,37 @@
+﻿$PBExportHeader$f_getconfirm.srf
+$PBExportComments$급여확정 Count를 구한다(A:year_month,R:count)
+global type f_getconfirm from function_object
+end type
+
+forward prototypes
+global function long f_getconfirm (string as_chasu, string as_yearmonth, string as_messageyn)
+end prototypes
+
+global function long f_getconfirm (string as_chasu, string as_yearmonth, string as_messageyn);// ==========================================================================================
+// 기    능 : 	월급여확정구분 Count를 가져온다.
+// 작 성 인 : 	안금옥
+// 작성일자 : 	2002.04
+// 함수원형 : 	f_getconfirm(string	as_yearmonth, string	as_messageyn)	return	long
+// 인    수 :	as_yearmonth	-	기준년월
+//					as_messageyn	-	메세지 여부 (Y/N)
+// 되 돌 림 :	count
+// 주의사항 :
+// 수정사항 :
+// ==========================================================================================
+
+long		ll_count
+
+  select count(*)
+    into :ll_count
+	 from  padb.hpa021m
+	where year_month  = :as_yearmonth
+	  and chasu       like :as_chasu || '%'
+	  and confirm_gbN = 9 ;
+	  
+if (as_messageyn = 'Y' or as_messageyn = 'y') and ll_count > 0 then
+	f_messagebox('1', string(as_yearmonth, '@@@@년 @@월') + '의 급여 확정을 마친 상태입니다. 자료를 재생성할 수 없습니다.!')
+end if
+
+return	ll_count
+end function
+

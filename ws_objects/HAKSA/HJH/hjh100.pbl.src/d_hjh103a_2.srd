@@ -1,0 +1,56 @@
+﻿$PBExportHeader$d_hjh103a_2.srd
+$PBExportComments$[청운대]장학배정관리
+release 10.5;
+datawindow(units=0 timer_interval=0 color=80269524 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=72 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes name=hakbun dbname="sungjukgye.hakbun" )
+ column=(type=char(1) updatewhereclause=yes name=hakyun dbname="sungjukgye.hakyun" )
+ column=(type=char(1) updatewhereclause=yes name=hakgi dbname="sungjukgye.hakgi" )
+ column=(type=decimal(0) updatewhereclause=yes name=sungjukgye_jh_sukcha dbname="sungjukgye.jh_sukcha" )
+ column=(type=char(4) updatewhereclause=yes name=gwa dbname="sungjukgye.gwa" )
+ column=(type=char(20) updatewhereclause=yes name=jaehak_hakjuk_hname dbname="sungjukgye.hname" )
+ column=(type=decimal(0) updatewhereclause=yes name=gwa_sym_order_seq dbname="sungjukgye.order_seq" )
+ retrieve="SELECT 	A.HAKBUN,   
+			A.HAKYUN,   
+			A.HAKGI,   
+			A.JH_SUKCHA, 
+			A.GWA,
+			B.HNAME,
+			C.ORDER_SEQ	  
+FROM		HAKSA.SUNGJUKGYE A,
+			HAKSA.JAEHAK_HAKJUK B,
+			HAKSA.GWA_SYM C
+WHERE 	B.GWA		=	C.GWA
+AND		A.HAKBUN = B.HAKBUN
+AND		A.YEAR	= :as_year
+AND		A.HAKGI	= :as_hakgi
+AND		A.HAKYUN like :as_hakyun
+and		A.GWA		like :as_gwa
+AND		A.JH_SUKCHA is not null
+
+
+" arguments=(("as_year", string),("as_hakgi", string),("as_hakyun", string),("as_gwa", string))  sort="gwa_sym_order_seq A hakyun A sungjukgye_jh_sukcha A " )
+group(level=1 header.height=76 trailer.height=0 by=("gwa" , "hakyun" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text="성명" border="0" color="0" x="306" y="4" height="60" width="315" html.valueishtml="0"  name=view_janghak_sajung_hakyun_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학번" border="0" color="0" x="5" y="4" height="60" width="297" html.valueishtml="0"  name=view_janghak_sajung_hakbun_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="장학석차" border="0" color="0" x="626" y="4" height="60" width="338" html.valueishtml="0"  name=view_janghak_sajung_hakgi_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="15780518" )
+column(band=header.1 id=2 alignment="2" tabsequence=32766 border="0" color="8388608" x="745" y="4" height="60" width="219" format="@학년" html.valueishtml="0"  name=hakyun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="12639424" )
+column(band=header.1 id=5 alignment="0" tabsequence=32766 border="0" color="8388608" x="5" y="4" height="60" width="736" format="[general]" html.valueishtml="0"  name=gwa visible="1" dddw.name=d_dddw_hakgwa dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="12639424" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="165" y="280" height="60" width="32" format="[general]" html.valueishtml="0"  name=hakgi visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="12639424" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="5" y="4" height="60" width="297" format="[general]" html.valueishtml="0"  name=hakbun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="1090519039" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="306" y="4" height="60" width="315" format="[general]" html.valueishtml="0"  name=jaehak_hakjuk_hname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="1090519039" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="255" x="626" y="4" height="60" width="338" format="[general]" html.valueishtml="0"  name=sungjukgye_jh_sukcha visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="1090519039" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,56 @@
+﻿$PBExportHeader$d_hin805p_sub.srd
+$PBExportComments$전임교원 재임용 현황 dw sub
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=152 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=144 color="536870912" )
+table(column=(type=char(3) updatewhereclause=yes name=duty_code dbname="duty_code" )
+ column=(type=char(4000) updatewhereclause=yes name=com_duty_nm dbname="com_duty_nm" )
+ column=(type=decimal(0) updatewhereclause=yes name=to_cnt dbname="to_cnt" )
+ column=(type=number updatewhereclause=yes name=com_daesang_cnt dbname="com_daesang_cnt" )
+ column=(type=number updatewhereclause=yes name=com_ok_cnt dbname="com_ok_cnt" )
+ retrieve="SELECT	A.DUTY_CODE,
+			A.COM_DUTY_NM,
+			A.TO_CNT,
+			B.COM_DAESANG_CNT,
+			B.COM_OK_CNT
+FROM		(	SELECT	A.DUTY_CODE,
+							A.TO_CNT,
+							FU_DUTY_NM(A.DUTY_CODE,'K')	COM_DUTY_NM
+				FROM		INDB.HIN023M A
+				WHERE		A.TO_CNT    > 0
+				AND		A.DUTY_CODE IN (101, 102, 103, 104)	) A,
+			(	SELECT	A.DUTY_CODE,
+							COUNT(*)										COM_DAESANG_CNT,
+							SUM(DECODE(A.SIGN_OPT,2,1,3,1,0))	COM_OK_CNT
+				FROM		INDB.HIN007H A,
+							INDB.HIN001M B
+				WHERE		A.MEMBER_NO     = B.MEMBER_NO
+				AND		A.CHANGE_OPT    = 31
+				AND		A.FROM_DATE     = :as_day
+				AND		A.DUTY_CODE     IN (101, 102, 103, 104)
+				GROUP	BY	A.DUTY_CODE	) B
+WHERE		A.DUTY_CODE = B.DUTY_CODE(+)
+ORDER	BY	A.DUTY_CODE
+" arguments=(("as_day", string)) )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="14" y="32" height="72" width="434" format="[general]" html.valueishtml="0"  name=to_cnt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="453" y="32" height="72" width="466" format="[general]" html.valueishtml="0"  name=com_daesang_cnt visible="1" editmask.mask="###0" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="if(isnull( com_daesang_cnt  -  com_ok_cnt ), 0,  com_daesang_cnt  -  com_ok_cnt) "border="0" color="0" x="1458" y="32" height="72" width="521" format="###0" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="923" y="32" height="72" width="530" format="[general]" html.valueishtml="0"  name=com_ok_cnt visible="1" editmask.mask="###0" editmask.focusrectangle=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(to_cnt for all)"border="0" color="0" x="14" y="28" height="72" width="434" format="[general]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(com_daesang_cnt for all)"border="0" color="0" x="453" y="28" height="72" width="466" format="[general]" html.valueishtml="0"  name=compute_3 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(if(isnull( com_daesang_cnt  -  com_ok_cnt ), 0,  com_daesang_cnt  -  com_ok_cnt)  for all)"border="0" color="0" x="1458" y="28" height="72" width="521" format="###0" html.valueishtml="0"  name=compute_5 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="sum(com_ok_cnt for all)"border="0" color="0" x="923" y="28" height="72" width="530" format="[general]" html.valueishtml="0"  name=compute_4 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

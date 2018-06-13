@@ -1,0 +1,41 @@
+﻿$PBExportHeader$f_getnontax.srf
+$PBExportComments$현근무지자료를 구한다(as_year,as_member,as_gubun:return=구분에 따라)
+global type f_getnontax from function_object
+end type
+
+forward prototypes
+global function decimal f_getnontax (string as_year, string as_memberno)
+end prototypes
+
+global function decimal f_getnontax (string as_year, string as_memberno);//	비과세금액을 산출한다.
+//	
+Decimal{0}	li_Amt, li_FoodAmt, li_RscAmt, li_pay, li_cnt
+
+SELECT	NVL(SUM(A.PAY_AMT),0), COUNT(A.MEMBER_NO)
+INTO		:li_FoodAmt,	:li_cnt
+FROM		PADB.HPA005D A
+WHERE   	A.YEAR_MONTH	BETWEEN 	:as_Year || '0101'  AND  :as_Year || '1231' 
+AND     	A.CODE		=	'17'
+AND		A.MEMBER_NO	=	:as_MemberNo;
+IF			li_FoodAmt	>	600000	THEN
+			li_FoodAmt	=	li_cnt  *  50000;
+END IF
+SELECT	NVL(SUM(A.PAY_AMT) ,0)
+INTO		:li_RscAmt
+FROM		PADB.HPA005D A
+WHERE   	A.YEAR_MONTH	LIKE 	:as_Year || '__'
+AND     	A.CODE		IN	('06','10')
+AND		A.MEMBER_NO	=	:as_MemberNo;
+IF			ISNULL(li_RscAmt)		THEN
+			li_RscAmt	=	0
+END IF
+li_Pay	=	f_getpaybon(as_year, as_MemberNo, '1') + f_getpaybon(as_year, as_MemberNo, '2') - li_FoodAmt
+li_pay	=	li_Pay  * 	0.20
+IF	li_RscAmt	>	li_Pay	THEN
+	li_RscAmt	=	li_Pay
+END IF
+li_Amt	=	li_FoodAmt	+	li_RscAmt
+
+Return li_Amt
+end function
+

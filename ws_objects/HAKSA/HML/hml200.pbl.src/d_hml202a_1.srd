@@ -1,0 +1,106 @@
+﻿$PBExportHeader$d_hml202a_1.srd
+$PBExportComments$부처별신청마일리지승인
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(20) updatewhereclause=yes name=jaehak_hakjuk_hname dbname="jaehak_hakjuk.hname" )
+ column=(type=char(60) updatewhereclause=yes name=juya_gubun dbname="juya_gubun" )
+ column=(type=char(1) updatewhereclause=yes name=sex dbname="jaehak_hakjuk.sex" values="남	1/여	2/" )
+ column=(type=char(1) updatewhereclause=yes name=su_hakyun dbname="jaehak_hakjuk.su_hakyun" )
+ column=(type=char(4) updatewhereclause=yes key=yes name=budget_year dbname="point_gwa_use.budget_year" )
+ column=(type=char(4) updatewhereclause=yes key=yes name=gwa dbname="point_gwa_use.gwa" )
+ column=(type=char(50) updatewhereclause=yes name=gwa_nm dbname="gwa_nm" )
+ column=(type=char(4) updatewhereclause=yes key=yes name=point_item dbname="point_gwa_use.point_item" )
+ column=(type=char(60) updatewhereclause=yes name=point_item_nm dbname="point_rule.point_item_nm" )
+ column=(type=char(60) updatewhereclause=yes name=point_gb dbname="point_gb" )
+ column=(type=char(10) updatewhereclause=yes key=yes name=hakbun dbname="point_gwa_use.hakbun" )
+ column=(type=decimal(0) updatewhereclause=yes key=yes name=seq dbname="point_gwa_use.seq" )
+ column=(type=char(8) updatewhereclause=yes name=req_dt dbname="point_gwa_use.req_dt" )
+ column=(type=decimal(0) updatewhereclause=yes name=request_point dbname="point_gwa_use.request_point" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=approval_point dbname="point_gwa_use.approval_point" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=approval_dt dbname="point_gwa_use.approval_dt" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=approval_yn dbname="point_gwa_use.approval_yn" values="미승인	1/승인	3/보류	2/" )
+ column=(type=char(1) updatewhereclause=yes name=app_yn dbname="point_gwa_use.app_yn" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=approval_delay_memo dbname="point_gwa_use.approval_delay_memo" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=worker dbname="point_gwa_use.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="point_gwa_use.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="point_gwa_use.work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_uid dbname="point_gwa_use.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="point_gwa_use.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="point_gwa_use.job_date" )
+ retrieve="  SELECT A.HNAME,   
+ (SELECT FNAME FROM CDDB.KCH102D WHERE UPPER(CODE_GB) = 'SYS02' AND  CODE = A.JUYA_GUBUN  ) as JUYA_GUBUN,
+A.SEX,
+        A.SU_HAKYUN,   
+        B.BUDGET_YEAR,   
+        B.GWA,   
+    (SELECT FNAME FROM CDDB.KCH003M WHERE TRIM(GWA)= TRIM(A.GWA) ) AS GWA_nm,   
+        B.POINT_ITEM,   
+C.POINT_ITEM_NM,
+(SELECT FNAME
+FROM CDDB.KCH102D
+WHERE CODE_GB = 'HML02'
+AND	   CODE = C.POINT_GB) AS POINT_GB,
+        B.HAKBUN,   
+        B.SEQ,   
+        B.REQ_DT,   
+        B.REQUEST_POINT,   
+        B.APPROVAL_POINT,   
+        B.APPROVAL_DT,   
+        B.APPROVAL_YN,   
+B.APPROVAL_YN as app_yn,
+        B.APPROVAL_DELAY_MEMO,   
+        B.WORKER,   
+        B.IPADDR,   
+        B.WORK_DATE,   
+        B.JOB_UID,   
+        B.JOB_ADD,   
+        B.JOB_DATE 
+    FROM HAKSA.JAEHAK_HAKJUK A,   
+         HAKSA.POINT_GWA_USE B ,
+HAKSA.POINT_RULE C
+   WHERE (A.HAKBUN =B.HAKBUN ) and  
+ B.POINT_ITEM = C.POINT_ITEM AND
+         ( B.REQ_DT BETWEEN :as_fr_dt ANd :as_to_dt ) AND  
+         (:as_gwa = '%' OR TRIM(B.GWA) = :as_gwa ) AND
+(:as_yn = '%' Or B.APPROVAL_YN = :as_yn)" update="HAKSA.POINT_GWA_USE" updatewhere=0 updatekeyinplace=no arguments=(("as_fr_dt", string),("as_to_dt", string),("as_gwa", string),("as_yn", string)) )
+text(band=header alignment="2" text="이름" border="0" color="33554432" x="1422" y="8" height="56" width="347" html.valueishtml="0"  name=hname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성별" border="0" color="33554432" x="1778" y="8" height="56" width="174" html.valueishtml="0"  name=sex_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학년" border="0" color="33554432" x="859" y="8" height="56" width="165" html.valueishtml="0"  name=su_hakyun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="항목" border="0" color="33554432" x="2194" y="8" height="56" width="526" html.valueishtml="0"  name=point_item_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="구분" border="0" color="33554432" x="1961" y="8" height="56" width="224" html.valueishtml="0"  name=point_gb_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학번" border="0" color="33554432" x="1033" y="8" height="56" width="379" html.valueishtml="0"  name=hakbun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="신청일자" border="0" color="33554432" x="3127" y="8" height="56" width="384" html.valueishtml="0"  name=req_dt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="마일리지" border="0" color="33554432" x="2729" y="8" height="56" width="389" html.valueishtml="0"  name=request_point_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="승인여부" border="0" color="33554432" x="3520" y="8" height="56" width="896" html.valueishtml="0"  name=approval_yn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="승인보류사유" border="0" color="33554432" x="4791" y="8" height="56" width="1074" html.valueishtml="0"  name=approval_delay_memo_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="승인일자" border="0" color="33554432" x="4425" y="8" height="56" width="357" html.valueishtml="0"  name=approval_dt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="주/야" border="0" color="33554432" x="672" y="8" height="56" width="178" html.valueishtml="0"  name=juya_gubun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학과/부서" border="0" color="0" x="9" y="8" height="56" width="649" html.valueishtml="0"  name=gwa_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="33554432" x="1422" y="8" height="68" width="347" format="[general]" html.valueishtml="0"  name=hname  tag="KOR" visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="33554432" x="2194" y="8" height="68" width="526" format="[general]" html.valueishtml="0"  name=point_item_nm visible="1" edit.limit=60 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="33554432" x="1961" y="8" height="68" width="224" format="[general]" html.valueishtml="0"  name=point_gb visible="1" edit.limit=2 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="33554432" x="1033" y="8" height="68" width="379" format="[general]" html.valueishtml="0"  name=hakbun visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="2" tabsequence=32766 border="0" color="33554432" x="3131" y="8" height="68" width="379" format="[general]" html.valueishtml="0"  name=req_dt  tag="DATE" visible="1" editmask.mask="####/##/##" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="1" tabsequence=32766 border="0" color="33554432" x="2729" y="8" height="68" width="389" format="[general]" html.valueishtml="0"  name=request_point visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="2" tabsequence=10 border="0" color="33554432" x="3520" y="8" height="68" width="896" format="[general]" html.valueishtml="0"  name=approval_yn visible="1" radiobuttons.columns=3 radiobuttons.scale=yes radiobuttons.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=19 alignment="0" tabsequence=20 border="0" color="33554432" x="4791" y="8" height="68" width="1074" format="[general]" html.valueishtml="0" protect="0~tif(  approval_yn ='2', 0, 1)"  name=approval_delay_memo  tag="KOR" visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="2" tabsequence=32766 border="0" color="33554432" x="4430" y="8" height="68" width="352" format="[general]" html.valueishtml="0"  name=approval_dt  tag="DATE" visible="1" editmask.mask="####/##/##" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="9" y="8" height="68" width="649" format="[general]" html.valueishtml="0"  name=gwa_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="672" y="8" height="68" width="178" format="[general]" html.valueishtml="0"  name=juya_gubun visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="33554432" x="859" y="8" height="68" width="165" format="[general]" html.valueishtml="0"  name=su_hakyun visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="33554432" x="1778" y="8" height="68" width="174" format="[general]" html.valueishtml="0"  name=sex visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

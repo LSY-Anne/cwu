@@ -1,0 +1,45 @@
+﻿$PBExportHeader$d_hyk204a_p5.srd
+$PBExportComments$교육업적평가자료-학생학문지도출력
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 225 print.margin.right = 225 print.margin.top = 150 print.margin.bottom = 150 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=8 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=628 color="536870912" height.autosize=yes )
+table(column=(type=char(5) updatewhereclause=yes name=member_no dbname="hin001m.member_no" dbalias="A.member_no" )
+ column=(type=char(40) updatewhereclause=yes name=name dbname="hin001m.name" dbalias="A.name" )
+ column=(type=char(50) updatewhereclause=yes name=gwa_in dbname="gwa_in" )
+ column=(type=char(60) updatewhereclause=yes name=jikwi_code dbname="jikwi_code" )
+ column=(type=char(8) updatewhereclause=yes name=birth_dt dbname="hin001m.birth_dt" dbalias="A.birth_dt" )
+ column=(type=char(8) updatewhereclause=yes name=junim_date dbname="hin001m.junim_date" dbalias="A.junim_date" )
+ column=(type=char(8) updatewhereclause=yes name=jogyosu_date dbname="hin001m.jogyosu_date" dbalias="A.jogyosu_date" )
+ column=(type=char(8) updatewhereclause=yes name=bugyosu_date dbname="hin001m.bugyosu_date" dbalias="A.bugyosu_date" )
+ column=(type=char(8) updatewhereclause=yes name=gyosu_date dbname="hin001m.gyosu_date" dbalias="A.gyosu_date" )
+ column=(type=char(6) updatewhereclause=yes name=evl_ym dbname="evl_ym" )
+ retrieve="  SELECT A.MEMBER_NO,   
+         A.NAME,         
+(SELECT FNAME FROM CDDB.KCH003M WHERE GWA = A.GWA)  as GWA_in, 
+         (SELECT FNAME FROM CDDB.KCH102D WHERE UPPER(CODE_GB) = 'JIKWI_CODE' AND  CODE = TO_CHAR(A.JIKWI_CODE))   as JIKWI_CODE,   
+         A.BIRTH_DT,   
+         A.JUNIM_DATE,   
+         A.JOGYOSU_DATE,   
+         A.BUGYOSU_DATE,   
+         A.GYOSU_DATE  ,
+CAST(:AS_YM AS VARCHAR(6)) AS EVL_YM
+    FROM INDB.HIN001M  A
+   WHERE A.MEMBER_NO = :as_member_no  " arguments=(("as_ym", string),("as_member_no", string)) )
+report(band=detail dataobject="d_hyk204a_p5_2" x="0" y="164" height="136" width="3168" border="0"  height.autosize=yes criteria="" nest_arguments=((" evl_ym "),(" member_no ")) trail_footer = yes  name=dw_2 visible="1"  slideup=directlyabove )
+report(band=detail dataobject="d_hyk204a_p5_1" x="0" y="4" height="136" width="3168" border="0"  height.autosize=yes criteria="" nest_arguments=((" evl_ym "),(" member_no ")) trail_footer = yes  name=dw_1 visible="1"  slideup=directlyabove )
+report(band=detail dataobject="d_hyk204a_p5_3" x="0" y="320" height="136" width="3168" border="0"  height.autosize=yes criteria="" nest_arguments=((" evl_ym "),(" member_no ")) trail_footer = yes  name=dw_3 visible="1"  slideup=directlyabove )
+report(band=detail dataobject="d_hyk204a_p5_4" x="0" y="480" height="136" width="3168" border="0"  height.autosize=yes criteria="" nest_arguments=((" evl_ym "),(" member_no ")) trail_footer = yes  name=dw_4 visible="1"  slideup=directlyabove )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

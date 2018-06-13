@@ -1,0 +1,69 @@
+﻿$PBExportHeader$f_getcodemonth.srf
+$PBExportComments$특정수당의근무월수를 구한다(A:member_no, as_yearmonth, as_today, as_first_date, as_code, R:num_of_month)
+global type f_getcodemonth from function_object
+end type
+
+forward prototypes
+global function integer f_getcodemonth (string as_member_no, string as_yearmonth, string as_today, string as_first_date, string as_code)
+end prototypes
+
+global function integer f_getcodemonth (string as_member_no, string as_yearmonth, string as_today, string as_first_date, string as_code);// ==========================================================================================
+// 기    능 : 	특정수당의근무월수를 구한다
+// 작 성 인 : 	안금옥
+// 작성일자 : 	2002.04
+// 함수원형 : 	f_getcodemonth(string as_member_no, string as_yearmonth, string as_today, string as_first_date, string as_code)
+//					return	integer
+// 인    수 :	as_member_no	-	개인번호
+//					as_yearmonth	-	지급년월
+//					as_today			-	근무년수계산기준일자
+//					as_first_date	-	최초임용일자
+//					as_code			-	특정수당코드
+// 되 돌 림 :	특정코드근무월수
+// 주의사항 :
+// 수정사항 :
+// ==========================================================================================
+
+integer	li_num_of_month = 0			// 근무월수
+integer	li_curr_month					// 지급월
+integer	li_str_month					// 특정코드시작월
+string	ls_str_yymm						// 특정코드시작년월
+string	ls_firstdate = ''
+string	ls_lastdate
+
+if isnull(as_member_no) or trim(as_member_no) = '' then	return	0
+
+li_curr_month	=	integer(right(as_yearmonth, 2))
+
+// 특정코드해당월의 기간을 구한다.
+select	decode(substr(pay_month, :li_curr_month, 1), '1', instr(substr(pay_month, 1, :li_curr_month), '1', -1, 2) + 1, 0)
+into		:li_str_month
+from		padb.hpa003m
+where		code	=	:as_code	;
+
+if sqlca.sqlcode <> 0 or li_str_month = 0 then	return	0
+
+if li_str_month > li_curr_month then
+	ls_str_yymm	= string(integer(left(as_yearmonth, 4)) - 1) + string(li_str_month, '00')
+else
+	ls_str_yymm = left(as_yearmonth, 4) + string(li_str_month, '00')
+end if
+
+// 최초임용년월이 특정코드시작년월보다 작다면 전부근무한것이다.
+if left(as_first_date, 6) < ls_str_yymm then
+	li_num_of_month = li_curr_month - li_str_month + 1
+
+// 최초임용년월이 특정코드시작년월보다 크거나 같다면 15일이상근무한지의 여부를 체크한다.
+// 15일이상근무했으면 한달근무한것으로 인정한다.
+else
+	ls_lastdate = f_lastdate(as_first_date)
+	if integer(right(ls_lastdate, 2)) - integer(right(as_first_date, 2)) + 1 >= 15 then
+		li_num_of_month = integer(right(as_yearmonth, 2)) - integer(mid(as_first_date, 5, 2)) + 1
+	else
+		li_num_of_month = integer(right(as_yearmonth, 2)) - integer(mid(as_first_date, 5, 2))
+	end if
+end if
+
+return	li_num_of_month
+
+end function
+

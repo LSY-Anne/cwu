@@ -1,0 +1,181 @@
+﻿$PBExportHeader$d_hfn707p_1.srd
+$PBExportComments$차입금종류별내역
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 200 print.margin.right = 0 print.margin.top = 300 print.margin.bottom = 0 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=560 color="536870912" )
+summary(height=96 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=96 color="536870912" )
+table(column=(type=number updatewhereclause=yes name=com_loan_class dbname="com_loan_class" )
+ column=(type=number updatewhereclause=yes name=com_bank_code dbname="com_bank_code" )
+ column=(type=char(60) updatewhereclause=yes name=com_loan_name dbname="com_loan_name" )
+ column=(type=char(20) updatewhereclause=yes name=com_loan_no dbname="com_loan_no" )
+ column=(type=number updatewhereclause=yes name=com_loan_amt dbname="com_loan_amt" )
+ column=(type=number updatewhereclause=yes name=com_loan_rtn_amt dbname="com_loan_rtn_amt" )
+ column=(type=char(8) updatewhereclause=yes name=com_acct_date dbname="com_acct_date" )
+ column=(type=char(1) updatewhereclause=yes name=com_gubun dbname="com_gubun" values="원금	1/이자	2/" )
+ column=(type=number updatewhereclause=yes name=com_amt dbname="com_amt" )
+ retrieve="SELECT	A.COM_LOAN_CLASS						COM_LOAN_CLASS,
+			A.COM_BANK_CODE						COM_BANK_CODE,
+			A.COM_LOAN_NAME						COM_LOAN_NAME,
+			A.COM_LOAN_NO							COM_LOAN_NO,
+			NVL(SUM(A.COM_LOAN_AMT),0)			COM_LOAN_AMT,
+			NVL(SUM(A.COM_LOAN_RTN_AMT),0)	COM_LOAN_RTN_AMT,
+			A.COM_ACCT_DATE						COM_ACCT_DATE,
+			A.COM_GUBUN								COM_GUBUN,
+			NVL(SUM(A.COM_AMT),0)				COM_AMT
+FROM		(	SELECT	A.LOAN_CLASS				COM_LOAN_CLASS,
+							A.BANK_CODE					COM_BANK_CODE,
+							A.LOAN_NAME					COM_LOAN_NAME,
+							A.LOAN_NO					COM_LOAN_NO,
+							NVL(A.LOAN_AMT,0)			COM_LOAN_AMT,
+							NVL(A.LOAN_RTN_AMT,0)	COM_LOAN_RTN_AMT,
+							''								COM_ACCT_DATE,
+							''								COM_GUBUN,
+							0								COM_AMT,
+							'1'							COM_SORT
+				FROM		FNDB.HFN005M A
+				WHERE		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+				AND		DECODE(:AI_LOAN_CLASS,0,0,A.LOAN_CLASS) = :AI_LOAN_CLASS
+				AND		DECODE(:AS_USE_YN,'0','0',A.USE_YN) = :AS_USE_YN
+				AND		DECODE(:AS_LOAN_NO,'0','0',A.LOAN_NO) = :AS_LOAN_NO
+				UNION ALL
+				SELECT	B.LOAN_CLASS				COM_LOAN_CLASS,
+							B.BANK_CODE					COM_BANK_CODE,
+							B.LOAN_NAME					COM_LOAN_NAME,
+							A.MANA_DATA					COM_LOAN_NO,
+							0								COM_LOAN_AMT,
+							0								COM_LOAN_RTN_AMT,
+							A.ACCT_DATE					COM_ACCT_DATE,
+							'1'							COM_GUBUN,
+							NVL(A.DR_ALT_AMT,0) +
+							NVL(A.DR_CASH_AMT,0)		COM_AMT,
+							'2'							COM_SORT
+				FROM		FNDB.HFN501H A, FNDB.HFN005M B
+				WHERE		A.MANA_DATA = B.LOAN_NO (+)
+				AND		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+				AND		DECODE(:AI_LOAN_CLASS,0,0,B.LOAN_CLASS) = :AI_LOAN_CLASS
+				AND		DECODE(:AS_USE_YN,'0','0',B.USE_YN) = :AS_USE_YN
+				AND		DECODE(:AS_LOAN_NO,'0','0',A.MANA_DATA) = :AS_LOAN_NO
+				AND		SUBSTR(A.ACCT_CODE,1,3) IN ('211', '221')
+				AND		NVL(A.DR_ALT_AMT,0) + NVL(A.DR_CASH_AMT,0) <> 0
+				UNION ALL
+				SELECT	C.LOAN_CLASS				COM_LOAN_CLASS,
+							C.BANK_CODE					COM_BANK_CODE,
+							C.LOAN_NAME					COM_LOAN_NAME,
+							B.MANA_DATA1				COM_LOAN_NO,
+							0								COM_LOAN_AMT,
+							0								COM_LOAN_RTN_AMT,
+							A.ACCT_DATE					COM_ACCT_DATE,
+							'2'							COM_GUBUN,
+							NVL(SUM(B.SLIP_AMT),0)	COM_AMT,
+							'2'							COM_SORT
+				FROM		FNDB.HFN201M A, FNDB.HFN202M B, FNDB.HFN005M C
+				WHERE		A.ACCT_CLASS = B.ACCT_CLASS
+				AND		A.SLIP_DATE = B.SLIP_DATE
+				AND		A.SLIP_NO = B.SLIP_NO
+				AND		B.MANA_DATA1 = C.LOAN_NO (+)
+				AND		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+				AND		DECODE(:AI_LOAN_CLASS,0,0,C.LOAN_CLASS) = :AI_LOAN_CLASS
+				AND		DECODE(:AS_USE_YN,'0','0',C.USE_YN) = :AS_USE_YN
+				AND		DECODE(:AS_LOAN_NO,'0','0',B.MANA_DATA1) = :AS_LOAN_NO
+				AND		A.CLOSE_YN = 'Y'
+				AND		SUBSTR(B.ACCT_CODE,1,3) = '441'
+				AND		B.DRCR_CLASS = 'D'
+				GROUP BY C.LOAN_CLASS, C.BANK_CODE, C.LOAN_NAME, B.MANA_DATA1, A.ACCT_DATE	) A
+GROUP BY A.COM_LOAN_CLASS, A.COM_BANK_CODE, A.COM_LOAN_NAME, A.COM_LOAN_NO,
+			A.COM_SORT, A.COM_ACCT_DATE, A.COM_GUBUN
+ORDER BY A.COM_LOAN_NO" arguments=(("ai_acct_class", number),("ai_loan_class", number),("as_use_yn", string),("as_loan_no", string)) )
+group(level=1 header.height=0 trailer.height=96 by=("com_loan_no" ) header.color="536870912" trailer.color="536870912" )
+rectangle(band=header x="27" y="368" height="184" width="4686"  name=r_1 visible="1" brush.hatch="6" brush.color="31580641" pen.style="0" pen.width="5" pen.color="31580641"  background.mode="2" background.color="12632256" )
+text(band=header alignment="0" text="DATE : " border="0" color="0" x="4087" y="152" height="60" width="219" html.valueishtml="0"  name=t_12 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="TIME : " border="0" color="0" x="4087" y="224" height="60" width="219" html.valueishtml="0"  name=t_13 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="PAGE : " border="0" color="0" x="4087" y="296" height="60" width="219" html.valueishtml="0"  name=t_14 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+compute(band=header alignment="0" expression="page() + ' OF ' + pageCount()"border="0" color="0" x="4320" y="296" height="60" width="393" format="[general]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="27" y1="368" x2="4704" y2="368"  name=l_8 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="27" y1="556" x2="4704" y2="556"  name=l_29 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="4713" y1="364" x2="4713" y2="748"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+compute(band=header alignment="2" expression="'차입금 및 이자상환 내역'"border="0" color="0" x="27" y="8" height="124" width="4686" format="[GENERAL]" html.valueishtml="0"  name=compute_4 visible="1"  font.face="굴림체" font.height="-20" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" font.underline="1" background.mode="1" background.color="553648127" )
+line(band=header x1="27" y1="464" x2="4704" y2="464"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="27" y1="364" x2="27" y2="748"  name=l_49 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3314" y1="364" x2="3314" y2="748"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="389" y1="464" x2="389" y2="772"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="896" y1="464" x2="896" y2="772"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1289" y1="464" x2="1289" y2="772"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2171" y1="464" x2="2171" y2="772"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2743" y1="464" x2="2743" y2="772"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="3826" y1="464" x2="3826" y2="772"  name=l_18 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="4137" y1="464" x2="4137" y2="772"  name=l_20 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="차     입     내     역" border="0" color="0" x="46" y="392" height="56" width="3255" html.valueishtml="0"  name=t_10 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="원금 및 이자상환내역" border="0" color="0" x="3333" y="392" height="56" width="1362" html.valueishtml="0"  name=t_11 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="차입금종류" border="0" color="0" x="46" y="484" height="56" width="329" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="차입은행" border="0" color="0" x="407" y="484" height="56" width="475" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="차입번호" border="0" color="0" x="914" y="484" height="56" width="361" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="차입금명" border="0" color="0" x="1307" y="484" height="56" width="850" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="차입금액" border="0" color="0" x="2190" y="484" height="56" width="539" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="차입잔액" border="0" color="0" x="2761" y="484" height="56" width="539" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="일    자" border="0" color="0" x="3333" y="484" height="56" width="480" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="구분" border="0" color="0" x="3845" y="484" height="56" width="279" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="금    액" border="0" color="0" x="4155" y="484" height="56" width="539" html.valueishtml="0"  name=t_9 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="0"border="0" color="0" x="82" y="916" height="76" width="256" format="[GENERAL]" html.valueishtml="0"  name=grp_jikjong visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="2" expression="getrow()"border="0" color="0" x="91" y="772" height="56" width="128" format="[GENERAL]" html.valueishtml="0"  name=compute_3 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=detail x1="4713" y1="0" x2="4713" y2="384"  name=l_6 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="27" y1="92" x2="4704" y2="92"  name=l_39 visible="1~tIf( GetRow() = long( Describe( ~"datawindow.LastRowOnpage~" ) ), 1, 0 )" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="27" y1="88" x2="4704" y2="88"  name=l_40 visible="1~tIf( GetRow() = long( Describe( ~"datawindow.LastRowOnpage~" ) ), 0, 1 )" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="27" y1="0" x2="27" y2="384"  name=l_7 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="389" y1="0" x2="389" y2="384"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="896" y1="0" x2="896" y2="384"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1289" y1="0" x2="1289" y2="384"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="4137" y1="0" x2="4137" y2="384"  name=l_21 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3826" y1="0" x2="3826" y2="384"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3314" y1="0" x2="3314" y2="384"  name=l_17 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2743" y1="0" x2="2743" y2="384"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2171" y1="0" x2="2171" y2="384"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="46" y="16" height="56" width="329" format="[general]" html.valueishtml="0"  name=com_loan_class visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="407" y="16" height="56" width="475" format="[general]" html.valueishtml="0"  name=com_bank_code visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="914" y="16" height="56" width="361" format="[general]" html.valueishtml="0"  name=com_loan_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1307" y="16" height="56" width="850" format="[general]" html.valueishtml="0"  name=com_loan_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="3333" y="16" height="56" width="480" format="@@@@/@@/@@" html.valueishtml="0"  name=com_acct_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="3845" y="16" height="56" width="279" format="[general]" html.valueishtml="0"  name=com_gubun visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="2185" y="16" height="56" width="539" format="#,###" html.valueishtml="0"  name=com_loan_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="1" expression=" com_loan_amt  -  com_loan_rtn_amt "border="0" color="0" x="2761" y="16" height="56" width="539" format="#,###" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="4155" y="16" height="56" width="539" format="#,###" html.valueishtml="0"  name=com_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=trailer.1 x1="4713" y1="0" x2="4713" y2="384"  name=l_22 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=trailer.1 x1="27" y1="92" x2="4704" y2="92"  name=l_23 visible="1~tIf( GetRow() = long( Describe( ~"datawindow.LastRowOnpage~" ) ), 1, 0 )" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="27" y1="88" x2="4704" y2="88"  name=l_24 visible="1~tIf( GetRow() = long( Describe( ~"datawindow.LastRowOnpage~" ) ), 0, 1 )" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="27" y1="0" x2="27" y2="384"  name=l_25 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="4137" y1="0" x2="4137" y2="384"  name=l_30 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="3314" y1="0" x2="3314" y2="384"  name=l_32 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="2743" y1="0" x2="2743" y2="384"  name=l_33 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="2171" y1="0" x2="2171" y2="384"  name=l_34 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=trailer.1 alignment="2" text="차입금별 합계" border="0" color="0" x="46" y="16" height="56" width="2112" html.valueishtml="0"  name=t_15 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=trailer.1 alignment="2" text="차입금별 합계" border="0" color="0" x="3333" y="16" height="56" width="791" html.valueishtml="0"  name=t_16 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(com_loan_amt for group 1)"border="0" color="0" x="2185" y="16" height="56" width="539" format="#,###" html.valueishtml="0"  name=compute_5 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+compute(band=trailer.1 alignment="1" expression="sum( com_loan_amt  -  com_loan_rtn_amt  for group 1)"border="0" color="0" x="2761" y="16" height="56" width="539" format="#,###" html.valueishtml="0"  name=compute_6 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+compute(band=trailer.1 alignment="1" expression="sum(com_amt for group 1)"border="0" color="0" x="4155" y="16" height="56" width="539" format="#,###" html.valueishtml="0"  name=compute_7 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=summary x1="4713" y1="0" x2="4713" y2="384"  name=l_26 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=summary x1="27" y1="92" x2="4704" y2="92"  name=l_27 visible="1~tIf( GetRow() = long( Describe( ~"datawindow.LastRowOnpage~" ) ), 1, 0 )" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="27" y1="88" x2="4704" y2="88"  name=l_28 visible="1~tIf( GetRow() = long( Describe( ~"datawindow.LastRowOnpage~" ) ), 0, 1 )" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="27" y1="0" x2="27" y2="384"  name=l_31 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="4137" y1="0" x2="4137" y2="384"  name=l_35 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="3314" y1="0" x2="3314" y2="384"  name=l_36 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="2743" y1="0" x2="2743" y2="384"  name=l_37 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=summary x1="2171" y1="0" x2="2171" y2="384"  name=l_38 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=summary alignment="2" text="차입금 총합계" border="0" color="0" x="46" y="16" height="56" width="2112" html.valueishtml="0"  name=t_17 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=summary alignment="2" text="차입금 총합계" border="0" color="0" x="3333" y="16" height="56" width="791" html.valueishtml="0"  name=t_18 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="1" expression="sum(com_loan_amt for all)"border="0" color="0" x="2185" y="16" height="56" width="539" format="#,###" html.valueishtml="0"  name=compute_8 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum( com_loan_amt  -  com_loan_rtn_amt  for all)"border="0" color="0" x="2761" y="16" height="56" width="539" format="#,###" html.valueishtml="0"  name=compute_9 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+compute(band=summary alignment="1" expression="sum(com_amt for all)"border="0" color="0" x="4155" y="16" height="56" width="539" format="#,###" html.valueishtml="0"  name=compute_10 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+compute(band=header alignment="0" expression="string(f_sysdate(), 'yyyy/mm/dd')"border="0" color="0" x="4320" y="152" height="60" width="393" format="[GENERAL]" html.valueishtml="0"  name=compute_12 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=header alignment="0" expression="string(f_sysdate(), 'hh:mm:ss')"border="0" color="0" x="4320" y="224" height="60" width="393" format="[GENERAL]" html.valueishtml="0"  name=compute_11 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+
+sparse(names="com_loan_class	com_bank_code	com_loan_no	com_loan_name")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()

@@ -1,0 +1,112 @@
+﻿$PBExportHeader$d_hfn201a_2.srd
+$PBExportComments$발의서등록(부서용)_발의서등록용
+release 10.5;
+datawindow(units=0 timer_interval=0 color=79741120 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=196 color="536870912" )
+table(column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=acct_class dbname="acct_class" )
+ column=(type=char(8) update=yes updatewhereclause=yes key=yes name=resol_date dbname="resol_date" )
+ column=(type=number update=yes updatewhereclause=yes key=yes name=resol_no dbname="resol_no" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=resol_gwa dbname="resol_gwa" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=slip_class dbname="slip_class" values="수입	1/지출	2/대체	3/" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=remark dbname="remark" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=genesis_gb dbname="genesis_gb" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=step_opt dbname="step_opt" )
+ column=(type=char(14) update=yes updatewhereclause=yes name=pass_dt dbname="pass_dt" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=slip_date dbname="slip_date" )
+ column=(type=number update=yes updatewhereclause=yes name=slip_no dbname="slip_no" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=jumun_no dbname="jumun_no" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=ibgo_no dbname="ibgo_no" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=bdgt_year dbname="bdgt_year" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="job_date" )
+ column=(type=number updatewhereclause=yes name=com_resol_amt dbname="com_resol_amt" )
+ column=(type=char(4000) updatewhereclause=yes name=com_gensis_nm dbname="com_gensis_nm" )
+ column=(type=char(10) updatewhereclause=yes name=com_mok_acct_code dbname="com_mok_acct_code" )
+ retrieve="SELECT	A.ACCT_CLASS,
+			A.RESOL_DATE,
+			A.RESOL_NO,
+			A.RESOL_GWA,
+			A.SLIP_CLASS,
+			A.REMARK,
+			A.GENESIS_GB,
+			A.STEP_OPT,
+			A.PASS_DT,
+			A.SLIP_DATE,
+			A.SLIP_NO,
+			A.JUMUN_NO,
+			A.IBGO_NO,
+			A.BDGT_YEAR,
+			A.WORKER,
+			A.IPADDR,
+			A.WORK_DATE,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE,
+			NVL(B.COM_RESOL_AMT,0)	COM_RESOL_AMT,
+			FU_CODE_NM('HAENG','GENESIS_GB',A.GENESIS_GB,'K')	COM_GENSIS_NM,
+			B.COM_MOK_ACCT_CODE
+FROM		FNDB.HFN101M A,
+			(	SELECT	SUBSTR(B.ACCT_CODE,1,4)||'00'	COM_MOK_ACCT_CODE,
+							NVL(SUM(B.RESOL_AMT),0)	COM_RESOL_AMT
+				FROM		FNDB.HFN102M B
+				WHERE		B.ACCT_CLASS = :AI_ACCT_CLASS
+				AND		B.RESOL_DATE = :AS_RESOL_DATE
+				AND		B.RESOL_NO   = :AI_RESOL_NO
+				GROUP	BY	SUBSTR(B.ACCT_CODE,1,4)	) B
+WHERE		A.ACCT_CLASS = :AI_ACCT_CLASS
+AND		A.RESOL_DATE = :AS_RESOL_DATE
+AND		A.RESOL_NO   = :AI_RESOL_NO
+" update="fndb.hfn101m" updatewhere=1 updatekeyinplace=no arguments=(("ai_acct_class", number),("as_resol_date", string),("ai_resol_no", number)) )
+text(band=detail alignment="2" text="" border="0" color="0" x="430" y="104" height="56" width="3269" html.valueishtml="0"  name=t_4 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=6 alignment="0" tabsequence=20 border="0" color="0" x="439" y="120" height="60" width="3250" format="[general]" html.valueishtml="0"  name=remark visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=detail alignment="2" text="" border="0" color="0" x="430" y="8" height="56" width="471" html.valueishtml="0"  name=t_6 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="1090519039~tif ( isRowNew(), 16777215, 81324524)" )
+column(band=detail id=2 alignment="2" tabsequence=10 border="0" color="0" x="439" y="28" height="60" width="453" format="[general]" html.valueishtml="0" protect="0~tif ( isRowNew() , 0, 1 )"  name=resol_date visible="1" editmask.autoskip=yes editmask.mask="XXXX/XX/XX" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="1090519039~tif ( isRowNew(), 16777215, 81324524)" )
+line(band=detail x1="14" y1="8" x2="3703" y2="8"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="주문번호" border="0" color="0" x="23" y="940" height="56" width="338" html.valueishtml="0"  name=ord_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="접수일자" border="0" color="0" x="23" y="1028" height="56" width="338" html.valueishtml="0"  name=acpt_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="주문일자" border="0" color="0" x="745" y="940" height="56" width="338" html.valueishtml="0"  name=ord_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="현금일자" border="0" color="0" x="745" y="1028" height="56" width="338" html.valueishtml="0"  name=cash_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="납품일자" border="0" color="0" x="1467" y="940" height="56" width="338" html.valueishtml="0"  name=del_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="자금일자" border="0" color="0" x="1467" y="1028" height="56" width="338" html.valueishtml="0"  name=fund_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="검수일자" border="0" color="0" x="2190" y="940" height="56" width="338" html.valueishtml="0"  name=aud_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="등기일자" border="0" color="0" x="2190" y="1028" height="56" width="338" html.valueishtml="0"  name=rsv_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="전표일자" border="0" color="0" x="2917" y="940" height="56" width="338" html.valueishtml="0"  name=slip_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="전표번호" border="0" color="0" x="2917" y="1028" height="56" width="338" html.valueishtml="0"  name=t_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="0" x="3278" y="936" height="60" width="407" format="@@@@/@@/@@" html.valueishtml="0"  name=slip_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="0" x="3278" y="1028" height="60" width="407" format="[general]" html.valueishtml="0"  name=slip_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="14" y1="100" x2="3703" y2="100"  name=l_2 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="425" y1="4" x2="425" y2="192"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2971" y1="8" x2="2971" y2="100"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="901" y1="8" x2="901" y2="100"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1312" y1="8" x2="1312" y2="100"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="1326" y="28" height="60" width="320" format="[general]" html.valueishtml="0"  name=resol_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.nilisnull=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="1655" y1="4" x2="1655" y2="100"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="결의번호" border="0" color="128" x="914" y="28" height="56" width="389" html.valueishtml="0"  name=resol_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="2066" y1="8" x2="2066" y2="100"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="총 금 액" border="0" color="0" x="1669" y="28" height="56" width="389" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=21 alignment="1" tabsequence=32766 border="0" color="0" x="2080" y="28" height="60" width="882" format="#,###" html.valueishtml="0"  name=com_resol_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+button(band=detail text="항삭제" filename="" enabled=yes action="0" border="0" color="255" x="3342" y="16" height="80" width="357" vtextalign="0" htextalign="0"  name=btn_delete visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+button(band=detail text="항추가" filename="" enabled=yes action="0" border="0" color="16711680" x="2981" y="16" height="80" width="357" vtextalign="0" htextalign="0"  name=btn_insert  tag="" visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+line(band=detail x1="14" y1="192" x2="3703" y2="192"  name=l_8 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="결의일자" border="0" color="128" x="27" y="28" height="56" width="389" html.valueishtml="0"  name=src_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="14" y1="4" x2="14" y2="192"  name=l_11 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3703" y1="4" x2="3703" y2="192"  name=l_17 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="적    요" border="0" color="128" x="27" y="120" height="56" width="389" html.valueishtml="0"  name=t_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

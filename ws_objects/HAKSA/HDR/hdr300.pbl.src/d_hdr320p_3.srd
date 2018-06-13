@@ -1,0 +1,117 @@
+﻿$PBExportHeader$d_hdr320p_3.srd
+$PBExportComments$[청운대]등록금 납부고지서(조기시험자용)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 0 print.margin.right = 0 print.margin.top = 0 print.margin.bottom = 0 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=4120 color="536870912" height.autosize=yes )
+table(column=(type=char(4) updatewhereclause=yes name=gwa_id dbname="jaehak_hakjuk.gwa_id" )
+ column=(type=char(10) updatewhereclause=yes name=jaehak_hakjuk_hakbun dbname="jaehak_hakjuk.hakbun" )
+ column=(type=char(1) updatewhereclause=yes name=jaehak_hakjuk_hakgicha dbname="jaehak_hakjuk.hakgicha" )
+ column=(type=char(20) updatewhereclause=yes name=jaehak_hakjuk_hname dbname="jaehak_hakjuk.hname" )
+ column=(type=char(200) updatewhereclause=yes name=jaehak_hakjuk_juso dbname="jaehak_hakjuk.juso" )
+ column=(type=char(6) updatewhereclause=yes name=jaehak_hakjuk_zipcode dbname="jaehak_hakjuk.zipcode" )
+ column=(type=char(50) updatewhereclause=yes name=d_gongji_n_gigan dbname="jaehak_hakjuk.n_gigan" )
+ column=(type=char(50) updatewhereclause=yes name=d_gongji_n_cheo dbname="jaehak_hakjuk.n_cheo" )
+ column=(type=char(30) updatewhereclause=yes name=d_gongji_gae_ilsi dbname="jaehak_hakjuk.gae_ilsi" )
+ column=(type=char(100) updatewhereclause=yes name=d_gongji_gita dbname="jaehak_hakjuk.gita" )
+ column=(type=char(100) updatewhereclause=yes name=c_gita1 dbname="jaehak_hakjuk.gita1" )
+ column=(type=char(100) updatewhereclause=yes name=c_gita2 dbname="jaehak_hakjuk.gita2" )
+ column=(type=char(100) updatewhereclause=yes name=c_gita3 dbname="jaehak_hakjuk.gita3" )
+ column=(type=char(100) updatewhereclause=yes name=c_gita4 dbname="jaehak_hakjuk.gita4" )
+ column=(type=decimal(0) updatewhereclause=yes name=sungjukgye_s_hakjum dbname="jaehak_hakjuk.s_hakjum" )
+ column=(type=decimal(0) updatewhereclause=yes name=sungjukgye_c_hakjum dbname="jaehak_hakjuk.c_hakjum" )
+ column=(type=decimal(2) updatewhereclause=yes name=sungjukgye_p_tot dbname="jaehak_hakjuk.p_tot" )
+ column=(type=decimal(2) updatewhereclause=yes name=sungjukgye_p_avg dbname="jaehak_hakjuk.p_avg" )
+ column=(type=char(1) updatewhereclause=yes name=d_dr_hakyun dbname="jaehak_hakjuk.dr_hakyun" )
+ column=(type=char(4) updatewhereclause=yes name=d_dr_year dbname="jaehak_hakjuk.dr_year" )
+ column=(type=char(1) updatewhereclause=yes name=d_dr_hakgi dbname="jaehak_hakjuk.dr_hakgi" )
+ retrieve="SELECT	B.GWA										AS	GWA_ID,
+			B.HAKBUN									AS	HAKBUN,
+			B.SU_HAKYUN								AS	HAKGICHA,
+			B.HNAME									AS	HNAME,
+			B.ADDR									AS	JUSO,
+			B.ZIP_ID									AS	ZIPCODE,
+			C.NAPBU_GIGAN							AS	N_GIGAN,
+			C.NAPBUCHEO								AS	N_CHEO,
+			C.GAE_ILSI								AS	GAE_ILSI,
+			C.GITA									AS	GITA,
+			C.GITA1									AS GITA1,
+			C.GITA2									AS	GITA2,
+			C.GITA3									AS	GITA3,
+			C.GITA4									AS	GITA4,
+			D.SINCHUNG_HAKJUM						AS	S_HAKJUM,
+			D.CHIDK_HAKJUM							AS	C_HAKJUM,
+			D.TOTAL_PYENGJUM						AS	P_TOT,
+			D.AVG_PYENGJUM							AS	P_AVG,
+			D.HAKYUN									AS DR_HAKYUN,
+			D.YEAR									AS DR_YEAR,
+			D.HAKGI									AS DR_HAKGI
+FROM		HAKSA.JAEHAK_HAKJUK		B,
+			HAKSA.GONGJI				C,
+			(	SELECT	:as_year N_YEAR,
+							:as_hakgi N_HAKGI,
+							YEAR,
+							HAKGI,
+							HAKBUN,
+							HAKYUN,
+							SINCHUNG_HAKJUM,
+							CHIDK_HAKJUM,
+							TOTAL_PYENGJUM,
+							AVG_PYENGJUM
+				FROM		HAKSA.SUNGJUKGYE
+				WHERE		YEAR  = DECODE( :as_hakgi, '1', to_char(to_number(:as_year) - 1), :as_year)
+				AND		HAKGI	= DECODE( :as_hakgi, '1', '2', '1')
+			) D
+WHERE		B.HAKBUN		=	D.HAKBUN
+AND		D.N_YEAR		=	C.YEAR(+)
+AND		D.N_HAKGI		=	C.HAKGI(+)
+AND		B.SANGTAE	NOT IN  '01'
+AND		D.N_YEAR		=	:as_year
+AND		D.N_HAKGI	=	:as_hakgi
+AND		B.GWA			like	:as_gwa
+AND		D.HAKBUN		like	:as_hakbun
+
+
+
+
+
+" arguments=(("as_year", string),("as_hakgi", string),("as_gwa", string),("as_hakbun", string))  sort="gwa_id A jaehak_hakjuk_hakgicha A jaehak_hakjuk_hakbun A " )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="3191" y="1368" height="52" width="320" format="[general]" html.valueishtml="0"  name=jaehak_hakjuk_hakbun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+report(band=detail dataobject="d_hdr320p_n1" x="2514" y="3192" height="136" width="1019" border="0"  height.autosize=yes criteria="" nest_arguments=((" d_dr_year "),(" d_dr_hakgi "),(" jaehak_hakjuk_hakbun ")) trail_footer = yes  name=dw_1 visible="1"  slideup=directlyabove )
+column(band=detail id=15 alignment="2" tabsequence=32766 border="0" color="0" x="2738" y="3972" height="52" width="187" format="[general]" html.valueishtml="0"  name=sungjukgye_s_hakjum visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="2" tabsequence=32766 border="0" color="0" x="2738" y="4036" height="56" width="187" format="[general]" html.valueishtml="0"  name=sungjukgye_c_hakjum visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=18 alignment="2" tabsequence=32766 border="0" color="0" x="3287" y="4036" height="56" width="187" format="0.00" html.valueishtml="0"  name=sungjukgye_p_avg visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="2" tabsequence=32766 border="0" color="0" x="3287" y="3972" height="52" width="187" format="[general]" html.valueishtml="0"  name=sungjukgye_p_tot visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=20 alignment="0" tabsequence=32766 border="0" color="0" x="2592" y="2900" height="52" width="160" format="[general]" html.valueishtml="0"  name=d_dr_year visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=21 alignment="0" tabsequence=32766 border="0" color="0" x="2935" y="2900" height="52" width="37" format="[general]" html.valueishtml="0"  name=d_dr_hakgi visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="2656" y="3060" height="52" width="389" format="[general]" html.valueishtml="0"  name=jaehak_hakjuk_hakbun_4 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="3191" y="3060" height="52" width="306" format="[general]" html.valueishtml="0"  name=jaehak_hakjuk_hname_5 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="2501" y="2392" height="60" width="1189" format="[general]" html.valueishtml="0"  name=gongji_gita1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="2501" y="2460" height="60" width="1189" format="[general]" html.valueishtml="0"  name=gongji_gita2 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="0" x="2501" y="2528" height="60" width="1189" format="[general]" html.valueishtml="0"  name=gongji_gita3 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="2501" y="2596" height="60" width="1189" format="[general]" html.valueishtml="0"  name=gongji_gita4 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="2501" y="2324" height="60" width="1189" format="[general]" html.valueishtml="0"  name=d_gongji_gita_1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=19 alignment="0" tabsequence=32766 border="0" color="0" x="3191" y="2996" height="52" width="64" format="[general]" html.valueishtml="0"  name=d_dr_hakyun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="2656" y="2996" height="52" width="389" format="[general]" html.valueishtml="0"  name=gwa_id visible="1" dddw.name=d_dddw_shorthakgwa dddw.displaycolumn=sname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="2912" y="2140" height="72" width="773" format="[general]" html.valueishtml="0"  name=d_gongji_gae_ilsi visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="2501" y="2072" height="60" width="1179" format="[general]" html.valueishtml="0"  name=d_gongji_n_cheo_1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="2501" y="1820" height="60" width="1179" format="[general]" html.valueishtml="0"  name=d_gongji_n_gigan_1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-8" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="1093" y="636" height="176" width="2089" format="[general]" html.valueishtml="0"  name=jaehak_hakjuk_juso visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="2441" y="892" height="76" width="379" format="[general]" html.valueishtml="0"  name=jaehak_hakjuk_hname_2 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="2651" y="1048" height="84" width="489" format="[general]" html.valueishtml="0"  name=jaehak_hakjuk_zipcode visible="1" edit.name="###-##-####" editmask.mask="###-###" editmask.focusrectangle=no  font.face="굴림체" font.height="-14" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="홍성 남장
+우편 취급소" border="0" color="0" x="3013" y="224" height="120" width="352" html.valueishtml="0"  name=t_5 visible="0"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="학생 貴下" border="0" color="0" x="2843" y="896" height="72" width="338" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-12" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

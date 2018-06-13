@@ -1,0 +1,38 @@
+﻿$PBExportHeader$sessioncheck.srf
+global type sessioncheck from function_object
+end type
+
+forward prototypes
+global function boolean sessioncheck (string as_url, string argument, integer methodtype, ref string as_returnmsg)
+end prototypes
+
+global function boolean sessioncheck (string as_url, string argument, integer methodtype, ref string as_returnmsg);/*===========================================================================//
+		Function Name 	: sessioncheck
+		Access Type 	: public
+		Return Type		: boolean
+		Argument Name				Argument Type				Commant
+		-----------------------------------------------------------
+		value		as_url			String						session check page 경로
+		value		argument			String						check page에 보낼 아규먼트
+		value		methodtype		Integer						HTTP Request Type 1/POST, 2/GET
+		ref		as_returnmsg	String						Response로 받은 page내용
+		
+		Commant : Appeon에서 session을 체크하여 사용 할 수 있도록 해준다.
+//============================================================================*/
+uo_session		luo_ses
+Boolean			lb_tf
+//luo_ses = Create uo_session
+
+IF MethodType = luo_ses.POS THEN 
+	IF Not (argument = '' OR IsNull(argument)) THEN
+		lb_tf =  luo_ses.sessioncheck(luo_ses.POS, as_url, argument, as_returnmsg)
+	ELSE
+		lb_tf = luo_ses.sessioncheck(luo_ses.GET, as_url, as_returnmsg)
+	END IF
+ELSE
+	lb_tf = luo_ses.sessioncheck(luo_ses.GET, as_url, as_returnmsg)
+END IF
+
+return lb_tf
+end function
+

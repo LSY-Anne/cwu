@@ -1,0 +1,54 @@
+﻿$PBExportHeader$f_encode.srf
+$PBExportComments$데이타를 암호화한다
+global type f_encode from function_object
+end type
+
+forward prototypes
+global function string f_encode (string as_string)
+end prototypes
+
+global function string f_encode (string as_string);//////////////////////////////////////////////////////////////////
+// 	작성목적 : 데이타를 암호화 한다.
+//    적 성 인 : 이현수
+//		작성일자 : 2002.10
+//    변 경 인 :
+//    변경일자 :
+//    변경사유 :
+//////////////////////////////////////////////////////////////////
+
+INT i_Strlen  //문자열의길이
+int i_asc     //Asc값 
+int i         //임시
+String s_return,s_Temp,s_STRTOINT
+char   c_onchar
+i_Strlen =  Len(AS_STRING)
+
+      
+for i = 1 to i_Strlen
+    i_asc      = Asc(mid(AS_STRING,i,1))
+	 s_STRTOINT = STRING(i_asc,'000')
+	 s_return   = s_return + s_STRTOINT
+Next
+
+i_Strlen = lEN(s_return)  
+If mod(i_Strlen,2) = 0 then
+else
+   s_return   = s_return	+ '0'
+	i_Strlen   ++
+end IF
+s_temp = ''
+for i = 0 to (i_Strlen - 1)
+	 s_temp   = s_temp + Mid(s_return,i_Strlen - i,1)
+Next
+
+s_return = ''
+for i = 1 to (i_Strlen/2)
+    i_asc      = integer(mid(s_temp,i*2 - 1,2))
+	 If   i_asc =  0 then I_asc = 199     
+	 s_STRTOINT = char(i_asc)
+	 s_return   = s_return + s_STRTOINT
+Next
+
+Return s_return
+end function
+

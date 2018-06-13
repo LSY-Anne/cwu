@@ -1,0 +1,50 @@
+﻿$PBExportHeader$f_getpayday.srf
+$PBExportComments$상여근무월수를 구한다(A:member_no,R:num_of_bonwork)
+global type f_getpayday from function_object
+end type
+
+forward prototypes
+global function integer f_getpayday (string as_member_no, string as_yearmonth, string as_first_date, string as_retire_date)
+end prototypes
+
+global function integer f_getpayday (string as_member_no, string as_yearmonth, string as_first_date, string as_retire_date);// ==========================================================================================
+// 기    능 : 	급여근무일수를 구한다.
+// 작 성 인 : 	안금옥
+// 작성일자 : 	2002.04
+// 함수원형 : 	f_getpayday(string as_member_no, string as_yearmonth, string as_first_date, string as_retire_date)	return	integer
+// 인    수 :	as_member_no	- 	개인번호
+//					as_yearmonth	- 	지급년월
+//					as_first_date	-	최초임용일자
+//					as_retire_date	-	퇴직일자
+// 되 돌 림 :	급여근무일수
+// 주의사항 :
+// 수정사항 :
+// ==========================================================================================
+
+integer	li_num_of_paywork
+
+// 급여근무일수를 구한다.
+	
+if isnull(as_first_date) or trim(as_first_date) = '' or trim(as_member_no) = '' then
+	li_num_of_paywork	=	0
+else
+	if isnull(as_retire_date) or trim(as_retire_date) = ''	then
+		li_num_of_paywork = integer(right(f_lastdate(as_yearmonth), 2))
+
+	elseif mid(as_retire_date, 1, 6) = mid(as_first_date, 1, 6)	then
+		li_num_of_paywork = integer(mid(as_retire_date, 7, 2)) - integer(mid(as_first_date, 7, 2)) + 1
+
+	elseif mid(as_retire_date, 1, 6) = as_yearmonth		then
+		li_num_of_paywork = integer(mid(as_retire_date, 7, 2))
+		
+	elseif mid(as_retire_date, 1, 6) <> as_yearmonth	then
+		li_num_of_paywork = integer(right(f_lastdate(as_yearmonth), 2))
+		
+	else
+		li_num_of_paywork = 0
+	end if
+end if
+
+return	li_num_of_paywork
+end function
+

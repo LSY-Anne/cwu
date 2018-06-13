@@ -1,0 +1,147 @@
+﻿$PBExportHeader$d_hgm503a_1.srd
+$PBExportComments$물품입고현황(출력)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=796 color="536870912" )
+summary(height=4 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=number updatewhereclause=yes name=hst109h_in_no dbname="hst109h.in_no" )
+ column=(type=char(10) updatewhereclause=yes name=hst109h_ord_no dbname="hst109h.ord_no" )
+ column=(type=char(4) updatewhereclause=yes name=hst109h_gwa dbname="hst109h.gwa" )
+ column=(type=char(8) updatewhereclause=yes name=hst109h_req_date dbname="hst109h.req_date" )
+ column=(type=char(40) updatewhereclause=yes name=hst004m_item_name dbname="hst109h.item_name" )
+ column=(type=char(7) updatewhereclause=yes name=hst109h_item_no dbname="hst109h.item_no" )
+ column=(type=char(8) updatewhereclause=yes name=hst109h_in_date dbname="hst109h.in_date" )
+ column=(type=decimal(0) updatewhereclause=yes name=hst109h_in_qty dbname="hst109h.in_qty" )
+ column=(type=decimal(2) updatewhereclause=yes name=hst109h_in_price dbname="hst109h.in_price" )
+ column=(type=decimal(0) updatewhereclause=yes name=hst109h_in_amt dbname="hst109h.in_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=hst109h_item_class dbname="hst109h.item_class" )
+ column=(type=char(50) updatewhereclause=yes name=hst109h_remark dbname="hst109h.remark" )
+ column=(type=char(10) updatewhereclause=yes name=hst109h_cust_no dbname="hst109h.cust_no" )
+ column=(type=char(4) updatewhereclause=yes name=hst105h_apply_gwa dbname="hst109h.apply_gwa" )
+ column=(type=char(6) updatewhereclause=yes name=hst105h_acct_code dbname="hst109h.acct_code" )
+ column=(type=decimal(0) updatewhereclause=yes name=hst105h_apply_amt dbname="hst109h.apply_amt" )
+ column=(type=char(200) updatewhereclause=yes name=hst105h_apply_note dbname="hst109h.apply_note" )
+ column=(type=decimal(0) updatewhereclause=yes name=revenue_opt dbname="hst109h.revenue_opt" )
+ column=(type=char(8) updatewhereclause=yes name=hst109h_proof_date dbname="hst109h.proof_date" )
+ column=(type=number updatewhereclause=yes name=hst109h_item_seq dbname="hst109h.item_seq" )
+ column=(type=char(10) updatewhereclause=yes name=hst109h_req_no dbname="hst109h.req_no" )
+ column=(type=char(1) updatewhereclause=yes name=hst109h_in_opt dbname="hst109h.in_opt" values="	1/	0" )
+ column=(type=char(5) updatewhereclause=yes name=hst109h_worker dbname="hst109h.worker" )
+ column=(type=char(20) updatewhereclause=yes name=hst109h_ipaddr dbname="hst109h.ipaddr" )
+ column=(type=datetime updatewhereclause=yes name=hst109h_work_date dbname="hst109h.work_date" )
+ column=(type=char(5) updatewhereclause=yes name=hst109h_job_uid dbname="hst109h.job_uid" )
+ column=(type=char(20) updatewhereclause=yes name=hst109h_job_add dbname="hst109h.job_add" )
+ column=(type=datetime updatewhereclause=yes name=hst109h_job_date dbname="hst109h.job_date" )
+ retrieve="  SELECT A.IN_NO,   
+         A.ORD_NO,
+         A.GWA,   
+			A.REQ_DATE,
+         B.ITEM_NAME, 
+         A.ITEM_NO,  
+         A.IN_DATE,     
+         A.IN_QTY,   
+         A.IN_PRICE,   
+         A.IN_AMT,   
+         A.ITEM_CLASS,   
+         A.REMARK,   
+         A.CUST_NO,
+         C.APPLY_GWA,
+         C.ACCT_CODE,
+			C.APPLY_AMT,
+			C.APPLY_NOTE,
+         A.REVENUE_OPT,
+         A.PROOF_DATE,
+         A.ITEM_SEQ,
+         A.REQ_NO,
+         A.IN_OPT,
+         A.WORKER, 
+         A.IPADDR,
+         A.WORK_DATE,
+         A.JOB_UID,
+         A.JOB_ADD,
+         A.JOB_DATE      
+ FROM    STDB.HST109H A,
+         STDB.HST004M B,
+         STDB.HST105H C
+ WHERE   A.ITEM_NO = B.ITEM_NO
+ AND     A.ORD_NO  = C.ORD_NO(+)
+ AND     A.REQ_NO  = C.REQ_NO(+)
+ AND     A.IN_DATE  BETWEEN  :as_fr_date AND :as_to_date
+ AND     nvl(C.APPLY_GWA,' ') LIKE :as_gwa
+ AND     nvl(C.ACCT_CODE,' ') LIKE :as_acct_code" arguments=(("as_fr_date", string),("as_to_date", string),("as_gwa", string),("as_acct_code", string))  sort="hst109h_ord_no A " )
+line(band=header x1="9" y1="644" x2="6729" y2="640"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="입고현황 리스트" border="0" color="0" x="9" y="280" height="132" width="6720" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-22" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" font.underline="1" background.mode="1" background.color="553648127" )
+line(band=header x1="9" y1="644" x2="9" y2="840"  name=l_2 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="6734" y1="644" x2="6734" y2="840"  name=l_13 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+compute(band=header alignment="0" expression="page() + ' OF ' + pageCount()"border="0" color="0" x="6336" y="572" height="60" width="393" format="[general]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="DATE : " border="0" color="0" x="6107" y="428" height="60" width="219" html.valueishtml="0"  name=t_12 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="TIME : " border="0" color="0" x="6107" y="500" height="60" width="219" html.valueishtml="0"  name=t_13 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="PAGE : " border="0" color="0" x="6107" y="572" height="60" width="219" html.valueishtml="0"  name=t_14 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+compute(band=header alignment="0" expression="left(   as_fr_date   , 4) + '/' + mid(  as_fr_date , 5, 2) + '/' + right(  as_fr_date , 2) + ' ~~ ' + left(  as_to_date  , 4) + '/' + mid( as_to_date , 5, 2) + '/' + right( as_to_date , 2)"border="0" color="0" x="3017" y="432" height="60" width="745" format="[GENERAL]" html.valueishtml="0"  name=compute_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="(                         )" border="0" color="0" x="2949" y="432" height="60" width="873" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="발주번호" border="0" color="0" x="183" y="688" height="60" width="334" html.valueishtml="0"  name=hst109h_ord_no_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="169" y1="644" x2="169" y2="840"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="구분" border="0" color="0" x="23" y="688" height="60" width="137" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="526" y1="644" x2="526" y2="840"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="품명" border="0" color="0" x="539" y="688" height="60" width="645" html.valueishtml="0"  name=hst004m_item_name_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="1193" y1="644" x2="1193" y2="840"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="부서" border="0" color="0" x="1207" y="688" height="60" width="645" html.valueishtml="0"  name=hst109h_gwa_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="1861" y1="644" x2="1861" y2="840"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="2555" y1="644" x2="2555" y2="840"  name=l_31 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="5" y1="792" x2="6725" y2="792"  name=l_3 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계정과목" border="0" color="0" x="1883" y="688" height="60" width="645" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="증빙일자" border="0" color="0" x="2574" y="688" height="60" width="338" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="3506" y1="644" x2="3506" y2="840"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="단가" border="0" color="0" x="3136" y="688" height="60" width="361" html.valueishtml="0"  name=hst109h_in_price_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="3122" y1="644" x2="3122" y2="840"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="수량" border="0" color="0" x="2935" y="688" height="60" width="178" html.valueishtml="0"  name=hst109h_in_qty_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="2921" y1="644" x2="2921" y2="840"  name=l_33 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="3977" y1="644" x2="3977" y2="840"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="금액" border="0" color="0" x="3520" y="688" height="60" width="448" html.valueishtml="0"  name=hst109h_in_amt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="요구금액" border="0" color="0" x="3991" y="688" height="60" width="448" html.valueishtml="0"  name=hst109h_item_class_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="4453" y1="644" x2="4453" y2="840"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="거래처명" border="0" color="0" x="4466" y="688" height="60" width="800" html.valueishtml="0"  name=hst109h_cust_no_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="5275" y1="644" x2="5275" y2="840"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="비고" border="0" color="0" x="5294" y="688" height="60" width="1426" html.valueishtml="0"  name=hst109h_remark_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="string(f_sysdate(), 'yyyy/mm/dd')"border="0" color="0" x="6336" y="428" height="60" width="393" format="[GENERAL]" html.valueishtml="0"  name=compute_6 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=header alignment="0" expression="string(f_sysdate(), 'hh:mm:ss')"border="0" color="0" x="6336" y="500" height="60" width="393" format="[GENERAL]" html.valueishtml="0"  name=compute_7 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=detail x1="9" y1="0" x2="9" y2="196"  name=l_15 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="6734" y1="0" x2="6734" y2="196"  name=l_17 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="169" y1="0" x2="169" y2="196"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="183" y="12" height="60" width="334" format="[general]" html.valueishtml="0"  name=hst109h_ord_no visible="1" edit.limit=10 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=22 alignment="2" tabsequence=32766 border="0" color="0" x="23" y="8" height="60" width="137" format="[general]" html.valueishtml="0"  name=hst109h_in_opt visible="1" checkbox.text="" checkbox.on="1" checkbox.off="0" checkbox.scale=no checkbox.threed=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="526" y1="0" x2="526" y2="196"  name=l_20 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="539" y="12" height="60" width="645" format="[general]" html.valueishtml="0"  name=hst004m_item_name visible="1" edit.limit=40 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="1193" y1="0" x2="1193" y2="196"  name=l_21 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="1207" y="12" height="60" width="645" format="[general]" html.valueishtml="0"  name=hst105h_apply_gwa visible="1" dddw.name=dddw_hakgwa_all dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="1861" y1="0" x2="1861" y2="196"  name=l_22 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="2555" y1="0" x2="2555" y2="196"  name=l_32 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="9" y1="84" x2="6729" y2="84"  name=l_28 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="1879" y="16" height="60" width="658" format="[general]" html.valueishtml="0"  name=hst105h_acct_code visible="1" dddw.name=dddw_acct_code_totel dddw.displaycolumn=name dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=19 alignment="2" tabsequence=32766 border="0" color="0" x="2574" y="12" height="60" width="338" format="[general]" html.valueishtml="0"  name=hst109h_proof_date visible="1" editmask.mask="####/##/##" editmask.focusrectangle=no  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="3506" y1="0" x2="3506" y2="196"  name=l_24 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="0" x="3136" y="12" height="60" width="361" format="#,##0" html.valueishtml="0"  name=hst109h_in_price visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="3122" y1="0" x2="3122" y2="196"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="2935" y="12" height="60" width="178" format="[general]" html.valueishtml="0"  name=hst109h_in_qty visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="2921" y1="0" x2="2921" y2="196"  name=l_34 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="3977" y1="0" x2="3977" y2="196"  name=l_25 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="4453" y1="0" x2="4453" y2="196"  name=l_26 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="5275" y1="0" x2="5275" y2="196"  name=l_27 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="0" x="4466" y="12" height="60" width="800" format="[general]" html.valueishtml="0"  name=hst109h_cust_no visible="1" dddw.name=dddw_cust dddw.displaycolumn=cust_name dddw.datacolumn=cust_no dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="0" x="5294" y="12" height="60" width="1426" format="[general]" html.valueishtml="0"  name=hst105h_apply_note visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="0" x="3520" y="12" height="60" width="448" format="#,##0" html.valueishtml="0"  name=hst109h_in_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="1" tabsequence=32766 border="0" color="0" x="3991" y="12" height="60" width="448" format="#,##0" html.valueishtml="0"  name=hst105h_apply_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=summary x1="9" y1="0" x2="6729" y2="0"  name=l_29 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

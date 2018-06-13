@@ -1,0 +1,37 @@
+﻿$PBExportHeader$f_address.srf
+$PBExportComments$현재 컴퓨터의 IP를 조회한다.
+global type f_address from function_object
+end type
+
+forward prototypes
+global function string f_address ()
+end prototypes
+
+global function string f_address ();//////////////////////////////////////////////////////////////////
+// 	작성목적 : IP 주소를 찾기 위하여 사용한다.
+//    적 성 인 : 이현수
+//		작성일자 : 2002.10
+//    변 경 인 :
+//    변경일자 :
+//    변경사유 :
+//////////////////////////////////////////////////////////////////
+
+string ls_inet_version, ls_db_name, ls_user_id, ls_user_passwd, ls_lock_mode
+// ------------     IP 찾기 변수    -----------------
+string  ls_iPAddress = '000.000.000.000' 
+string  ls_Registry_list, ls_Registry
+string  ls_SubKeyList[]
+integer li_SubKey_count, li_rtn
+environment    lenv_env                                // holds environment information
+cuo_ip   luo_ip
+luo_ip = CREATE cuo_ip
+
+luo_ip.uf_getipaddr(ls_iPAddress)
+If isnull(ls_iPAddress) Then
+	ls_iPAddress = '000.000.000.000' 
+End if
+
+DESTROY luo_ip
+return   ls_ipAddress
+end function
+

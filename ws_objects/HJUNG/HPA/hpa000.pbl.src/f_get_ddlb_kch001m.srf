@@ -1,0 +1,51 @@
+﻿$PBExportHeader$f_get_ddlb_kch001m.srf
+$PBExportComments$공통코드 테이블(cddb.kch001m)의 자료를 DDLB로 생성
+global type f_get_ddlb_kch001m from function_object
+end type
+
+forward prototypes
+global subroutine f_get_ddlb_kch001m (string as_type, integer ai_gubun, dropdownlistbox aobj_ddlb)
+end prototypes
+
+global subroutine f_get_ddlb_kch001m (string as_type, integer ai_gubun, dropdownlistbox aobj_ddlb);// ==========================================================================================
+// 기    능 : 	공통코드 테이블(cddb.kch001m)의 자료를 ddlb로 보여준다.
+// 작 성 인 : 	안금옥
+// 작성일자 : 	2002.04
+// 함수원형 : 	f_get_ddlb_kch001m(string as_type, integer ai_gubun, dropdownlistbox aobj_ddlb)
+// 인    수 :	as_type		-	type
+//					ai_gubun		-	0 이면 코드에서 0을 포함해서(빈칸) 보여준다.
+//					aobj_ddlb	-	삽입할 ddlb 명칭
+// 되 돌 림 :
+// 주의사항 :
+// 수정사항 :
+// ==========================================================================================
+
+integer	li_code
+string	ls_name
+
+// 공통코드 테이블 Select
+declare	cur_1	cursor for
+select	code, rtrim(fname)
+from		cddb.kch001m
+where		rtrim(type)	=	:as_type
+and		code	<>	-1
+and		decode(:ai_gubun, 0, 1, code)	<>	0
+order by code	;
+
+open		cur_1;
+
+do while true
+	fetch next cur_1
+	into	:li_code, :ls_name	;
+
+	if sqlca.sqlcode <> 0 then exit
+
+	aobj_ddlb.additem(string(li_code, '####') + '   ' + trim(ls_name))
+//	aobj_ddlb.additem(string(li_code) + '   ' + trim(ls_name))
+LOOP
+
+close		cur_1;
+
+aobj_ddlb.selectitem(1)
+end subroutine
+

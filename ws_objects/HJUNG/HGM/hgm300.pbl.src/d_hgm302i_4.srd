@@ -1,0 +1,103 @@
+﻿$PBExportHeader$d_hgm302i_4.srd
+$PBExportComments$비품수리접수취소
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=decimal(0) update=yes updatewhereclause=yes name=stat_class dbname="hst030h.stat_class" initial="1" values="	3/	2" )
+ column=(type=char(40) updatewhereclause=yes name=item_name dbname="hst030h.item_name" )
+ column=(type=char(40) updatewhereclause=yes name=room_name dbname="hst030h.room_name" )
+ column=(type=char(40) updatewhereclause=yes name=hst004m_item_name_1 dbname="hst030h.item_name" )
+ column=(type=char(11) updatewhereclause=yes key=yes name=id_no dbname="hst030h.id_no" )
+ column=(type=decimal(0) updatewhereclause=yes key=yes name=item_class dbname="hst030h.item_class" )
+ column=(type=char(8) updatewhereclause=yes key=yes name=apply_date dbname="hst030h.apply_date" )
+ column=(type=number updatewhereclause=yes key=yes name=apply_no dbname="hst030h.apply_no" )
+ column=(type=char(4) updatewhereclause=yes name=rep_gwa dbname="hst030h.rep_gwa" )
+ column=(type=char(10) updatewhereclause=yes name=rep_member_no dbname="hst030h.rep_member_no" )
+ column=(type=decimal(0) updatewhereclause=yes name=apply_amt dbname="hst030h.apply_amt" )
+ column=(type=char(100) updatewhereclause=yes name=rep_need dbname="hst030h.rep_need" )
+ column=(type=char(6) updatewhereclause=yes name=acct_code dbname="hst030h.acct_code" )
+ column=(type=char(200) updatewhereclause=yes name=rep_remark dbname="hst030h.rep_remark" )
+ column=(type=decimal(0) updatewhereclause=yes name=rep_amt dbname="hst030h.rep_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=hst030h_stat_class_1 dbname="hst030h.stat_class" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=req_no dbname="hst030h.req_no" )
+ column=(type=number update=yes updatewhereclause=yes name=item_seq dbname="hst030h.item_seq" )
+ column=(type=char(100) updatewhereclause=yes name=hst027m_item_stand_size dbname="hst030h.item_stand_size" )
+ column=(type=char(100) updatewhereclause=yes name=hst027m_model dbname="hst030h.model" )
+ column=(type=char(5) updatewhereclause=yes name=job_uid dbname="hst030h.job_uid" )
+ column=(type=char(20) updatewhereclause=yes name=job_add dbname="hst030h.job_add" )
+ column=(type=datetime updatewhereclause=yes name=job_date dbname="hst030h.job_date" )
+ column=(type=char(4000) updatewhereclause=yes name=com_dept_nm dbname="com_dept_nm" )
+ retrieve="SELECT	a.stat_class,
+			C.ITEM_NAME,
+			D.ROOM_NAME,
+			C.ITEM_NAME,
+			A.ID_NO, 
+			A.ITEM_CLASS, 
+			A.APPLY_DATE, 
+			A.APPLY_NO, 
+			A.REP_GWA, 
+			A.REP_MEMBER_NO, 
+			A.APPLY_AMT, 
+			A.REP_NEED, 
+			A.ACCT_CODE, 
+			A.REP_REMARK, 
+			A.REP_AMT , 
+			A.STAT_CLASS,
+			A.REQ_NO,
+			A.ITEM_SEQ,
+         B.ITEM_STAND_SIZE,
+         B.MODEL,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE,
+			FU_DEPT_NM(A.REP_GWA,'K')										COM_DEPT_NM
+FROM		STDB.HST030H A, STDB.HST027M B, STDB.HST004M C,STDB.HST242M	D
+WHERE		A.ID_NO		 =	B.ID_NO AND 
+			A.ITEM_CLASS = B.ITEM_CLASS AND 
+			B.ROOM_CODE = D.ROOM_CODE(+) AND 
+			B.ITEM_NO	= C.ITEM_NO	(+)  AND
+			NVL(D.ROOM_NAME,' ')  LIKE  :as_room_name||'%' AND
+			C.ITEM_NAME           LIKE	 :as_item_name||'%'AND
+			FU_DEPT_NM(A.REP_GWA,'K')  LIKE :as_Gwa||'%' AND
+			A.STAT_CLASS =  2
+" update="STDB.HST030H" updatewhere=0 updatekeyinplace=no arguments=(("as_gwa", string),("as_room_name", string),("as_item_name", string)) )
+text(band=header alignment="2" text="구분" border="0" color="0" x="9" y="8" height="56" width="155" html.valueishtml="0"  name=stat_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="접수번호" border="0" color="0" x="174" y="4" height="56" width="306" html.valueishtml="0"  name=req_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="품목명" border="0" color="0" x="919" y="8" height="56" width="773" html.valueishtml="0"  name=item_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="예상금액" border="0" color="0" x="1701" y="8" height="56" width="398" html.valueishtml="0"  name=apply_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="장소" border="0" color="0" x="2107" y="8" height="56" width="270" html.valueishtml="0"  name=room_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="규격" border="0" color="0" x="2386" y="8" height="56" width="1001" html.valueishtml="0"  name=hst027m_item_stand_size_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="모델" border="0" color="0" x="3397" y="8" height="56" width="713" html.valueishtml="0"  name=hst027m_model_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="등재번호" border="0" color="0" x="4119" y="8" height="56" width="329" html.valueishtml="0"  name=id_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="신청일자" border="0" color="0" x="4457" y="8" height="56" width="293" html.valueishtml="0"  name=apply_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="신청번호" border="0" color="0" x="4759" y="8" height="56" width="279" html.valueishtml="0"  name=apply_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="신청자" border="0" color="0" x="5047" y="8" height="56" width="224" html.valueishtml="0"  name=rep_member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="수리의필요성" border="0" color="0" x="5280" y="8" height="56" width="992" html.valueishtml="0"  name=rep_need_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="신청부서" border="0" color="0" x="489" y="8" height="56" width="421" html.valueishtml="0"  name=com_dept_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=10 border="0" color="0" x="9" y="8" height="76" width="155" format="[general]" html.valueishtml="0"  name=stat_class visible="1" checkbox.text="" checkbox.on="3" checkbox.off="2" checkbox.scale=no checkbox.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="919" y="8" height="76" width="773" format="[general]" html.valueishtml="0" protect="0~t1"  name=item_name visible="1" edit.limit=40 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="2107" y="8" height="76" width="270" format="[general]" html.valueishtml="0" protect="0~t1"  name=room_name visible="1" dddw.name=dddw_room_code dddw.displaycolumn=name dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="4119" y="8" height="76" width="329" format="[general]" html.valueishtml="0" protect="0~t1"  name=id_no visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="4457" y="8" height="76" width="293" format="@@@@/@@/@@" html.valueishtml="0" protect="0~t1"  name=apply_date visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="4759" y="8" height="76" width="279" format="[general]" html.valueishtml="0" protect="0~t1"  name=apply_no visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="0" x="5047" y="8" height="76" width="224" format="[general]" html.valueishtml="0" protect="0~t1"  name=rep_member_no visible="1" dddw.name=dddw_insa_total dddw.displaycolumn=name dddw.datacolumn=id dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="1" tabsequence=32766 border="0" color="0" x="1701" y="8" height="76" width="398" format="#,###,##0" html.valueishtml="0" protect="0~t1"  name=apply_amt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="0" x="174" y="8" height="76" width="306" format="[general]" html.valueishtml="0"  name=req_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="5280" y="8" height="76" width="992" format="[general]" html.valueishtml="0" protect="0~t1"  name=rep_need visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=19 alignment="0" tabsequence=32766 border="0" color="0" x="2386" y="8" height="76" width="1001" format="[general]" html.valueishtml="0"  name=hst027m_item_stand_size visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=20 alignment="0" tabsequence=32766 border="0" color="0" x="3397" y="8" height="76" width="713" format="[general]" html.valueishtml="0"  name=hst027m_model visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=24 alignment="0" tabsequence=32766 border="0" color="0" x="489" y="8" height="76" width="421" format="[general]" html.valueishtml="0"  name=com_dept_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

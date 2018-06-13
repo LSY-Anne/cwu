@@ -1,0 +1,51 @@
+﻿$PBExportHeader$f_mgr_dept.srf
+$PBExportComments$상위부서 구하기(년도(S), 계정코드(S))
+global type f_mgr_dept from function_object
+end type
+
+forward prototypes
+global function string f_mgr_dept (string as_bdgt_year, string as_acct_code, integer ai_acct_class, string as_io_gubun)
+end prototypes
+
+global function string f_mgr_dept (string as_bdgt_year, string as_acct_code, integer ai_acct_class, string as_io_gubun);// ------------------------------------------------------------------------------------------
+// Function Name	:	f_mgr_dept
+//	Function 설명	:	상위부서 구하기
+// Argument			:	as_bdgt_year(String)
+//							ai_acct_class(Integer)
+//							as_acct_code(string)
+//							as_io_gubun(string)
+// Return			:	as_mgr_dept(String)
+// ------------------------------------------------------------------------------------------
+
+string	ls_dept_code
+integer	li_cnt
+
+select 	count(*)
+into		:li_cnt
+from		acdb.hac005m
+where		bdgt_year	=	:as_bdgt_year
+and		acct_code	=	:as_acct_code
+and		acct_class	=	:ai_acct_class
+and		io_gubun		=	:as_io_gubun
+and		use_yn		=	'Y'	;
+
+if li_cnt <> 1 then
+	f_messagebox('1', '계정코드의 담당주관부서를 찾아올 수 없습니다.~n~n주관부서별 계정코드를 검토하시기 바랍니다.')
+	return	''
+end if
+
+select	rtrim(gwa)
+into		:ls_dept_code
+from		acdb.hac005m
+where		bdgt_year	=	:as_bdgt_year
+and		acct_code	=	:as_acct_code
+and		acct_class	=	:ai_acct_class
+and		io_gubun		=	:as_io_gubun
+and		use_yn		=	'Y'	;
+
+if sqlca.sqlcode <> 0 then	return	''
+
+return	trim(ls_dept_code)
+
+end function
+

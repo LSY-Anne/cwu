@@ -1,0 +1,88 @@
+﻿$PBExportHeader$d_hfn304a_2.srd
+$PBExportComments$수입/지출 전표 등록 - 등록 마스타
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=196 color="536870912" )
+table(column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=acct_class dbname="hfn201m.acct_class" initial="1" )
+ column=(type=char(8) update=yes updatewhereclause=yes key=yes name=slip_date dbname="hfn201m.slip_date" )
+ column=(type=number update=yes updatewhereclause=yes key=yes name=slip_no dbname="hfn201m.slip_no" initial="0" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=slip_gwa dbname="hfn201m.slip_gwa" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=slip_class dbname="hfn201m.slip_class" values="수입전표	1/지출전표	2/" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=genesis_gb dbname="hfn201m.genesis_gb" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=remark dbname="hfn201m.remark" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=close_yn dbname="hfn201m.close_yn" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=step_opt dbname="hfn201m.step_opt" initial="4" )
+ column=(type=char(8) updatewhereclause=yes name=resol_date dbname="hfn201m.resol_date" )
+ column=(type=number updatewhereclause=yes name=resol_no dbname="hfn201m.resol_no" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=bdgt_year dbname="hfn201m.bdgt_year" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=acct_date dbname="hfn201m.acct_date" )
+ column=(type=number update=yes updatewhereclause=yes name=acct_no dbname="hfn201m.acct_no" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hfn201m.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hfn201m.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hfn201m.work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hfn201m.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hfn201m.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hfn201m.job_date" )
+ retrieve="SELECT	A.ACCT_CLASS,
+			A.SLIP_DATE,
+			A.SLIP_NO,
+			A.SLIP_GWA,
+			A.SLIP_CLASS,
+			A.GENESIS_GB,
+			A.REMARK,
+			A.CLOSE_YN,
+			A.STEP_OPT,
+			A.RESOL_DATE,
+			A.RESOL_NO,
+			A.BDGT_YEAR,
+			A.ACCT_DATE,
+			A.ACCT_NO,
+			A.WORKER,
+			A.IPADDR,
+			A.WORK_DATE,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE
+FROM		FNDB.HFN201M A
+WHERE		A.ACCT_CLASS = :AI_ACCT_CLASS
+AND		A.SLIP_DATE  = :AS_SLIP_DATE
+AND		A.SLIP_NO    = :AI_SLIP_NO
+" update="FNDB.HFN201M" updatewhere=1 updatekeyinplace=no arguments=(("ai_acct_class", number),("as_slip_date", string),("ai_slip_no", number)) )
+text(band=detail alignment="2" text="" border="0" color="0" x="430" y="104" height="56" width="3269" html.valueishtml="0"  name=t_4 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1090519039" )
+column(band=detail id=7 alignment="0" tabsequence=20 border="0" color="0" x="439" y="120" height="60" width="3250" format="[general]" html.valueishtml="0"  name=remark visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="2" background.color="1090519039" )
+text(band=detail alignment="2" text="" border="0" color="0" x="430" y="8" height="56" width="384" html.valueishtml="0"  name=t_6 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="1090519039~tif ( isRowNew(), 16777215, 81324524)" )
+column(band=detail id=2 alignment="2" tabsequence=10 border="0" color="0" x="439" y="28" height="60" width="366" format="[general]" html.valueishtml="0" protect="0~tif ( isRowNew(), 0, 1)"  name=slip_date visible="1" editmask.autoskip=yes editmask.mask="xxxx/xx/xx" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="16777215~tif ( isRowNew(), 16777215, 81324524)" )
+line(band=detail x1="14" y1="8" x2="3703" y2="8"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="100" x2="3703" y2="100"  name=l_2 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="425" y1="4" x2="425" y2="192"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="814" y1="8" x2="814" y2="100"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1225" y1="8" x2="1225" y2="100"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1481" y1="4" x2="1481" y2="100"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="전표번호" border="0" color="128" x="827" y="28" height="56" width="389" html.valueishtml="0"  name=resol_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="14" y1="192" x2="3703" y2="192"  name=l_8 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="전표일자" border="0" color="128" x="27" y="28" height="56" width="389" html.valueishtml="0"  name=src_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="14" y1="4" x2="14" y2="192"  name=l_11 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3703" y1="4" x2="3703" y2="192"  name=l_17 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="적    요" border="0" color="128" x="27" y="120" height="56" width="389" html.valueishtml="0"  name=t_3 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="전표부서" border="0" color="0" x="1495" y="28" height="56" width="389" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="1893" y1="8" x2="1893" y2="100"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="1239" y="28" height="60" width="233" format="[general]" html.valueishtml="0"  name=slip_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1906" y="28" height="60" width="869" format="[general]" html.valueishtml="0"  name=slip_gwa visible="1" dddw.name=dddw_sosok501 dddw.displaycolumn=dept_name dddw.datacolumn=dept_code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=detail alignment="2" text="전표상태" border="0" color="0" x="2798" y="28" height="56" width="389" html.valueishtml="0"  name=t_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+line(band=detail x1="2784" y1="12" x2="2784" y2="104"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3195" y1="12" x2="3195" y2="104"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=detail alignment="2" expression="if( step_opt = 5, '확정전표', '미확정전표' )"border="0" color="0" x="3209" y="28" height="60" width="480" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

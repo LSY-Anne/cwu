@@ -1,0 +1,207 @@
+﻿$PBExportHeader$d_hsu700p_6.srd
+$PBExportComments$[청운대]학과별 수업평가 요약분석표
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=756 color="536870912" )
+summary(height=112 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=96 color="536870912" )
+table(column=(type=char(4) updatewhereclause=yes name=evaluate_year dbname="year" )
+ column=(type=char(1) updatewhereclause=yes name=evaluate_hakgi dbname="hakgi" )
+ column=(type=char(6) updatewhereclause=yes name=hakgwa dbname="hakgwa" )
+ column=(type=number updatewhereclause=yes name=hang1 dbname="hang1" )
+ column=(type=number updatewhereclause=yes name=hang2 dbname="hang2" )
+ column=(type=number updatewhereclause=yes name=hang3 dbname="hang3" )
+ column=(type=number updatewhereclause=yes name=hang4 dbname="hang4" )
+ column=(type=number updatewhereclause=yes name=hang5 dbname="hang5" )
+ column=(type=number updatewhereclause=yes name=hang6 dbname="hang6" )
+ column=(type=number updatewhereclause=yes name=hang7 dbname="hang7" )
+ column=(type=number updatewhereclause=yes name=hang8 dbname="hang8" )
+ column=(type=number updatewhereclause=yes name=hang9 dbname="hang9" )
+ column=(type=number updatewhereclause=yes name=hang10 dbname="hang10" )
+ column=(type=number updatewhereclause=yes name=hang11 dbname="hang11" )
+ column=(type=number updatewhereclause=yes name=hang12 dbname="hang12" )
+ column=(type=number updatewhereclause=yes name=hang13 dbname="hang13" )
+ column=(type=number updatewhereclause=yes name=hang14 dbname="hang14" )
+ retrieve="SELECT	A.YEAR,
+			A.HAKGI,
+			A.HAKGWA,
+			ROUND(AVG(TO_CHAR(A.HANG1)),2)	HANG1,
+			ROUND(AVG(TO_CHAR(A.HANG2)),2)	HANG2,
+			ROUND(AVG(TO_CHAR(A.HANG3)),2)	HANG3,
+			ROUND(AVG(TO_CHAR(A.HANG4)),2)	HANG4,
+			ROUND(AVG(TO_CHAR(A.HANG5)),2)	HANG5,
+			ROUND(AVG(TO_CHAR(A.HANG6)),2)	HANG6,
+			ROUND(AVG(TO_CHAR(A.HANG7)),2)	HANG7,
+			ROUND(AVG(TO_CHAR(A.HANG8)),2)	HANG8,
+			ROUND(AVG(TO_CHAR(A.HANG9)),2)	HANG9,
+			ROUND(AVG(TO_CHAR(A.HANG10)),2)	HANG10,
+			ROUND(AVG(TO_CHAR(A.HANG11)),2)	HANG11,
+			ROUND(AVG(TO_CHAR(A.HANG12)),2)	HANG12,
+			ROUND(AVG(TO_CHAR(A.HANG13)),2)	HANG13,
+			ROUND(AVG(TO_CHAR(A.HANG14)),2)	HANG14
+FROM 		(	SELECT	A.YEAR					AS	YEAR	,
+							A.HAKGI					AS HAKGI	,
+							SUBSTR(B.GWA, 1, 3)	AS HAKGWA,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 1, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 1, 1, NULL)), 0), 2)	AS HANG1,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 2, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 2, 1, NULL)), 0), 2)	AS HANG2,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 3, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 3, 1, NULL)), 0), 2)	AS HANG3,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 4, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 4, 1, NULL)), 0), 2)	AS HANG4,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 5, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 5, 1, NULL)), 0), 2)	AS HANG5,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 6, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 6, 1, NULL)), 0), 2)	AS HANG6,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 7, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 7, 1, NULL)), 0), 2)	AS HANG7,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 8, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 8, 1, NULL)), 0), 2)	AS HANG8,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 9, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 9, 1, NULL)), 0), 2)	AS HANG9,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 10, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 10, 1, NULL)), 0), 2)	AS HANG10,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 11, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 11, 1, NULL)), 0), 2)	AS HANG11,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 12, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 12, 1, NULL)), 0), 2)	AS HANG12,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 13, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 13, 1, NULL)), 0), 2)	AS HANG13,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 14, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 14, 1, NULL)), 0), 2)	AS HANG14
+				FROM		HAKSA.EVALUATE			A,
+							HAKSA.JAEHAK_HAKJUK	B
+				WHERE		TRIM(A.HAKBUN)	= B.HAKBUN
+				AND		A.YEAR	= :year
+				AND		A.HAKGI	= :hakgi
+				GROUP BY	A.YEAR				,
+							A.HAKGI				,
+							SUBSTR(B.GWA, 1, 3)
+				
+				UNION 
+				
+				SELECT	A.YEAR					AS	YEAR	,
+							A.HAKGI					AS HAKGI	,
+							SUBSTR(B.GWA, 1, 3)	AS HAKGWA,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 1, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 1, 1, NULL)), 0), 2)	AS HANG1,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 2, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 2, 1, NULL)), 0), 2)	AS HANG2,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 3, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 3, 1, NULL)), 0), 2)	AS HANG3,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 4, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 4, 1, NULL)), 0), 2)	AS HANG4,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 5, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 5, 1, NULL)), 0), 2)	AS HANG5,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 6, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 6, 1, NULL)), 0), 2)	AS HANG6,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 7, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 7, 1, NULL)), 0), 2)	AS HANG7,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 8, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 8, 1, NULL)), 0), 2)	AS HANG8,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 9, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 9, 1, NULL)), 0), 2)	AS HANG9,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 10, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 10, 1, NULL)), 0), 2)	AS HANG10,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 11, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 11, 1, NULL)), 0), 2)	AS HANG11,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 12, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 12, 1, NULL)), 0), 2)	AS HANG12,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 13, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 13, 1, NULL)), 0), 2)	AS HANG13,
+							ROUND(NVL(SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 14, TO_NUMBER(A.JUMSU), 0)) * 20 / SUM(DECODE(TO_NUMBER(A.EVALUATE_ID), 14, 1, NULL)), 0), 2)	AS HANG14
+				FROM		HAKSA.EVALUATE			A,
+							HAKSA.JOLUP_HAKJUK	B
+				WHERE		TRIM(A.HAKBUN)	= B.HAKBUN
+				AND		A.YEAR	= :year
+				AND		A.HAKGI	= :hakgi
+				GROUP BY	A.YEAR				,
+							A.HAKGI				,
+							SUBSTR(B.GWA, 1, 3)) A
+GROUP BY A.YEAR,
+			A.HAKGI,
+			A.HAKGWA
+" arguments=(("year", string),("hakgi", string)) )
+rectangle(band=header x="27" y="572" height="184" width="3355"  name=r_1 visible="1" brush.hatch="6" brush.color="16777215" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="0" )
+compute(band=header alignment="2" expression=" evaluate_year + '년도 ' +  evaluate_hakgi  + '학기 학과별 수업평가 요약분석표'"border="1" color="0" x="366" y="264" height="116" width="2610" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-18" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="1항" border="0" color="0" x="677" y="676" height="60" width="187" html.valueishtml="0"  name=hang1_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="각 항목에 대한 수업평가 환산점수" border="0" color="0" x="677" y="592" height="60" width="2299" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="2항" border="0" color="0" x="869" y="676" height="60" width="187" html.valueishtml="0"  name=hang2_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="3항" border="0" color="0" x="1061" y="676" height="60" width="187" html.valueishtml="0"  name=hang3_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="4항" border="0" color="0" x="1253" y="676" height="60" width="187" html.valueishtml="0"  name=hang4_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="5항" border="0" color="0" x="1445" y="676" height="60" width="187" html.valueishtml="0"  name=hang5_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="6항" border="0" color="0" x="1637" y="676" height="60" width="187" html.valueishtml="0"  name=hang6_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="7항" border="0" color="0" x="1829" y="676" height="60" width="187" html.valueishtml="0"  name=hang7_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="8항" border="0" color="0" x="2021" y="676" height="60" width="187" html.valueishtml="0"  name=hang8_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="10항" border="0" color="0" x="2405" y="676" height="60" width="187" html.valueishtml="0"  name=hang10_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="11항" border="0" color="0" x="2597" y="676" height="60" width="187" html.valueishtml="0"  name=hang11_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="12항" border="0" color="0" x="2789" y="676" height="60" width="187" html.valueishtml="0"  name=hang12_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="9항" border="0" color="0" x="2213" y="676" height="60" width="187" html.valueishtml="0"  name=hang8_t_1_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="평    균환산점수" border="0" color="0" x="2981" y="612" height="120" width="389" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="2784" y1="660" x2="2784" y2="768"  name=l_33 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=header x1="2016" y1="660" x2="2016" y2="768"  name=l_34 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=header x1="672" y1="576" x2="672" y2="768"  name=l_35 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=header x1="864" y1="660" x2="864" y2="768"  name=l_36 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=header x1="1056" y1="660" x2="1056" y2="768"  name=l_37 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=header x1="1248" y1="660" x2="1248" y2="768"  name=l_38 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=header x1="1440" y1="660" x2="1440" y2="768"  name=l_39 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=header x1="1632" y1="660" x2="1632" y2="768"  name=l_40 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=header x1="1824" y1="660" x2="1824" y2="768"  name=l_41 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=header x1="2208" y1="660" x2="2208" y2="768"  name=l_42 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=header x1="2400" y1="660" x2="2400" y2="768"  name=l_43 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=header x1="2592" y1="660" x2="2592" y2="768"  name=l_44 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=header x1="2976" y1="576" x2="2976" y2="768"  name=l_45 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=header x1="672" y1="660" x2="2976" y2="660"  name=l_46 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+text(band=header alignment="2" text="학과명" border="0" color="0" x="46" y="644" height="60" width="613" html.valueishtml="0"  name=hakgwa_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="페 이 지 :" border="0" color="0" x="2775" y="516" height="48" width="288" html.valueishtml="0"  name=t_13 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=header alignment="1" expression="pageCount() + ' of'  + page()"border="0" color="0" x="3081" y="516" height="48" width="288" format="[GENERAL]" html.valueishtml="0"  name=compute_17 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="작성일자 :" border="0" color="0" x="2775" y="456" height="52" width="288" html.valueishtml="0"  name=t_14 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=header alignment="1" expression="today()"border="0" color="0" x="3081" y="456" height="52" width="288" format="yyyy.mm.dd" html.valueishtml="0"  name=compute_18 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=detail x1="27" y1="92" x2="3374" y2="92"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="27" y1="0" x2="27" y2="108"  name=l_14 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="3374" y1="0" x2="3374" y2="108"  name=l_8 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="2784" y1="0" x2="2784" y2="108"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="2016" y1="0" x2="2016" y2="108"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="672" y1="0" x2="672" y2="108"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="864" y1="0" x2="864" y2="108"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="1056" y1="0" x2="1056" y2="108"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="1248" y1="0" x2="1248" y2="108"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="1440" y1="0" x2="1440" y2="108"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="1632" y1="0" x2="1632" y2="108"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="1824" y1="0" x2="1824" y2="108"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="2208" y1="0" x2="2208" y2="108"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="2400" y1="0" x2="2400" y2="108"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="2592" y1="0" x2="2592" y2="108"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=detail x1="2976" y1="0" x2="2976" y2="108"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="677" y="16" height="64" width="187" format="0.00" html.valueishtml="0"  name=hang1 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="869" y="16" height="64" width="187" format="0.00" html.valueishtml="0"  name=hang2 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="1061" y="16" height="64" width="187" format="0.00" html.valueishtml="0"  name=hang3 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="1253" y="16" height="64" width="187" format="0.00" html.valueishtml="0"  name=hang4 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="1445" y="16" height="64" width="187" format="0.00" html.valueishtml="0"  name=hang5 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="0" x="1637" y="16" height="64" width="187" format="0.00" html.valueishtml="0"  name=hang6 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="0" x="1829" y="16" height="64" width="187" format="0.00" html.valueishtml="0"  name=hang7 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="0" x="2021" y="16" height="64" width="187" format="0.00" html.valueishtml="0"  name=hang8 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="2" tabsequence=32766 border="0" color="0" x="2213" y="16" height="64" width="187" format="0.00" html.valueishtml="0"  name=hang9 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="2" tabsequence=32766 border="0" color="0" x="2405" y="16" height="64" width="187" format="0.00" html.valueishtml="0"  name=hang10 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="2" tabsequence=32766 border="0" color="0" x="2597" y="16" height="64" width="187" format="0.00" html.valueishtml="0"  name=hang11 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="2" tabsequence=32766 border="0" color="0" x="2789" y="16" height="64" width="187" format="0.00" html.valueishtml="0"  name=hang12 visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="( hang1  +  hang2  +  hang3  +  hang4  +  hang5  +  hang6  +  hang7  +  hang8  +  hang9  +  hang10  +  hang11  +  hang12   +  hang13  +  hang14) / 14"border="0" color="0" x="2981" y="16" height="64" width="389" format="0.00" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="46" y="16" height="64" width="613" format="[general]" html.valueishtml="0"  name=hakgwa visible="1" dddw.name=d_dddw_daepyogwa dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=summary x1="27" y1="108" x2="3374" y2="108"  name=l_17 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="0" )
+line(band=summary x1="2784" y1="0" x2="2784" y2="108"  name=l_18 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=summary x1="2016" y1="0" x2="2016" y2="108"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=summary x1="672" y1="0" x2="672" y2="108"  name=l_20 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=summary x1="27" y1="0" x2="27" y2="108"  name=l_21 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="0" )
+line(band=summary x1="3374" y1="0" x2="3374" y2="108"  name=l_22 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="0" )
+line(band=summary x1="864" y1="0" x2="864" y2="108"  name=l_23 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=summary x1="1056" y1="0" x2="1056" y2="108"  name=l_24 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=summary x1="1248" y1="0" x2="1248" y2="108"  name=l_25 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=summary x1="1440" y1="0" x2="1440" y2="108"  name=l_26 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=summary x1="1632" y1="0" x2="1632" y2="108"  name=l_27 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=summary x1="1824" y1="0" x2="1824" y2="108"  name=l_28 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=summary x1="2208" y1="0" x2="2208" y2="108"  name=l_29 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=summary x1="2400" y1="0" x2="2400" y2="108"  name=l_30 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=summary x1="2592" y1="0" x2="2592" y2="108"  name=l_31 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+line(band=summary x1="2976" y1="0" x2="2976" y2="108"  name=l_32 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="0" )
+text(band=summary alignment="2" text="계" border="0" color="0" x="73" y="24" height="64" width="128" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="count(hakgwa for all)"border="0" color="0" x="206" y="24" height="64" width="169" format="[general]" html.valueishtml="0"  name=compute_16 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=summary alignment="2" text="개 학과" border="0" color="0" x="379" y="24" height="64" width="242" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="avg(hang1 for all)"border="0" color="0" x="677" y="24" height="64" width="187" format="0.00" html.valueishtml="0"  name=compute_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="avg(hang2 for all)"border="0" color="0" x="869" y="24" height="64" width="187" format="0.00" html.valueishtml="0"  name=compute_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="avg(hang3 for all)"border="0" color="0" x="1061" y="24" height="64" width="187" format="0.00" html.valueishtml="0"  name=compute_5 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="avg(hang4 for all)"border="0" color="0" x="1253" y="24" height="64" width="187" format="0.00" html.valueishtml="0"  name=compute_6 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="avg(hang5 for all)"border="0" color="0" x="1445" y="24" height="64" width="187" format="0.00" html.valueishtml="0"  name=compute_7 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="avg(hang6 for all)"border="0" color="0" x="1637" y="24" height="64" width="187" format="0.00" html.valueishtml="0"  name=compute_8 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="avg(hang7 for all)"border="0" color="0" x="1829" y="24" height="64" width="187" format="0.00" html.valueishtml="0"  name=compute_9 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="avg(hang8 for all)"border="0" color="0" x="2021" y="24" height="64" width="187" format="0.00" html.valueishtml="0"  name=compute_11 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="avg(hang9 for all)"border="0" color="0" x="2213" y="24" height="64" width="187" format="0.00" html.valueishtml="0"  name=compute_13 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="avg(hang10 for all)"border="0" color="0" x="2405" y="24" height="64" width="187" format="0.00" html.valueishtml="0"  name=compute_12 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="avg(hang11 for all)"border="0" color="0" x="2597" y="24" height="64" width="187" format="0.00" html.valueishtml="0"  name=compute_10 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="avg(hang12 for all)"border="0" color="0" x="2789" y="24" height="64" width="187" format="0.00" html.valueishtml="0"  name=compute_14 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="2" expression="avg( hang1  +  hang2  +  hang3  +  hang4  +  hang5  +  hang6  +  hang7  +  hang8  +  hang9  +  hang10  +  hang11  +  hang12  +  hang13  +  hang14  for all) / 14"border="0" color="0" x="2981" y="24" height="64" width="389" format="0.00" html.valueishtml="0"  name=compute_15 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

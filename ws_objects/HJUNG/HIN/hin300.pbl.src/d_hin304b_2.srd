@@ -1,0 +1,110 @@
+﻿$PBExportHeader$d_hin304b_2.srd
+$PBExportComments$급여 이체은행자료 일괄생성_생성용
+release 10.5;
+datawindow(units=0 timer_interval=0 color=80269524 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=68 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes name=com_member_no dbname="hin001m.com_member_no" )
+ column=(type=number updatewhereclause=yes name=com_bank_no dbname="hin001m.com_bank_no" )
+ column=(type=char(20) updatewhereclause=yes name=com_acct_no dbname="hin001m.com_acct_no" )
+ column=(type=char(20) updatewhereclause=yes name=com_name dbname="hin001m.com_name" )
+ column=(type=number updatewhereclause=yes name=com_pay_class dbname="hin001m.com_pay_class" )
+ column=(type=char(4000) updatewhereclause=yes name=com_bank_nm dbname="com_bank_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_pay_class_nm dbname="com_pay_class_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_dept_nm dbname="com_dept_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_jikjong_nm dbname="com_jikjong_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_jikwi_nm dbname="com_jikwi_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_duty_nm dbname="com_duty_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_jikmu_nm dbname="com_jikmu_nm" )
+ retrieve="SELECT	A.MEMBER_NO																		COM_MEMBER_NO,
+			A.BANK_CD1																		COM_BANK_NO,
+			A.ACCT_NO1																		COM_ACCT_NO,
+			C.NAME																			COM_NAME,
+			0																					COM_PAY_CLASS,
+			FU_CODE_NM('HAENG','BANK_CODE',A.BANK_CD1,'K')						COM_BANK_NM,
+			FU_CODE_NM('HAENG','PAY_CLASS2',0,'K')									COM_PAY_CLASS_NM,
+			FU_DEPT_NM(C.GWA,'K')														COM_DEPT_NM,
+			FU_CODE_NM('HAENG','JIKJONG_CODE',SUBSTR(C.DUTY_CODE,1,1),'K')	COM_JIKJONG_NM,
+			FU_CODE_NM('HAENG','JIKWI_CODE',C.JIKWI_CODE,'K')					COM_JIKWI_NM,
+			FU_DUTY_NM(C.DUTY_CODE,'K')												COM_DUTY_NM,
+			FU_CODE_NM('HAENG','JIKMU_CODE',C.JIKMU_CODE,'K')					COM_JIKMU_NM
+FROM		INDB.HIN001M C,
+			INDB.HIN011M A
+WHERE		A.MEMBER_NO = C.MEMBER_NO
+AND		C.MEMBER_NO LIKE :as_MemberNo||'%'
+AND		C.NAME      LIKE :as_Name||'%'
+AND		C.DUTY_CODE  BETWEEN DECODE(:as_JikjongCode,'1','000','2','400','000') 
+							 AND     DECODE(:as_JikjongCode,'1','399','2','999','999')
+AND		C.JAEJIK_OPT < 3
+AND		NOT (NVL(LENGTH(TRIM(A.ACCT_NO1)),0) = 0)
+AND		NOT (NVL(LENGTH(TRIM(A.BANK_CD1)),0) = 0)
+AND		NOT EXISTS	(	SELECT	1
+								FROM		PADB.HPA020M B
+								WHERE		A.MEMBER_NO = B.MEMBER_NO
+								AND		A.ACCT_NO1  = B.ACCT_NO	)
+UNION	ALL
+SELECT	A.MEMBER_NO,
+			A.BANK_CD2,
+			A.ACCT_NO2,
+			C.NAME,
+			0,
+			FU_CODE_NM('HAENG','BANK_CODE',A.BANK_CD2,'K'),
+			FU_CODE_NM('HAENG','PAY_CLASS2',0,'K'),
+			FU_DEPT_NM(C.GWA,'K'),
+			FU_CODE_NM('HAENG','JIKJONG_CODE',SUBSTR(C.DUTY_CODE,1,1),'K'),
+			FU_CODE_NM('HAENG','JIKWI_CODE',C.JIKWI_CODE,'K'),
+			FU_DUTY_NM(C.DUTY_CODE,'K'),
+			FU_CODE_NM('HAENG','JIKMU_CODE',C.JIKMU_CODE,'K')
+FROM		INDB.HIN001M C,
+			INDB.HIN011M A
+WHERE		A.MEMBER_NO = C.MEMBER_NO
+AND		C.MEMBER_NO LIKE :as_MemberNo||'%'
+AND		C.NAME      LIKE :as_Name||'%'
+AND		C.DUTY_CODE  BETWEEN DECODE(:as_JikjongCode,'1','000','2','400','000') 
+							 AND     DECODE(:as_JikjongCode,'1','399','2','999','999')
+AND		C.JAEJIK_OPT < 3
+AND		NOT (NVL(LENGTH(TRIM(A.ACCT_NO2)),0) = 0)
+AND		NOT (NVL(LENGTH(TRIM(A.BANK_CD2)),0) = 0)
+AND		NOT EXISTS	(	SELECT	1
+								FROM		PADB.HPA020M B
+								WHERE		A.MEMBER_NO = B.MEMBER_NO
+								AND		A.ACCT_NO2  = B.ACCT_NO	)
+
+" arguments=(("as_Name", string),("as_MemberNo", string),("as_JikjongCode", string))  sort="com_name A " )
+text(band=header alignment="0" text="Com Bank Nm" border="0" color="0" x="1385" y="8" height="60" width="443" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="Com Pay Class Nm" border="0" color="0" x="2478" y="8" height="60" width="571" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="Com Dept Nm" border="0" color="0" x="9" y="8" height="60" width="603" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="Com Jikjong Nm" border="0" color="0" x="3058" y="8" height="60" width="489" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="Com Jikwi Nm" border="0" color="0" x="3557" y="8" height="60" width="416" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="Com Duty Nm" border="0" color="0" x="3982" y="8" height="60" width="389" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="Com Jikmu Nm" border="0" color="0" x="4379" y="8" height="60" width="421" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="Hin011m Com Member No" border="0" color="0" x="622" y="8" height="60" width="311" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="Hin011m Com Bank No" border="0" color="0" x="1243" y="8" height="60" width="133" html.valueishtml="0"  name=t_9 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="Hin011m Com Acct No" border="0" color="0" x="1838" y="8" height="60" width="631" html.valueishtml="0"  name=t_10 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="Hin001m Com Name" border="0" color="0" x="942" y="8" height="60" width="293" html.valueishtml="0"  name=t_11 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="Com Pay Class" border="0" color="0" x="4809" y="8" height="60" width="471" html.valueishtml="0"  name=t_12 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1385" y="4" height="60" width="443" format="[general]" html.valueishtml="0"  name=com_bank_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="2478" y="4" height="60" width="571" format="[general]" html.valueishtml="0"  name=com_pay_class_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="60" width="603" format="[general]" html.valueishtml="0"  name=com_dept_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="3058" y="4" height="60" width="489" format="[general]" html.valueishtml="0"  name=com_jikjong_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="3557" y="4" height="60" width="416" format="[general]" html.valueishtml="0"  name=com_jikwi_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="3982" y="4" height="60" width="389" format="[general]" html.valueishtml="0"  name=com_duty_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="4379" y="4" height="60" width="421" format="[general]" html.valueishtml="0"  name=com_jikmu_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="622" y="4" height="60" width="311" format="[general]" html.valueishtml="0"  name=com_member_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="1243" y="4" height="60" width="133" format="[general]" html.valueishtml="0"  name=com_bank_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1838" y="4" height="60" width="631" format="[general]" html.valueishtml="0"  name=com_acct_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="942" y="4" height="60" width="293" format="[general]" html.valueishtml="0"  name=com_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="4809" y="4" height="60" width="471" format="[general]" html.valueishtml="0"  name=com_pay_class visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

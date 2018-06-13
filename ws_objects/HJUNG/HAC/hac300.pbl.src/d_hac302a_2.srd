@@ -1,0 +1,77 @@
+﻿$PBExportHeader$d_hac302a_2.srd
+$PBExportComments$예산 요구 등록/출력(예산신청산출내역 등록)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=decimal(0) update=yes updatewhereclause=yes name=sort dbname="hac010h.sort" initial="0" )
+ column=(type=char(4) update=yes updatewhereclause=yes key=yes name=bdgt_year dbname="hac010h.bdgt_year" )
+ column=(type=char(4) update=yes updatewhereclause=yes key=yes name=gwa dbname="hac010h.gwa" )
+ column=(type=char(6) update=yes updatewhereclause=yes key=yes name=acct_code dbname="hac010h.acct_code" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=acct_class dbname="hac010h.acct_class" )
+ column=(type=char(1) update=yes updatewhereclause=yes key=yes name=io_gubun dbname="hac010h.io_gubun" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=bdgt_class dbname="hac010h.bdgt_class" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=bdgt_seq dbname="hac010h.bdgt_seq" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=grp dbname="hac010h.grp" initial="0" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=calc_remark dbname="hac010h.calc_remark" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=remark dbname="hac010h.remark" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hac010h.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hac010h.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hac010h.work_date" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=work_gbn dbname="hac010h.work_gbn" initial="I" )
+ column=(type=decimal(0) updatewhereclause=yes name=stat_class dbname="hac010h.stat_class" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hac010h.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hac010h.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hac010h.job_date" )
+ retrieve="SELECT	A.SORT,
+			A.BDGT_YEAR,
+			A.GWA,
+			A.ACCT_CODE,
+			A.ACCT_CLASS,
+			A.IO_GUBUN,
+			A.BDGT_CLASS,
+			A.BDGT_SEQ,
+			A.GRP,
+			A.CALC_REMARK,
+			A.REMARK,
+			A.WORKER,
+			A.IPADDR,
+			A.WORK_DATE,
+			A.WORK_GBN,
+			B.STAT_CLASS,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE
+FROM		ACDB.HAC010H A, ACDB.HAC009H B
+WHERE		A.BDGT_YEAR = B.BDGT_YEAR
+AND		A.GWA = B.GWA
+AND		A.ACCT_CODE = B.ACCT_CODE
+AND		A.ACCT_CLASS = B.ACCT_CLASS
+AND		A.IO_GUBUN = B.IO_GUBUN
+AND		A.BDGT_CLASS = B.BDGT_CLASS
+AND		A.BDGT_YEAR = :AS_BDGT_YEAR
+AND		A.GWA = :AS_GWA
+AND		A.ACCT_CODE = :AS_ACCT_CODE
+AND		A.ACCT_CLASS = :AI_ACCT_CLASS
+AND		A.IO_GUBUN = :AS_IO_GUBUN
+AND		A.BDGT_CLASS = :AI_BDGT_CLASS
+ORDER BY	A.SORT, A.BDGT_SEQ" update="ACDB.HAC010H" updatewhere=0 updatekeyinplace=no arguments=(("as_bdgt_year", string),("as_gwa", string),("as_acct_code", string),("ai_acct_class", number),("as_io_gubun", string),("ai_bdgt_class", number),("ai_stat_class", number),("as_work_gbn", string)) )
+text(band=header alignment="2" text="우선순위" border="0" color="0" x="9" y="12" height="56" width="283" html.valueishtml="0"  name=sort_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="산출근거(내역:수량*단가=금액)(50BYTE)" border="0" color="0" x="302" y="12" height="56" width="2231" html.valueishtml="0"  name=calc_remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="비    고(38BYTE)" border="0" color="0" x="2542" y="12" height="56" width="1701" html.valueishtml="0"  name=remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=10 border="0" color="0" x="9" y="4" height="72" width="283" format="[general]" html.valueishtml="0" protect="0~tif ( stat_class <> ai_stat_class or as_work_gbn <> '', 1, 0)"  name=sort visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( stat_class = ai_stat_class and getrow() = currentrow() and as_work_gbn = '', rgb ( 255, 255, 255 ), 78682240 )" )
+column(band=detail id=10 alignment="0" tabsequence=20 border="0" color="0" x="302" y="4" height="72" width="2231" format="[general]" html.valueishtml="0" protect="0~tif ( stat_class <> ai_stat_class or as_work_gbn <> '', 1, 0)"  name=calc_remark visible="1" edit.limit=50 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( stat_class = ai_stat_class and getrow() = currentrow() and as_work_gbn = '', rgb ( 255, 255, 255 ), 78682240 )" )
+column(band=detail id=11 alignment="0" tabsequence=30 border="0" color="0" x="2542" y="4" height="72" width="1701" format="[general]" html.valueishtml="0" protect="0~tif ( stat_class <> ai_stat_class or as_work_gbn <> '', 1, 0)"  name=remark visible="1" edit.limit=38 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( stat_class = ai_stat_class and getrow() = currentrow() and as_work_gbn = '', rgb ( 255, 255, 255 ), 78682240 )" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

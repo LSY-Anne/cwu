@@ -1,0 +1,33 @@
+﻿$PBExportHeader$gf_sys_datetime.srf
+$PBExportComments$시스템날자를 받아오는 함수
+global type gf_sys_datetime from function_object
+end type
+
+forward prototypes
+global function datetime gf_sys_datetime ()
+end prototypes
+
+global function datetime gf_sys_datetime ();/* 시스템 날자를 확인하여 해당 일자를 Return 한다.
+	Return : DateTime 시스템 TimeStamp
+*/
+
+DateTime	ldt_GetDate                                    
+Integer		li_err_code
+String			ls_err_text
+
+SELECT	SYSDATE
+INTO		:ldt_GetDate                                    
+FROM		DUAL
+USING	SQLCA ;
+
+If SQLCA.SQLCODE <> 0 Then
+	li_err_code	= SQLCA.SQLDBCode
+	ls_err_text	= SQLCA.SQLErrText
+	gf_sqlerr_msg('UserObject ', 'Function of_get_datetime', String(7), 'SELECT SYSDATE FROM DUAL', li_err_code, ls_err_text)
+End If
+
+If IsNull(ldt_getDate)  Then ldt_getDate = DateTime(ToDay())
+
+Return ldt_GetDate
+end function
+

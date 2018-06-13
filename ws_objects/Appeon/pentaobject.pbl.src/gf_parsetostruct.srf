@@ -1,0 +1,51 @@
+﻿$PBExportHeader$gf_parsetostruct.srf
+global type gf_parsetostruct from function_object
+end type
+
+forward prototypes
+global function integer gf_parsetostruct (string as_source, string as_rowdelimiter, string as_coldelimiter, ref s_row astr_data)
+end prototypes
+
+global function integer gf_parsetostruct (string as_source, string as_rowdelimiter, string as_coldelimiter, ref s_row astr_data);Long			i, j, ll_pos
+String		ls_temprowdata
+
+stringtokenizer		lstr_rowtoken, lstr_coltoken
+
+ll_pos = Pos(as_source, as_rowdelimiter, 1)
+
+IF ll_pos > 0 THEN
+	lstr_rowtoken.settokenizer( as_source, as_rowdelimiter)
+	
+	do while lstr_rowtoken.hasmoretokens( )
+		i++
+		ls_temprowdata = lstr_rowtoken.nexttoken( ) 
+		
+		ll_pos = Pos(ls_temprowdata, as_coldelimiter, 1)
+		IF ll_pos > 0 THEN
+			lstr_coltoken.settokenizer( ls_temprowdata, as_coldelimiter)
+			do while  lstr_coltoken.hasmoretokens( )
+				j++
+				astr_data.row[i].data[j]	= lstr_coltoken.nexttoken( )
+			Loop
+			SetNull(ls_temprowdata)
+		ELSE
+			astr_data.row[i].data[1]	= ls_temprowdata
+		END IF
+		j = 0
+	Loop
+ELSE
+	ll_pos = Pos(as_source, as_coldelimiter, 1)
+	IF ll_pos > 0 THEN
+		lstr_coltoken.settokenizer( as_source, as_coldelimiter)
+		do while  lstr_coltoken.hasmoretokens( )
+			j++
+			astr_data.row[1].data[j]	= lstr_coltoken.nexttoken( )
+		Loop
+	ELSE
+		astr_data.row[1].data[1] = as_source
+	END IF
+END IF
+
+return i
+end function
+

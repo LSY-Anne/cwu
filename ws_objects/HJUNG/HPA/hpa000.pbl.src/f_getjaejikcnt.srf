@@ -1,0 +1,34 @@
+﻿$PBExportHeader$f_getjaejikcnt.srf
+$PBExportComments$재직자수를 리턴한다(재직구분,년도,직급)
+global type f_getjaejikcnt from function_object
+end type
+
+forward prototypes
+global function long f_getjaejikcnt (string as_year, string as_duty, integer ai_jaejik)
+end prototypes
+
+global function long f_getjaejikcnt (string as_year, string as_duty, integer ai_jaejik);// ==========================================================================================
+// 기    능 : 	재직구분과 직급, 년도에 따라 재직인원을 구한다.
+// 작 성 인 : 	현곡
+// 작성일자 : 	2004.01
+// 함수원형 : 	
+// 인    수 :	as_year		-	기준년도
+//					as_duty		-	직급코드
+//					ai_jaejik	-	재직구분(1.재직,2.퇴직예정,3.퇴직,4.휴직)
+// 되 돌 림 :	인원수
+// 주의사항 :
+// 수정사항 :
+// ==========================================================================================
+
+integer	li_cnt = 0
+
+SELECT COUNT(*)	INTO	:li_cnt
+FROM	 INDB.HIN001M
+WHERE  FIRSTHIRE_DATE  <=  :as_Year||'9999'
+AND    DUTY_CODE	LIKE	:as_duty||'%'
+AND	 JAEJIK_OPT	=	:ai_jaejik;
+if sqlca.sqlcode <> 0 or isnull(li_cnt)	then	li_cnt = 0
+
+return	li_cnt
+end function
+

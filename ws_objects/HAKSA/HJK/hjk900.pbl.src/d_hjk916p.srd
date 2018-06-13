@@ -1,0 +1,94 @@
+﻿$PBExportHeader$d_hjk916p.srd
+$PBExportComments$학년별학적상태[교무처]
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=660 color="536870912" )
+summary(height=92 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=100 color="536870912" )
+table(column=(type=char(4) updatewhereclause=yes name=jaehak_hakjuk_gwa dbname="jaehak_hakjuk.gwa" )
+ column=(type=char(20) updatewhereclause=yes name=kch003m_sname dbname="jaehak_hakjuk.sname" )
+ column=(type=char(8) updatewhereclause=yes name=iphak_date dbname="iphak_date" )
+ column=(type=number updatewhereclause=yes name=jaehak dbname="jaehak" )
+ column=(type=number updatewhereclause=yes name=huuhak dbname="huuhak" )
+ column=(type=number updatewhereclause=yes name=bokhak dbname="bokhak" )
+ column=(type=number updatewhereclause=yes name=jeijuk dbname="jeijuk" )
+ column=(type=number updatewhereclause=yes name=jengoa dbname="jengoa" )
+ column=(type=number updatewhereclause=yes name=jaiip dbname="jaiip" )
+ column=(type=number updatewhereclause=yes name=tot dbname="tot" )
+ retrieve="SELECT 	A.GWA,
+			B.SNAME,
+			SUBSTR(A.IPHAK_DATE, 1, 4) 				IPHAK_DATE,
+			SUM(DECODE(A.HJMOD_ID, 'A', 1, 0)) 	JAEHAK,
+			SUM(DECODE(A.HJMOD_ID, 'B', 1, 0)) 	HUUHAK,
+			SUM(DECODE(A.HJMOD_ID, 'C', 1, 0)) 	BOKHAK,
+			SUM(DECODE(A.HJMOD_ID, 'D', 1, 0)) 	JEIJUK,
+			SUM(DECODE(A.HJMOD_ID, 'F', 1, 0)) 	JENGOA,
+			SUM(DECODE(A.HJMOD_ID, 'I', 1, 0)) 	JAIIP,
+			COUNT(*) TOT
+FROM 		HAKSA.JAEHAK_HAKJUK A,
+			CDDB.KCH003M B
+WHERE 	A.GWA	=	B.GWA
+AND		A.DR_HAKYUN = :as_hakyun
+AND		A.SANGTAE	= '01'
+GROUP BY A.GWA,
+			B.SNAME,
+			A.IPHAK_DATE" arguments=(("as_hakyun", string))  sort="iphak_date A jaehak_hakjuk_gwa A " )
+group(level=1 header.height=0 trailer.height=100 by=("iphak_date" ) newpage=yes header.color="536870912" trailer.color="536870912" )
+column(band=header id=3 alignment="0" tabsequence=32766 border="0" color="0" x="46" y="456" height="60" width="151" format="[general]" html.valueishtml="0"  name=iphak_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=header x1="5" y1="540" x2="3374" y2="540"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=header alignment="2" expression="string ( today(), 'yyyy.mm.dd')"border="0" color="0" x="3022" y="360" height="48" width="352" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="작성일자:" border="0" color="0" x="2702" y="360" height="48" width="306" html.valueishtml="0"  name=t_9 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=header alignment="2" expression="string ( today(), 'hh:mm:ss') "border="0" color="0" x="3022" y="420" height="48" width="352" format="[GENERAL]" html.valueishtml="0"  name=compute_3 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="작성시간:" border="0" color="0" x="2702" y="420" height="48" width="306" html.valueishtml="0"  name=t_23 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=header alignment="2" expression="page() + '  of  ' + pageCount()"border="0" color="0" x="3022" y="480" height="48" width="352" format="[General]" html.valueishtml="0"  name=page_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="페 이 지:" border="0" color="0" x="2702" y="480" height="48" width="306" html.valueishtml="0"  name=t_24 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="5" y1="656" x2="3374" y2="656"  name=l_2 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="학과" border="0" color="0" x="46" y="568" height="60" width="293" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="재학" border="0" color="0" x="471" y="568" height="60" width="293" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="휴학" border="0" color="0" x="896" y="568" height="60" width="293" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="복학" border="0" color="0" x="1321" y="568" height="60" width="293" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="제적" border="0" color="0" x="1746" y="568" height="60" width="293" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="전과" border="0" color="0" x="2171" y="568" height="60" width="293" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="재입학" border="0" color="0" x="2597" y="568" height="60" width="293" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="합계" border="0" color="0" x="3022" y="568" height="60" width="293" html.valueishtml="0"  name=t_10 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=header alignment="2" expression=" as_hakyun + ~"학년의 현재 학적상태~""border="1" color="0" x="549" y="172" height="124" width="2350" format="[GENERAL]" html.valueishtml="0"  name=compute_10 visible="1"  font.face="굴림체" font.height="-20" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="학년도 입학자" border="0" color="0" x="183" y="460" height="60" width="512" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="46" y="20" height="60" width="293" format="[general]" html.valueishtml="0"  name=kch003m_sname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="471" y="20" height="60" width="293" format="[general]" html.valueishtml="0"  name=jaehak visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="896" y="20" height="60" width="293" format="[general]" html.valueishtml="0"  name=huuhak visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="1321" y="20" height="60" width="293" format="[general]" html.valueishtml="0"  name=bokhak visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="1746" y="20" height="60" width="293" format="[general]" html.valueishtml="0"  name=jeijuk visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="2171" y="20" height="60" width="293" format="[general]" html.valueishtml="0"  name=jengoa visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="0" x="2597" y="20" height="60" width="293" format="[general]" html.valueishtml="0"  name=jaiip visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="0" x="3022" y="20" height="60" width="293" format="[general]" html.valueishtml="0"  name=tot visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=detail x1="5" y1="96" x2="3374" y2="96"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="2" expression="sum(jaehak for group 1)"border="0" color="0" x="471" y="20" height="60" width="293" format="[general]" html.valueishtml="0"  name=compute_11 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="2" expression="sum(huuhak for group 1)"border="0" color="0" x="896" y="20" height="60" width="293" format="[general]" html.valueishtml="0"  name=compute_12 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="2" expression="sum(bokhak for group 1)"border="0" color="0" x="1321" y="20" height="60" width="293" format="[general]" html.valueishtml="0"  name=compute_13 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="2" expression="sum(jeijuk for group 1)"border="0" color="0" x="1746" y="20" height="60" width="293" format="[general]" html.valueishtml="0"  name=compute_14 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="2" expression="sum(jengoa for group 1)"border="0" color="0" x="2171" y="20" height="60" width="293" format="[general]" html.valueishtml="0"  name=compute_15 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="2" expression="sum(jaiip for group 1)"border="0" color="0" x="2597" y="20" height="60" width="293" format="[general]" html.valueishtml="0"  name=compute_16 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="2" expression="sum(tot for group 1)"border="0" color="0" x="3022" y="20" height="60" width="293" format="[general]" html.valueishtml="0"  name=compute_17 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="5" y1="96" x2="3374" y2="96"  name=l_4 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=trailer.1 alignment="2" text="소계" border="0" color="0" x="46" y="16" height="60" width="293" html.valueishtml="0"  name=t_11 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=summary x1="5" y1="88" x2="3374" y2="88"  name=l_6 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="sum(jaehak for all)"border="0" color="0" x="471" y="8" height="60" width="293" format="[general]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="sum(huuhak for all)"border="0" color="0" x="896" y="8" height="60" width="293" format="[general]" html.valueishtml="0"  name=compute_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="sum(bokhak for all)"border="0" color="0" x="1321" y="8" height="60" width="293" format="[general]" html.valueishtml="0"  name=compute_5 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="sum(jeijuk for all)"border="0" color="0" x="1746" y="8" height="60" width="293" format="[general]" html.valueishtml="0"  name=compute_6 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="sum(jengoa for all)"border="0" color="0" x="2171" y="8" height="60" width="293" format="[general]" html.valueishtml="0"  name=compute_7 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="sum(jaiip for all)"border="0" color="0" x="2597" y="8" height="60" width="293" format="[general]" html.valueishtml="0"  name=compute_8 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="2" expression="sum(tot for all)"border="0" color="0" x="3022" y="8" height="60" width="293" format="[general]" html.valueishtml="0"  name=compute_9 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=summary alignment="2" text="총계" border="0" color="0" x="46" y="8" height="60" width="293" html.valueishtml="0"  name=t_15 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

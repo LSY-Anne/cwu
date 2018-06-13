@@ -1,0 +1,82 @@
+﻿$PBExportHeader$d_hpa601a_4.srd
+$PBExportComments$연말정산 기초자료 생성(연말정산기초자료)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes name=member_no dbname="hpa019h.member_no" )
+ column=(type=decimal(0) updatewhereclause=yes name=hpa019h_child_num dbname="hpa019h.child_num" )
+ column=(type=decimal(0) updatewhereclause=yes name=hpa019h_old_num dbname="hpa019h.old_num" )
+ column=(type=decimal(0) updatewhereclause=yes name=hpa019h_support_60_num dbname="hpa019h.support_60_num" )
+ column=(type=decimal(0) updatewhereclause=yes name=hpa019h_support_20_num dbname="hpa019h.support_20_num" )
+ column=(type=decimal(0) updatewhereclause=yes name=hpa019h_wife_num dbname="hpa019h.wife_num" values="Y	9/	0/" )
+ column=(type=decimal(0) updatewhereclause=yes name=hpa019h_insure_medical_amt dbname="hpa019h.insure_medical_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=hpa019h_constribution_legal_amt dbname="hpa019h.constribution_legal_amt" )
+ column=(type=char(20) updatewhereclause=yes name=hin001m_name dbname="hpa019h.name" )
+ column=(type=char(4000) updatewhereclause=yes name=hin001m_gwa dbname="gwa" )
+ column=(type=char(4000) updatewhereclause=yes name=duty_name dbname="duty_name" )
+ column=(type=number updatewhereclause=yes name=hin003m_02v_jikjong_code dbname="jikjong_code" )
+ column=(type=decimal(0) updatewhereclause=yes name=hin001m_jaejik_opt dbname="hpa019h.jaejik_opt" values="재직	1/퇴직예정	2/퇴직	3/휴직	4/정년퇴직	96/" )
+ column=(type=char(8) updatewhereclause=yes name=retire_date dbname="retire_date" )
+ retrieve=" select	a.member_no as member_no,
+			a.child_num,
+			a.old_num,
+			a.support_60_num,
+			a.support_20_num,
+			a.wife_num,
+			a.insure_medical_amt,
+			a.constribution_legal_amt,
+			b.name as name,
+			FU_DEPT_NM(b.gwa,'K') GWA,
+			FU_DUTY_NM(b.duty_code,'K') DUTY_NAME,
+			to_number(substr(b.duty_code,1,1)) jikjong_code,
+			b.jaejik_opt,
+			nvl(b.retire_date, ' ')	retire_date
+from		padb.hpa019h a, indb.hin001m b
+where		a.year		=		:as_year
+and		b.gwa	like	:as_gwa || '%'
+and		decode(b.jaejik_opt,2,1,b.jaejik_opt) 	>=		decode(:ai_jaejik_opt,0,0,:ai_jaejik_opt)
+and		decode(b.jaejik_opt,2,1,b.jaejik_opt)	<=		decode(:ai_jaejik_opt,0,9,:ai_jaejik_opt)
+and		decode(:ai_jaejik_opt,3,b.retire_date,:as_year)  like  :as_year || '%'
+and		a.member_no	>=		:as_str_member
+and		a.member_no	<=		:as_end_member
+and		a.member_no	=		b.member_no
+order by a.member_no   
+" arguments=(("as_year", string),("as_gwa", string),("as_str_member", string),("as_end_member", string),("ai_jaejik_opt", number)) )
+text(band=header alignment="2" text="개인번호" border="0" color="0" x="9" y="12" height="56" width="379" html.valueishtml="0"  name=member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="부양자녀" border="0" color="0" x="3497" y="12" height="56" width="279" html.valueishtml="0"  name=hpa019h_child_num_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="경로우대" border="0" color="0" x="3191" y="12" height="56" width="297" html.valueishtml="0"  name=hpa019h_old_num_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="부양자60세" border="0" color="0" x="2848" y="12" height="56" width="334" html.valueishtml="0"  name=hpa019h_support_60_num_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="부양자20세" border="0" color="0" x="2482" y="12" height="56" width="357" html.valueishtml="0"  name=hpa019h_support_20_num_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="배우자" border="0" color="0" x="2139" y="12" height="56" width="334" html.valueishtml="0"  name=hpa019h_wife_num_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="1" text="의료보험" border="0" color="0" x="3785" y="12" height="56" width="416" html.valueishtml="0"  name=hpa019h_insure_medical_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="1" text="기부금" border="0" color="0" x="4210" y="12" height="56" width="421" html.valueishtml="0"  name=hpa019h_constribution_legal_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="성  명" border="0" color="0" x="398" y="12" height="56" width="457" html.valueishtml="0"  name=hin001m_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="부서" border="0" color="0" x="1751" y="12" height="56" width="379" html.valueishtml="0"  name=hin001m_gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="재직구분" border="0" color="0" x="1349" y="12" height="56" width="393" html.valueishtml="0"  name=hin001m_jaejik_opt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직급명" border="0" color="0" x="864" y="12" height="56" width="475" html.valueishtml="0"  name=duty_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="379" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="3785" y="4" height="72" width="416" format="#,###" html.valueishtml="0"  name=hpa019h_insure_medical_amt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="3497" y="4" height="72" width="279" format="[general]" html.valueishtml="0"  name=hpa019h_child_num visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="3191" y="4" height="72" width="297" format="[general]" html.valueishtml="0"  name=hpa019h_old_num visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="2848" y="4" height="72" width="334" format="[general]" html.valueishtml="0"  name=hpa019h_support_60_num visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="2482" y="4" height="72" width="357" format="[general]" html.valueishtml="0"  name=hpa019h_support_20_num visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="2139" y="4" height="72" width="334" format="[general]" html.valueishtml="0"  name=hpa019h_wife_num visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="1" tabsequence=32766 border="0" color="0" x="4210" y="4" height="72" width="421" format="#,###" html.valueishtml="0"  name=hpa019h_constribution_legal_amt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="398" y="4" height="72" width="457" format="[general]" html.valueishtml="0"  name=hin001m_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="1751" y="4" height="72" width="379" format="[general]" html.valueishtml="0"  name=hin001m_gwa visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="2" tabsequence=32766 border="0" color="0" x="1349" y="4" height="72" width="393" format="[general]" html.valueishtml="0"  name=hin001m_jaejik_opt visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="864" y="4" height="72" width="475" format="[general]" html.valueishtml="0"  name=duty_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

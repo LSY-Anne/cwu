@@ -1,0 +1,63 @@
+﻿$PBExportHeader$f_decode.srf
+$PBExportComments$암호를 해제한다
+global type f_decode from function_object
+end type
+
+forward prototypes
+global function string f_decode (string as_string)
+end prototypes
+
+global function string f_decode (string as_string);//////////////////////////////////////////////////////////////////
+// 	작성목적 : 암호화한 데이타를 해제 한다.
+//    적 성 인 : 이현수
+//		작성일자 : 2002.10
+//    변 경 인 :
+//    변경일자 :
+//    변경사유 :
+//////////////////////////////////////////////////////////////////
+
+INT i_Strlen             //문자열의길이
+int i_asc                //Asc값 
+int i,i_STRcNT,J,i_Step  //임시
+char   c_onechar
+String s_return,s_Temp,s_STRTOINT,s_BUFFER
+
+s_Temp   = ''
+i_Strlen =  Len(AS_STRING) 
+for i = 1 to i_Strlen
+    c_onechar  =  mid(AS_STRING,i,1)
+	 i_asc      =  asc(c_onechar)
+	 If i_asc   = 199 then i_asc = 0
+	 s_Temp     =  s_Temp + String(i_asc,'00')
+Next
+
+s_BUFFER  = ''
+i_Strlen  = Len(S_Temp)
+
+for i = 0 to (i_Strlen - 1)
+	 s_BUFFER   = s_BUFFER + Mid(S_Temp,i_Strlen - i,1)
+Next
+
+
+If mod(i_Strlen,3) = 0 then
+else
+	 i_Strlen --
+	 s_BUFFER   = Mid(s_BUFFER,1,i_Strlen)
+end If
+
+s_temp    = ''
+s_return  = ''
+i_Step    = 0
+for i = 1 to i_Strlen
+	 i_Step ++
+	 S_Temp = S_Temp   + Mid(s_BUFFER,i,1)
+	 If i_Step > 2 then
+		 s_return   = s_return + char(integer(S_Temp))
+		 i_Step     = 0
+		 S_Temp   = ''
+	 end If
+Next
+
+Return s_return
+end function
+

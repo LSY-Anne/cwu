@@ -1,0 +1,89 @@
+﻿$PBExportHeader$d_hyd305p_1.srd
+$PBExportComments$연구업적평가총괄표-자료내역
+release 10.5;
+datawindow(units=3 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 2 print.margin.left = 1000 print.margin.right = 1000 print.margin.top = 1500 print.margin.bottom = 1000 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=3148 color="536870912" )
+summary(height=26 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=555 color="536870912" )
+table(column=(type=char(4) updatewhereclause=yes name=evl_year dbname="hyd401t.evl_year" )
+ column=(type=char(5) updatewhereclause=yes name=member_no dbname="hyd401t.member_no" )
+ column=(type=char(40) updatewhereclause=yes name=name dbname="hyd401t.name" )
+ column=(type=char(4) updatewhereclause=yes name=gwa dbname="hyd401t.gwa" )
+ column=(type=char(50) updatewhereclause=yes name=gwa_nm dbname="hyd401t.gwa_nm" )
+ column=(type=char(4) updatewhereclause=yes name=jikwi_code dbname="hyd401t.jikwi_code" )
+ column=(type=char(1) updatewhereclause=yes name=gyeyul_id dbname="hyd401t.gyeyul_id" )
+ column=(type=char(8) updatewhereclause=yes name=evl_str_dt dbname="hyd401t.evl_str_dt" )
+ column=(type=char(8) updatewhereclause=yes name=evl_end_dt dbname="hyd401t.evl_end_dt" )
+ column=(type=number updatewhereclause=yes name=std_point dbname="std_point" )
+ column=(type=number updatewhereclause=yes name=fix_point dbname="fix_point" )
+ column=(type=number updatewhereclause=yes name=cnt dbname="cnt" )
+ retrieve="  SELECT 	A.EVL_YEAR,   
+				A.MEMBER_NO,
+				C.NAME,   
+				A.GWA,
+				D.FNAME AS GWA_NM,   
+				A.JIKWI_CODE,
+				B.GYEYUL_ID,
+				A.EVL_STR_DT,
+				A.EVL_END_DT,
+				SUM(B.STD_POINT) AS STD_POINT,   
+				SUM(B.FIX_POINT) AS FIX_POINT,
+				COUNT(B.GYEYUL_ID) AS CNT
+    FROM 	YGDB.HYD401T A,   
+         		YGDB.HYD402T B,
+				INDB.HIN001M C,
+				CDDB.KCH003M D 
+   WHERE ( A.EVL_YEAR = B.EVL_YEAR ) and  
+         ( A.MEMBER_NO = B.MEMBER_NO ) and  
+		 ( A.MEMBER_NO = C.MEMBER_NO ) AND
+		 ( A.GWA = D.GWA ) AND
+         ( ( A.EVL_YEAR = :as_evl_year ) AND  
+         ( A.JIKWI_CODE = :as_jikwi_code ) )
+GROUP BY  A.EVL_YEAR,   
+				A.MEMBER_NO,
+				C.NAME , 
+				A.GWA,
+				D.FNAME,   
+				A.JIKWI_CODE,
+				B.GYEYUL_ID,
+				A.EVL_STR_DT,
+				A.EVL_END_DT   
+" arguments=(("as_evl_year", string),("as_jikwi_code", string)) )
+text(band=header alignment="2" text="기준일자 : " border="0" color="33554432" x="79" y="1613" height="370" width="1746" html.valueishtml="0"  name=kch101m_area_gb_t visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="부교수 -> 교수 (총점 100점중 연구업적부분 만점 20점, 최소실적 : 인정비율기준 500%)" border="0" color="33554432" x="79" y="2090" height="370" width="13017" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="순번" border="0" color="33554432" x="26" y="2645" height="370" width="1031" html.valueishtml="0"  name=evl_year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="1" text="출력자사번/명 : " border="0" color="33554432" x="12461" y="1111" height="370" width="2540" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="gf_global_value(1)"border="0" color="0" x="15081" y="1111" height="370" width="3915" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="1" text="출력일시 : " border="0" color="33554432" x="12594" y="1613" height="370" width="2407" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="gf_sys_datetime()"border="0" color="0" x="15081" y="1613" height="370" width="3915" format="[SHORTDATE] [TIME]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="1" text="페이지 : " border="0" color="33554432" x="13096" y="2090" height="370" width="1905" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="page() + ' / ' + pageCount()"border="0" color="33554432" x="15081" y="2090" height="370" width="3915" format="[general]" html.valueishtml="0"  name=page_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="1073741824" )
+text(band=header alignment="2" text="학과" border="0" color="33554432" x="1164" y="2645" height="370" width="4074" html.valueishtml="0"  name=gwa_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="직위" border="0" color="33554432" x="5344" y="2672" height="370" width="1772" html.valueishtml="0"  name=jikwi_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성명" border="0" color="33554432" x="7196" y="2672" height="370" width="1905" html.valueishtml="0"  name=name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="평가기간" border="0" color="33554432" x="9181" y="2645" height="370" width="5000" html.valueishtml="0"  name=t_6 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="총점" border="0" color="33554432" x="17039" y="2645" height="370" width="1957" html.valueishtml="0"  name=std_point_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="인정비율(%)" border="0" color="33554432" x="14340" y="2645" height="370" width="2592" html.valueishtml="0"  name=cnt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="교원업적(연구부분)평가 종합점수표 (승진심사용)" border="0" color="33554432" x="26" y="79" height="635" width="18970" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-16" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="0" y1="3122" x2="18970" y2="3122"  name=l_2 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="0" y1="2540" x2="18970" y2="2540"  name=l_1 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="33554432" x="1190" y="79" height="449" width="4074" format="[general]" html.valueishtml="0"  name=gwa_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="33554432" x="5371" y="79" height="449" width="1772" format="[general]" html.valueishtml="0"  name=jikwi_code visible="1" edit.limit=4 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="7223" y="79" height="449" width="1905" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="33554432" x="11403" y="106" height="370" width="1799" format="[general]" html.valueishtml="0"  name=evl_end_dt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="9233" y="106" height="370" width="1799" format="[general]" html.valueishtml="0"  name=evl_str_dt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="33554432" x="17065" y="53" height="449" width="1957" format="[general]" html.valueishtml="0"  name=std_point visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="1" tabsequence=32766 border="0" color="33554432" x="14366" y="53" height="449" width="2592" format="[general]" html.valueishtml="0"  name=cnt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+line(band=summary x1="0" y1="0" x2="18970" y2="0"  name=l_3 visible="1" pen.style="0" pen.width="26" pen.color="0"  background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

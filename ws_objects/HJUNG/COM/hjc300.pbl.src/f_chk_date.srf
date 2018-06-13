@@ -1,0 +1,61 @@
+﻿$PBExportHeader$f_chk_date.srf
+$PBExportComments$날짜체크 (String date ,String mode)-사용권장
+global type f_chk_date from function_object
+end type
+
+forward prototypes
+global function boolean f_chk_date (string as_date, string as_mode)
+end prototypes
+
+global function boolean f_chk_date (string as_date, string as_mode);//////////////////////////////////////////////////////////////////////////////////////////
+// 기    능 : 날짜를 체크한다.
+// 작 성 자 : 이현수
+// 작 성 일 : 2002.10
+// 함수원형 : gf_chk_date( string as_date, string as_mode ) return boolean
+// 인    수 : as_date - 체크하고자하는 날짜 
+//				  as_mode - 'Y'   : 년도체크
+//							 - 'YM'  : 년월체크
+//							 - 'YMD' : 년월일테크
+// 되 돌 림 : TRUE:정상, FALSE:오류
+//	주의사항 : as_mode가 'YMD'일경우에는 ''이렇게 해도 되며
+//					분리자가 슬래스,콤마,하이픈 또는 없어도 체크가 됨.
+//////////////////////////////////////////////////////////////////////////////////////////
+String  ls_date, ls_mode, ls_temp, ls_One
+Integer li_len,  li_inx
+
+ls_date = UPPER(Trim(as_date))
+ls_mode = UPPER(Trim(as_mode))
+
+IF isNull(ls_date) or ls_date = '' THEN 	RETURN FALSE
+
+IF isNull(ls_mode) or ls_mode = '' THEN
+	ls_mode = 'YMD'
+END IF
+
+IF POS('/Y/YM/YMD/',"/"+ls_mode+"/" ) < 1 THEN
+	MessageBox("확인","일자체크 모드(Argument)를 확인하세요.")
+	RETURN FALSE
+END IF	
+
+li_len = Len(ls_date)
+FOR li_inx = 1 TO li_len
+    ls_One = Mid(ls_date,li_inx,1)
+	 IF Pos('1234567890',ls_one) > 0 THEN
+		 ls_temp = ls_temp + ls_one
+	END IF	
+NEXT	
+
+CHOOSE CASE ls_mode
+	CASE 'Y'
+		  ls_date = ls_temp + '/01/01'  
+		  RETURN isDate(ls_date)  AND Len(ls_temp) = 4
+	CASE 'YM'
+		  ls_date = Mid(ls_temp,1,4) +'/'+Mid(ls_temp,5,2)+'/01'  
+		  RETURN isDate(ls_date)  AND Len(ls_temp) = 6
+	CASE 'YMD'
+		  ls_date = Mid(ls_temp,1,4) +'/'+Mid(ls_temp,5,2)+'/'+Mid(ls_temp,7,2)  
+		  RETURN isDate(ls_date)  AND Len(ls_temp) = 8
+END CHOOSE
+
+end function
+

@@ -1,0 +1,89 @@
+﻿$PBExportHeader$uf_wonseo_back.srf
+$PBExportComments$[대학원입시] 원서백업만들기
+global type uf_wonseo_back from function_object
+end type
+
+forward prototypes
+global function integer uf_wonseo_back (string as_year, string as_hakgi, string as_suhum)
+end prototypes
+
+global function integer uf_wonseo_back (string as_year, string as_hakgi, string as_suhum);//원서 백업하는 함수
+// return value : 0 - 오류, 1 - 성공
+
+int li_serial
+
+SELECT	NVL(MAX(SERIAL), 0) + 1
+INTO	:li_serial
+FROM	DIPSI.DI_WONSEO_BACK
+WHERE	YEAR	=	:as_year
+AND	HAKGI	=	:as_hakgi	;
+
+INSERT INTO DIPSI.DI_WONSEO_BACK
+(	  SELECT :li_serial	,
+				YEAR			,
+				HAKGI			,
+				SUHUM_NO		,
+				MOJIP_ID		,
+				JONGBYUL_ID	,
+				GWAJUNG_ID	,
+				GWA_ID		,
+				JUNGONG_ID	,
+				JUYA_GUBUN	,
+				YEONGU_YN	,
+				HNAME			,
+				CNAME			,
+				JUMIN_NO		,
+				AGE			,
+				SEX			,
+				ZIP_ID		,
+				JUSO			,
+				E_ZIP_ID		,
+				E_JUSO		,
+				TEL			,
+				OFF_TEL		,
+				HP				,
+				JOB_ID		,
+				JIKWI_ID		,
+				BO_HNAME		,
+				BO_GWANGYE	,
+				BO_TEL		,
+				BO_JOB_ID	,
+				BO_ZIP_ID	,
+				BO_JUSO		,
+				JUPSU_ILJA	,
+				JUPSUJA		,
+				IP_ADDR		,
+				JOLUP_YY		,
+				JOLUP_ID		,
+				COLLEGE_ID1	,
+				GWA_NAME1	,
+				HAKWI_NO1	,
+				MAN1			,
+				PYEN1			,
+				COLLEGE_ID2	,
+				GWA_NAME2	,
+				HAKWI_NO2	,
+				MAN2			,
+				PYEN2			,
+				JUMSU			,
+				MYUNJUP_JUMSU,   
+				GWA_SUNWI	,
+				TOT_SUNWI	,
+				HAP_ID		,
+				DUNG_YN		,
+				JANGHAK_ID  ,
+				'0'
+		 FROM DIPSI.DI_WONSEO
+		 WHERE	YEAR		=	:as_year
+		 AND		HAKGI		=	:as_hakgi
+		 AND		SUHUM_NO	=	:as_suhum
+	)	;
+	
+	RETURN sqlca.sqlcode
+		 
+		 
+		 
+	
+
+end function
+

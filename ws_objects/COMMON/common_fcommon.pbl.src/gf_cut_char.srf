@@ -1,0 +1,44 @@
+﻿$PBExportHeader$gf_cut_char.srf
+$PBExportComments$String 내부의 지정한Char 제거
+global type gf_cut_char from function_object
+end type
+
+forward prototypes
+global function string gf_cut_char (string str_io, string cut_char)
+end prototypes
+
+global function string gf_cut_char (string str_io, string cut_char);/////////////////////////////////////////////////////////////////////////////
+//
+// Function: gf_cut_char
+//
+// Purpose: Input Argument로 받은 String str_io에서 cust_char를 제거한뒤 Return한다
+//
+// Scope: public
+//
+// Arguments: string str_io, string cut_char
+//
+// Returns: string
+//
+/////////////////////////////////////////////////////////////////////////////
+
+/* String 내부의 지정한char 삭제 */
+long l_start=1, l_pos
+string  l_str_new=''
+
+if IsNull(str_io) Then Return str_io
+
+do while(TRUE)
+	l_pos = Pos(str_io,cut_char,l_start)
+	if l_pos <= 0 then
+		l_str_new += Mid(str_io, l_start, Len(str_io) - l_start + 1)
+		exit
+	end if
+	
+	l_str_new += Mid(str_io,l_start, l_pos - l_start)
+	l_start = l_pos + 1	
+loop
+
+return l_str_new
+
+end function
+

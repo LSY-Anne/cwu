@@ -1,0 +1,69 @@
+﻿$PBExportHeader$d_hjk210p_1_test.srd
+$PBExportComments$[청운대]학적변동관리(재입학)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=80269524 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=68 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=68 color="536870912" )
+table(column=(type=char(4) updatewhereclause=yes name=year dbname="dungrok_gwanri.year" )
+ column=(type=char(1) updatewhereclause=yes name=hakgi dbname="dungrok_gwanri.hakgi" )
+ column=(type=char(1) updatewhereclause=yes name=su_hakyun dbname="dungrok_gwanri.su_hakyun" )
+ column=(type=number updatewhereclause=yes name=to_dr dbname="to_dr" )
+ column=(type=number updatewhereclause=yes name=to_djh dbname="to_djh" )
+ column=(type=number updatewhereclause=yes name=to_drn dbname="to_drn" )
+ column=(type=char(1) updatewhereclause=yes name=to_wan dbname="to_wan" values="등록	Y/미등록	N/" )
+ column=(type=char(1) updatewhereclause=yes name=sugang_yn dbname="dungrok_gwanri.sugang_yn" values="신청	Y/미신청	N/" )
+ retrieve="SELECT 	A.YEAR,
+			A.HAKGI,
+			A.SU_HAKYUN,
+			SUM(A.DUNGROK) TO_DR,
+			SUM(A.D_JANGHAK) TO_DJH,
+			SUM(A.DUNGROK_N) TO_DRN,
+			MAX(A.WAN_YN) TO_WAN ,
+			B.SUGANG_YN
+FROM 		HAKSA.DUNGROK_GWANRI A,
+			(	SELECT   YEAR,
+							HAKGI,
+							HAKBUN,
+							DECODE( COUNT(GWAMOK_ID), 0, 'N', 'Y')SUGANG_YN
+			  	FROM		HAKSA.SUGANG_TRANS
+			  	WHERE		HAKBUN = :as_hakbun
+			  	GROUP BY YEAR,
+							HAKGI,
+							HAKBUN
+			)B
+WHERE		A.HAKBUN = B.HAKBUN
+AND		A.HAKBUN = :as_hakbun
+GROUP BY A.YEAR,
+			A.HAKGI,
+			A.SU_HAKYUN,
+			B.SUGANG_YN
+" arguments=(("as_hakbun", string)) )
+text(band=header alignment="2" text="등록년도" border="0" color="0" x="5" y="4" height="60" width="256" html.valueishtml="0"  name=acct_name_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학기" border="0" color="0" x="265" y="4" height="60" width="155" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학년" border="0" color="0" x="425" y="4" height="60" width="155" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="등록금액" border="0" color="0" x="585" y="4" height="60" width="379" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="장학금" border="0" color="0" x="969" y="4" height="60" width="379" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="15780518" )
+text(band=header alignment="1" text="등록납입금액" border="0" color="0" x="1353" y="4" height="60" width="416" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="등록여부" border="0" color="0" x="1774" y="4" height="60" width="261" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="수강여부" border="0" color="0" x="2039" y="4" height="60" width="261" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="15780518" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="5" y="4" height="60" width="256" format="[general]" html.valueishtml="0"  name=year visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="265" y="4" height="60" width="155" format="[general]" html.valueishtml="0"  name=hakgi visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="425" y="4" height="60" width="155" format="[general]" html.valueishtml="0"  name=su_hakyun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="585" y="4" height="60" width="379" format="#,##0" html.valueishtml="0"  name=to_dr visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="969" y="4" height="60" width="379" format="#,##0" html.valueishtml="0"  name=to_djh visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="1353" y="4" height="60" width="416" format="#,##0" html.valueishtml="0"  name=to_drn visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="255" x="1774" y="4" height="60" width="261" format="[general]" html.valueishtml="0"  name=to_wan visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="2039" y="4" height="60" width="261" format="[general]" html.valueishtml="0"  name=sugang_yn visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

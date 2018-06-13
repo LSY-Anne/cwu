@@ -1,0 +1,63 @@
+﻿$PBExportHeader$f_getpaytot.srf
+$PBExportComments$현근무지자료를 구한다(as_year,as_member,return=급여총계(비과세제외)
+global type f_getpaytot from function_object
+end type
+
+forward prototypes
+global function decimal f_getpaytot (string as_year, string as_memberno)
+end prototypes
+
+global function decimal f_getpaytot (string as_year, string as_memberno);Decimal{0}	li_Amt 
+Decimal{0}	li_Tot 
+Decimal{0}	li_Cha 
+Decimal{0}	li_Pay 
+Decimal{0}	li_Var 
+Decimal{0}	li_Var2 
+Decimal{0}	li_FoodAmt 
+Decimal{0}	li_RscAmt 
+Decimal{0}	li_Cnt 
+Decimal{0}	li_Non
+
+//	급여일 때 재계산한다. 식대는 월5만원이 비과세이고 연구비+연구보조비는 급여액의 20%가 한도이므로
+// 초과금액은 급여액으로 이동하여 합산한다.
+	SELECT	NVL(SUM(A.PAY_AMT),0), COUNT(A.MEMBER_NO)
+	INTO		:li_FoodAmt, :Li_Cnt
+	FROM		PADB.HPA005D A
+	WHERE   	A.YEAR_MONTH	LIKE	:as_Year || '%'
+	AND     	A.CODE		=	'17'
+	AND		A.MEMBER_NO	=	:as_MemberNo;
+	IF		li_FoodAmt	>	600000	THEN
+			li_Var	=	li_FoodAmt	-	(li_Cnt  *  50000)
+			li_FoodAmt 	=	li_Cnt  *  50000
+	ELSE
+			li_Var	=	0
+	END IF
+	SELECT	NVL(SUM(A.PAY_AMT) ,0)
+	INTO		:li_RscAmt
+	FROM		PADB.HPA005D A
+	WHERE   	A.YEAR_MONTH	LIKE :as_Year || '%'
+	AND    	A.CODE		IN	('06','10')
+	AND		A.MEMBER_NO	=	:as_MemberNo;
+	if		isnull(li_RscAmt)	then	li_RscAmt	=	0
+	SELECT	NVL(SUM(A.PAY_AMT),0)	
+	INTO		:li_tot
+	FROM	   PADB.HPA005D A
+	WHERE	   A.YEAR_MONTH	LIKE	:as_Year || '%'
+	AND		A.CODE		<	'50'
+	AND		A.MEMBER_NO	=	:as_MemberNo;
+	li_cha	=	li_tot - li_FoodAmt
+	li_pay	=	truncate( li_cha  * 	0.20 ,0)
+	IF		li_RscAmt	>	li_Pay	THEN
+			li_Var2		=	li_RscAmt	-	li_Pay
+			li_RscAmt	=	li_Pay
+	ELSE
+			li_Var2	=	0
+	END IF
+	if		isnull(li_Tot)	then	li_Tot	=	0
+	li_non	=	f_getnontax(as_year, as_MemberNo)
+	if		isnull(li_non)	then	li_non	=	0
+	li_Amt	=	li_Tot	-	li_non
+
+Return li_Amt
+end function
+

@@ -1,0 +1,55 @@
+﻿$PBExportHeader$d_hjk204p_1.srd
+$PBExportComments$[청운대]제적통지서(미복학)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 2 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=4248 color="536870912" )
+table(column=(type=char(20) updatewhereclause=yes name=jaehak_hakjuk_hname dbname="jaehak_hakjuk.hname" )
+ column=(type=char(1) updatewhereclause=yes name=jaehak_hakjuk_su_hakyun dbname="jaehak_hakjuk.su_hakyun" )
+ column=(type=char(10) updatewhereclause=yes name=jaehak_hakjuk_hakbun dbname="jaehak_hakjuk.hakbun" )
+ column=(type=char(4) updatewhereclause=yes name=jaehak_hakjuk_gwa dbname="jaehak_hakjuk.gwa" )
+ retrieve="SELECT   A.HNAME ,
+			A.SU_HAKYUN,
+			A.HAKBUN ,
+			A.GWA    
+FROM 		HAKSA.JAEHAK_HAKJUK A,
+			HAKSA.HAKJUKBYENDONG B,
+			CDDB.KCH003M C 
+WHERE   	A.GWA					= C.GWA
+AND		( A.HAKBUN = B.HAKBUN				)
+and		( A.HJMOD_SAYU_ID = B.SAYU_ID		)
+and		(	( B.YEAR 		= :as_year		)
+and		( B.HAKGI		= :as_hakgi		)
+and		( A.HAKBUN 		like :as_hakbun)
+and      ( A.HNAME 		like :as_hname )  
+and      ( B.SAYU_ID	= 'D13')
+			)  
+ORDER BY C.ORDER_SEQ,
+			A.SU_HAKYUN ,
+			A.HAKBUN 			
+			" arguments=(("as_year", string),("as_hakgi", string),("as_hakbun", string),("as_hname", string)) )
+line(band=detail x1="3259" y1="144" x2="3259" y2="4172"  name=l_4 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="제  적  통  지  서" border="0" color="0" x="823" y="600" height="148" width="1691" html.valueishtml="0"  name=t_3 visible="1"  font.face="바탕체" font.height="-24" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=detail x1="114" y1="144" x2="3259" y2="144"  name=l_2 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="119" y1="4168" x2="3259" y2="4172"  name=l_5 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="청  운  대  학  교  총  장" border="0" color="0" x="247" y="3604" height="132" width="2907" html.valueishtml="0"  name=t_9 visible="1"  font.face="바탕체" font.height="-22" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="today()"border="0" color="0" x="247" y="3132" height="100" width="2907" format="yyyy 년  m 월  d 일" html.valueishtml="0"  name=compute_1 visible="1"  font.face="바탕체" font.height="-16" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=detail x1="119" y1="140" x2="119" y2="4172"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression="STRING( TODAY(), 'YYYY년 MM월 DD일') + ' 자로 제적처리 되었음을 통보합니다 '"border="0" color="0" x="562" y="1540" height="72" width="2286" format="[GENERAL]" html.valueishtml="0"  name=compute_3 visible="1"  font.face="바탕체" font.height="-12" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="복학하지 아니한 학생으로서 본 대학 학칙 제24조에 의거" border="0" color="0" x="562" y="1420" height="72" width="2286" html.valueishtml="0"  name=t_5 visible="1"  font.face="바탕체" font.height="-12" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression=" jaehak_hakjuk_hname + ' 학생은 휴학기간 종료후 소정기간 이내에 특정한 사유없이 '"border="0" color="0" x="562" y="1300" height="72" width="2496" format="[GENERAL]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="바탕체" font.height="-12" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="*  궁금하시거나 문의사항은  (학적담당)  041 - 630 - 3111" border="0" color="0" x="562" y="2320" height="72" width="2313" html.valueishtml="0"  name=t_1 visible="1"  font.face="바탕체" font.height="-12" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="   로 연락주시기 바랍니다." border="0" color="0" x="562" y="2424" height="72" width="2313" html.valueishtml="0"  name=t_2 visible="1"  font.face="바탕체" font.height="-12" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,127 @@
+﻿$PBExportHeader$d_hst501i_1.srd
+$PBExportComments$지산폐기신청 - 저장
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(11) update=yes updatewhereclause=yes key=yes name=id_no dbname="hst034h.id_no" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=item_class dbname="hst034h.item_class" )
+ column=(type=char(8) update=yes updatewhereclause=yes key=yes name=apply_date dbname="hst034h.apply_date" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=seq_no dbname="hst034h.seq_no" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=apply_member_no dbname="hst034h.apply_member_no" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=move_proc_date dbname="hst034h.move_proc_date" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=move_bef_gwa dbname="hst034h.move_bef_gwa" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=move_bef_room dbname="hst034h.move_bef_room" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=gwa dbname="hst034h.gwa" )
+ column=(type=char(12) update=yes updatewhereclause=yes name=room_code dbname="hst034h.room_code" )
+ column=(type=char(200) update=yes updatewhereclause=yes name=in_item_name dbname="hst034h.in_item_name" )
+ column=(type=char(30) update=yes updatewhereclause=yes name=jikwi_name dbname="hst034h.jikwi_name" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=move_opt dbname="hst034h.move_opt" initial="8" )
+ column=(type=char(7) updatewhereclause=yes name=item_no dbname="hst034h.item_no" )
+ column=(type=char(40) updatewhereclause=yes name=item_name dbname="hst034h.item_name" )
+ column=(type=char(100) updatewhereclause=yes name=item_stand_size dbname="hst034h.item_stand_size" )
+ column=(type=char(100) updatewhereclause=yes name=model dbname="hst034h.model" )
+ column=(type=char(40) updatewhereclause=yes name=room_name dbname="hst034h.room_name" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=move_proc_member_no dbname="hst034h.move_proc_member_no" )
+ column=(type=number updatewhereclause=yes name=purchase_qty dbname="hst034h.purchase_qty" )
+ column=(type=number updatewhereclause=yes name=purchase_amt dbname="hst034h.purchase_amt" )
+ column=(type=number updatewhereclause=yes name=limit_term dbname="hst034h.limit_term" )
+ column=(type=char(200) update=yes updatewhereclause=yes name=remark dbname="hst034h.remark" )
+ column=(type=char(200) update=yes updatewhereclause=yes name=loss_remark dbname="hst034h.loss_remark" )
+ column=(type=char(12) update=yes updatewhereclause=yes name=move_room dbname="hst034h.move_room" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hst034h.worker" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hst034h.work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hst034h.ipaddr" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hst034h.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hst034h.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hst034h.job_date" )
+ retrieve="SELECT	A.ID_NO,
+			A.ITEM_CLASS,
+			A.APPLY_DATE,
+         A.SEQ_NO,
+			A.APPLY_MEMBER_NO,
+			A.MOVE_PROC_DATE,
+			A.MOVE_BEF_GWA,
+			A.MOVE_BEF_ROOM,
+			A.GWA,
+			A.ROOM_CODE,
+			A.IN_ITEM_NAME,
+			A.JIKWI_NAME,
+			A.MOVE_OPT,
+			B.ITEM_NO,
+			D.ITEM_NAME,
+			B.ITEM_STAND_SIZE,
+			B.MODEL,
+			C.ROOM_NAME,
+			A.MOVE_PROC_MEMBER_NO,
+         B.PURCHASE_QTY,
+         B.PURCHASE_AMT,
+			B.LIMIT_TERM,
+         A.REMARK,
+			A.LOSS_REMARK,
+			A.MOVE_ROOM,
+			A.WORKER,
+			A.WORK_DATE,
+			A.IPADDR,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE
+FROM		STDB.HST034H	A,
+			STDB.HST027M	B,
+			STDB.HST242M	C,
+         STDB.HST004M   D
+WHERE		A.ID_NO      = B.ID_NO
+AND		A.ITEM_CLASS = B.ITEM_CLASS
+AND		A.ROOM_CODE  = C.ROOM_CODE(+)
+AND      B.ITEM_NO    = D.ITEM_NO(+)
+AND		nvl(C.ROOM_NAME,' ')	LIKE	:as_room_name
+AND		A.ID_NO     LIKE :as_id_no
+AND		nvl(B.ITEM_NO,' ')  LIKE :as_item_no
+AND		nvl(D.ITEM_NAME,' ') LIKE :as_item_name
+AND		nvl(TO_CHAR(A.ITEM_CLASS),0) LIKE :as_item_class
+AND		A.APPLY_DATE     >= :as_date_f
+AND		A.APPLY_DATE     <= :as_date_t
+AND		nvl(A.GWA,' ')       LIKE :as_dept_code
+AND		A.MOVE_OPT        = :ai_move_opt
+" update="STDB.HST034H" updatewhere=0 updatekeyinplace=no arguments=(("as_id_no", string),("as_item_no", string),("as_item_name", string),("as_item_class", string),("as_date_f", string),("as_date_t", string),("as_dept_code", string),("ai_move_opt", number),("as_room_name", string))  sort="seq_no A id_no A item_no A " )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="8" height="68" width="288" format="[general]" html.valueishtml="0"  name=seq_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="306" y="8" height="68" width="389" format="[general]" html.valueishtml="0"  name=id_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="0" tabsequence=30 border="0" color="0" x="4096" y="8" height="68" width="480" format="[general]" html.valueishtml="0"  name=in_item_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=10 border="0" color="0" x="2469" y="8" height="68" width="384" format="@@@@/@@/@@" html.valueishtml="0"  name=apply_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="2862" y="8" height="68" width="562" format="[general]" html.valueishtml="0"  name=gwa visible="1" dddw.name=dddw_dept_code_apply dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=200 dddw.lines=25 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="704" y="8" height="68" width="667" format="[general]" html.valueishtml="0"  name=item_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=40 border="0" color="0" x="4585" y="8" height="68" width="329" format="[general]" html.valueishtml="0"  name=apply_member_no pointer="Help!" visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="3433" y="8" height="68" width="343" format="[general]" html.valueishtml="0"  name=room_code visible="1" dddw.name=dddw_room_code dddw.displaycolumn=name dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=20 alignment="1" tabsequence=32766 border="0" color="0" x="1381" y="8" height="68" width="261" format="#,##0" html.valueishtml="0"  name=purchase_qty visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=21 alignment="1" tabsequence=32766 border="0" color="0" x="1650" y="8" height="68" width="475" format="#,##0" html.valueishtml="0"  name=purchase_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=23 alignment="0" tabsequence=50 border="0" color="0" x="4923" y="8" height="68" width="1399" format="[general]" html.valueishtml="0"  name=remark visible="1" edit.limit=200 edit.case=any edit.autoselect=yes edit.nilisnull=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=24 alignment="0" tabsequence=60 border="0" color="0" x="6331" y="8" height="68" width="2249" format="[general]" html.valueishtml="0"  name=loss_remark visible="1" edit.limit=200 edit.case=any edit.autoselect=yes edit.nilisnull=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=22 alignment="2" tabsequence=32766 border="0" color="0" x="2135" y="8" height="68" width="325" format="[general]" html.valueishtml="0"  name=limit_term visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=25 alignment="0" tabsequence=20 border="0" color="0" x="3785" y="8" height="68" width="302" format="[general]" html.valueishtml="0"  name=move_room visible="1" dddw.name=dddw_room_code dddw.displaycolumn=name dddw.datacolumn=code dddw.percentwidth=200 dddw.lines=10 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="일련번호" border="0" color="0" x="9" y="8" height="56" width="288" html.valueishtml="0"  name=seq_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="자산 번호" border="0" color="0" x="306" y="8" height="56" width="389" html.valueishtml="0"  name=id_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="품목명" border="0" color="0" x="704" y="8" height="56" width="667" html.valueishtml="0"  name=item_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="구입수량" border="0" color="0" x="1381" y="8" height="56" width="261" html.valueishtml="0"  name=purchase_qty_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="구입금액" border="0" color="0" x="1650" y="8" height="56" width="475" html.valueishtml="0"  name=purchase_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="신청일자" border="0" color="0" x="2469" y="8" height="56" width="384" html.valueishtml="0"  name=apply_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="부서" border="0" color="0" x="2862" y="8" height="56" width="562" html.valueishtml="0"  name=gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="설치장소" border="0" color="0" x="3433" y="8" height="56" width="343" html.valueishtml="0"  name=room_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="포함 기기" border="0" color="0" x="4096" y="8" height="56" width="480" html.valueishtml="0"  name=in_item_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="신청인" border="0" color="0" x="4585" y="8" height="56" width="329" html.valueishtml="0"  name=apply_member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="불용처분사유" border="0" color="0" x="4923" y="8" height="56" width="1399" html.valueishtml="0"  name=remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="처분방법" border="0" color="0" x="6331" y="8" height="56" width="2249" html.valueishtml="0"  name=loss_remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="사용년한" border="0" color="0" x="2135" y="8" height="56" width="325" html.valueishtml="0"  name=limit_term_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="반납장소" border="0" color="0" x="3785" y="8" height="56" width="302" html.valueishtml="0"  name=move_room_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

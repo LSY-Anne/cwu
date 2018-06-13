@@ -1,0 +1,93 @@
+﻿$PBExportHeader$d_hpa311b_2_20051123.srd
+$PBExportComments$월 세금계산 생성(월 급여지급)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=80263581 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=84 color="536870912" )
+summary(height=76 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=80 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes name=member_no dbname="hpa005d_20051123.member_no" dbalias=".member_no" )
+ column=(type=char(6) updatewhereclause=yes name=year_month dbname="hpa005d_20051123.year_month" dbalias=".year_month" )
+ column=(type=number updatewhereclause=yes name=pay_amt dbname="hpa005d_20051123.pay_amt" dbalias=".pay_amt" )
+ column=(type=number updatewhereclause=yes name=nontax_amt dbname="hpa005d_20051123.nontax_amt" dbalias=".nontax_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=hpa005d_20051123_sort dbname="hpa005d_20051123.sort" dbalias=".sort" )
+ column=(type=decimal(0) updatewhereclause=yes name=excepte_gbn dbname="hpa005d_20051123.excepte_gbn" dbalias=".excepte_gbn" )
+ column=(type=char(20) updatewhereclause=yes name=hpa005d_20051123_contents dbname="hpa005d_20051123.contents" dbalias=".contents" )
+ column=(type=char(20) updatewhereclause=yes name=hpa005d_20051123_remark dbname="hpa005d_20051123.remark" dbalias=".remark" )
+ column=(type=char(5) updatewhereclause=yes name=hpa005d_20051123_worker dbname="hpa005d_20051123.worker" dbalias=".worker" )
+ column=(type=datetime updatewhereclause=yes name=hpa005d_20051123_work_date dbname="hpa005d_20051123.work_date" dbalias=".work_date" )
+ column=(type=char(20) updatewhereclause=yes name=hpa005d_20051123_ipaddr dbname="hpa005d_20051123.ipaddr" dbalias=".ipaddr" )
+ column=(type=char(6) updatewhereclause=yes name=hpa001m_gwa dbname="hpa001m.gwa" dbalias=".gwa" )
+ column=(type=char(4) updatewhereclause=yes name=hpa001m_duty_code dbname="hpa001m.duty_code" dbalias=".duty_code" )
+ column=(type=char(30) updatewhereclause=yes name=hpa003m_item_name dbname="hpa003m.item_name" dbalias=".item_name" )
+ column=(type=char(2) updatewhereclause=yes name=hpa005d_20051123_code dbname="hpa005d_20051123.code" dbalias=".code" )
+ column=(type=char(30) updatewhereclause=yes name=item_name dbname="hpa005d_20051123.item_name" dbalias=".item_name" )
+ column=(type=char(20) updatewhereclause=yes name=hpa001m_name dbname="hpa001m.name" dbalias=".name" )
+ column=(type=char(8) updatewhereclause=yes name=pay_date dbname="hpa005d_20051123.pay_date" dbalias=".pay_date" )
+ retrieve="  SELECT PADB.HPA005D_20051123.MEMBER_NO,   
+         PADB.HPA005D_20051123.YEAR_MONTH,   
+         PADB.HPA005D_20051123.PAY_AMT,   
+         PADB.HPA005D_20051123.NONTAX_AMT,   
+         PADB.HPA005D_20051123.SORT,   
+         PADB.HPA005D_20051123.EXCEPTE_GBN,   
+         PADB.HPA005D_20051123.CONTENTS,   
+         PADB.HPA005D_20051123.REMARK,   
+         PADB.HPA005D_20051123.WORKER,   
+         PADB.HPA005D_20051123.WORK_DATE,   
+         PADB.HPA005D_20051123.IPADDR,   
+         PADB.HPA001M.GWA,   
+         PADB.HPA001M.DUTY_CODE,   
+         PADB.HPA003M.ITEM_NAME,   
+         PADB.HPA005D_20051123.CODE,   
+         PADB.HPA005D_20051123.ITEM_NAME,   
+         PADB.HPA001M.NAME,   
+         PADB.HPA005D_20051123.PAY_DATE  
+    FROM PADB.HPA005D_20051123,   
+         PADB.HPA003M,   
+         PADB.HPA001M  
+   WHERE PADB.HPA005D_20051123.CODE = PADB.HPA003M.CODE  and  
+         PADB.HPA005D_20051123.MEMBER_NO = PADB.HPA001M.MEMBER_NO  and  
+         PADB.HPA005D_20051123.YEAR_MONTH = PADB.HPA001M.YEAR_MONTH  and  
+         PADB.HPA005D_20051123.YEAR_MONTH = :as_yearmonth  AND  
+         PADB.HPA001M.GWA like :as_gwa || '%'  AND  
+         PADB.HPA005D_20051123.CODE in (:as_item1, :as_item2)  AND  
+         PADB.HPA001M.JIKJONG_CODE >= :ai_str_jikjong  AND  
+         PADB.HPA001M.JIKJONG_CODE <= :ai_end_jikjong  and
+			 PADB.HPA005D_20051123.MEMBER_NO like :as_member||'%'  
+ORDER BY PADB.HPA005D_20051123.YEAR_MONTH ASC,   
+         PADB.HPA005D_20051123.MEMBER_NO ASC,   
+         PADB.HPA005D_20051123.CODE ASC   
+" arguments=(("as_yearmonth", string),("as_gwa", string),("as_item1", string),("as_item2", string),("ai_str_jikjong", number),("ai_end_jikjong", number),("as_member", string)) )
+group(level=1 header.height=0 trailer.height=76 by=("member_no" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text="성 명" border="6" color="0" x="891" y="8" height="60" width="485" html.valueishtml="0"  name=hpa001m_name_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="80263581" )
+text(band=header alignment="2" text="개인번호" border="6" color="0" x="571" y="8" height="60" width="311" html.valueishtml="0"  name=member_no_t visible="1"  font.face="굴림" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="금액" border="6" color="0" x="2107" y="8" height="60" width="571" html.valueishtml="0"  name=pay_amt_t visible="1"  font.face="굴림" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="비과세금액" border="6" color="0" x="2688" y="8" height="60" width="430" html.valueishtml="0"  name=nontax_amt_t visible="1"  font.face="굴림" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="항목구분" border="6" color="0" x="3127" y="8" height="60" width="311" html.valueishtml="0"  name=excepte_gbn_t visible="1"  font.face="굴림" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="항목명" border="6" color="0" x="1385" y="8" height="60" width="713" html.valueishtml="0"  name=item_name_t visible="1"  font.face="굴림" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="지급일자" border="6" color="0" x="247" y="8" height="60" width="315" html.valueishtml="0"  name=pay_date_t visible="1"  font.face="굴림" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="134217750" )
+text(band=header alignment="2" text="지급월" border="6" color="0" x="9" y="8" height="60" width="229" html.valueishtml="0"  name=year_month_t visible="1"  font.face="굴림" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="134217750" )
+column(band=detail id=17 alignment="2" tabsequence=32766 border="0~tif ( getrow() = currentrow(), 5, 0)" color="0" x="891" y="4" height="72" width="485" format="[general]" html.valueishtml="0"  name=hpa001m_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="571" y="4" height="72" width="311" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="2107" y="4" height="72" width="571" format="#,##0" html.valueishtml="0"  name=pay_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="2688" y="4" height="72" width="430" format="#,##0" html.valueishtml="0"  name=nontax_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="3127" y="4" height="72" width="311" format="[general]" html.valueishtml="0"  name=excepte_gbn visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="0" x="1385" y="4" height="72" width="713" format="[general]" html.valueishtml="0"  name=item_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="0" color="0" x="247" y="4" height="72" width="315" format="@@@@/@@/@@" html.valueishtml="0"  name=pay_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="229" format="@@@@/@@" html.valueishtml="0"  name=year_month visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=trailer.1 alignment="2" text="소계" border="6" color="0" x="1385" y="4" height="60" width="713" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="12639424" )
+compute(band=trailer.1 alignment="1" expression="sum(   pay_amt for group 1 )"border="6" color="0" x="2107" y="4" height="60" width="571" format="#,##0" html.valueishtml="0"  name=sum_amt visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="12639424" )
+compute(band=trailer.1 alignment="1" expression="sum(  nontax_amt  for group 1 )"border="6" color="0" x="2688" y="4" height="60" width="430" format="#,##0" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="12639424" )
+text(band=summary alignment="2" text="합계" border="6" color="0" x="1385" y="8" height="60" width="713" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="12639424" )
+compute(band=summary alignment="0" expression="sum(  sum_amt  for all )"border="0" color="0" x="2107" y="8" height="60" width="571" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="12639424" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

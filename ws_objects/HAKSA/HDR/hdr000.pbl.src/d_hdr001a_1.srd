@@ -1,0 +1,106 @@
+﻿$PBExportHeader$d_hdr001a_1.srd
+$PBExportComments$[청운대]등록모델관리 dw
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=80 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(4) update=yes updatewhereclause=yes key=yes name=year dbname="dungrok_model.year" )
+ column=(type=char(1) update=yes updatewhereclause=yes key=yes name=hakgi dbname="dungrok_model.hakgi" )
+ column=(type=char(1) update=yes updatewhereclause=yes key=yes name=hakyun dbname="dungrok_model.hakyun" )
+ column=(type=char(4) update=yes updatewhereclause=yes key=yes name=gwa dbname="dungrok_model.gwa" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=iphak dbname="dungrok_model.iphak" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=dungrok dbname="dungrok_model.dungrok" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=haksengwhe dbname="dungrok_model.haksengwhe" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=gyojae dbname="dungrok_model.gyojae" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=album dbname="dungrok_model.album" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=hakwhe dbname="dungrok_model.hakwhe" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=memorial dbname="dungrok_model.memorial" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=dongchangwhe dbname="dungrok_model.dongchangwhe" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=tot_japbu dbname="dungrok_model.tot_japbu" initial="0" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=gijun_hakjum dbname="dungrok_model.gijun_hakjum" initial="0" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="dungrok_model.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="dungrok_model.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="dungrok_model.work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="dungrok_model.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="dungrok_model.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="dungrok_model.job_date" )
+ column=(type=decimal(0) updatewhereclause=yes name=gwa_sym_order_seq dbname="dungrok_model.order_seq" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=tmt_hakgi_dungrok dbname="dungrok_model.tmt_hakgi_dungrok" initial="0" )
+ column=(type=decimal(1) update=yes updatewhereclause=yes name=tmt_gijun_hakjum dbname="dungrok_model.tmt_gijun_hakjum" initial="0" )
+ retrieve="SELECT 	A.YEAR,   
+			A.HAKGI,   
+			A.HAKYUN,   
+			A.GWA,   
+			A.IPHAK,
+			A.DUNGROK,
+			A.HAKSENGWHE,
+			A.GYOJAE,
+			A.ALBUM,
+			A.HAKWHE,  
+			A.MEMORIAL,
+			A.DONGCHANGWHE,
+			A.TOT_JAPBU,
+			A.GIJUN_HAKJUM,   
+			A.WORKER,   
+			A.IPADDR,   
+			A.WORK_DATE,   
+			A.JOB_UID,   
+			A.JOB_ADD,   
+			A.JOB_DATE,
+			B.ORDER_SEQ,
+         A.tmt_hakgi_dungrok,
+         A.tmt_gijun_hakjum
+FROM 		HAKSA.DUNGROK_MODEL  A,
+			HAKSA.GWA_SYM 			B
+WHERE		A.GWA	=	trim(B.GWA)
+AND		A.YEAR = :as_year
+AND  		A.HAKGI = :as_hakgi 
+AND  		A.HAKYUN like :as_hakyun 
+AND  		A.GWA like :as_gwa 
+
+" update="HAKSA.DUNGROK_MODEL" updatewhere=0 updatekeyinplace=yes arguments=(("as_year", string),("as_hakgi", string),("as_hakyun", string),("as_gwa", string))  sort="gwa_sym_order_seq A hakyun A " )
+text(band=header alignment="2" text="년도" border="0" color="8388608" x="9" y="12" height="60" width="178" html.valueishtml="0"  name=year_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학기" border="0" color="8388608" x="187" y="12" height="60" width="137" html.valueishtml="0"  name=hakyun_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학년" border="0" color="8388608" x="320" y="12" height="60" width="137" html.valueishtml="0"  name=hakgi_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학과" border="0" color="8388608" x="457" y="12" height="60" width="334" html.valueishtml="0"  name=gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="입학금" border="0" color="8388608" x="795" y="12" height="60" width="320" html.valueishtml="0"  name=iphak_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학점당등록금" border="0" color="8388608" x="1102" y="12" height="60" width="411" html.valueishtml="0"  name=dungrok_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학생회비" border="0" color="8388608" x="1893" y="12" height="60" width="297" html.valueishtml="0"  name=haksengwhe_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="동창회비" border="0" color="8388608" x="3122" y="12" height="60" width="297" html.valueishtml="0"  name=dongchangwhe_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="교재비" border="0" color="8388608" x="2194" y="12" height="60" width="297" html.valueishtml="0"  name=gyojae_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학회비" border="0" color="8388608" x="3424" y="12" height="60" width="297" html.valueishtml="0"  name=hakwhe_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="잡부금총액" border="0" color="8388608" x="3717" y="12" height="60" width="343" html.valueishtml="0"  name=tot_japbu_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="기준학점" border="0" color="8388608" x="4050" y="12" height="60" width="274" html.valueishtml="0"  name=gijun_hakjum_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="졸업기념비" border="0" color="8388608" x="2789" y="12" height="60" width="343" html.valueishtml="0"  name=memorial_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="앨범비" border="0" color="8388608" x="2496" y="12" height="60" width="297" html.valueishtml="0"  name=album_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학기제등록금" border="0" color="8388608" x="1490" y="12" height="60" width="411" html.valueishtml="0"  name=tmt_hakgi_dungrok_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+text(band=header alignment="2" text="학기제기준학점" border="0" color="8388608" x="4325" y="12" height="60" width="480" html.valueishtml="0"  name=tmt_gijun_hakjum_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="15780518" )
+column(band=detail id=1 alignment="2" tabsequence=10 border="0" color="0" x="9" y="12" height="64" width="178" format="[general]" html.valueishtml="0"  name=year visible="1" edit.limit=4 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=20 border="0" color="0" x="192" y="12" height="64" width="128" format="[general]" html.valueishtml="0"  name=hakgi visible="1" edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=30 border="0" color="8388736" x="325" y="12" height="64" width="128" format="[general]" html.valueishtml="0"  name=hakyun visible="1" edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=40 border="0" color="0" x="457" y="12" height="64" width="334" format="[general]" html.valueishtml="0"  name=gwa visible="1" dddw.name=d_dddw_shorthakgwa dddw.displaycolumn=sname dddw.datacolumn=gwa dddw.percentwidth=192 dddw.lines=5 dddw.limit=0 dddw.allowedit=yes dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="1" tabsequence=50 border="0" color="16711680" x="795" y="12" height="64" width="320" format="#,##0" html.valueishtml="0"  name=iphak visible="1" editmask.mask="#,###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="1" tabsequence=140 border="0" color="32896" x="3726" y="12" height="64" width="320" format="[general]" html.valueishtml="0"  name=tot_japbu visible="1" editmask.mask="#,###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="1" tabsequence=80 border="0" color="16711680" x="1893" y="12" height="64" width="297" format="#,##0" html.valueishtml="0"  name=haksengwhe visible="1" editmask.mask="#,###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="1" tabsequence=90 border="0" color="16711680" x="2194" y="12" height="64" width="297" format="#,##0" html.valueishtml="0"  name=gyojae visible="1" editmask.mask="#,###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="1" tabsequence=100 border="0" color="16711680" x="2496" y="12" height="64" width="297" format="#,##0" html.valueishtml="0"  name=album visible="1" editmask.mask="#,###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="1" tabsequence=110 border="0" color="16711680" x="2798" y="12" height="64" width="320" format="#,##0" html.valueishtml="0"  name=memorial visible="1" editmask.mask="#,###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="1" tabsequence=120 border="0" color="16711680" x="3122" y="12" height="64" width="297" format="#,##0" html.valueishtml="0"  name=dongchangwhe visible="1" editmask.mask="#,###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="1" tabsequence=130 border="0" color="16711680" x="3424" y="12" height="64" width="297" format="#,##0" html.valueishtml="0"  name=hakwhe visible="1" editmask.mask="#,###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="1" tabsequence=60 border="0" color="255" x="1120" y="12" height="64" width="384" format="#,##0" html.valueishtml="0"  name=dungrok visible="1" editmask.mask="#,###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=22 alignment="1" tabsequence=70 border="0" color="255" x="1504" y="12" height="64" width="384" format="[general]" html.valueishtml="0"  name=tmt_hakgi_dungrok visible="1" editmask.mask="##,###,##0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="2" tabsequence=150 border="0" color="0" x="4050" y="12" height="64" width="274" format="[general]" html.valueishtml="0"  name=gijun_hakjum visible="1" edit.limit=2 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.nilisnull=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=23 alignment="1" tabsequence=160 border="0" color="0" x="4329" y="12" height="64" width="466" format="[general]" html.valueishtml="0"  name=tmt_gijun_hakjum visible="1" editmask.mask="###.0" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,73 @@
+﻿$PBExportHeader$d_hjj208p_1_neast_old.srd
+$PBExportComments$[청운대]국문성적표(nested)(교내용)
+release 10.5;
+datawindow(units=3 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 6879 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no print.columns=3 print.columns.width=6100 )
+header(height=0 color="536870912" )
+summary(height=1852 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=317 color="536870912" height.autosize=yes )
+table(column=(type=char(4) updatewhereclause=yes name=year dbname="sugang.year" )
+ column=(type=char(1) updatewhereclause=yes name=hakgi dbname="sugang.hakgi" values="1	1/여름	3/2	2/겨울	4/" )
+ column=(type=char(100) updatewhereclause=yes name=gwamok_code_gwamok_hname dbname="sugang.gwamok_hname" )
+ column=(type=char(2) updatewhereclause=yes name=sugang_isu_id dbname="sugang.isu_id" )
+ column=(type=decimal(0) updatewhereclause=yes name=hakjum dbname="sugang.hakjum" )
+ column=(type=char(2) updatewhereclause=yes name=hwansan_jumsu dbname="sugang.hwansan_jumsu" )
+ column=(type=number updatewhereclause=yes name=hwan_jumsu dbname="hwan_jumsu" )
+ column=(type=number updatewhereclause=yes name=sugang_jumsu dbname="jumsu" )
+ column=(type=char(2) updatewhereclause=yes name=jaehak_hakjuk_injung_hakjum dbname="injung_hakjum" )
+ column=(type=char(1) updatewhereclause=yes name=gwamok_code_pass_gubun dbname="sugang.pass_gubun" )
+ retrieve="SELECT  	A.YEAR ,
+			A.HAKGI ,
+			B.GWAMOK_HNAME,
+			A.ISU_ID ,
+			A.HAKJUM ,
+			A.HWANSAN_JUMSU ,
+			(A.PYENGJUM * A.HAKJUM) HWAN_JUMSU,
+			(A.JUMSU * A.HAKJUM) JUMSU,
+			nvl(C.INJUNG_HAKJUM,0) INJUNG_HAKJUM ,
+			B.PASS_GUBUN 
+FROM 		HAKSA.SUGANG			A,
+			HAKSA.GWAMOK_CODE		B,
+			HAKSA.JAEHAK_HAKJUK	C
+WHERE 	( A.HAKBUN = C.HAKBUN ) 
+AND		( A.GWAMOK_ID = B.GWAMOK_ID)
+AND		( A.GWAMOK_SEQ = B.GWAMOK_SEQ)  
+and      ( A.HAKBUN = :hakbun )  
+" arguments=(("hakbun", string))  sort="year A hakgi_sort A sugang_isu_id A gwamok_code_gwamok_hname A " )
+group(level=1 header.height=396 trailer.height=1296 by=("year" , "hakgi" ) header.color="536870912" trailer.color="536870912" )
+compute(band=header.1 alignment="0" expression="1"border="0" color="0" x="1217" y="503" height="396" width="1058" format="[General]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=header.1 alignment="0" expression="cumulativeSum(  compute_1  for group 1 )"border="0" color="0" x="2407" y="503" height="396" width="1058" format="[General]" html.valueishtml="0"  name=compute_9 visible="1"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=header.1 id=1 alignment="0" tabsequence=32766 border="0" color="0" x="1270" y="27" height="317" width="793" format="[general]" html.valueishtml="0"  name=year  tag="년도" visible="1~tIF(  compute_1  =  compute_9 , 1, 0)" edit.limit=4 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="바탕체" font.height="-7" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="0" text="학년도" border="0" color="0" x="2090" y="27" height="317" width="899" html.valueishtml="0"  name=t_1 visible="1~tIF(  compute_1  =  compute_9 , 1, 0)"  font.face="바탕체" font.height="-7" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=header.1 alignment="0" expression="if(hakgi = '1', 1, if(hakgi= '2', 3, if(hakgi = '3', 2, if(hakgi = '4', 4, 4))))"border="0" color="0" x="4709" y="27" height="291" width="291" format="[GENERAL]" html.valueishtml="0"  name=hakgi_sort visible="1~t0"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header.1 alignment="0" text="학기" border="0" color="0" x="3677" y="27" height="317" width="582" html.valueishtml="0"  name=t_2 visible="1~tIF(  compute_1  =  compute_9 , 1, 0)"  font.face="바탕체" font.height="-7" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=header.1 id=2 alignment="2" tabsequence=32766 border="0" color="0" x="3069" y="27" height="317" width="582" format="[general]" html.valueishtml="0"  name=hakgi  tag="학기" visible="1~tIF(  compute_1  =  compute_9 , 1, 0)" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="바탕체" font.height="-7" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="396" y="27" height="264" width="793" format="[general]" html.valueishtml="0"  name=sugang_isu_id visible="1" dddw.name=d_dddw_isucode dddw.displaycolumn=isu_name dddw.datacolumn=isu_id dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="바탕체" font.height="-7" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="5820" y="27" height="264" width="529" format="[general]" html.valueishtml="0"  name=hwansan_jumsu  tag="환산점수" visible="1" edit.limit=3 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="바탕체" font.height="-7" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1243" y="27" height="264" width="3333" format="[general]" html.valueishtml="0"  name=gwamok_code_gwamok_hname visible="1"  resizeable=1 height.autosize=yes edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕체" font.height="-7" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="0" x="4630" y="27" height="264" width="582" format="[general]" html.valueishtml="0"  name=hakjum  tag="학점" visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="바탕체" font.height="-7" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="0" expression="~"신청/취득학점 : ~"+sum(  if( hwansan_jumsu = 'W', 0, hakjum)  for group 1 ) +'/' + sum( if( (hwansan_jumsu = 'F' OR hwansan_jumsu = 'W'), 0, hakjum) for group 1)"border="0" color="0" x="1270" y="26" height="264" width="3280" format="[general]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="바탕체" font.height="-7" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="1090519039" )
+text(band=trailer.1 alignment="0" text="-------------------------" border="0" color="0" x="1270" y="978" height="264" width="3307" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-7" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="0" expression="round(sum(  IF(( gwamok_code_pass_gubun = 'Y' OR hwansan_jumsu = 'W'), 0, hwan_jumsu)  for group 1 ) / sum(  IF( ( gwamok_code_pass_gubun = 'Y' OR hwansan_jumsu = 'W'), 0, hakjum)  for group 1 ),2)"border="0" color="0" x="2778" y="661" height="264" width="1058" format="#,##0.00" html.valueishtml="0"  name=compute_4 visible="1"  font.face="바탕체" font.height="-7" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="1090519039" )
+compute(band=trailer.1 alignment="0" expression="~"환산점수합계 : ~"+ sum(  IF(  gwamok_code_pass_gubun = 'Y', 0, hwan_jumsu)  for group 1 )"border="0" color="0" x="1270" y="317" height="291" width="3280" format="[general]" html.valueishtml="0"  name=compute_3 visible="1"  font.face="바탕체" font.height="-7" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="1090519039" )
+text(band=trailer.1 alignment="0" text="평점평균 :" border="0" color="0" x="1270" y="661" height="264" width="1402" html.valueishtml="0"  name=t_9 visible="1"  font.face="바탕체" font.height="-7" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=summary alignment="0" text="===== <이하여백> =====" border="0" color="0" x="1270" y="1561" height="264" width="3439" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-7" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=summary alignment="0" expression="round((((round(sum(  IF( (gwamok_code_pass_gubun = 'Y'OR hwansan_jumsu ='W'), 0, hwan_jumsu)  for all ) / sum(  IF( (gwamok_code_pass_gubun = 'Y' OR hwansan_jumsu ='W'), 0, hakjum)  for all ),2) * 100)  - 100) * 0.11428571) + 60, 2)"border="0" color="0" x="3862" y="1058" height="264" width="767" format="#,##0.00" html.valueishtml="0"  name=compute_11 visible="1"  font.face="바탕체" font.height="-7" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="1090519039" )
+text(band=summary alignment="0" text="100점기준 환산점수: " border="0" color="0" x="1270" y="1058" height="264" width="2513" html.valueishtml="0"  name=t_6 visible="1"  font.face="바탕체" font.height="-7" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="0" expression="round(sum(  IF( ( gwamok_code_pass_gubun = 'Y' OR hwansan_jumsu = 'W'), 0, hwan_jumsu)  for all ) / sum(  IF( ( gwamok_code_pass_gubun = 'Y' OR hwansan_jumsu = 'W'), 0, hakjum)  for all ),2)"border="0" color="0" x="3016" y="741" height="264" width="555" format="#,##0.00" html.valueishtml="0"  name=compute_7 visible="1"  font.face="바탕체" font.height="-7" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="1090519039" )
+text(band=summary alignment="0" text="총평점평균 :" border="0" color="0" x="1270" y="741" height="264" width="1666" html.valueishtml="0"  name=t_7 visible="1"  font.face="바탕체" font.height="-7" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=summary alignment="0" text="/4.5만점" border="0" color="0" x="3651" y="767" height="264" width="1005" html.valueishtml="0"  name=t_8 visible="1"  font.face="바탕체" font.height="-7" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=summary alignment="0" expression="~"총 신청/취득학점 : ~"+ sum(    if( hwansan_jumsu = 'W', 0, hakjum) for all ) +'/' + sum( if( (hwansan_jumsu = 'W' OR hwansan_jumsu = 'F'), 0, hakjum) for all )"border="0" color="0" x="1270" y="132" height="264" width="3307" format="[general]" html.valueishtml="0"  name=compute_5 visible="1"  font.face="바탕체" font.height="-7" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="1090519039" )
+compute(band=summary alignment="0" expression="~"총 환산점수합계 : ~"+ sum(  IF(  gwamok_code_pass_gubun = 'Y', 0, hwan_jumsu)  for all )"border="0" color="0" x="1270" y="423" height="291" width="3307" format="[general]" html.valueishtml="0"  name=compute_6 visible="1"  font.face="바탕체" font.height="-7" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="1090519039" )
+
+sparse(names="year	hakgi")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,85 @@
+﻿$PBExportHeader$f_set_ddlb.srf
+$PBExportComments$ddlb 에 코드+코드명으로 넣기(2Tier)(공통코드)
+global type f_set_ddlb from function_object
+end type
+
+forward prototypes
+global function integer f_set_ddlb (dropdownlistbox ddlb_name, string code_opt, string smode, integer disp_size)
+end prototypes
+
+global function integer f_set_ddlb (dropdownlistbox ddlb_name, string code_opt, string smode, integer disp_size);// function : gf_set_ddlb
+// created  : 2002.10
+// 요약     : 공통코드 테이블에서 코드구분의 내용을 받아
+//            그 코드와 코드명을 주어진 ddlb object에 올려주고
+//            그갯수를 넘겨준다.
+//
+// 사용방법 : li = gf_set_ddlb(ddlb_name, code_opt, sMode, code_size) 
+//                 ddlb_name : 내용이 들어갈 ddlb box
+//					    code_opt : 코드테이블의 코드구분(A19등)
+//                 sMode : 'C' : 코드+코드명 으로 출력
+//                         'N' : 코드명+코드 형태로 출력
+//                 code_size : 앞에 위치할 칼럼의 크기(주어진 숫자보다 작은 
+//                             데이터 뒤는 Space로 채워진다.)
+//                             코드명을 앞으로하고 뒤의 코드를 안보이게 할때등 사용
+// Return : rv > 0 : 데이터 건수.
+
+string sCode, sCodeName 
+Integer Li,spc_size
+
+// ddlb 내용 지우기
+ddlb_name.reset()
+
+
+DECLARE code_cur CURSOR FOR
+	SELECT	CODE, FNAME
+	FROM		CDDB.KCH001M
+	WHERE		TYPE = :code_opt
+	AND		CODE > 0
+	ORDER	BY CODE;
+
+if SQLCA.sqlcode < 0 then 
+	return(0)
+elseif SQLCA.sqlcode = 100 then 
+	return(0)
+end if
+
+li = 0 
+
+OPEN code_cur;
+if SQLCA.sqlcode < 0 then 
+	return(0)
+end if
+
+ddlb_name.additem('')
+do while true
+	FETCH code_cur INTO :sCode, :sCodeName;
+	
+	if SQLCA.sqlcode = 100 then
+		exit
+	end if
+	if sMode = 'C' then
+		if disp_size > Len(Trim(sCode)) then
+			spc_size = disp_size - Len(Trim(sCode))
+		else 
+			spc_size = 1
+		end if
+		ddlb_name.additem(Trim(sCode)+space(spc_size)+Trim(sCodeName))
+	else
+		if disp_size > Len(Trim(sCodeName)) then
+			spc_size = disp_size - Len(Trim(sCodeName))
+		else 
+			spc_size = 1
+		end if
+		ddlb_name.additem(Trim(sCodeName)+space(spc_size)+Trim(sCode))
+	end if		
+	
+	li = li + 1
+loop
+
+close code_cur;
+ddlb_name.selectitem(0)
+
+return(li)
+
+end function
+

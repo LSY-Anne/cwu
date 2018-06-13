@@ -1,0 +1,50 @@
+﻿$PBExportHeader$d_hgm100h_2.srd
+$PBExportComments$호실 조회 response - 조회
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="553648127" )
+summary(height=8 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(12) updatewhereclause=yes key=yes name=room_code dbname="hst242m.room_code" )
+ column=(type=char(40) updatewhereclause=yes name=room_name dbname="hst242m.room_name" )
+ column=(type=char(30) updatewhereclause=yes name=room_name_etc dbname="hst242m.room_name_etc" )
+ column=(type=char(3) updatewhereclause=yes name=buil_no dbname="hst242m.buil_no" )
+ column=(type=char(2) updatewhereclause=yes name=floor dbname="hst242m.floor" )
+ column=(type=char(6) updatewhereclause=yes name=room_no dbname="hst242m.room_no" )
+ retrieve="  SELECT ROOM_CODE,   
+         ROOM_NAME,
+			ROOM_NAME_ETC,   
+         BUIL_NO,   
+         FLOOR,   
+         ROOM_NO  
+    FROM STDB.HST242M  
+   WHERE ROOM_CODE LIKE :as_room_code  AND  
+         ROOM_NAME LIKE :as_room_name  AND  
+         BUIL_NO LIKE :as_buil_no 
+" update="STDB.HST242M" updatewhere=0 updatekeyinplace=no arguments=(("as_room_code", string),("as_room_name", string),("as_buil_no", string))  sort="room_code A room_name A " )
+text(band=header alignment="2" text="순서" border="0" color="0" x="9" y="8" height="56" width="146" html.valueishtml="0"  name=compute_1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="장소 코드" border="0" color="0" x="165" y="8" height="56" width="320" html.valueishtml="0"  name=room_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="사용 장소" border="0" color="0" x="1125" y="8" height="56" width="315" html.valueishtml="0"  name=room_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="건 물" border="0" color="0" x="494" y="8" height="56" width="622" html.valueishtml="0"  name=buil_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="층" border="0" color="0" x="1449" y="8" height="56" width="178" html.valueishtml="0"  name=floor_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="호실" border="0" color="0" x="1637" y="12" height="56" width="206" html.valueishtml="0"  name=room_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="호실명" border="0" color="0" x="1851" y="8" height="56" width="800" html.valueishtml="0"  name=room_name_etc_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="2" expression="getrow()"border="0" color="0" x="9" y="4" height="64" width="146" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="165" y="4" height="64" width="320" format="[general]" html.valueishtml="0"  name=room_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="1125" y="4" height="64" width="315" format="[general]" html.valueishtml="0"  name=room_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="494" y="4" height="64" width="622" format="[general]" html.valueishtml="0"  name=buil_no visible="1" dddw.name=dddw_build_code dddw.displaycolumn=name dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="1449" y="4" height="64" width="178" format="[general]" html.valueishtml="0"  name=floor visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="1637" y="4" height="64" width="206" format="[general]" html.valueishtml="0"  name=room_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1851" y="4" height="64" width="800" format="[general]" html.valueishtml="0"  name=room_name_etc visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,543 @@
+﻿$PBExportHeader$d_hfn510p_3_back.srd
+$PBExportComments$자금계산서 출력(월결산용) - 자금지출
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 200 print.margin.right = 0 print.margin.top = 300 print.margin.bottom = 0 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=520 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=96 color="536870912" )
+table(column=(type=char(1) updatewhereclause=yes name=slip_class dbname="slip_class" values="수입	1/지출	2/" )
+ column=(type=char(1) updatewhereclause=yes name=sort dbname="sort" )
+ column=(type=char(7) updatewhereclause=yes name=large_code dbname="large_code" )
+ column=(type=char(30) updatewhereclause=yes name=large_name dbname="large_name" )
+ column=(type=char(8) updatewhereclause=yes name=middle_code dbname="middle_code" )
+ column=(type=char(30) updatewhereclause=yes name=middle_name dbname="middle_name" )
+ column=(type=char(9) updatewhereclause=yes name=acct_code dbname="acct_code" )
+ column=(type=char(30) updatewhereclause=yes name=acct_name dbname="acct_name" )
+ column=(type=number updatewhereclause=yes name=bdgt_acct_amt dbname="bdgt_acct_amt" )
+ column=(type=number updatewhereclause=yes name=yebibi_amt dbname="yebibi_amt" )
+ column=(type=number updatewhereclause=yes name=jen_amt dbname="jen_amt" )
+ column=(type=number updatewhereclause=yes name=acct_amt dbname="acct_amt" )
+ column=(type=char(1) updatewhereclause=yes name=gubun dbname="gubun" )
+ column=(type=number updatewhereclause=yes name=acct_month_amt dbname="acct_month_amt" )
+ column=(type=char(35) updatewhereclause=yes name=title_dt dbname="title_dt" )
+ retrieve="SELECT	A.SLIP_CLASS						SLIP_CLASS,
+			A.SORT								SORT,
+			A.LARGE_CODE						LARGE_CODE,
+			A.LARGE_NAME						LARGE_NAME,
+			A.MIDDLE_CODE						MIDDLE_CODE,
+			A.MIDDLE_NAME						MIDDLE_NAME,
+			A.ACCT_CODE							ACCT_CODE,
+			A.ACCT_NAME							ACCT_NAME,
+			NVL(SUM(A.BDGT_ACCT_AMT),0)	BDGT_ACCT_AMT,
+			NVL(SUM(A.YEBIBI_AMT),0)		YEBIBI_AMT,
+			NVL(SUM(A.JEN_AMT),0)			JEN_AMT,
+			NVL(SUM(A.ACCT_AMT),0)			ACCT_AMT,
+			A.GUBUN								GUBUN,
+			NVL(SUM(A.ACCT_MONTH_AMT),0)	ACCT_MONTH_AMT,
+'( ' || to_char(to_date(:as_strdate), 'yyyy/mm/dd')  || ' 부터 ' ||  to_char(to_date(:as_enddate), 'yyyy/mm/dd') || ' 까지 )' as title_dt
+FROM		(
+			
+			SELECT	DISTINCT
+						'2'	SLIP_CLASS,
+						CASE	WHEN	SUBSTR(A.ACCT_CODE,1,1) = '5'	THEN	'1'
+								WHEN	SUBSTR(A.ACCT_CODE,1,1) = '4'	THEN	'1'
+								WHEN	SUBSTR(A.ACCT_CODE,1,1) = '1'	THEN	'2'
+								ELSE	'3'	END	SORT,
+						'2'||SUBSTR(A.ACCT_CODE,1,2)||'00'	LARGE_CODE,
+						C.ACCT_ONAME								LARGE_NAME,
+						''												MIDDLE_CODE,
+						''												MIDDLE_NAME,
+						''												ACCT_CODE,
+						''												ACCT_NAME,
+						0												BDGT_ACCT_AMT,
+						0												YEBIBI_AMT,
+						0												JEN_AMT,
+						0												ACCT_MONTH_AMT,
+						0												ACCT_AMT,
+						'1'											GUBUN
+			FROM		ACDB.HAC001M A, ACDB.HAC001M C
+			WHERE		SUBSTR(A.ACCT_CODE,1,2)	IN	(	SELECT	DISTINCT	SUBSTR(B.FORM_CODE,1,2)
+																FROM		ACDB.HAC006M B
+																WHERE		SUBSTR(B.USED_GBN,4,1) = '9'	)
+			AND		A.LEVEL_CLASS = '1'
+			AND		A.JICHUL_GUBUN = 'Y'
+			AND		SUBSTR(A.ACCT_CODE,1,2)||'0000' = C.ACCT_CODE
+			UNION ALL
+			
+			SELECT	DISTINCT
+						'2'	SLIP_CLASS,
+						CASE	WHEN	SUBSTR(A.ACCT_CODE,1,1) = '5'	THEN	'1'
+								WHEN	SUBSTR(A.ACCT_CODE,1,1) = '4'	THEN	'1'
+								WHEN	SUBSTR(A.ACCT_CODE,1,1) = '1'	THEN	'2'
+								ELSE	'3'	END	SORT,
+						'2'||SUBSTR(A.ACCT_CODE,1,2)||'00'	LARGE_CODE,
+						''												LARGE_NAME,
+						'2'||SUBSTR(A.ACCT_CODE,1,3)||'0'	MIDDLE_CODE,
+						C.ACCT_ONAME								MIDDLE_NAME,
+						''												ACCT_CODE,
+						''												ACCT_NAME,
+						0												BDGT_ACCT_AMT,
+						0												YEBIBI_AMT,
+						0												JEN_AMT,
+						0												ACCT_MONTH_AMT,
+						0												ACCT_AMT,
+						'2'											GUBUN
+			FROM		ACDB.HAC001M A, ACDB.HAC001M C
+			WHERE		SUBSTR(A.ACCT_CODE,1,3)	IN	(	SELECT	DISTINCT	SUBSTR(B.FORM_CODE,1,3)
+																FROM		ACDB.HAC006M B
+																WHERE		SUBSTR(B.USED_GBN,4,1) = '9'	)
+			AND		A.LEVEL_CLASS = '2'
+			AND		A.JICHUL_GUBUN = 'Y'
+			AND		SUBSTR(A.ACCT_CODE,1,3)||'000' = C.ACCT_CODE
+			UNION ALL
+			
+			SELECT	DISTINCT
+						'2'	SLIP_CLASS,
+						CASE	WHEN	SUBSTR(A.ACCT_CODE,1,1) = '5'	THEN	'1'
+								WHEN	SUBSTR(A.ACCT_CODE,1,1) = '4'	THEN	'1'
+								WHEN	SUBSTR(A.ACCT_CODE,1,1) = '1'	THEN	'2'
+								ELSE	'3'	END	SORT,
+						'2'||SUBSTR(A.ACCT_CODE,1,2)||'00'	LARGE_CODE,
+						''												LARGE_NAME,
+						'2'||SUBSTR(A.ACCT_CODE,1,3)||'0'	MIDDLE_CODE,
+						''												MIDDLE_NAME,
+						'2'||SUBSTR(A.ACCT_CODE,1,4)			ACCT_CODE,
+						C.ACCT_ONAME								ACCT_NAME,
+						0												BDGT_ACCT_AMT,
+						0												YEBIBI_AMT,
+						0												JEN_AMT,
+						0												ACCT_MONTH_AMT,
+						0												ACCT_AMT,
+						'3'											GUBUN
+			FROM		ACDB.HAC001M A, ACDB.HAC001M C
+			WHERE		SUBSTR(A.ACCT_CODE,1,4)	IN	(	SELECT	DISTINCT	SUBSTR(B.FORM_CODE,1,4)
+																FROM		ACDB.HAC006M B
+																WHERE		SUBSTR(B.USED_GBN,4,1) = '9'	)
+			AND		A.LEVEL_CLASS = '3'
+			AND		A.JICHUL_GUBUN = 'Y'
+			AND		SUBSTR(A.ACCT_CODE,1,4)||'00' = C.ACCT_CODE
+			UNION	ALL
+			
+			SELECT	'2'	SLIP_CLASS,
+						CASE	WHEN	SUBSTR(A.ACCT_CODE,1,1) = '4'	THEN	'1'
+								WHEN	SUBSTR(A.ACCT_CODE,1,1) = '1'	THEN	'2'
+								ELSE	'3'	END	SORT,
+						'2'||SUBSTR(A.ACCT_CODE,1,2)||'00'	LARGE_CODE,
+						B.ACCT_ONAME								LARGE_NAME,
+						''												MIDDLE_CODE,
+						''												MIDDLE_NAME,
+						''												ACCT_CODE,
+						''												ACCT_NAME,
+						NVL(SUM(A.ASSN_USED_AMT),0)			BDGT_ACCT_AMT,
+						0												YEBIBI_AMT,
+						0												JEN_AMT,
+						0												ACCT_MONTH_AMT,
+						0												ACCT_AMT,
+						'1'											GUBUN
+			FROM		ACDB.HAC012M A, ACDB.HAC001M B
+			WHERE		BDGT_YEAR = :AS_BDGT_YEAR
+			AND		(	SUBSTR(A.ACCT_CODE,1,1) = '4' OR
+							SUBSTR(A.ACCT_CODE,1,3) IN ('122','123','124','131','132','211','221','222')	)
+			AND		SUBSTR(A.ACCT_CODE,1,2)||'0000' = B.ACCT_CODE
+			AND		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+			AND		A.IO_GUBUN = '2'
+			GROUP	BY	SUBSTR(A.ACCT_CODE,1,1), SUBSTR(A.ACCT_CODE,1,2), B.ACCT_ONAME
+			UNION	ALL
+			
+			SELECT	'2'	SLIP_CLASS,
+						CASE	WHEN	SUBSTR(A.ACCT_CODE,1,1) = '4'	THEN	'1'
+								WHEN	SUBSTR(A.ACCT_CODE,1,1) = '1'	THEN	'2'
+								ELSE	'3'	END	SORT,
+						'2'||SUBSTR(A.ACCT_CODE,1,2)||'00'	LARGE_CODE,
+						''												LARGE_NAME,
+						'2'||SUBSTR(A.ACCT_CODE,1,3)||'0'	MIDDLE_CODE,
+						B.ACCT_ONAME								MIDDLE_NAME,
+						''												ACCT_CODE,
+						''												ACCT_NAME,
+						NVL(SUM(A.ASSN_USED_AMT),0)			BDGT_ACCT_AMT,
+						0												YEBIBI_AMT,
+						0												JEN_AMT,
+						0												ACCT_MONTH_AMT,
+						0												ACCT_AMT,
+						'2'											GUBUN
+			FROM		ACDB.HAC012M A, ACDB.HAC001M B
+			WHERE		BDGT_YEAR = :AS_BDGT_YEAR
+			AND		(	SUBSTR(A.ACCT_CODE,1,1) = '4' OR
+							SUBSTR(A.ACCT_CODE,1,3) IN ('122','123','124','131','132','211','221','222')	)
+			AND		SUBSTR(A.ACCT_CODE,1,3)||'000' = B.ACCT_CODE
+			AND		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+			AND		A.IO_GUBUN = '2'
+			GROUP	BY	SUBSTR(A.ACCT_CODE,1,1), SUBSTR(A.ACCT_CODE,1,2), SUBSTR(A.ACCT_CODE,1,3), B.ACCT_ONAME
+			UNION	ALL
+			
+			SELECT	'2'	SLIP_CLASS,
+						CASE	WHEN	SUBSTR(A.ACCT_CODE,1,1) = '4'	THEN	'1'
+								WHEN	SUBSTR(A.ACCT_CODE,1,1) = '1'	THEN	'2'
+								ELSE	'3'	END	SORT,
+						'2'||SUBSTR(A.ACCT_CODE,1,2)||'00'	LARGE_CODE,
+						''												LARGE_NAME,
+						'2'||SUBSTR(A.ACCT_CODE,1,3)||'0'	MIDDLE_CODE,
+						''												MIDDLE_NAME,
+						'2'||SUBSTR(A.ACCT_CODE,1,4)			ACCT_CODE,
+						B.ACCT_ONAME								ACCT_NAME,
+						NVL(SUM(A.ASSN_USED_AMT),0)			BDGT_ACCT_AMT,
+						0												YEBIBI_AMT,
+						0												JEN_AMT,
+						0												ACCT_MONTH_AMT,
+						0												ACCT_AMT,
+						'3'											GUBUN
+			FROM		ACDB.HAC012M A, ACDB.HAC001M B
+			WHERE		BDGT_YEAR = :AS_BDGT_YEAR
+			AND		(	SUBSTR(A.ACCT_CODE,1,1) = '4' OR
+							SUBSTR(A.ACCT_CODE,1,3) IN ('122','123','124','131','132','211','221','222')	)
+			AND		SUBSTR(A.ACCT_CODE,1,4)||'00' = B.ACCT_CODE
+			AND		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+			AND		A.IO_GUBUN = '2'
+			GROUP	BY	SUBSTR(A.ACCT_CODE,1,1), SUBSTR(A.ACCT_CODE,1,2), SUBSTR(A.ACCT_CODE,1,3), SUBSTR(A.ACCT_CODE,1,4), B.ACCT_ONAME
+			UNION	ALL
+			
+			SELECT	'2'	SLIP_CLASS,
+						CASE	WHEN	SUBSTR(A.ACCT_CODE,1,1) = '4'	THEN	'1'
+								WHEN	SUBSTR(A.ACCT_CODE,1,1) = '1'	THEN	'2'
+								ELSE	'3'	END	SORT,
+						'2'||SUBSTR(A.ACCT_CODE,1,2)||'00'	LARGE_CODE,
+						B.ACCT_ONAME								LARGE_NAME,
+						''												MIDDLE_CODE,
+						''												MIDDLE_NAME,
+						''												ACCT_CODE,
+						''												ACCT_NAME,
+						0												BDGT_ACCT_AMT,
+						0												YEBIBI_AMT,
+						0												JEN_AMT,
+						0												ACCT_MONTH_AMT,
+						CASE	WHEN	SUBSTR(A.ACCT_CODE,1,1) = '4'	THEN
+								CASE	WHEN	B.DRCR_CLASS = 'D'	THEN
+										(NVL(SUM(A.DR_ALT_AMT),0) + NVL(SUM(A.DR_CASH_AMT),0)) -
+										(NVL(SUM(A.CR_ALT_AMT),0) + NVL(SUM(A.CR_CASH_AMT),0))
+										ELSE
+										(NVL(SUM(A.CR_ALT_AMT),0) + NVL(SUM(A.CR_CASH_AMT),0)) -
+										(NVL(SUM(A.DR_ALT_AMT),0) + NVL(SUM(A.DR_CASH_AMT),0))
+										END
+								ELSE
+								CASE	WHEN	B.DRCR_CLASS = 'D'	THEN
+										NVL(SUM(DR_ALT_AMT),0) + NVL(SUM(DR_CASH_AMT),0)
+										ELSE
+										NVL(SUM(CR_ALT_AMT),0) + NVL(SUM(CR_CASH_AMT),0)
+										END
+								END	ACCT_AMT,
+						'1'											GUBUN
+			FROM		FNDB.HFN502H A, ACDB.HAC001M B
+			WHERE		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+			AND		A.BDGT_YEAR = :AS_BDGT_YEAR
+			AND		SUBSTR(A.ACCT_DATE,5,4) <> '0000'
+			AND		A.ACCT_DATE <= :AS_ENDDATE
+			AND		(	SUBSTR(A.ACCT_CODE,1,1) = '4' OR
+							SUBSTR(A.ACCT_CODE,1,3) IN ('122','123','124','131','132','211','221','222')	)
+			AND		SUBSTR(A.ACCT_CODE,1,2)||'0000' = B.ACCT_CODE
+			GROUP BY SUBSTR(A.ACCT_CODE,1,1), SUBSTR(A.ACCT_CODE,1,2), B.ACCT_ONAME, B.DRCR_CLASS
+			UNION	ALL
+			
+			SELECT	'2'	SLIP_CLASS,
+						CASE	WHEN	SUBSTR(A.ACCT_CODE,1,1) = '4'	THEN	'1'
+								WHEN	SUBSTR(A.ACCT_CODE,1,1) = '1'	THEN	'2'
+								ELSE	'3'	END	SORT,
+						'2'||SUBSTR(A.ACCT_CODE,1,2)||'00'	LARGE_CODE,
+						B.ACCT_ONAME								LARGE_NAME,
+						''												MIDDLE_CODE,
+						''												MIDDLE_NAME,
+						''												ACCT_CODE,
+						''												ACCT_NAME,
+						0												BDGT_ACCT_AMT,
+						0												YEBIBI_AMT,
+						0												JEN_AMT,
+						CASE	WHEN	SUBSTR(A.ACCT_CODE,1,1) = '4'	THEN
+								CASE	WHEN	B.DRCR_CLASS = 'D'	THEN
+										(NVL(SUM(A.DR_ALT_AMT),0) + NVL(SUM(A.DR_CASH_AMT),0)) -
+										(NVL(SUM(A.CR_ALT_AMT),0) + NVL(SUM(A.CR_CASH_AMT),0))
+										ELSE
+										(NVL(SUM(A.CR_ALT_AMT),0) + NVL(SUM(A.CR_CASH_AMT),0)) -
+										(NVL(SUM(A.DR_ALT_AMT),0) + NVL(SUM(A.DR_CASH_AMT),0))
+										END
+								ELSE
+								CASE	WHEN	B.DRCR_CLASS = 'D'	THEN
+										NVL(SUM(DR_ALT_AMT),0) + NVL(SUM(DR_CASH_AMT),0)
+										ELSE
+										NVL(SUM(CR_ALT_AMT),0) + NVL(SUM(CR_CASH_AMT),0)
+										END
+								END	ACCT_MONTH_AMT,
+						0												ACCT_AMT,
+						'1'											GUBUN
+			FROM		FNDB.HFN502H A, ACDB.HAC001M B
+			WHERE		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+			AND		A.BDGT_YEAR = :AS_BDGT_YEAR
+			AND		SUBSTR(A.ACCT_DATE,1,6) = SUBSTR(:AS_ENDDATE,1,6)
+			AND		(	SUBSTR(A.ACCT_CODE,1,1) = '4' OR
+							SUBSTR(A.ACCT_CODE,1,3) IN ('122','123','124','131','132','211','221','222')	)
+			AND		SUBSTR(A.ACCT_CODE,1,2)||'0000' = B.ACCT_CODE
+			GROUP BY SUBSTR(A.ACCT_CODE,1,1), SUBSTR(A.ACCT_CODE,1,2), B.ACCT_ONAME, B.DRCR_CLASS
+			UNION	ALL
+			
+			SELECT	'2'	SLIP_CLASS,
+						CASE	WHEN	SUBSTR(A.ACCT_CODE,1,1) = '4'	THEN	'1'
+								WHEN	SUBSTR(A.ACCT_CODE,1,1) = '1'	THEN	'2'
+								ELSE	'3'	END	SORT,
+						'2'||SUBSTR(A.ACCT_CODE,1,2)||'00'	LARGE_CODE,
+						''												LARGE_NAME,
+						'2'||SUBSTR(A.ACCT_CODE,1,3)||'0'	MIDDLE_CODE,
+						B.ACCT_ONAME								MIDDLE_NAME,
+						''												ACCT_CODE,
+						''												ACCT_NAME,
+						0												BDGT_ACCT_AMT,
+						0												YEBIBI_AMT,
+						0												JEN_AMT,
+						0												ACCT_MONTH_AMT,
+						CASE	WHEN	SUBSTR(A.ACCT_CODE,1,1) = '4'	THEN
+								CASE	WHEN	B.DRCR_CLASS = 'D'	THEN
+										(NVL(SUM(A.DR_ALT_AMT),0) + NVL(SUM(A.DR_CASH_AMT),0)) -
+										(NVL(SUM(A.CR_ALT_AMT),0) + NVL(SUM(A.CR_CASH_AMT),0))
+										ELSE
+										(NVL(SUM(A.CR_ALT_AMT),0) + NVL(SUM(A.CR_CASH_AMT),0)) -
+										(NVL(SUM(A.DR_ALT_AMT),0) + NVL(SUM(A.DR_CASH_AMT),0))
+										END
+								ELSE
+								CASE	WHEN	B.DRCR_CLASS = 'D'	THEN
+										NVL(SUM(DR_ALT_AMT),0) + NVL(SUM(DR_CASH_AMT),0)
+										ELSE
+										NVL(SUM(CR_ALT_AMT),0) + NVL(SUM(CR_CASH_AMT),0)
+										END
+								END	ACCT_AMT,
+						'2'											GUBUN
+			FROM		FNDB.HFN502H A, ACDB.HAC001M B
+			WHERE		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+			AND		A.BDGT_YEAR = :AS_BDGT_YEAR
+			AND		SUBSTR(A.ACCT_DATE,5,4) <> '0000'
+			AND		A.ACCT_DATE <= :AS_ENDDATE
+			AND		(	SUBSTR(A.ACCT_CODE,1,1) = '4' OR
+							SUBSTR(A.ACCT_CODE,1,3) IN ('122','123','124','131','132','211','221','222')	)
+			AND		SUBSTR(A.ACCT_CODE,1,3)||'000' = B.ACCT_CODE
+			GROUP BY SUBSTR(A.ACCT_CODE,1,1), SUBSTR(A.ACCT_CODE,1,2), SUBSTR(A.ACCT_CODE,1,3), B.ACCT_ONAME, B.DRCR_CLASS
+			UNION ALL
+			
+			SELECT	'2'	SLIP_CLASS,
+						CASE	WHEN	SUBSTR(A.ACCT_CODE,1,1) = '4'	THEN	'1'
+								WHEN	SUBSTR(A.ACCT_CODE,1,1) = '1'	THEN	'2'
+								ELSE	'3'	END	SORT,
+						'2'||SUBSTR(A.ACCT_CODE,1,2)||'00'	LARGE_CODE,
+						''												LARGE_NAME,
+						'2'||SUBSTR(A.ACCT_CODE,1,3)||'0'	MIDDLE_CODE,
+						B.ACCT_ONAME								MIDDLE_NAME,
+						''												ACCT_CODE,
+						''												ACCT_NAME,
+						0												BDGT_ACCT_AMT,
+						0												YEBIBI_AMT,
+						0												JEN_AMT,
+						CASE	WHEN	SUBSTR(A.ACCT_CODE,1,1) = '4'	THEN
+								CASE	WHEN	B.DRCR_CLASS = 'D'	THEN
+										(NVL(SUM(A.DR_ALT_AMT),0) + NVL(SUM(A.DR_CASH_AMT),0)) -
+										(NVL(SUM(A.CR_ALT_AMT),0) + NVL(SUM(A.CR_CASH_AMT),0))
+										ELSE
+										(NVL(SUM(A.CR_ALT_AMT),0) + NVL(SUM(A.CR_CASH_AMT),0)) -
+										(NVL(SUM(A.DR_ALT_AMT),0) + NVL(SUM(A.DR_CASH_AMT),0))
+										END
+								ELSE
+								CASE	WHEN	B.DRCR_CLASS = 'D'	THEN
+										NVL(SUM(DR_ALT_AMT),0) + NVL(SUM(DR_CASH_AMT),0)
+										ELSE
+										NVL(SUM(CR_ALT_AMT),0) + NVL(SUM(CR_CASH_AMT),0)
+										END
+								END	ACCT_MONTH_AMT,
+						0												ACCT_AMT,
+						'2'											GUBUN
+			FROM		FNDB.HFN502H A, ACDB.HAC001M B
+			WHERE		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+			AND		A.BDGT_YEAR = :AS_BDGT_YEAR
+			AND		SUBSTR(A.ACCT_DATE,1,6) = SUBSTR(:AS_ENDDATE,1,6)
+			AND		(	SUBSTR(A.ACCT_CODE,1,1) = '4' OR
+							SUBSTR(A.ACCT_CODE,1,3) IN ('122','123','124','131','132','211','221','222')	)
+			AND		SUBSTR(A.ACCT_CODE,1,3)||'000' = B.ACCT_CODE
+			GROUP BY SUBSTR(A.ACCT_CODE,1,1), SUBSTR(A.ACCT_CODE,1,2), SUBSTR(A.ACCT_CODE,1,3), B.ACCT_ONAME, B.DRCR_CLASS
+			UNION ALL
+			
+			SELECT	'2'	SLIP_CLASS,
+						CASE	WHEN	SUBSTR(A.ACCT_CODE,1,1) = '4'	THEN	'1'
+								WHEN	SUBSTR(A.ACCT_CODE,1,1) = '1'	THEN	'2'
+								ELSE	'3'	END	SORT,
+						'2'||SUBSTR(A.ACCT_CODE,1,2)||'00'	LARGE_CODE,
+						''												LARGE_NAME,
+						'2'||SUBSTR(A.ACCT_CODE,1,3)||'0'	MIDDLE_CODE,
+						''												MIDDLE_NAME,
+						'2'||SUBSTR(A.ACCT_CODE,1,4)			ACCT_CODE,
+						B.ACCT_ONAME								ACCT_NAME,
+						0												BDGT_ACCT_AMT,
+						0												YEBIBI_AMT,
+						0												JEN_AMT,
+						0												ACCT_MONTH_AMT,
+						CASE	WHEN	SUBSTR(A.ACCT_CODE,1,1) = '4'	THEN
+								CASE	WHEN	B.DRCR_CLASS = 'D'	THEN
+										(NVL(SUM(A.DR_ALT_AMT),0) + NVL(SUM(A.DR_CASH_AMT),0)) -
+										(NVL(SUM(A.CR_ALT_AMT),0) + NVL(SUM(A.CR_CASH_AMT),0))
+										ELSE
+										(NVL(SUM(A.CR_ALT_AMT),0) + NVL(SUM(A.CR_CASH_AMT),0)) -
+										(NVL(SUM(A.DR_ALT_AMT),0) + NVL(SUM(A.DR_CASH_AMT),0))
+										END
+								ELSE
+								CASE	WHEN	B.DRCR_CLASS = 'D'	THEN
+										NVL(SUM(DR_ALT_AMT),0) + NVL(SUM(DR_CASH_AMT),0)
+										ELSE
+										NVL(SUM(CR_ALT_AMT),0) + NVL(SUM(CR_CASH_AMT),0)
+										END
+								END	ACCT_AMT,
+						'3'											GUBUN
+			FROM		FNDB.HFN502H A, ACDB.HAC001M B
+			WHERE		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+			AND		A.BDGT_YEAR = :AS_BDGT_YEAR
+			AND		SUBSTR(A.ACCT_DATE,5,4) <> '0000'
+			AND		A.ACCT_DATE <= :AS_ENDDATE
+			AND		(	SUBSTR(A.ACCT_CODE,1,1) = '4' OR
+							SUBSTR(A.ACCT_CODE,1,3) IN ('122','123','124','131','132','211','221','222')	)
+			AND		SUBSTR(A.ACCT_CODE,1,4)||'00' = B.ACCT_CODE
+			GROUP BY SUBSTR(A.ACCT_CODE,1,1), SUBSTR(A.ACCT_CODE,1,2), SUBSTR(A.ACCT_CODE,1,3), SUBSTR(A.ACCT_CODE,1,4), B.ACCT_ONAME, B.DRCR_CLASS
+			UNION ALL
+			
+			SELECT	'2'	SLIP_CLASS,
+						CASE	WHEN	SUBSTR(A.ACCT_CODE,1,1) = '4'	THEN	'1'
+								WHEN	SUBSTR(A.ACCT_CODE,1,1) = '1'	THEN	'2'
+								ELSE	'3'	END	SORT,
+						'2'||SUBSTR(A.ACCT_CODE,1,2)||'00'	LARGE_CODE,
+						''												LARGE_NAME,
+						'2'||SUBSTR(A.ACCT_CODE,1,3)||'0'	MIDDLE_CODE,
+						''												MIDDLE_NAME,
+						'2'||SUBSTR(A.ACCT_CODE,1,4)			ACCT_CODE,
+						B.ACCT_ONAME								ACCT_NAME,
+						0												BDGT_ACCT_AMT,
+						0												YEBIBI_AMT,
+						0												JEN_AMT,
+						CASE	WHEN	SUBSTR(A.ACCT_CODE,1,1) = '4'	THEN
+								CASE	WHEN	B.DRCR_CLASS = 'D'	THEN
+										(NVL(SUM(A.DR_ALT_AMT),0) + NVL(SUM(A.DR_CASH_AMT),0)) -
+										(NVL(SUM(A.CR_ALT_AMT),0) + NVL(SUM(A.CR_CASH_AMT),0))
+										ELSE
+										(NVL(SUM(A.CR_ALT_AMT),0) + NVL(SUM(A.CR_CASH_AMT),0)) -
+										(NVL(SUM(A.DR_ALT_AMT),0) + NVL(SUM(A.DR_CASH_AMT),0))
+										END
+								ELSE
+								CASE	WHEN	B.DRCR_CLASS = 'D'	THEN
+										NVL(SUM(DR_ALT_AMT),0) + NVL(SUM(DR_CASH_AMT),0)
+										ELSE
+										NVL(SUM(CR_ALT_AMT),0) + NVL(SUM(CR_CASH_AMT),0)
+										END
+								END	ACCT_MONTH_AMT,
+						0												ACCT_AMT,
+						'3'											GUBUN
+			FROM		FNDB.HFN502H A, ACDB.HAC001M B
+			WHERE		DECODE(:AI_ACCT_CLASS,0,0,A.ACCT_CLASS) = :AI_ACCT_CLASS
+			AND		A.BDGT_YEAR = :AS_BDGT_YEAR
+			AND		SUBSTR(A.ACCT_DATE,1,6) = SUBSTR(:AS_ENDDATE,1,6)
+			AND		(	SUBSTR(A.ACCT_CODE,1,1) = '4' OR
+							SUBSTR(A.ACCT_CODE,1,3) IN ('122','123','124','131','132','211','221','222')	)
+			AND		SUBSTR(A.ACCT_CODE,1,4)||'00' = B.ACCT_CODE
+			GROUP BY SUBSTR(A.ACCT_CODE,1,1), SUBSTR(A.ACCT_CODE,1,2), SUBSTR(A.ACCT_CODE,1,3), SUBSTR(A.ACCT_CODE,1,4), B.ACCT_ONAME, B.DRCR_CLASS
+			) A
+GROUP BY A.SLIP_CLASS,
+			A.SORT,
+			A.LARGE_CODE,
+			A.LARGE_NAME,
+			A.MIDDLE_CODE,
+			A.MIDDLE_NAME,
+			A.ACCT_CODE,
+			A.ACCT_NAME,
+			A.GUBUN
+HAVING	NVL(SUM(A.BDGT_ACCT_AMT),0) <> 0
+OR			NVL(SUM(A.YEBIBI_AMT),0) <> 0
+OR			NVL(SUM(A.JEN_AMT),0) <> 0
+OR			NVL(SUM(A.ACCT_AMT),0) <> 0
+OR			NVL(SUM(A.ACCT_MONTH_AMT),0) <> 0
+ORDER BY	1, 2, 3, 4, 5, 6, 7, 8" arguments=(("ai_acct_class", number),("as_bdgt_year", string),("as_strdate", string),("as_enddate", string))  sort="slip_class A sort A large_code A middle_code A acct_code A " )
+group(level=1 header.height=0 trailer.height=148 by=("slip_class" ) newpage=yes resetpagecount=yes header.color="536870912" trailer.color="536870912" )
+column(band=header id=15 alignment="2" tabsequence=0 border="0" color="0" x="27" y="140" height="56" width="4681" html.valueishtml="0"  name=title_dt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+rectangle(band=header x="27" y="360" height="156" width="4686"  name=r_1 visible="1" brush.hatch="6" brush.color="31580641" pen.style="0" pen.width="5" pen.color="31580641"  background.mode="2" background.color="12632256" )
+text(band=header alignment="1" text="(단위 : 원)" border="0" color="0" x="4242" y="292" height="56" width="462" html.valueishtml="0"  name=t_33 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="4713" y1="356" x2="4713" y2="740"  name=l_16 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=header x1="27" y1="516" x2="4704" y2="516"  name=l_27 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="27" y1="356" x2="27" y2="740"  name=l_4 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="27" y1="360" x2="4704" y2="360"  name=l_15 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=header alignment="0" expression="if( slip_class = '1', '1. 수  입','2. 지  출')"border="0" color="0" x="27" y="292" height="56" width="1230" format="[GENERAL]" html.valueishtml="0"  name=compute_6 visible="1~tif(page() = 1, 1, 0)"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=header alignment="2" expression="'자 금 계 산 서'"border="0" color="0" x="27" y="4" height="124" width="4681" format="[general]" html.valueishtml="0"  name=title visible="1~tif(page() = 1, 1, 0)"  font.face="굴림체" font.height="-20" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" font.underline="1" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="관" border="0" color="0" x="41" y="448" height="56" width="507" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="558" y1="440" x2="558" y2="824"  name=l_26 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="항" border="0" color="0" x="571" y="448" height="56" width="507" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="1088" y1="440" x2="1088" y2="824"  name=l_28 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="27" y1="436" x2="4270" y2="436"  name=l_35 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="증 감 액" border="0" color="0" x="4288" y="408" height="56" width="411" html.valueishtml="0"  name=t_31 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="4274" y1="364" x2="4274" y2="748"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="누계" border="0" color="0" x="3854" y="448" height="56" width="411" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="3840" y1="436" x2="3840" y2="760"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="결산액" border="0" color="0" x="3419" y="372" height="56" width="846" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="3406" y1="364" x2="3406" y2="748"  name=l_30 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="예   산   현   액" border="0" color="0" x="1682" y="372" height="56" width="1714" html.valueishtml="0"  name=t_9 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="차감액" border="0" color="0" x="2985" y="448" height="56" width="411" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="2971" y1="436" x2="2971" y2="748"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="전용증감액(△)" border="0" color="0" x="2551" y="448" height="56" width="411" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="2537" y1="436" x2="2537" y2="748"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="예비비사용액" border="0" color="0" x="2117" y="448" height="56" width="411" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="2103" y1="436" x2="2103" y2="748"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="예산액" border="0" color="0" x="1682" y="448" height="56" width="411" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="1669" y1="364" x2="1669" y2="748"  name=l_29 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="계    정    과    목" border="0" color="0" x="41" y="372" height="56" width="1618" html.valueishtml="0"  name=t_26 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="목" border="0" color="0" x="1102" y="448" height="56" width="558" html.valueishtml="0"  name=t_14 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="월계" border="0" color="0" x="3419" y="448" height="56" width="411" html.valueishtml="0"  name=t_10 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=detail x1="27" y1="92" x2="4704" y2="92"  name=l_6 visible="1~tIf( ( gubun = '1' or ( gubun = '3' and large_code <> large_code [1] ) ) and ( GetRow() <> long( Describe( ~"datawindow.LastRowOnpage~" ) ) ), 1, 0 )" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="562" y1="92" x2="4713" y2="92"  name=l_13 visible="1~tIf( ( gubun = '2' or ( gubun = '3' and middle_code <> middle_code [1] ) ) and ( GetRow() <> long( Describe( ~"datawindow.LastRowOnpage~" ) ) ), 1, 0 )" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1093" y1="92" x2="4709" y2="92"  name=l_14 visible="1~tIf( gubun = '3' and GetRow() <> long( Describe( ~"datawindow.LastRowOnpage~" ) ) and large_code = large_code [1] and middle_code = middle_code [1] and acct_code <> acct_code [1], 1, 0 )" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="4713" y1="0" x2="4713" y2="384"  name=l_17 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="27" y1="0" x2="27" y2="384"  name=l_36 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="27" y1="92" x2="4704" y2="92"  name=l_23 visible="1~tIf ( GetRow() = long( Describe( ~"datawindow.LastRowOnpage~" ) ) , 1, 0 )" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="41" y="16" height="56" width="507" format="[general]" html.valueishtml="0"  name=large_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="558" y1="0" x2="558" y2="384"  name=l_24 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="571" y="16" height="56" width="507" format="[general]" html.valueishtml="0"  name=middle_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="1088" y1="0" x2="1088" y2="384"  name=l_25 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=detail alignment="1" expression="if(com_chagam_amt = 0, com_bdgt_acct_amt - com_acct_amt, com_chagam_amt - com_acct_amt)"border="0" color="0" x="4288" y="16" height="56" width="411" format="#,###" html.valueishtml="0"  name=com_junggam visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression="if (com_yebibi_amt = 0 and com_jen_amt = 0, 0, com_bdgt_acct_amt  +  com_yebibi_amt  -  com_jen_amt )"border="0" color="0" x="2985" y="16" height="56" width="411" format="#,###" html.valueishtml="0"  name=com_chagam_amt visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression="if (slip_class = '1', truncate(jen_amt/1000, 0 ) * 1000, round(jen_amt/1000,0)*1000)"border="0" color="0" x="2551" y="16" height="56" width="411" format="#,###" html.valueishtml="0"  name=com_jen_amt visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression="if (slip_class = '1', truncate(yebibi_amt/1000, 0 ) * 1000, round(yebibi_amt/1000,0)*1000)"border="0" color="0" x="2117" y="16" height="56" width="411" format="#,###" html.valueishtml="0"  name=com_yebibi_amt visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="1" expression="if (slip_class = '1', truncate( bdgt_acct_amt/1000, 0 ) * 1000, round(bdgt_acct_amt/1000,0)*1000)"border="0" color="0" x="1682" y="16" height="56" width="411" format="#,###" html.valueishtml="0"  name=com_bdgt_acct_amt visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="1669" y1="0" x2="1669" y2="384"  name=l_31 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="1102" y="16" height="56" width="558" format="[general]" html.valueishtml="0"  name=acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="1" tabsequence=32766 border="0" color="0" x="3419" y="16" height="56" width="411" format="#,###" html.valueishtml="0"  name=acct_month_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="2103" y1="0" x2="2103" y2="384"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2537" y1="0" x2="2537" y2="384"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2971" y1="0" x2="2971" y2="384"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3406" y1="0" x2="3406" y2="384"  name=l_32 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3840" y1="0" x2="3840" y2="384"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="4274" y1="0" x2="4274" y2="384"  name=l_33 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=detail alignment="1" expression=" acct_amt"border="0" color="0" x="3854" y="16" height="56" width="411" format="#,###" html.valueishtml="0"  name=com_acct_amt visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=trailer.1 x1="4713" y1="0" x2="4713" y2="384"  name=l_22 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=trailer.1 x1="27" y1="0" x2="27" y2="384"  name=l_38 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="27" y1="144" x2="4704" y2="144"  name=l_18 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="1669" y1="0" x2="1669" y2="384"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="2" expression="if ( slip_class  = '1', '자  금  수  입  총  계', '자  금  지  출  총  계')"border="0" color="0" x="41" y="40" height="56" width="1618" format="[GENERAL]" html.valueishtml="0"  name=compute_4 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=trailer.1 x1="2103" y1="0" x2="2103" y2="384"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="2537" y1="0" x2="2537" y2="384"  name=l_20 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="2971" y1="0" x2="2971" y2="384"  name=l_21 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="3406" y1="0" x2="3406" y2="384"  name=l_34 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="3840" y1="0" x2="3840" y2="384"  name=l_37 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=trailer.1 x1="4274" y1="0" x2="4274" y2="384"  name=l_39 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=trailer.1 alignment="1" expression="sum(if(gubun = '1', com_bdgt_acct_amt, 0) for group 1)"border="0" color="0" x="1682" y="40" height="56" width="411" format="#,###" html.valueishtml="0"  name=compute_8 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(if(gubun = '1', com_yebibi_amt, 0) for group 1)"border="0" color="0" x="2117" y="40" height="56" width="411" format="#,###" html.valueishtml="0"  name=compute_7 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(if(gubun = '1', com_jen_amt, 0) for group 1)"border="0" color="0" x="2551" y="40" height="56" width="411" format="#,###" html.valueishtml="0"  name=compute_5 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(if(gubun = '1', com_chagam_amt, 0) for group 1)"border="0" color="0" x="2985" y="40" height="56" width="411" format="#,###" html.valueishtml="0"  name=compute_3 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(if(gubun = '1', acct_month_amt, 0) for group 1)"border="0" color="0" x="3419" y="40" height="56" width="411" format="#,###" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(if(gubun = '1', acct_amt, 0) for group 1)"border="0" color="0" x="3854" y="40" height="56" width="411" format="#,###" html.valueishtml="0"  name=com_acct_tot visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=trailer.1 alignment="1" expression="sum(if(gubun = '1', com_junggam, 0) for group 1)"border="0" color="0" x="4288" y="40" height="56" width="411" format="#,###" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

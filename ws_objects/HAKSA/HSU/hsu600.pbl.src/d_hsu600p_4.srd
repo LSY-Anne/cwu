@@ -1,0 +1,107 @@
+﻿$PBExportHeader$d_hsu600p_4.srd
+$PBExportComments$[청운대]학사경고자명단(통산4회이상)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=720 color="536870912" )
+summary(height=4 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes name=sungjukgye_hakbun dbname="sungjukgye.hakbun" )
+ column=(type=char(4) updatewhereclause=yes name=jaehak_hakjuk_gwa dbname="sungjukgye.gwa" )
+ column=(type=char(1) updatewhereclause=yes name=hakyun dbname="sungjukgye.hakyun" )
+ column=(type=char(20) updatewhereclause=yes name=jaehak_hakjuk_hname dbname="sungjukgye.hname" )
+ column=(type=decimal(0) updatewhereclause=yes name=sinchung_hakjum dbname="sungjukgye.sinchung_hakjum" )
+ column=(type=decimal(0) updatewhereclause=yes name=chidk_hakjum dbname="sungjukgye.chidk_hakjum" )
+ column=(type=decimal(2) updatewhereclause=yes name=total_pyengjum dbname="sungjukgye.total_pyengjum" )
+ column=(type=decimal(2) updatewhereclause=yes name=avg_pyengjum dbname="sungjukgye.avg_pyengjum" )
+ column=(type=decimal(0) updatewhereclause=yes name=order_seq dbname="sungjukgye.order_seq" )
+ retrieve="SELECT	TT2.HAKBUN,
+			TT2.GWA,
+			TT2.HAKYUN,
+			TT2.HNAME,
+			TT1.SINCHUNG_HAKJUM,
+			TT1.CHIDK_HAKJUM,
+			TT1.TOTAL_PYENGJUM,
+			TT1.AVG_PYENGJUM,
+			TT3.ORDER_SEQ 
+FROM		HAKSA.SUNGJUKGYE	TT1,
+			(
+				SELECT	T2.HAKBUN	AS	HAKBUN,
+							T2.GWA		AS	GWA,
+							T2.HAKYUN	AS	HAKYUN,
+							T2.HNAME		AS	HNAME,
+							SUM(DECODE(T1.GYUNGGO_YN, '1', 1, 0))	AS	G_CNT
+				FROM		
+						HAKSA.SUNGJUKGYE	T1,
+						(
+							SELECT	A.HAKBUN		AS	HAKBUN,
+										A.GWA			AS	GWA,
+										A.DR_HAKYUN	AS	HAKYUN,
+										A.HNAME		AS	HNAME,
+										DECODE(B.GUBUN, '1', B.GIJUN, '11111'	) GIJUN 
+							FROM
+									HAKSA.JAEHAK_HAKJUK	A,
+									(
+										SELECT	HAKBUN,
+													MAX(YEAR||HAKGI)	AS	GIJUN,
+													'1'	AS GUBUN
+										FROM		HAKSA.HAKJUKBYENDONG
+										WHERE		HJMOD_ID = 'I'
+										GROUP BY HAKBUN
+									)	B
+							WHERE	A.HAKBUN	=	B.HAKBUN(+)
+						)	T2
+				WHERE	T1.HAKBUN	=	T2.HAKBUN
+				AND	T1.YEAR||T1.HAKGI	>=	T2.GIJUN
+				GROUP BY	T2.HAKBUN,
+							T2.GWA,
+							T2.HAKYUN,
+							T2.HNAME	
+			)	TT2,
+			HAKSA.GWA_SYM   TT3 
+WHERE		TT2.GWA		=	TT3.GWA
+AND		TT1.HAKBUN	=	TT2.HAKBUN
+AND		TT1.YEAR		=	:as_year
+AND		TT1.HAKGI	=	:as_hakgi
+AND		TT2.G_CNT	>=	4
+
+" arguments=(("as_year", string),("as_hakgi", string))  sort="order_seq A hakyun A sungjukgye_hakbun A " )
+compute(band=header alignment="2" expression=" as_year + ' 년도 ' +  as_hakgi + '학기 학사 경고자 명단(통산4회)'"border="0" color="0" x="338" y="244" height="112" width="2757" format="[GENERAL]" html.valueishtml="0"  name=compute_5 visible="1"  font.face="굴림체" font.height="-18" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=header x1="18" y1="620" x2="3369" y2="620"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="18" y1="716" x2="3369" y2="716"  name=l_2 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="비 고" border="0" color="0" x="3122" y="640" height="60" width="229" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="순번" border="0" color="0" x="37" y="640" height="60" width="146" html.valueishtml="0"  name=sinchung_hakjum_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="평점평균" border="0" color="0" x="2825" y="640" height="60" width="270" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="평점합계" border="0" color="0" x="2533" y="640" height="60" width="270" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="취득학점" border="0" color="0" x="2240" y="640" height="60" width="270" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="신청학점" border="0" color="0" x="1947" y="640" height="60" width="270" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학년" border="0" color="0" x="983" y="640" height="60" width="160" html.valueishtml="0"  name=gyunggo_cnt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학번" border="0" color="0" x="1166" y="640" height="60" width="402" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="성명" border="0" color="0" x="1600" y="640" height="60" width="325" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학과명" border="0" color="0" x="206" y="640" height="60" width="754" html.valueishtml="0"  name=avg_pyengjum_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="페 이 지 :" border="0" color="0" x="2766" y="560" height="48" width="288" html.valueishtml="0"  name=t_13 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=header alignment="1" expression="pageCount() + ' of'  + page()"border="0" color="0" x="3072" y="560" height="48" width="288" format="[GENERAL]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="작성일자 :" border="0" color="0" x="2766" y="500" height="52" width="288" html.valueishtml="0"  name=t_14 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=header alignment="1" expression="today()"border="0" color="0" x="3072" y="500" height="52" width="288" format="yyyy.mm.dd" html.valueishtml="0"  name=compute_6 visible="1"  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="" border="0" color="0" x="3122" y="16" height="60" width="229" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="2" expression="getrow()"border="0" color="0" x="37" y="16" height="60" width="146" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="206" y="16" height="60" width="754" format="[general]" html.valueishtml="0"  name=jaehak_hakjuk_gwa visible="1" dddw.name=d_dddw_hakgwa dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="1166" y="16" height="60" width="402" format="[general]" html.valueishtml="0"  name=sungjukgye_hakbun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="1600" y="16" height="60" width="325" format="[general]" html.valueishtml="0"  name=jaehak_hakjuk_hname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="1947" y="16" height="60" width="251" format="#,##0" html.valueishtml="0"  name=sinchung_hakjum visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="2240" y="16" height="60" width="251" format="#,##0" html.valueishtml="0"  name=chidk_hakjum visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="2533" y="16" height="60" width="251" format="#,##0.0" html.valueishtml="0"  name=total_pyengjum visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="2825" y="16" height="60" width="251" format="#,##0.00" html.valueishtml="0"  name=avg_pyengjum visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1029" y="20" height="60" width="55" format="[general]" html.valueishtml="0"  name=hakyun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=summary x1="18" y1="0" x2="3369" y2="0"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

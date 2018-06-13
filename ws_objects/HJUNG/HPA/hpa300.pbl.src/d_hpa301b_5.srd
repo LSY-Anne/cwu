@@ -1,0 +1,102 @@
+﻿$PBExportHeader$d_hpa301b_5.srd
+$PBExportComments$월 지급급여 생성(급여계산기준정보)(hpa003d)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=92 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=104 color="536870912" )
+table(column=(type=char(10) update=yes updatewhereclause=yes key=yes name=hpa005d_member_no dbname="hpa005d.member_no" dbalias=".member_no" )
+ column=(type=char(6) update=yes updatewhereclause=yes key=yes name=hpa005d_year_month dbname="hpa005d.year_month" dbalias=".year_month" )
+ column=(type=char(1) update=yes updatewhereclause=yes key=yes name=hpa005d_chasu dbname="hpa005d.chasu" dbalias=".chasu" )
+ column=(type=char(2) update=yes updatewhereclause=yes key=yes name=hpa005d_code dbname="hpa005d.code" dbalias=".code" )
+ column=(type=char(30) update=yes updatewhereclause=yes name=hpa005d_item_name dbname="hpa005d.item_name" dbalias=".item_name" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=hpa005d_pay_date dbname="hpa005d.pay_date" dbalias=".pay_date" )
+ column=(type=number update=yes updatewhereclause=yes name=hpa005d_pay_amt dbname="hpa005d.pay_amt" dbalias=".pay_amt" )
+ column=(type=number update=yes updatewhereclause=yes name=hpa005d_nontax_amt dbname="hpa005d.nontax_amt" dbalias=".nontax_amt" )
+ column=(type=number update=yes updatewhereclause=yes name=hpa005d_retro_amt dbname="hpa005d.retro_amt" dbalias=".retro_amt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=hpa005d_excepte_gbn dbname="hpa005d.excepte_gbn" dbalias=".excepte_gbn" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=hpa005d_sort dbname="hpa005d.sort" dbalias=".sort" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=hpa005d_contents dbname="hpa005d.contents" dbalias=".contents" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=hpa005d_remark dbname="hpa005d.remark" dbalias=".remark" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=hpa005d_worker dbname="hpa005d.worker" dbalias=".worker" )
+ column=(type=datetime update=yes updatewhereclause=yes name=hpa005d_work_date dbname="hpa005d.work_date" dbalias=".work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=hpa005d_ipaddr dbname="hpa005d.ipaddr" dbalias=".ipaddr" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=hpa005d_job_uid dbname="hpa005d.job_uid" dbalias=".job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=hpa005d_job_add dbname="hpa005d.job_add" dbalias=".job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=hpa005d_job_date dbname="hpa005d.job_date" dbalias=".job_date" )
+ retrieve="  SELECT PADB.HPA005D.MEMBER_NO,   
+         PADB.HPA005D.YEAR_MONTH,
+         PADB.HPA005D.CHASU,   
+         PADB.HPA005D.CODE,   
+         PADB.HPA005D.ITEM_NAME,   
+         PADB.HPA005D.PAY_DATE,   
+         PADB.HPA005D.PAY_AMT,   
+         PADB.HPA005D.NONTAX_AMT,   
+         PADB.HPA005D.RETRO_AMT,   
+         PADB.HPA005D.EXCEPTE_GBN,   
+         PADB.HPA005D.SORT,   
+         PADB.HPA005D.CONTENTS,   
+         PADB.HPA005D.REMARK,   
+         PADB.HPA005D.WORKER,   
+         PADB.HPA005D.WORK_DATE,   
+         PADB.HPA005D.IPADDR,   
+         PADB.HPA005D.JOB_UID,   
+         PADB.HPA005D.JOB_ADD,   
+         PADB.HPA005D.JOB_DATE  
+    FROM PADB.HPA005D,   
+         PADB.HPA003M  
+   WHERE ( PADB.HPA003M.CODE = PADB.HPA005D.CODE ) and 
+         ( PADB.HPA005D.CHASU = :AS_CHASU) and
+         ( ( PADB.HPA003M.OPT = '3' ) AND  
+         ( PADB.HPA005D.YEAR_MONTH = :as_yearmonth ) )    
+" update="PADB.HPA005D" updatewhere=0 updatekeyinplace=yes arguments=(("as_yearmonth", string),("as_chasu", string)) )
+text(band=header alignment="0" text="Hpa005d Member No" border="0" color="0" x="9" y="4" height="76" width="311" html.valueishtml="0"  name=t_1 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa005d Year Month" border="0" color="0" x="329" y="4" height="76" width="251" html.valueishtml="0"  name=t_2 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa005d Code" border="0" color="0" x="590" y="4" height="76" width="201" html.valueishtml="0"  name=t_3 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa005d item_name" border="0" color="0" x="800" y="4" height="76" width="951" html.valueishtml="0"  name=t_4 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa005d Pay Date" border="0" color="0" x="1760" y="4" height="76" width="439" html.valueishtml="0"  name=t_5 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa005d pay_amt" border="0" color="0" x="2208" y="4" height="76" width="1367" html.valueishtml="0"  name=t_6 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa005d Nontax Amt" border="0" color="0" x="3584" y="4" height="76" width="1367" html.valueishtml="0"  name=t_7 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa005d Retro Amt" border="0" color="0" x="4960" y="4" height="76" width="1367" html.valueishtml="0"  name=t_8 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa005d Excepte Gbn" border="0" color="0" x="6336" y="4" height="76" width="1367" html.valueishtml="0"  name=t_9 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa005d Sort" border="0" color="0" x="7712" y="4" height="76" width="1367" html.valueishtml="0"  name=t_10 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa005d Contents" border="0" color="0" x="9088" y="4" height="76" width="631" html.valueishtml="0"  name=t_11 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa005d Remark" border="0" color="0" x="9728" y="4" height="76" width="631" html.valueishtml="0"  name=t_12 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa005d Worker" border="0" color="0" x="10368" y="4" height="76" width="311" html.valueishtml="0"  name=t_13 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa005d Work Date" border="0" color="0" x="10688" y="4" height="76" width="183" html.valueishtml="0"  name=t_14 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa005d Ipaddr" border="0" color="0" x="10880" y="4" height="76" width="631" html.valueishtml="0"  name=t_15 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa005d Job Uid" border="0" color="0" x="11520" y="4" height="76" width="311" html.valueishtml="0"  name=t_16 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa005d Job Add" border="0" color="0" x="11840" y="4" height="76" width="503" html.valueishtml="0"  name=t_17 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa005d Job Date" border="0" color="0" x="12352" y="4" height="76" width="183" html.valueishtml="0"  name=t_18 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa005d Chasu" border="0" color="0" x="12544" y="4" height="76" width="338" html.valueishtml="0"  name=t_19 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="0" height="76" width="311" format="[general]" html.valueishtml="0"  name=hpa005d_member_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="329" y="0" height="76" width="251" format="[general]" html.valueishtml="0"  name=hpa005d_year_month visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="590" y="0" height="76" width="201" format="[general]" html.valueishtml="0"  name=hpa005d_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="800" y="0" height="76" width="951" format="[general]" html.valueishtml="0"  name=hpa005d_item_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1760" y="0" height="76" width="439" format="[general]" html.valueishtml="0"  name=hpa005d_pay_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="2208" y="0" height="76" width="1367" format="[general]" html.valueishtml="0"  name=hpa005d_pay_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="3584" y="0" height="76" width="1367" format="[general]" html.valueishtml="0"  name=hpa005d_nontax_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="4960" y="0" height="76" width="1367" format="[general]" html.valueishtml="0"  name=hpa005d_retro_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="6336" y="0" height="76" width="1367" format="[general]" html.valueishtml="0"  name=hpa005d_excepte_gbn visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="7712" y="0" height="76" width="1367" format="[general]" html.valueishtml="0"  name=hpa005d_sort visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="9088" y="0" height="76" width="631" format="[general]" html.valueishtml="0"  name=hpa005d_contents visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="0" x="9728" y="0" height="76" width="631" format="[general]" html.valueishtml="0"  name=hpa005d_remark visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="10368" y="0" height="76" width="311" format="[general]" html.valueishtml="0"  name=hpa005d_worker visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="10688" y="0" height="76" width="183" format="[shortdate] [time]" html.valueishtml="0"  name=hpa005d_work_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="0" x="10880" y="0" height="76" width="631" format="[general]" html.valueishtml="0"  name=hpa005d_ipaddr visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="0" x="11520" y="0" height="76" width="311" format="[general]" html.valueishtml="0"  name=hpa005d_job_uid visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="0" color="0" x="11840" y="0" height="76" width="503" format="[general]" html.valueishtml="0"  name=hpa005d_job_add visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=19 alignment="0" tabsequence=32766 border="0" color="0" x="12352" y="0" height="76" width="183" format="[shortdate] [time]" html.valueishtml="0"  name=hpa005d_job_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="12544" y="0" height="76" width="338" format="[general]" html.valueishtml="0"  name=hpa005d_chasu visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

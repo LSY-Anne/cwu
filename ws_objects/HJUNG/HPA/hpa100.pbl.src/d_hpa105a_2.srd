@@ -1,0 +1,58 @@
+﻿$PBExportHeader$d_hpa105a_2.srd
+$PBExportComments$이체 은행계좌 관리
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=decimal(0) update=yes updatewhereclause=yes name=bank_code dbname="hpa020m.bank_code" dbalias=".bank_code" )
+ column=(type=char(20) update=yes updatewhereclause=yes key=yes name=acct_no dbname="hpa020m.acct_no" dbalias=".acct_no" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=depositor dbname="hpa020m.depositor" dbalias=".depositor" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=pay_class dbname="hpa020m.pay_class" dbalias=".pay_class" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=use_yn dbname="hpa020m.use_yn" dbalias=".use_yn" initial="9" values="Y	9/	0/" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hpa020m.worker" dbalias=".worker" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hpa020m.work_date" dbalias=".work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hpa020m.ipaddr" dbalias=".ipaddr" )
+ column=(type=char(10) update=yes updatewhereclause=yes key=yes name=member_no dbname="hpa020m.member_no" dbalias=".member_no" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hpa020m.job_uid" dbalias=".job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hpa020m.job_add" dbalias=".job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hpa020m.job_date" dbalias=".job_date" )
+ retrieve="  SELECT PADB.HPA020M.BANK_CODE,   
+         PADB.HPA020M.ACCT_NO,   
+         PADB.HPA020M.DEPOSITOR,   
+         PADB.HPA020M.PAY_CLASS,   
+         PADB.HPA020M.USE_YN,   
+         PADB.HPA020M.WORKER,   
+         PADB.HPA020M.WORK_DATE,   
+         PADB.HPA020M.IPADDR,   
+         PADB.HPA020M.MEMBER_NO,   
+         PADB.HPA020M.JOB_UID,   
+         PADB.HPA020M.JOB_ADD,   
+         PADB.HPA020M.JOB_DATE  
+    FROM PADB.HPA020M  
+   WHERE PADB.HPA020M.MEMBER_NO = :as_member_no   
+ORDER BY PADB.HPA020M.PAY_CLASS ASC,   
+         PADB.HPA020M.BANK_CODE ASC   
+" update="PADB.HPA020M" updatewhere=0 updatekeyinplace=no arguments=(("as_member_no", string)) )
+text(band=header alignment="2" text="은 행 명" border="0" color="0" x="9" y="12" height="56" width="466" html.valueishtml="0"  name=bank_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계좌번호" border="0" color="0" x="485" y="12" height="56" width="672" html.valueishtml="0"  name=acct_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="예금주" border="0" color="0" x="1166" y="12" height="56" width="293" html.valueishtml="0"  name=depositor_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="지급구분" border="0" color="0" x="1467" y="12" height="56" width="430" html.valueishtml="0"  name=pay_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="사용" border="0" color="0" x="1906" y="12" height="56" width="165" html.valueishtml="0"  name=use_yn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=10 border="0" color="0" x="9" y="4" height="72" width="466" format="[general]" html.valueishtml="0"  name=bank_code pointer="..\bmp\HAND.CUR" visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=170 dddw.lines=10 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="0" color="0" x="485" y="4" height="72" width="672" format="[general]" html.valueishtml="0"  name=acct_no visible="1" edit.limit=20 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=30 border="0" color="0" x="1166" y="4" height="72" width="293" format="[general]" html.valueishtml="0"  name=depositor visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autovscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=40 border="0" color="0" x="1467" y="4" height="72" width="430" format="[general]" html.valueishtml="0"  name=pay_class pointer="..\bmp\HAND.CUR" visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=170 dddw.lines=10 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=50 border="0" color="0" x="1906" y="4" height="72" width="165" format="[general]" html.valueishtml="0"  name=use_yn pointer="..\bmp\HAND.CUR" visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb ( 255, 255, 255 ), 78682240)" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

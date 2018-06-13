@@ -1,0 +1,104 @@
+﻿$PBExportHeader$d_hin208p_09.srd
+$PBExportComments$인사기본정보출력_해외연수사항등록용
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 2 print.margin.left = 110 print.margin.right = 110 print.margin.top = 300 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=652 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=176 color="536870912" )
+table(column=(type=char(10) update=yes updatewhereclause=yes key=yes name=member_no dbname="hin015h.member_no" )
+ column=(type=char(8) update=yes updatewhereclause=yes key=yes name=from_date dbname="hin015h.from_date" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=to_date dbname="hin015h.to_date" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=gubun dbname="hin015h.gubun" values="국내	1/국외	2/" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=master_opt dbname="hin015h.master_opt" )
+ column=(type=char(60) update=yes updatewhereclause=yes name=location dbname="hin015h.location" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=main_title dbname="hin015h.main_title" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=purpose_opt dbname="hin015h.purpose_opt" values="참석	1/주제발표	2/토론	3/기타	4/" )
+ column=(type=char(3) update=yes updatewhereclause=yes name=nation_code dbname="hin015h.nation_code" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=organ_name dbname="hin015h.organ_name" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=worker dbname="hin015h.worker" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hin015h.work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hin015h.ipaddr" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=job_uid dbname="hin015h.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hin015h.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hin015h.job_date" )
+ column=(type=char(4000) updatewhereclause=yes name=com_master_opt dbname="com_master_opt" )
+ column=(type=char(4000) updatewhereclause=yes name=com_nation_code dbname="com_nation_code" )
+ retrieve="SELECT	A.MEMBER_NO,
+			A.FROM_DATE,
+			A.TO_DATE,
+			A.COUNTRY_OPT      GUBUN,
+			A.MASTER_OPT,
+			A.LOCATION,
+			A.MAIN_TITLE,
+			A.PURPOSE_OPT,
+			A.NATION_CODE,
+			A.ORGAN_NAME,
+			A.WORKER,
+			A.WORK_DATE,
+			A.IPADDR,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE,
+			FU_CODE_NM('COMM','master_opt',A.MASTER_OPT,'K')	COM_MASTER_OPT,
+			FU_CODE_NM('COMM','kukjuk_code',A.NATION_CODE,'K')	COM_NATION_CODE
+FROM		INDB.HIN015H A
+WHERE		A.MEMBER_NO = :as_MemberNo
+ORDER BY A.FROM_DATE,
+			A.TO_DATE
+" update="INDB.HIN015H" updatewhere=0 updatekeyinplace=no arguments=(("as_MemberNo", string)) )
+text(band=header alignment="0" text="8. 국 외 연 수" border="0" color="0" x="9" y="8" height="132" width="3383" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-22" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" font.underline="1" background.mode="1" background.color="536870912" )
+line(band=header x1="9" y1="376" x2="3392" y2="376"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="주제 및 내용" border="0" color="0" x="2153" y="408" height="60" width="1225" html.valueishtml="0"  name=main_title_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="9" y1="648" x2="3392" y2="648"  name=l_10 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="목적
+구분" border="0" color="0" x="2153" y="516" height="116" width="320" html.valueishtml="0"  name=purpose_opt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="2482" y1="492" x2="2482" y2="728"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="국내외
+구분" border="0" color="0" x="2496" y="516" height="116" width="197" html.valueishtml="0"  name=gubun_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="2702" y1="492" x2="2702" y2="728"  name=l_8 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="국가" border="0" color="0" x="2702" y="544" height="60" width="663" html.valueishtml="0"  name=nation_code_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="3392" y1="376" x2="3392" y2="716"  name=l_2 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="722" y1="376" x2="722" y2="716"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="366" y1="376" x2="366" y2="716"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1179" y1="376" x2="1179" y2="716"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1691" y1="376" x2="1691" y2="716"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="9" y1="376" x2="9" y2="716"  name=l_80 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2139" y1="376" x2="2139" y2="716"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2139" y1="488" x2="3392" y2="488"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="장소명" border="0" color="0" x="1705" y="492" height="60" width="425" html.valueishtml="0"  name=location_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="주체 기관명" border="0" color="0" x="1193" y="492" height="60" width="489" html.valueishtml="0"  name=organ_name_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="연수구분" border="0" color="0" x="736" y="492" height="60" width="434" html.valueishtml="0"  name=master_opt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="종료일자" border="0" color="0" x="379" y="492" height="60" width="334" html.valueishtml="0"  name=to_date_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="시작일자" border="0" color="0" x="23" y="492" height="60" width="334" html.valueishtml="0"  name=from_date_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=detail x1="722" y1="0" x2="722" y2="236"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="9" y1="0" x2="9" y2="236"  name=l_14 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="366" y1="0" x2="366" y2="236"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="3392" y1="0" x2="3392" y2="236"  name=l_17 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1179" y1="0" x2="1179" y2="236"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1691" y1="0" x2="1691" y2="236"  name=l_18 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2139" y1="0" x2="2139" y2="236"  name=l_19 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="2153" y="12" height="60" width="1225" format="[general]" html.valueishtml="0"  name=main_title visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=detail x1="9" y1="172" x2="3392" y2="172"  name=l_22 visible="1" pen.style="0" pen.width="5~tif(getrow() = last(getrow() for page), 10, 5)" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="2153" y="104" height="56" width="320" format="[general]" html.valueishtml="0"  name=purpose_opt visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any ddlb.vscrollbar=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="2496" y="104" height="56" width="197" format="[general]" html.valueishtml="0"  name=gubun visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="0" color="0" x="2715" y="104" height="56" width="663" format="[general]" html.valueishtml="0"  name=com_nation_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=detail x1="2482" y1="88" x2="2482" y2="216"  name=l_21 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2702" y1="88" x2="2702" y2="216"  name=l_20 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2139" y1="84" x2="3392" y2="84"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1705" y="56" height="60" width="425" format="[general]" html.valueishtml="0"  name=location visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="1193" y="56" height="60" width="489" format="[general]" html.valueishtml="0"  name=organ_name visible="1" edit.limit=40 edit.case=any edit.autoselect=yes edit.nilisnull=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="0" x="736" y="56" height="60" width="434" format="[general]" html.valueishtml="0"  name=com_master_opt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="379" y="56" height="60" width="334" format="@@@@/@@/@@" html.valueishtml="0"  name=to_date visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="23" y="56" height="60" width="334" format="@@@@/@@/@@" html.valueishtml="0"  name=from_date visible="1" edit.limit=8 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

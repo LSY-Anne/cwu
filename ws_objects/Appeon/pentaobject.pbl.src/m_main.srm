@@ -1,0 +1,418 @@
+﻿$PBExportHeader$m_main.srm
+forward
+global type m_main from menu
+end type
+type m_file from menu within m_main
+end type
+type m_saves from menu within m_file
+end type
+type m_4 from menu within m_file
+end type
+type m_file from menu within m_main
+m_saves m_saves
+m_4 m_4
+end type
+type m_window from menu within m_main
+end type
+type m_0 from menu within m_window
+end type
+type m_1 from menu within m_window
+end type
+type m_2 from menu within m_window
+end type
+type m_3 from menu within m_window
+end type
+type m_window from menu within m_main
+m_0 m_0
+m_1 m_1
+m_2 m_2
+m_3 m_3
+end type
+type m_help from menu within m_main
+end type
+type m_6 from menu within m_help
+end type
+type m_help from menu within m_main
+m_6 m_6
+end type
+global type m_main from menu
+m_file m_file
+m_window m_window
+m_help m_help
+end type
+end forward
+
+global type m_main from menu
+m_file m_file
+m_window m_window
+m_help m_help
+end type
+global m_main m_main
+
+on m_main.create
+m_main=this
+call super::create
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 67108864
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.m_file=create m_file
+this.m_window=create m_window
+this.m_help=create m_help
+this.Item[UpperBound(this.Item)+1]=this.m_file
+this.Item[UpperBound(this.Item)+1]=this.m_window
+this.Item[UpperBound(this.Item)+1]=this.m_help
+end on
+
+on m_main.destroy
+call super::destroy
+destroy(this.m_file)
+destroy(this.m_window)
+destroy(this.m_help)
+end on
+
+event clicked;w_pf_main.ArrangeSheets ( Cascade! )
+end event
+
+type m_file from menu within m_main
+m_saves m_saves
+m_4 m_4
+end type
+
+on m_file.create
+call super::create
+this.visible = false
+this.text = "파일"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 67108864
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.m_saves=create m_saves
+this.m_4=create m_4
+this.Item[UpperBound(this.Item)+1]=this.m_saves
+this.Item[UpperBound(this.Item)+1]=this.m_4
+end on
+
+on m_file.destroy
+call super::destroy
+destroy(this.m_saves)
+destroy(this.m_4)
+end on
+
+type m_saves from menu within m_file
+end type
+
+on m_saves.create
+call super::create
+this.visible = false
+this.text = "Save(&S)~tCtrl+S"
+this.shortcut = 339
+this.menuimage = "Save!"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 67108864
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+end on
+
+on m_saves.destroy
+call super::destroy
+end on
+
+event clicked;w_pf_main.GetActiveSheet ( ).PostEvent('ue_save')
+end event
+
+type m_4 from menu within m_file
+end type
+
+on m_4.create
+call super::create
+this.text = "Exit~tCtrl+Alt+X"
+this.shortcut = 856
+this.menuimage = "exit!"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 67108864
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+end on
+
+on m_4.destroy
+call super::destroy
+end on
+
+event clicked;Close(w_pf_main)
+end event
+
+type m_window from menu within m_main
+m_0 m_0
+m_1 m_1
+m_2 m_2
+m_3 m_3
+end type
+
+on m_window.create
+call super::create
+this.visible = false
+this.text = "윈도우"
+this.toolbaritemvisible = false
+this.toolbaritembarindex = 0
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 67108864
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.menuanimation = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.m_0=create m_0
+this.m_1=create m_1
+this.m_2=create m_2
+this.m_3=create m_3
+this.Item[UpperBound(this.Item)+1]=this.m_0
+this.Item[UpperBound(this.Item)+1]=this.m_1
+this.Item[UpperBound(this.Item)+1]=this.m_2
+this.Item[UpperBound(this.Item)+1]=this.m_3
+end on
+
+on m_window.destroy
+call super::destroy
+destroy(this.m_0)
+destroy(this.m_1)
+destroy(this.m_2)
+destroy(this.m_3)
+end on
+
+type m_0 from menu within m_window
+end type
+
+event clicked;w_pf_main.ArrangeSheets ( TileHorizontal! )
+end event
+
+on m_0.create
+call super::create
+this.text = "&Vertical"
+this.menuimage = "horizontal!"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 67108864
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+end on
+
+on m_0.destroy
+call super::destroy
+end on
+
+type m_1 from menu within m_window
+end type
+
+event clicked;w_pf_main.ArrangeSheets ( Tile! )
+end event
+
+on m_1.create
+call super::create
+this.text = "&Horizontal"
+this.menuimage = "tile!"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 67108864
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+end on
+
+on m_1.destroy
+call super::destroy
+end on
+
+type m_2 from menu within m_window
+end type
+
+event clicked;w_pf_main.ArrangeSheets ( Layer! )
+end event
+
+on m_2.create
+call super::create
+this.text = "&Layer"
+this.menuimage = "layer!"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 67108864
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+end on
+
+on m_2.destroy
+call super::destroy
+end on
+
+type m_3 from menu within m_window
+end type
+
+on m_3.create
+call super::create
+this.text = "&Cascade"
+this.menuimage = "cascade!"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 67108864
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+end on
+
+on m_3.destroy
+call super::destroy
+end on
+
+event clicked;w_pf_main.ArrangeSheets ( Cascade! )
+end event
+
+type m_help from menu within m_main
+m_6 m_6
+end type
+
+on m_help.create
+call super::create
+this.visible = false
+this.text = "도움말"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 67108864
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.m_6=create m_6
+this.Item[UpperBound(this.Item)+1]=this.m_6
+end on
+
+on m_help.destroy
+call super::destroy
+destroy(this.m_6)
+end on
+
+type m_6 from menu within m_help
+end type
+
+on m_6.create
+call super::create
+this.text = "About"
+this.menustyle = contemporarymenu!
+this.menutextcolor = 134217735
+this.menubackcolor = 67108864
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.toolbarstyle = contemporarytoolbar!
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+end on
+
+on m_6.destroy
+call super::destroy
+end on
+

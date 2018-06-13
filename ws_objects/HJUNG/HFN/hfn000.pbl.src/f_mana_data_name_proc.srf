@@ -1,0 +1,39 @@
+﻿$PBExportHeader$f_mana_data_name_proc.srf
+$PBExportComments$관리항목의 내용
+global type f_mana_data_name_proc from function_object
+end type
+
+forward prototypes
+global function string f_mana_data_name_proc (integer ai_mana_code, string as_mana_data)
+end prototypes
+
+global function string f_mana_data_name_proc (integer ai_mana_code, string as_mana_data);// ==========================================================================================
+// Function Name	:	f_mana_data_chk_proc
+// Function 설명	:	관리항목 내용이 올바른지 확인
+// Argument			:	ai_mana_code(관리항목코드)
+// 						as_mana_data(관리항목내용)
+// Return			:	string
+// ==========================================================================================
+string	ls_mana_data_name
+
+ls_mana_data_name = ''
+
+choose case ai_mana_code
+	case 2		// 거래처번호
+		select	cust_name	into	:ls_mana_data_name
+		from		stdb.hst001m
+		where		cust_no = :as_mana_data ;
+	case 3		// 인사번호
+		select	name	into	:ls_mana_data_name
+		from		indb.hin001m
+		where		member_no = :as_mana_data ;
+	case 10		// 은행
+		select	fname	into	:ls_mana_data_name
+		from		cddb.kch001m
+		where		type = 'bank_code'
+		and		code = :as_mana_data	;
+end choose
+
+return ls_mana_data_name
+end function
+

@@ -1,0 +1,43 @@
+﻿$PBExportHeader$f_getdwcommon.srf
+$PBExportComments$공통코드 테이블(cddb.kch001m)의 자료를 DW로 생성(A:Dw, Type(S), Space구분(I), Width(I))
+global type f_getdwcommon from function_object
+end type
+
+forward prototypes
+global subroutine f_getdwcommon (datawindow aobj_dw, string as_type, integer ai_gubun, integer ai_width)
+end prototypes
+
+global subroutine f_getdwcommon (datawindow aobj_dw, string as_type, integer ai_gubun, integer ai_width);// ------------------------------------------------------------------------------------------
+// Function Name 	: 	f_get_dw_kch001m
+// Function 설명 	: 	공통코드 테이블(cddb.kch001m)의 자료를 dw로 보여준다.
+// Argument			: 	aobj_dw				: 삽입할 dw 명칭
+//							as_type(string)	: 타입
+//						  	ai_gubun(integer)	: 0 이면 코드에서 0을 포함해서(빈칸) 보여준다.
+//							ai_width				: width 값
+// Return			:	
+// ------------------------------------------------------------------------------------------
+
+datawindowchild	ldw_child
+
+aobj_dw.reset()
+aobj_dw.insertrow(0)
+
+aobj_dw.object.code.width = ai_width
+
+aobj_dw.getchild('code', ldw_child)
+ldw_child.settransobject(sqlca)
+if ldw_child.retrieve(as_type, ai_gubun) < 1 then
+	ldw_child.reset()
+	ldw_child.insertrow(0)
+end if
+
+aobj_dw.Modify("code.dddw.PercentWidth=180")
+
+ldw_child.setsort("code, fname")
+ldw_child.sort()
+
+ldw_child.setrow(1)
+ldw_child.scrolltorow(1)
+
+end subroutine
+

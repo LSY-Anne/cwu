@@ -1,0 +1,101 @@
+﻿$PBExportHeader$d_hac602b_1.srd
+$PBExportComments$예산 전용 승인(예산부서용)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(4) update=yes updatewhereclause=yes key=yes name=bdgt_year dbname="hac014h.bdgt_year" )
+ column=(type=char(4) update=yes updatewhereclause=yes key=yes name=gwa dbname="hac014h.gwa" )
+ column=(type=char(6) update=yes updatewhereclause=yes key=yes name=acct_code dbname="hac014h.acct_code" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=acct_class dbname="hac014h.acct_class" )
+ column=(type=char(1) update=yes updatewhereclause=yes key=yes name=io_gubun dbname="hac014h.io_gubun" )
+ column=(type=char(8) update=yes updatewhereclause=yes key=yes name=req_date dbname="hac014h.req_date" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=seq dbname="hac014h.seq" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=tran_gwa dbname="hac014h.tran_gwa" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=tran_acct_code dbname="hac014h.tran_acct_code" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=req_amt dbname="hac014h.req_amt" initial="0" )
+ column=(type=char(255) update=yes updatewhereclause=yes name=causes dbname="hac014h.causes" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=stat_class dbname="hac014h.stat_class" initial="1" values="	2/	1" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=req_member_no dbname="hac014h.req_member_no" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=req_posi dbname="hac014h.req_posi" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=work_gbn dbname="hac014h.work_gbn" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hac014h.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hac014h.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hac014h.job_date" )
+ column=(type=char(30) updatewhereclause=yes name=acct_name dbname="acct_name" )
+ column=(type=char(30) updatewhereclause=yes name=tran_acct_name dbname="tran_acct_name" )
+ column=(type=char(50) updatewhereclause=yes name=dept_name dbname="hac014h.dept_name" )
+ column=(type=char(50) updatewhereclause=yes name=tran_dept_name dbname="hac014h.tran_dept_name" )
+ column=(type=char(20) updatewhereclause=yes name=name dbname="hac014h.name" )
+ retrieve="SELECT	A.BDGT_YEAR,
+			A.GWA,
+			A.ACCT_CODE,
+			A.ACCT_CLASS,
+			A.IO_GUBUN,
+			A.REQ_DATE,
+			A.SEQ,
+			A.TRAN_GWA,
+			A.TRAN_ACCT_CODE,
+			A.REQ_AMT,
+			A.CAUSES,
+			A.STAT_CLASS,
+			A.REQ_MEMBER_NO,
+			A.REQ_POSI,
+			A.WORK_GBN,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE,
+			DECODE(A.IO_GUBUN,'1',B.ACCT_INAME,'2',B.ACCT_ONAME,B.ACCT_NAME)	ACCT_NAME,
+			DECODE(A.IO_GUBUN,'1',C.ACCT_INAME,'2',C.ACCT_ONAME,C.ACCT_NAME)	TRAN_ACCT_NAME,
+			D.FNAME	DEPT_NAME,
+			E.FNAME	TRAN_DEPT_NAME,
+			F.NAME
+FROM		ACDB.HAC014H A, ACDB.HAC001M B, ACDB.HAC001M C, CDDB.KCH003M D, CDDB.KCH003M E, INDB.HIN001M F
+WHERE		A.ACCT_CODE = B.ACCT_CODE (+)
+AND		A.TRAN_ACCT_CODE = C.ACCT_CODE (+)
+AND		A.GWA = D.GWA (+)
+AND		A.TRAN_GWA = E.GWA (+)
+AND		A.REQ_MEMBER_NO = F.MEMBER_NO (+)
+AND		A.BDGT_YEAR = :AS_BDGT_YEAR
+AND		A.GWA LIKE :AS_GWA||'%'
+AND		A.ACCT_CLASS = :AI_ACCT_CLASS
+AND		A.IO_GUBUN = :AS_SLIP_CLASS
+ORDER BY	A.GWA, A.REQ_DATE, A.SEQ
+" update="ACDB.HAC014H" updatewhere=0 updatekeyinplace=no arguments=(("as_bdgt_year", string),("as_gwa", string),("ai_acct_class", number),("as_slip_class", string)) )
+group(level=1 header.height=0 trailer.height=84 by=("gwa" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="2" text="승인" border="0" color="0" x="9" y="12" height="56" width="133" html.valueishtml="0"  name=stat_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="요구일자" border="0" color="0" x="841" y="12" height="56" width="352" html.valueishtml="0"  name=req_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="전출계정과목" border="0" color="0" x="1563" y="12" height="56" width="553" html.valueishtml="0"  name=acct_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="전입계정과목" border="0" color="0" x="2688" y="12" height="56" width="553" html.valueishtml="0"  name=tran_acct_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="전출부서" border="0" color="0" x="297" y="12" height="56" width="535" html.valueishtml="0"  name=dept_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="전입부서" border="0" color="0" x="2126" y="12" height="56" width="553" html.valueishtml="0"  name=tran_dept_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="상태" border="0" color="0" x="151" y="12" height="56" width="137" html.valueishtml="0"  name=stat_class_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="전용금액" border="0" color="0" x="3250" y="12" height="56" width="443" html.valueishtml="0"  name=req_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="전  용  사  유" border="0" color="0" x="3703" y="12" height="56" width="2002" html.valueishtml="0"  name=causes_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="요구자" border="0" color="0" x="1202" y="12" height="56" width="352" html.valueishtml="0"  name=name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="2" tabsequence=10 border="0" color="0" x="9" y="4" height="72" width="133" format="[general]" html.valueishtml="0" protect="0~tif ( work_gbn = 'I', 0, 1)"  name=stat_class visible="1" checkbox.text="" checkbox.on="2" checkbox.off="1" checkbox.scale=no checkbox.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( work_gbn = 'I', 15780518, 78682240)" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="841" y="4" height="72" width="352" format="@@@@/@@/@@" html.valueishtml="0"  name=req_date visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=21 alignment="0" tabsequence=32766 border="0" color="0" x="297" y="4" height="72" width="535" format="[general]" html.valueishtml="0"  name=dept_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="0" x="3250" y="4" height="72" width="443" format="#,##0" html.valueishtml="0"  name=req_amt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=19 alignment="2" tabsequence=32766 border="0" color="0" x="1563" y="4" height="72" width="553" format="[general]" html.valueishtml="0"  name=acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=20 alignment="0" tabsequence=32766 border="0" color="0" x="2688" y="4" height="72" width="553" format="[general]" html.valueishtml="0"  name=tran_acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=22 alignment="0" tabsequence=32766 border="0" color="0" x="2126" y="4" height="72" width="553" format="[general]" html.valueishtml="0"  name=tran_dept_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="2" expression="if ( stat_class = 1, '신청', '승인')"border="0" color="0" x="151" y="4" height="72" width="137" format="[GENERAL]" html.valueishtml="0"  name=stat_class_name visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="3703" y="4" height="72" width="2002" format="[general]" html.valueishtml="0"  name=causes visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=23 alignment="0" tabsequence=32766 border="0" color="0" x="1202" y="4" height="72" width="352" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=trailer.1 alignment="1" expression="sum ( req_amt for group 1)"border="0" color="8388608" x="3250" y="8" height="60" width="443" format="#,##0" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=trailer.1 alignment="2" text="부서별소계" border="0" color="0" x="297" y="8" height="56" width="535" html.valueishtml="0"  name=t_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+
+sparse(names="dept_name	req_date")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

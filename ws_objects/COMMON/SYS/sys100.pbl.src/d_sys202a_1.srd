@@ -1,0 +1,78 @@
+﻿$PBExportHeader$d_sys202a_1.srd
+$PBExportComments$공지사항내역-공지사항
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=812 color="536870912" )
+table(column=(type=char(2) update=yes updatewhereclause=yes name=board_gb dbname="pf_board_main.board_gb" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=board_seq dbname="pf_board_main.board_seq" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=gwa dbname="pf_board_main.gwa" )
+ column=(type=char(50) updatewhereclause=yes name=gwa_nm dbname="pf_board_main.gwa_nm" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=member_no dbname="pf_board_main.member_no" )
+ column=(type=char(40) updatewhereclause=yes name=member_nm dbname="member_nm" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=make_dt dbname="pf_board_main.make_dt" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=end_dt dbname="pf_board_main.end_dt" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=title dbname="pf_board_main.title" )
+ column=(type=char(4000) updatewhereclause=yes name=memo dbname="pf_board_main.memo" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=imp_yn dbname="pf_board_main.imp_yn" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=worker dbname="pf_board_main.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="pf_board_main.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="pf_board_main.work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_uid dbname="pf_board_main.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="pf_board_main.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="pf_board_main.job_date" )
+ retrieve="  SELECT 	A.BOARD_GB,   
+				A.BOARD_SEQ,   
+				A.GWA,   
+				B.FNAME AS GWA_NM,
+				A.MEMBER_NO,
+				(SELECT NAME  FROM INDB.HIN001M WHERE MEMBER_NO = A.MEMBER_NO) AS MEMBER_NM,
+				A.MAKE_DT,   
+				A.END_DT,   
+				A.TITLE, 
+				A.MEMO,
+				A.IMP_YN,
+				A.WORKER,
+				A.IPADDR,
+				A.WORK_DATE,
+				A.JOB_UID,
+				A.JOB_ADD,
+				A.JOB_DATE
+    FROM CDDB.PF_BOARD_MAIN A,
+			 CDDB.KCH003M B
+	WHERE	A.GWA = B.GWA
+		AND A.BOARD_GB	= :as_board_gb
+		AND A.MAKE_DT = :as_make_dt
+		AND A.BOARD_SEQ = :ai_board_seq
+" arguments=(("as_board_gb", string),("as_make_dt", string),("ai_board_seq", number)) )
+text(band=detail alignment="1" text="공지사항구분" border="0" color="33554432" x="23" y="16" height="68" width="357" html.valueishtml="0"  name=board_gb_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="398" y="16" height="68" width="809" format="[general]" html.valueishtml="0"  name=board_gb  tag="NOTNULL(공지사항구분)" visible="1" dddw.name=d_dddw_code dddw.displaycolumn=cd_nm dddw.datacolumn=cd dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.autoretrieve=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="33554432" x="1600" y="16" height="68" width="329" format="[general]" html.valueishtml="0"  name=board_seq visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="순번" border="0" color="33554432" x="1225" y="16" height="68" width="357" html.valueishtml="0"  name=board_seq_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="33554432" x="2802" y="16" height="68" width="91" format="[general]" html.valueishtml="0"  name=imp_yn visible="1" edit.limit=1 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="중요여부" border="0" color="33554432" x="2427" y="16" height="68" width="357" html.valueishtml="0"  name=imp_yn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="작성부서" border="0" color="33554432" x="23" y="100" height="68" width="357" html.valueishtml="0"  name=gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="398" y="100" height="68" width="155" format="[general]" html.valueishtml="0"  name=gwa visible="1" edit.limit=4 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="567" y="100" height="68" width="640" format="[general]" html.valueishtml="0"  name=gwa_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="작성자" border="0" color="33554432" x="1225" y="100" height="68" width="357" html.valueishtml="0"  name=member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="33554432" x="1600" y="100" height="68" width="370" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=5 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="33554432" x="1984" y="100" height="68" width="425" format="[general]" html.valueishtml="0"  name=member_nm visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="작성일자" border="0" color="33554432" x="2427" y="100" height="68" width="357" html.valueishtml="0"  name=make_dt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="33554432" x="2802" y="100" height="68" width="389" format="[general]" html.valueishtml="0"  name=make_dt  tag="DATE" visible="1" editmask.mask="####.##.##" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="제목" border="0" color="33554432" x="23" y="184" height="68" width="357" html.valueishtml="0"  name=title_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="33554432" x="398" y="184" height="68" width="2793" format="[general]" html.valueishtml="0"  name=title  tag="NOTNULL(제목);KOR" visible="1" edit.limit=100 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=detail alignment="1" text="내용" border="0" color="33554432" x="23" y="268" height="532" width="357" html.valueishtml="0"  name=memo_t  tag="verticalcenter=true" visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="33554432" x="398" y="268" height="532" width="2793" format="[general]" html.valueishtml="0"  name=memo  tag="KOR" visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -1,0 +1,106 @@
+﻿$PBExportHeader$d_hpa105a_4.srd
+$PBExportComments$이체 은행계좌 내역
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1090519039 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 2 print.margin.left = 201 print.margin.right = 201 print.margin.top = 400 print.margin.bottom = 200 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=552 color="536870912" )
+summary(height=8 color="536870912" )
+footer(height=68 color="536870912" )
+detail(height=92 color="536870912" )
+table(column=(type=char(10) updatewhereclause=yes name=hpa020m_member_no dbname="hpa020m.member_no" dbalias=".member_no" )
+ column=(type=decimal(0) updatewhereclause=yes name=bank_code dbname="hpa020m.bank_code" dbalias=".bank_code" )
+ column=(type=char(20) updatewhereclause=yes name=hpa020m_acct_no dbname="hpa020m.acct_no" dbalias=".acct_no" )
+ column=(type=char(20) updatewhereclause=yes name=hpa020m_depositor dbname="hpa020m.depositor" dbalias=".depositor" )
+ column=(type=decimal(0) updatewhereclause=yes name=pay_class dbname="hpa020m.pay_class" dbalias=".pay_class" )
+ column=(type=char(1) updatewhereclause=yes name=hpa020m_use_yn dbname="hpa020m.use_yn" dbalias=".use_yn" values="Y	9/	0/" )
+ column=(type=char(5) updatewhereclause=yes name=hpa020m_worker dbname="hpa020m.worker" dbalias=".worker" )
+ column=(type=char(20) updatewhereclause=yes name=hpa020m_ipaddr dbname="hpa020m.ipaddr" dbalias=".ipaddr" )
+ column=(type=datetime updatewhereclause=yes name=hpa020m_work_date dbname="hpa020m.work_date" dbalias=".work_date" )
+ column=(type=char(40) updatewhereclause=yes name=hin001m_name dbname="hin001m.name" dbalias=".name" )
+ column=(type=char(20) updatewhereclause=yes name=v_hin003m_1_duty_name dbname="v_hin003m_1.duty_name" dbalias=".duty_name" )
+ column=(type=decimal(0) updatewhereclause=yes name=v_hin003m_1_jikjong_code dbname="v_hin003m_1.jikjong_code" dbalias=".jikjong_code" )
+ column=(type=char(4) updatewhereclause=yes name=v_hin003m_1_duty_code dbname="v_hin003m_1.duty_code" dbalias=".duty_code" )
+ column=(type=char(40) updatewhereclause=yes name=v_hin003m_1_fname dbname="v_hin003m_1.fname" dbalias=".fname" )
+ retrieve="SELECT  PADB.HPA020M.MEMBER_NO ,
+        PADB.HPA020M.BANK_CODE ,
+        PADB.HPA020M.ACCT_NO ,
+        PADB.HPA020M.DEPOSITOR ,
+        PADB.HPA020M.PAY_CLASS ,
+        PADB.HPA020M.USE_YN ,
+        PADB.HPA020M.WORKER ,
+        PADB.HPA020M.IPADDR ,
+        PADB.HPA020M.WORK_DATE ,
+        INDB.HIN001M.NAME ,
+        INDB.V_HIN003M_1.DUTY_NAME ,
+        INDB.V_HIN003M_1.JIKJONG_CODE ,
+        INDB.V_HIN003M_1.DUTY_CODE ,
+        INDB.V_HIN003M_1.FNAME     
+ FROM   PADB.HPA020M ,
+        INDB.HIN001M ,
+        INDB.V_HIN003M_1     
+WHERE ( PADB.HPA020M.MEMBER_NO = INDB.HIN001M.MEMBER_NO ) 
+  and ( INDB.HIN001M.DUTY_CODE = INDB.V_HIN003M_1.DUTY_CODE ) 
+  and ( ( INDB.V_HIN003M_1.JIKJONG_CODE >= :ai_str_jikjong )  
+  and ( INDB.V_HIN003M_1.JIKJONG_CODE <= :ai_end_jikjong ) 
+  and ( INDB.HIN001M.JAEJIK_OPT in (1,2) ) ) 
+ORDER BY INDB.V_HIN003M_1.DUTY_CODE          ASC,
+         PADB.HPA020M.MEMBER_NO          ASC  
+" arguments=(("ai_str_jikjong", number),("ai_end_jikjong", number)) )
+group(level=1 header.height=0 trailer.height=0 by=("hpa020m_member_no" ) header.color="536870912" trailer.color="536870912" )
+rectangle(band=header x="23" y="452" height="96" width="3182"  name=r_1 visible="1" brush.hatch="6" brush.color="31580641" pen.style="0" pen.width="5" pen.color="31580641"  background.mode="2" background.color="12632256" )
+line(band=header x1="27" y1="452" x2="3195" y2="452"  name=l_41 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="27" y1="548" x2="3195" y2="548"  name=l_8 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="이체 은행계좌 내역" border="0" color="0" x="27" y="116" height="124" width="3173" html.valueishtml="0"  name=t_13 visible="1"  font.face="굴림체" font.height="-20" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=header x1="27" y1="448" x2="27" y2="832"  name=l_49 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="직 급 명 :" border="0" color="0" x="27" y="384" height="56" width="334" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="개인번호" border="0" color="0" x="41" y="472" height="56" width="343" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="성 명" border="0" color="0" x="407" y="472" height="56" width="466" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="은행명" border="0" color="0" x="896" y="472" height="56" width="466" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계좌번호" border="0" color="0" x="1385" y="472" height="56" width="681" html.valueishtml="0"  name=t_6 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="예금주" border="0" color="0" x="2089" y="472" height="56" width="466" html.valueishtml="0"  name=t_7 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="393" y1="448" x2="393" y2="832"  name=l_11 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="882" y1="448" x2="882" y2="832"  name=l_22 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="1371" y1="448" x2="1371" y2="832"  name=l_9 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2565" y1="448" x2="2565" y2="832"  name=l_4 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="2075" y1="448" x2="2075" y2="832"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="사용" border="0" color="0" x="3035" y="472" height="56" width="151" html.valueishtml="0"  name=t_11 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="3022" y1="448" x2="3022" y2="832"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="지급구분" border="0" color="0" x="2578" y="472" height="56" width="434" html.valueishtml="0"  name=t_8 visible="1"  font.face="굴림체" font.height="-9" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="1" text="PAGE :" border="0" color="0" x="2601" y="380" height="60" width="219" html.valueishtml="0"  name=t_14 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+compute(band=header alignment="0" expression="Page() + ' / '  + PageCount()"border="0" color="0" x="2834" y="380" height="60" width="366" format="[GENERAL]" html.valueishtml="0"  name=compute_5 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="1" text="TIME :" border="0" color="0" x="2601" y="316" height="60" width="219" html.valueishtml="0"  name=t_15 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+compute(band=header alignment="0" expression="String(today(),'hh:mm:ss')"border="0" color="0" x="2834" y="316" height="60" width="366" format="[General]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="1" text="DATE :" border="0" color="0" x="2601" y="252" height="60" width="219" html.valueishtml="0"  name=t_18 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+compute(band=header alignment="0" expression="String(today(),'yyyy/mm/dd')"border="0" color="0" x="2834" y="252" height="60" width="366" format="[General]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=header x1="3200" y1="448" x2="3200" y2="832"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="27" y1="88" x2="3195" y2="88"  name=l_10 visible="1~tIf( GetRow() = long( Describe( ~"datawindow.LastRowOnpage~" ) ), 1, 0 )" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1408" y="12" height="56" width="658" format="[general]" html.valueishtml="0"  name=hpa020m_acct_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="41" y="12" height="56" width="343" format="[general]" html.valueishtml="0"  name=hpa020m_member_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="0" x="407" y="12" height="56" width="466" format="[general]" html.valueishtml="0"  name=hin001m_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="0" x="896" y="12" height="56" width="466" format="[general]" html.valueishtml="0"  name=bank_code visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="2089" y="12" height="56" width="466" format="[general]" html.valueishtml="0"  name=hpa020m_depositor visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="2" tabsequence=32766 border="0" color="0" x="3035" y="12" height="56" width="151" format="[general]" html.valueishtml="0"  name=hpa020m_use_yn visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="2578" y="12" height="56" width="434" format="[general]" html.valueishtml="0"  name=pay_class visible="1" dddw.name=dddw_common_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="굴림체" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+line(band=detail x1="3200" y1="0" x2="3200" y2="84"  name=l_6 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="1" background.color="553648127" )
+line(band=detail x1="3022" y1="0" x2="3022" y2="84"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2565" y1="0" x2="2565" y2="84"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="2075" y1="0" x2="2075" y2="84"  name=l_17 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="1371" y1="0" x2="1371" y2="84"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="882" y1="0" x2="882" y2="84"  name=l_12 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="393" y1="0" x2="393" y2="84"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="27" y1="0" x2="27" y2="84"  name=l_7 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="27" y1="84" x2="3195" y2="84"  name=l_18 visible="1~tIf( GetRow() = long( Describe( ~"datawindow.LastRowOnpage~" ) ) or hpa020m_member_no = hpa020m_member_no [1], 0, 1 )" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="27" y1="84" x2="3195" y2="84"  name=l_42 visible="1~tIf( GetRow() = long( Describe( ~"datawindow.LastRowOnpage~" ) ) or hpa020m_member_no <> hpa020m_member_no [1], 0, 1 )" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=footer alignment="0" text="" border="0" color="0" x="27" y="4" height="60" width="736" html.valueishtml="0"  name=w_id visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+compute(band=footer alignment="1" expression="f_footer_text()"border="0" color="0" x="2039" y="4" height="60" width="1161" format="[GENERAL]" html.valueishtml="0"  name=compute_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+
+sparse(names="hpa020m_member_no	hin001m_name")htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

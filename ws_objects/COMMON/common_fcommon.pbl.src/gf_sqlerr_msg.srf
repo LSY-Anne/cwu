@@ -1,0 +1,73 @@
+﻿$PBExportHeader$gf_sqlerr_msg.srf
+$PBExportComments$SQL Error Message
+global type gf_sqlerr_msg from function_object
+end type
+
+forward prototypes
+global subroutine gf_sqlerr_msg (string arg_msg_win, string arg_msg_plce, string arg_msg_line, string arg_msg_head, integer arg_db_code, string arg_db_message)
+end prototypes
+
+global subroutine gf_sqlerr_msg (string arg_msg_win, string arg_msg_plce, string arg_msg_line, string arg_msg_head, integer arg_db_code, string arg_db_message);/////////////////////////////////////////////////////////////////////////////
+//
+// Function : gf_sqlerr_msg
+//
+// Purpose  : message title(Event명 + Table명)을 Input Argument로 받아서 
+//				  Title로 사용하고 SQLCA의 SQLDBCode와 SQLErrText를
+//				  내용으로 하여 MessageBox를 띄운다.
+//            Script상에서 Embedded SQL을 구사할때 SQLCA.SQLCODE가 0보다 작으면
+//				  (NetWork장애 또는 DB장애인 경우가 대부분) Call한다.
+//
+// Scope    : public
+//
+// Arguments: String msg_title
+//
+// Returns  : None
+//
+/////////////////////////////////////////////////////////////////////////////
+
+Integer	l_pos
+String		l_error_text
+String		l_error_code
+
+Vector	vc
+vc = Create Vector
+
+l_error_code = String(arg_db_code, '00000')
+If l_error_code = '00001' Then
+	l_error_text	= Lower(gf_cut_char(arg_db_message,' '))
+	l_pos			= pos(l_error_text,'uniqueconstraint')
+	If l_pos <= 0 Then
+		l_pos = pos(l_error_text,'무결성제약조건')
+	End If	
+Else
+	l_error_text	= arg_db_message
+End If
+
+If l_error_code = '1' And l_pos <= 0 Then
+	vc.setProperty("err_win", arg_msg_win)
+	vc.setProperty("err_plce", arg_msg_plce)
+	vc.setProperty("err_line", arg_msg_line)
+	vc.setProperty("err_no",	'0100')
+	If Len(Trim(arg_msg_head)) = 0 or IsNull(arg_msg_head) Then
+		vc.setProperty("err_detl", "조회한 데이터가 없습니다.(NO DATA FOUND)")
+	Else
+		vc.setProperty("err_detl", arg_msg_head + " 시 ~r~n" + "조회한 데이터가 없습니다.(NO DATA FOUND)")
+	End If
+	OpenWithParm(w_system_error, vc)
+Else										
+	vc.setProperty("err_win", arg_msg_win)
+	vc.setProperty("err_plce", arg_msg_plce)
+	vc.setProperty("err_line", arg_msg_line)
+	vc.setProperty("err_no",	l_error_code)
+	If Len(Trim(arg_msg_head)) = 0 or IsNull(arg_msg_head) Then
+		vc.setProperty("err_detl", l_error_text)
+	Else
+		vc.setProperty("err_detl", arg_msg_head + " 시 ~r~n" + l_error_text)
+	End If
+	OpenWithParm(w_system_error, vc)
+End If										
+
+Destroy vc
+
+end subroutine
+

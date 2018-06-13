@@ -1,0 +1,38 @@
+﻿$PBExportHeader$d_hpa809p_2.srd
+$PBExportComments$시간강사료 지급 내역서 출력
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=0 color="536870912" )
+table(column=(type=decimal(0) updatewhereclause=yes name=week_weekend dbname="hpa112t.week_weekend" dbalias=".week_weekend" )
+ column=(type=number updatewhereclause=yes name=week_weekend dbname="week_weekend" )
+ retrieve="  SELECT PADB.HPA112T.WEEK_WEEKEND,   
+         nvl( week_weekend, 0) week_weekend  
+    FROM PADB.HPA112T  
+   WHERE ( PADB.HPA112T.YEAR = :as_year ) AND  
+         ( PADB.HPA112T.HAKGI = :as_hakgi ) AND  
+         ( PADB.HPA112T.MEMBER_NO = :as_member_no ) AND  
+         ( PADB.HPA112T.MONTH = :ai_month )    
+" arguments=(("as_year", string),("as_hakgi", string),("as_member_no", string),("ai_month", number)) )
+compute(band=header alignment="2" expression="if ( isnull ( comp_1 ) , '', if ( isnull ( comp_2 ), comp_1, if ( isnull ( comp_3 ), comp_1 + ' ' + comp_2, if ( isnull ( comp_4 ), comp_1 + ',' + comp_2 + ',' + comp_3, if ( isnull ( comp_5 ), comp_1 + ',' + comp_2 + ',' + comp_3 + ',' + comp_4, if ( isnull ( comp_6 ), comp_1 + ',' + comp_2 + ',' + comp_3 + ',' + comp_4 + ',' + comp_5, if ( isnull ( comp_7 ), comp_1 + ',' + comp_2 + ',' + comp_3 +  ',' + comp_4 + ',' + comp_5 + ',' + comp_6 , comp_1 + ',' + comp_2 + ',' + comp_3 +  ',' + comp_4 + ',' + comp_5 + ',' + comp_6 + ',' + comp_7 ) ) ) ) ) ) ) "border="0" color="0" x="9" y="8" height="60" width="293" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="256" format="[general]" html.valueishtml="0"  name=week_weekend visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="string ( week_weekend )"border="4" color="0" x="9" y="100" height="60" width="256" format="[General]" html.valueishtml="0"  name=comp_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="string ( week_weekend[1] )"border="4" color="0" x="9" y="196" height="60" width="256" format="[General]" html.valueishtml="0"  name=comp_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="string ( week_weekend[2] )"border="4" color="0" x="9" y="292" height="60" width="256" format="[General]" html.valueishtml="0"  name=comp_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="string ( week_weekend[3] )"border="4" color="0" x="9" y="380" height="60" width="256" format="[General]" html.valueishtml="0"  name=comp_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="string ( week_weekend[4] )"border="4" color="0" x="9" y="468" height="60" width="256" format="[General]" html.valueishtml="0"  name=comp_5 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="string ( week_weekend[5] )"border="4" color="0" x="9" y="552" height="60" width="256" format="[General]" html.valueishtml="0"  name=comp_6 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression="string ( week_weekend[6] )"border="4" color="0" x="9" y="632" height="60" width="256" format="[General]" html.valueishtml="0"  name=comp_7 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

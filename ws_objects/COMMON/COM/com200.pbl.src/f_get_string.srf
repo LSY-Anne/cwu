@@ -1,0 +1,49 @@
+﻿$PBExportHeader$f_get_string.srf
+$PBExportComments$원하는 문자로 분리된 문자열을 추출한다.
+global type f_get_string from function_object
+end type
+
+forward prototypes
+global function string f_get_string (string as_in_str, string as_cut_letter, integer ai_position)
+end prototypes
+
+global function string f_get_string (string as_in_str, string as_cut_letter, integer ai_position);//////////////////////////////////////////////////////////////////////////////////////////
+// 1. 기    능 : 문자열에서 원하는 문자 ~ 원하는 문자 사이의 문자열을 추출한다
+// 2. 작 성 자 : / 
+// 3. 작 성 일 : / 
+// 4. 함수원형 : f_get_string( string as_in_str, string as_cut_letter integer ai_position )
+//									RETURN String
+// 5. 인    수 : as_in_str     : 입력 문자열
+//					  as_cut_letter : 분리문자
+//					  ai_position   : 원하는 위치
+// 6. 되 돌 림 : 원하는 위치의 문자열 
+// 예>	ret = getstring("ab~tcd~tef~t","~t",2)
+//			ret -->  "cd"
+//			ret = getstring("ab~tcd@ef@","@",2)
+//			ret -->  "ef"
+//////////////////////////////////////////////////////////////////////////////////////////
+Integer    li_idx1,   li_idx2 = 2
+Integer    li_Sum,    li_Chk, li_Chk1
+
+Integer	pos1,pos2
+Integer	i
+
+//--------------------------------------------------
+if ai_position = 1 then              // 첫번째 데이타면
+   pos2 = pos(as_in_str, as_cut_letter,1)    //
+   if pos2 = 0 then  return ""   //데이타가 없으면 ""
+   return mid(as_in_str, 1, pos2 - 1)
+end if
+
+//---------------------------------------------------
+pos2 = 0 
+for  i = 1 to ai_position 
+  pos1 = pos2 +1
+  pos2 =  pos(as_in_str, as_cut_letter,pos1)
+  if pos2 = 0 then  return ""   //데이타가 없으면 ""
+end for
+
+return mid(as_in_str, pos1, pos2 - pos1)
+
+end function
+

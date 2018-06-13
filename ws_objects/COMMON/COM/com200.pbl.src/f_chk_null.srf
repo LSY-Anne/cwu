@@ -1,0 +1,70 @@
+﻿$PBExportHeader$f_chk_null.srf
+$PBExportComments$필수입력항목 널체크(datawindow, 문자배열)
+global type f_chk_null from function_object
+end type
+
+forward prototypes
+global function integer f_chk_null (datawindow adw, string as_required[])
+end prototypes
+
+global function integer f_chk_null (datawindow adw, string as_required[]);//////////////////////////////////////////////////////////////////////////////////////////
+// 기    능 : 데이타원도우에 해당 컬럼의 입력여부를 체크한다.
+// 작 성 자 : 이현수
+// 작 성 일 : 2002.10
+// 함수원형 : gf_chk_null( datawindow adw, string as_required[] ) return integer
+// 인    수 : adw         - 데이타원도우
+//				  as_required - 체크하고자하는 컬럼들의 배열
+// 되 돌 림 : 1:정상, -1:오류
+//	주의사항 : 
+// 수정사항 : Number Type Column의 음수값이 발생하면 null Check에서 
+//					item error 발생하던 것을 순수 Null인 경우만 item error
+//					를 return하고 음수값도 Not null로 인식토록 수정함
+//////////////////////////////////////////////////////////////////////////////////////////
+string	ls_column, ls_col_desc, ls_exp, ls_coltype
+long		ll_pos1, ll_pos2, row, ll_col, ll_null_row
+Long		ll_idx
+
+adw.accepttext()
+
+ll_idx = adw.GetNextModified(0,Primary!)
+DO WHILE ll_idx > 0 
+	// 필수입력 필드 체크
+	For ll_col = 1 To UpperBound(as_required)
+		
+		ll_pos1 = Pos(as_required[ll_col], '/')
+		
+		ls_column = Left(as_required[ll_col], ll_pos1 - 1)
+		ls_col_desc = Mid(as_required[ll_col], ll_pos1 + 1, Len(as_required[ll_col]))
+		
+		ls_coltype = adw.Describe(ls_column + '.coltype')
+		ll_pos2 = Pos(ls_coltype, '(')
+		If ll_pos2 = 0 Then ll_pos2 = Len(ls_coltype) + 1	
+	// Converts all the characters in a string to uppercase.
+		Choose Case Upper(Left(ls_coltype, ll_pos2 - 1))
+			Case 'DECIMAL', 'NUMBER', 'LONG'
+				ls_exp = 'IsNull(' + ls_column + ') OR ' + ls_column + ' = 0'
+			Case 'CHAR', 'STRING'
+				ls_exp = 'Len(Trim(' + ls_column +')) < 1 OR IsNull(' + ls_column + ')'
+		End Choose
+	
+		ll_null_row = adw.Find(ls_exp, ll_idx, ll_idx)
+		If ll_null_row > 0 Then
+			Beep(1)
+			MessageBox('필수 입력', ls_col_desc + '를(을) 입력하지 않았습니다.', stopsign!)
+			adw.SetFocus()
+			adw.SetColumn(ls_column)
+			adw.SetRow(ll_null_row)
+			adw.ScrollToRow(ll_null_row)
+			Return -1
+		End If
+	Next
+
+	ll_idx = adw.GetNextModified(ll_idx,Primary!)
+LOOP
+Return 1
+//////////////////////////////////////////////////////////////////////////////////////////
+// END OF GLOBAL FUNCTION
+//////////////////////////////////////////////////////////////////////////////////////////
+
+end function
+

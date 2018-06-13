@@ -1,0 +1,250 @@
+﻿$PBExportHeader$w_hsu203a.srw
+$PBExportComments$[청운대]수강신청일괄생성(신입생,편입생)
+forward
+global type w_hsu203a from w_no_condition_window
+end type
+type st_2 from statictext within w_hsu203a
+end type
+type cb_1 from commandbutton within w_hsu203a
+end type
+type dw_con from uo_dwfree within w_hsu203a
+end type
+end forward
+
+global type w_hsu203a from w_no_condition_window
+st_2 st_2
+cb_1 cb_1
+dw_con dw_con
+end type
+global w_hsu203a w_hsu203a
+
+on w_hsu203a.create
+int iCurrent
+call super::create
+this.st_2=create st_2
+this.cb_1=create cb_1
+this.dw_con=create dw_con
+iCurrent=UpperBound(this.Control)
+this.Control[iCurrent+1]=this.st_2
+this.Control[iCurrent+2]=this.cb_1
+this.Control[iCurrent+3]=this.dw_con
+end on
+
+on w_hsu203a.destroy
+call super::destroy
+destroy(this.st_2)
+destroy(this.cb_1)
+destroy(this.dw_con)
+end on
+
+event open;call super::open;dw_con.SetTransObject(sqlca)
+dw_con.InsertRow(0)
+
+dw_con.Object.year[1]   = f_haksa_iljung_year()
+dw_con.Object.hakgi[1]	= f_haksa_iljung_hakgi()
+end event
+
+type ln_templeft from w_no_condition_window`ln_templeft within w_hsu203a
+end type
+
+type ln_tempright from w_no_condition_window`ln_tempright within w_hsu203a
+end type
+
+type ln_temptop from w_no_condition_window`ln_temptop within w_hsu203a
+end type
+
+type ln_tempbuttom from w_no_condition_window`ln_tempbuttom within w_hsu203a
+end type
+
+type ln_tempbutton from w_no_condition_window`ln_tempbutton within w_hsu203a
+end type
+
+type ln_tempstart from w_no_condition_window`ln_tempstart within w_hsu203a
+end type
+
+type uc_retrieve from w_no_condition_window`uc_retrieve within w_hsu203a
+end type
+
+type uc_insert from w_no_condition_window`uc_insert within w_hsu203a
+end type
+
+type uc_delete from w_no_condition_window`uc_delete within w_hsu203a
+end type
+
+type uc_save from w_no_condition_window`uc_save within w_hsu203a
+end type
+
+type uc_excel from w_no_condition_window`uc_excel within w_hsu203a
+end type
+
+type uc_print from w_no_condition_window`uc_print within w_hsu203a
+end type
+
+type st_line1 from w_no_condition_window`st_line1 within w_hsu203a
+end type
+
+type st_line2 from w_no_condition_window`st_line2 within w_hsu203a
+end type
+
+type st_line3 from w_no_condition_window`st_line3 within w_hsu203a
+end type
+
+type uc_excelroad from w_no_condition_window`uc_excelroad within w_hsu203a
+end type
+
+type ln_dwcon from w_no_condition_window`ln_dwcon within w_hsu203a
+end type
+
+type gb_1 from w_no_condition_window`gb_1 within w_hsu203a
+end type
+
+type st_2 from statictext within w_hsu203a
+integer x = 55
+integer y = 296
+integer width = 4379
+integer height = 100
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Tahoma"
+long textcolor = 32768
+long backcolor = 32500968
+string text = "수강신청 일괄 생성"
+alignment alignment = center!
+boolean focusrectangle = false
+end type
+
+type cb_1 from commandbutton within w_hsu203a
+integer x = 1938
+integer y = 984
+integer width = 718
+integer height = 184
+integer taborder = 60
+boolean bringtotop = true
+integer textsize = -18
+integer weight = 700
+fontcharset fontcharset = hangeul!
+fontpitch fontpitch = fixed!
+fontfamily fontfamily = modern!
+string facename = "굴림체"
+string text = "생성"
+end type
+
+event clicked;string	ls_year, ls_hakgi, ls_gwa, ls_iphak_gubun, ls_gubun
+
+dw_con.AcceptText()
+
+ls_year		=	dw_con.Object.year[1]
+ls_hakgi		=	dw_con.Object.hakgi[1]
+ls_gwa		=	func.of_nvl(dw_con.Object.gwa[1], '%')
+ls_gubun     =	dw_con.Object.gubun[1]
+
+//신편입구분.
+if ls_gubun = '1' Then
+	ls_iphak_gubun	=	'A11'
+	
+else
+	ls_iphak_gubun	=	'A12'
+	
+end if
+
+if	ls_year = "" or isnull(ls_year) then
+	uf_messagebox(12)
+	dw_con.SetFocus()
+	dw_con.SetColumn("year")
+	return
+	
+elseif ls_hakgi = "" or isnull(ls_hakgi) then
+	uf_messagebox(14)
+	dw_con.SetFocus()
+	dw_con.SetColumn("hakgi")
+	return
+	
+end if
+
+SetPointer(HourGlass!)
+
+//수강신청 시작
+INSERT INTO HAKSA.SUGANG_TRANS
+(	SELECT	A.HAKBUN,
+				B.YEAR,
+				B.HAKGI,
+				B.GWA,
+				B.HAKYUN,
+				B.BAN,
+				B.GWAMOK_ID,
+				B.GWAMOK_SEQ,
+				MIN(B.BUNBAN),
+				B.ISU_ID,
+				B.HAKJUM,
+				NULL,
+				NULL,
+				NULL,
+				NULL,
+				NULL,
+				NULL,
+				NULL,
+				NULL,
+				'Y',
+				'0',
+				NULL,
+				NULL,
+				NULL,
+				NULL,
+				:gs_empcode,
+				:gs_ip,
+				SYSDATE,
+				NULL,
+				NULL,
+				NULL
+	FROM	HAKSA.JAEHAK_HAKJUK	A,
+			HAKSA.GAESUL_GWAMOK	B
+	WHERE	A.GWA			=	B.GWA
+	AND	A.SU_HAKYUN	=	B.HAKYUN
+	AND	A.BAN			=	B.BAN
+	AND	A.IPHAK_DATE	like	:ls_year||'%'
+	AND	A.HJMOD_SAYU_ID	=	:ls_iphak_gubun
+	AND	A.GWA				like	:ls_gwa
+	AND	B.YEAR				=	:ls_year
+	AND	B.HAKGI				=	:ls_hakgi
+	AND	B.HAKJUM				> 0	
+	GROUP BY A.HAKBUN,
+				B.YEAR,
+				B.HAKGI,
+				B.GWA,
+				B.HAKYUN,
+				B.BAN,
+				B.GWAMOK_ID,
+				B.GWAMOK_SEQ,
+				B.ISU_ID,
+				B.HAKJUM
+) USING SQLCA ;
+
+SetPointer(Arrow!)
+
+if sqlca.sqlcode = 0 then
+	commit USING SQLCA ;
+	messagebox("확인","작업이 완료되었습니다.")
+	
+else
+	messagebox("오류","수강신청중 오류가 발생되었습니다.~r~n" + sqlca.sqlerrtext)
+	rollback USING SQLCA ;
+	
+end if
+end event
+
+type dw_con from uo_dwfree within w_hsu203a
+integer x = 50
+integer y = 164
+integer width = 4384
+integer height = 120
+integer taborder = 10
+boolean bringtotop = true
+string dataobject = "d_hsu203a_c1"
+boolean border = false
+borderstyle borderstyle = stylebox!
+end type
+

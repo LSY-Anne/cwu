@@ -1,0 +1,77 @@
+﻿$PBExportHeader$gf_objectbtnlist.srf
+global type gf_objectbtnlist from function_object
+end type
+
+forward prototypes
+global function integer gf_objectbtnlist (powerobject apo, ref s_row astr_data)
+end prototypes
+
+global function integer gf_objectbtnlist (powerobject apo, ref s_row astr_data);Long	ll_rowcnt, ll_ctr_cnt, i
+
+ll_rowcnt = UpperBound(astr_data.row)
+ll_Rowcnt++
+Choose Case apo.typeof()
+	Case CommandButton!
+		CommandButton  lcb
+		lcb = apo
+		astr_data.row[ll_rowcnt].data[1] = lcb.ClassName()
+		IF lcb.visible THEN
+			astr_data.row[ll_Rowcnt].data[2] = 'N'
+		ELSE
+			astr_data.row[ll_Rowcnt].data[2] = 'Y'
+		END IF
+	Case PictureButton!
+		PictureButton lpb
+		lpb = apo
+		astr_data.row[ll_rowcnt].data[1] = lpb.ClassName()
+		IF lpb.visible THEN
+			astr_data.row[ll_Rowcnt].data[2] = 'N'
+		ELSE
+			astr_data.row[ll_Rowcnt].data[2] = 'Y'
+		END IF
+	Case Picture!
+		Picture  lp
+		lp  = apo
+		IF Upper(lp.Tag) = 'PICTUREBUTTON' THEN 
+			astr_data.row[ll_rowcnt].data[1] = lp.ClassName()
+			IF lp.visible THEN
+				astr_data.row[ll_Rowcnt].data[2] = 'N'
+			ELSE
+				astr_data.row[ll_Rowcnt].data[2] = 'Y'
+			END IF
+		END IF
+	Case UserObject!
+		UserObject  luo
+		luo = apo
+		IF Upper(luo.tag) = 'TEXTSTYLEPICTUREBUTTON' THEN
+			astr_data.row[ll_rowcnt].data[1] = luo.ClassName()
+			IF luo.visible THEN
+				astr_data.row[ll_Rowcnt].data[2] = 'N'
+			ELSE
+				astr_data.row[ll_Rowcnt].data[2] = 'Y'
+			END IF
+		ELSE
+			ll_ctr_cnt = UpperBound(luo.control)
+			FOR i = ll_ctr_cnt TO 1 Step -1
+				gf_objectbtnlist(luo.control[i], astr_data)
+			NEXT
+		END IF
+	Case Tab!
+		Tab  lt
+		lt = apo
+		ll_ctr_cnt = UpperBound(lt.control)
+		FOR i = ll_ctr_cnt TO 1 Step -1
+			gf_objectbtnlist(lt.control[i], astr_data)
+		NEXT
+	Case Window!
+		window	lw
+		lw = apo
+		ll_ctr_cnt = UpperBound(lw.control)
+		FOR i = ll_ctr_cnt TO 1 Step -1
+			gf_objectbtnlist(lw.control[i], astr_data)
+		NEXT
+End Choose
+
+return 0
+end function
+

@@ -1,0 +1,26 @@
+﻿$PBExportHeader$uf_chasu.srf
+$PBExportComments$[대학원등록] 등록금계산 - 차수가져오기
+global type uf_chasu from function_object
+end type
+
+forward prototypes
+global function integer uf_chasu (string as_year, string as_hakgi, string as_hakbun)
+end prototypes
+
+global function integer uf_chasu (string as_year, string as_hakgi, string as_hakbun);int li_chasu
+
+SELECT	MAX(CHASU) + 1
+INTO	:li_chasu
+FROM	HAKSA.D_DUNGROK
+WHERE	YEAR		=	:as_year
+AND	HAKGI		=	:as_hakgi
+AND	HAKBUN	=	:as_hakbun
+USING SQLCA ;
+
+if isnull(li_chasu) then
+	li_chasu = 1
+end if
+
+return li_chasu
+end function
+

@@ -1,0 +1,97 @@
+﻿$PBExportHeader$f_mana_data_chk_proc.srf
+$PBExportComments$관리항목의 내용이 올바른지 확인
+global type f_mana_data_chk_proc from function_object
+end type
+
+forward prototypes
+global function integer f_mana_data_chk_proc (integer ai_mana_code, string as_mana_data)
+end prototypes
+
+global function integer f_mana_data_chk_proc (integer ai_mana_code, string as_mana_data);// ==========================================================================================
+// Function Name	:	f_mana_data_chk_proc
+// Function 설명	:	관리항목 내용이 올바른지 확인
+// Argument			:	ai_mana_code(관리항목코드)
+// 						as_mana_data(관리항목내용)
+// Return			:	string
+// ==========================================================================================
+long	ll_cnt
+
+choose case ai_mana_code
+	case 1		// 계좌번호
+		select	count(*)	into	:ll_cnt
+		from		fndb.hfn003m
+		where		acct_no = :as_mana_data ;
+		
+		if ll_cnt < 1 then
+			messagebox('확인', '등록되지 않은 계좌번호입니다')
+			return -1
+		end if
+	case 2		// 거래처번호
+		select	count(*)	into	:ll_cnt
+		from		stdb.hst001m
+		where		cust_no = :as_mana_data ;
+		
+		if ll_cnt < 1 then
+			messagebox('확인', '등록되지 않은 거래처입니다')
+			return -1
+		end if
+	case 3		// 인사번호
+		select	count(*)	into	:ll_cnt
+		from		indb.hin001m
+		where		member_no = :as_mana_data ;
+
+		if ll_cnt < 1 then
+			messagebox('확인', '등록되지 않은 인사번호입니다')
+			return -1
+		end if
+	case 4		// 카드번호
+		select	count(*)	into	:ll_cnt
+		from		fndb.hfn009m
+		where		card_no = :as_mana_data ;
+
+		if ll_cnt < 1 then
+			messagebox('확인', '등록되지 않은 카드번호입니다')
+			return -1
+		end if
+	case 6		// 차입금번호
+		select	count(*)	into	:ll_cnt
+		from		fndb.hfn005m
+		where		loan_no = :as_mana_data ;
+
+		if ll_cnt < 1 then
+			messagebox('확인', '등록되지 않은 차입금번호입니다')
+			return -1
+		end if
+	case 7		// 수표번호
+		select	count(*)	into	:ll_cnt
+		from		fndb.hfn004m
+		where		notes_no = :as_mana_data ;
+
+		if ll_cnt < 1 then
+			messagebox('확인', '등록되지 않은 수표번호입니다')
+			return -1
+		end if
+	case 8		// 증권번호
+		select	count(*)	into	:ll_cnt
+		from		fndb.hfn006m
+		where		sec_no = :as_mana_data ;
+
+		if ll_cnt < 1 then
+			messagebox('확인', '등록되지 않은 증권번호입니다')
+			return -1
+		end if
+	case 10		// 은행
+		select	count(*)	into	:ll_cnt
+		from		cddb.kch001m
+		where		code = :as_mana_data
+		and		type = 'bank_code' ;
+
+		if ll_cnt < 1 then
+			messagebox('확인', '등록되지 않은 은행입니다')
+			return -1
+		end if
+end choose
+
+return 0
+end function
+

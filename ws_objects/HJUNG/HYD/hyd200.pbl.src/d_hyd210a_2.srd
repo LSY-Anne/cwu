@@ -1,0 +1,121 @@
+﻿$PBExportHeader$d_hyd210a_2.srd
+$PBExportComments$유형별 실적자료 승인 - 지식재산권내역
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(6) updatewhereclause=yes key=yes name=std_ym dbname="hyd303t.std_ym" )
+ column=(type=char(5) updatewhereclause=yes key=yes name=member_no dbname="hyd303t.member_no" )
+ column=(type=char(40) updatewhereclause=yes name=name dbname="hin001m.name" )
+ column=(type=char(12) updatewhereclause=yes key=yes name=mng_no dbname="hyd303t.mng_no" )
+ column=(type=char(60) updatewhereclause=yes name=itl_ppr_rgt_dvs_cd dbname="itl_ppr_rgt_dvs_cd" )
+ column=(type=char(20) updatewhereclause=yes name=acqs_ntn_dvs_cd dbname="hyd303t.acqs_ntn_dvs_cd" )
+ column=(type=char(60) updatewhereclause=yes name=acqs_dvs_cd dbname="acqs_dvs_cd" )
+ column=(type=char(60) updatewhereclause=yes name=acqs_dtl_dvs_cd dbname="acqs_dtl_dvs_cd" )
+ column=(type=char(60) updatewhereclause=yes name=pat_cls_cd dbname="pat_cls_cd" )
+ column=(type=char(300) updatewhereclause=yes name=itl_ppr_rgt_nm dbname="hyd303t.itl_ppr_rgt_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=smmr_cntn dbname="hyd303t.smmr_cntn" )
+ column=(type=char(8) updatewhereclause=yes name=appl_reg_date dbname="hyd303t.appl_reg_date" )
+ column=(type=char(32) updatewhereclause=yes name=appl_reg_no dbname="hyd303t.appl_reg_no" )
+ column=(type=char(20) updatewhereclause=yes name=appl_reg_ntn_cd dbname="hyd303t.appl_reg_ntn_cd" )
+ column=(type=decimal(0) updatewhereclause=yes name=pct_epo_appl_ntn_cnt dbname="hyd303t.pct_epo_appl_ntn_cnt" )
+ column=(type=char(100) updatewhereclause=yes name=invt_nm dbname="hyd303t.invt_nm" )
+ column=(type=decimal(0) updatewhereclause=yes name=invt_cnt dbname="hyd303t.invt_cnt" )
+ column=(type=char(150) updatewhereclause=yes name=appl_regt_nm dbname="hyd303t.appl_regt_nm" )
+ column=(type=char(50) updatewhereclause=yes name=sbjt_no dbname="hyd303t.sbjt_no" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=appr_dvs_cd dbname="hyd303t.appr_dvs_cd" )
+ column=(type=datetime update=yes updatewhereclause=yes name=appr_dttm dbname="hyd303t.appr_dttm" )
+ column=(type=datetime update=yes updatewhereclause=yes name=appr_cncl_dttm dbname="hyd303t.appr_cncl_dttm" )
+ column=(type=char(4000) update=yes updatewhereclause=yes name=appr_rtrn_cncl_rsn_cntn dbname="hyd303t.appr_rtrn_cncl_rsn_cntn" )
+ column=(type=decimal(2) updatewhereclause=yes name=gus_point dbname="hyd303t.gus_point" )
+ column=(type=char(1) updatewhereclause=yes name=evl_slt_yn dbname="hyd303t.evl_slt_yn" )
+ column=(type=char(4) updatewhereclause=yes name=evl_stat dbname="hyd303t.evl_stat" )
+ column=(type=char(1) updatewhereclause=yes name=kri_link_yn dbname="hyd303t.kri_link_yn" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=worker dbname="hyd303t.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hyd303t.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hyd303t.work_date" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_uid dbname="hyd303t.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hyd303t.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hyd303t.job_date" )
+ column=(type=char(1) updatewhereclause=yes name=chk dbname="chk" values="	Y/	N" )
+ retrieve=" SELECT A.STD_YM
+       ,A.MEMBER_NO
+       ,B.NAME
+       ,A.MNG_NO
+       ,(SELECT FNAME FROM CDDB.KCH102D WHERE UPPER(CODE_GB) = 'HYD1080' AND  CODE = A.ITL_PPR_RGT_DVS_CD  )  AS ITL_PPR_RGT_DVS_CD
+       ,A.ACQS_NTN_DVS_CD
+       ,(SELECT FNAME FROM CDDB.KCH102D WHERE UPPER(CODE_GB) = 'HYD1090' AND  CODE = A.ACQS_DVS_CD  )   AS ACQS_DVS_CD
+       ,(SELECT FNAME FROM CDDB.KCH102D WHERE UPPER(CODE_GB) = 'HYD1430' AND  CODE = A.ACQS_DTL_DVS_CD  )  AS ACQS_DTL_DVS_CD
+       ,(SELECT FNAME FROM CDDB.KCH102D WHERE UPPER(CODE_GB) = 'HYD1710' AND  CODE = A.PAT_CLS_CD  ) AS PAT_CLS_CD
+       ,A.ITL_PPR_RGT_NM
+       ,A.SMMR_CNTN
+       ,A.APPL_REG_DATE
+       ,A.APPL_REG_NO
+       ,A.APPL_REG_NTN_CD
+       ,A.PCT_EPO_APPL_NTN_CNT
+       ,A.INVT_NM
+       ,A.INVT_CNT
+       ,A.APPL_REGT_NM
+       ,A.SBJT_NO
+       ,A.APPR_DVS_CD
+       ,A.APPR_DTTM
+       ,A.APPR_CNCL_DTTM
+       ,A.APPR_RTRN_CNCL_RSN_CNTN
+       ,A.GUS_POINT
+       ,A.EVL_SLT_YN
+       ,A.EVL_STAT
+       ,A.KRI_LINK_YN
+       ,A.WORKER
+       ,A.IPADDR
+       ,A.WORK_DATE
+       ,A.JOB_UID
+       ,A.JOB_ADD
+       ,A.JOB_DATE
+, 'N' AS CHK
+ FROM YGDB.HYD303T A
+ ,INDB.HIN001M B
+ WHERE A.MEMBER_NO = B.MEMBER_NO
+ AND A.STD_YM = :as_std_ym
+AND (:as_gwa = '%' or B.GWA = :as_gwa)
+AND (A.APPR_DVS_CD = :as_appr_dvs_cd)" update="YGDB.HYD303T" updatewhere=0 updatekeyinplace=no arguments=(("as_std_ym", string),("as_gwa", string),("as_appr_dvs_cd", string)) )
+text(band=header alignment="2" text="사번" border="0" color="33554432" x="343" y="8" height="56" width="288" html.valueishtml="0"  name=member_no_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="성명" border="0" color="33554432" x="640" y="8" height="56" width="384" html.valueishtml="0"  name=name_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="관리번호" border="0" color="33554432" x="1033" y="8" height="56" width="334" html.valueishtml="0"  name=mng_no_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="지식재산권 구분" border="0" color="33554432" x="1376" y="8" height="56" width="439" html.valueishtml="0"  name=itl_ppr_rgt_dvs_cd_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="취득구분" border="0" color="33554432" x="1824" y="8" height="56" width="434" html.valueishtml="0"  name=acqs_dvs_cd_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="상세구분" border="0" color="33554432" x="2267" y="8" height="56" width="480" html.valueishtml="0"  name=acqs_dtl_dvs_cd_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="기술분류" border="0" color="33554432" x="3301" y="8" height="56" width="347" html.valueishtml="0"  name=pat_cls_cd_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="지식재산명" border="0" color="33554432" x="2757" y="8" height="56" width="535" html.valueishtml="0"  name=itl_ppr_rgt_nm_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="순번" border="0" color="0" x="133" y="8" height="56" width="201" html.valueishtml="0"  name=no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="선택" border="0" color="33554432" x="9" y="8" height="56" width="114" html.valueishtml="0"  name=chk_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="승인구분" border="0" color="33554432" x="3657" y="8" height="56" width="279" html.valueishtml="0"  name=appr_dvs_cd_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="승인일시" border="0" color="0" x="3945" y="8" height="56" width="489" html.valueishtml="0"  name=appr_dttm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="승인취소일시" border="0" color="0" x="4443" y="8" height="56" width="485" html.valueishtml="0"  name=appr_cncl_dttm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="승인취소사유" border="0" color="0" x="4937" y="8" height="56" width="1339" html.valueishtml="0"  name=appr_rtrn_cncl_rsn_cntn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="33554432" x="640" y="8" height="68" width="384" format="[general]" html.valueishtml="0"  name=name  tag="kor" visible="1" edit.limit=40 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="33554432" x="1033" y="8" height="68" width="334" format="[general]" html.valueishtml="0"  name=mng_no visible="1" edit.limit=12 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="33554432" x="1376" y="8" height="68" width="439" format="[general]" html.valueishtml="0"  name=itl_ppr_rgt_dvs_cd visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="33554432" x="1824" y="8" height="68" width="434" format="[general]" html.valueishtml="0"  name=acqs_dvs_cd visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="33554432" x="2267" y="8" height="68" width="480" format="[general]" html.valueishtml="0"  name=acqs_dtl_dvs_cd visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="33554432" x="3301" y="8" height="68" width="347" format="[general]" html.valueishtml="0"  name=pat_cls_cd visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="33554432" x="2757" y="8" height="68" width="535" format="[general]" html.valueishtml="0"  name=itl_ppr_rgt_nm  tag="kor" visible="1" edit.limit=300 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="0" color="33554432" x="343" y="8" height="68" width="288" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=5 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="2" expression="getrow()"border="0" color="0" x="133" y="8" height="68" width="201" format="[GENERAL]" html.valueishtml="0"  name=no visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=34 alignment="2" tabsequence=10 border="0" color="33554432" x="9" y="8" height="68" width="114" format="[general]" html.valueishtml="0"  name=chk visible="1" checkbox.text="" checkbox.on="Y" checkbox.off="N" checkbox.scale=yes checkbox.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=20 alignment="2" tabsequence=32766 border="0" color="33554432" x="3657" y="8" height="68" width="279" format="[general]" html.valueishtml="0"  name=appr_dvs_cd visible="1" dddw.name=d_dddw_code dddw.displaycolumn=cd_nm dddw.datacolumn=cd dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.autoretrieve=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=21 alignment="2" tabsequence=32766 border="0" color="0" x="3950" y="8" height="68" width="485" format="[shortdate] [time]" html.valueishtml="0"  name=appr_dttm visible="1" editmask.mask="yyyy/mm/dd hh:mm:ss" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=22 alignment="2" tabsequence=32766 border="0" color="0" x="4448" y="8" height="68" width="480" format="[shortdate] [time]" html.valueishtml="0"  name=appr_cncl_dttm visible="1" editmask.mask="yyyy/mm/dd hh:mm:ss" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=23 alignment="0" tabsequence=32766 border="0" color="0" x="4942" y="8" height="68" width="1335" format="[general]" html.valueishtml="0"  name=appr_rtrn_cncl_rsn_cntn  tag="kor" visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

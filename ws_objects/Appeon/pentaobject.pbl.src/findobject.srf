@@ -1,0 +1,63 @@
+﻿$PBExportHeader$findobject.srf
+global type findobject from function_object
+end type
+
+forward prototypes
+global function boolean findobject (string objname)
+end prototypes
+
+global function boolean findobject (string objname);String		ls_path, ls_port
+Boolean	lb_rtn
+Integer	li_rtn
+
+objname = lower(objname)
+
+IF appeongetclienttype() = 'PB' THEN
+	
+	ClassDefinition  cdf
+	cdf = FindClassDefinition(objname)
+	IF IsValid(cdf) THEN
+		lb_rtn = true
+	ELSE
+		lb_rtn = false
+	END IF
+ELSE
+	
+	OleObject req
+	req = CREATE oleobject
+	li_rtn = req.ConnectToNewObject("Microsoft.XMLHTTP")
+	
+	IF li_rtn < 0 THEN
+		lb_rtn = false
+	ELSE
+		//Appeon5
+		//=============
+//		ls_port = gvc_val.getproperty('webport')
+//		IF ls_port = '' OR ls_port = '80' THEN
+//			ls_path = "http://" + gvc_val.getproperty('webhostname') + "/" + gvc_val.getproperty('webappname') + "/" + objname + ".js"
+//		ELSE
+//			ls_path = "http://" + gvc_val.getproperty('webhostname') + ":" + ls_port + "/" + gvc_val.getproperty('webappname') + "/" + objname + ".js"
+//		END IF
+		//=============
+		
+		//Appeon6 
+		//================
+		ls_path = appeongetieurl() + "/" + objname + ".js"
+		//======================
+		req.open ("GET",  ls_path, false)
+		req.send ()
+		IF req.readyState = 4 THEN
+			IF req.Status <> 200 THEN
+				lb_rtn = false
+			ELSE
+				lb_rtn = true
+			END IF
+		END IF
+	END IF
+	
+	req.DisconnectObject()
+	Destroy req
+END IF
+return lb_rtn
+end function
+

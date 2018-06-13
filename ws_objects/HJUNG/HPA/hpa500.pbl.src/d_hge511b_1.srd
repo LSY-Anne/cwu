@@ -1,0 +1,64 @@
+﻿$PBExportHeader$d_hge511b_1.srd
+$PBExportComments$강사료 기초자료 생성 - 주리스트
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(4) update=yes updatewhereclause=yes key=yes name=year dbname="hpa101m.year" )
+ column=(type=char(1) update=yes updatewhereclause=yes key=yes name=hakgi dbname="hpa101m.hakgi" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=month dbname="hpa101m.month" initial="1" )
+ column=(type=number update=yes updatewhereclause=yes name=from_weekend dbname="hpa101m.from_weekend" initial="1" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=from_date dbname="hpa101m.from_date" )
+ column=(type=number update=yes updatewhereclause=yes name=to_weekend dbname="hpa101m.to_weekend" initial="4" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=to_date dbname="hpa101m.to_date" )
+ retrieve="
+select	year, hakgi, month,
+			case	
+				when		from_weekend < :ai_str_week
+					then	:ai_str_week
+				else		from_weekend
+			end	from_weekend,
+			from_date,
+			case	
+				when		to_weekend > :ai_end_week
+					then	:ai_end_week
+				else		to_weekend
+			end	to_weekend,
+			to_date
+from		GEDB.hpa101m
+where		year		=	:as_year
+and		hakgi		=	:as_hakgi
+and		((from_weekend	<=	:ai_str_week and to_weekend >= :ai_str_week)
+or			 (from_weekend	<=	:ai_end_week and to_weekend >= :ai_end_week))
+order by month
+
+" update="GEDB.hpa101m" updatewhere=1 updatekeyinplace=no arguments=(("as_year", string),("as_hakgi", string),("ai_str_week", number),("ai_end_week", number)) )
+text(band=header alignment="2" text="월" border="0" color="0" x="9" y="12" height="56" width="494" html.valueishtml="0"  name=month_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="마지막일자" border="0" color="0" x="2711" y="12" height="56" width="823" html.valueishtml="0"  name=to_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="첫주차" border="0" color="0" x="512" y="12" height="56" width="631" html.valueishtml="0"  name=from_weekend_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="시작일자" border="0" color="0" x="1152" y="12" height="56" width="791" html.valueishtml="0"  name=from_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="마지막주차" border="0" color="0" x="2053" y="12" height="56" width="649" html.valueishtml="0"  name=to_weekend_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="" border="0" color="0" x="1952" y="12" height="56" width="91" html.valueishtml="0"  name=compute_2_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="" border="0" color="0" x="3543" y="12" height="56" width="87" html.valueishtml="0"  name=compute_1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="0"border="0" color="0" x="3543" y="4" height="72" width="87" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+button(band=detail text="" filename="..\bmp\QUERY_S.bmp" enabled=yes action="0" border="0" color="0" x="3538" y="0" height="80" width="96" vtextalign="0" htextalign="0"  name=b_to_dt visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1073741824" )
+compute(band=detail alignment="0" expression="0"border="0" color="0" x="1952" y="4" height="68" width="91" format="[GENERAL]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+button(band=detail text="" filename="..\bmp\QUERY_S.bmp" enabled=yes action="0" border="0" color="0" x="1952" y="0" height="80" width="96" vtextalign="0" htextalign="0"  name=b_from_dt visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="1073741824" )
+column(band=detail id=3 alignment="2" tabsequence=10 border="0" color="0" x="9" y="4" height="72" width="494" format="[general]" html.valueishtml="0"  name=month visible="1" editmask.autoskip=yes editmask.spin=yes editmask.mask="#0" editmask.spinrange="1~~12" editmask.spinincr=1 editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb(255, 255, 255), 78682240)" )
+column(band=detail id=4 alignment="2" tabsequence=20 border="0" color="0" x="512" y="4" height="72" width="631" format="[general]" html.valueishtml="0"  name=from_weekend visible="1" editmask.autoskip=yes editmask.spin=yes editmask.mask="##" editmask.spinrange="1~~99" editmask.spinincr=1 editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb(255, 255, 255), 78682240)" )
+column(band=detail id=5 alignment="2" tabsequence=30 border="0" color="0" x="1152" y="4" height="72" width="791" format="[general]" html.valueishtml="0"  name=from_date visible="1" editmask.autoskip=yes editmask.mask="####/##/##" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb(255, 255, 255), 78682240)" )
+column(band=detail id=6 alignment="2" tabsequence=40 border="0" color="0" x="2053" y="4" height="72" width="649" format="[general]" html.valueishtml="0"  name=to_weekend visible="1" editmask.autoskip=yes editmask.spin=yes editmask.mask="##" editmask.spinrange="1~~99" editmask.spinincr=1 editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb(255, 255, 255), 78682240)" )
+column(band=detail id=7 alignment="2" tabsequence=50 border="0" color="0" x="2711" y="4" height="72" width="823" format="[general]" html.valueishtml="0"  name=to_date visible="1" editmask.autoskip=yes editmask.mask="####/##/##" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif ( getrow() = currentrow(), rgb(255, 255, 255), 78682240)" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

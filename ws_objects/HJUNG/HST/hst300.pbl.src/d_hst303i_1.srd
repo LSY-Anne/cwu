@@ -1,0 +1,114 @@
+﻿$PBExportHeader$d_hst303i_1.srd
+$PBExportComments$실사비품정리 - 비품실사내역
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(11) update=yes updatewhereclause=yes key=yes name=id_no dbname="hst033h.id_no" )
+ column=(type=char(8) update=yes updatewhereclause=yes key=yes name=inve_date dbname="hst033h.inve_date" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=item_class dbname="hst033h.item_class" )
+ column=(type=char(7) update=yes updatewhereclause=yes name=item_no dbname="hst033h.item_no" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=gwa dbname="hst033h.gwa" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=room_code dbname="hst033h.room_code" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=inve_status dbname="hst033h.inve_status" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=inve_detail dbname="hst033h.inve_detail" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=inve_gwa dbname="hst033h.inve_gwa" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=inve_researcher dbname="hst033h.inve_researcher" )
+ column=(type=char(80) update=yes updatewhereclause=yes name=remark dbname="hst033h.remark" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=work_gbn dbname="hst033h.work_gbn" values="변경	1/변경	0" )
+ column=(type=number update=yes updatewhereclause=yes name=boyu_qty dbname="hst033h.boyu_qty" )
+ column=(type=number update=yes updatewhereclause=yes name=silsa_gty dbname="hst033h.silsa_gty" initial="0" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hst033h.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hst033h.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hst033h.work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hst033h.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hst033h.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hst033h.job_date" )
+ column=(type=char(40) updatewhereclause=yes name=item_name dbname="hst033h.item_name" )
+ column=(type=number updatewhereclause=yes name=nation_amt dbname="hst033h.nation_amt" )
+ column=(type=char(40) updatewhereclause=yes name=useful dbname="hst033h.useful" )
+ column=(type=number updatewhereclause=yes name=purchase_amt dbname="hst033h.purchase_amt" )
+ retrieve="SELECT	A.ID_NO,
+			A.INVE_DATE  INVE_DATE, 
+			A.ITEM_CLASS,
+			A.ITEM_NO,
+			A.GWA,
+			A.ROOM_CODE,
+			A.INVE_STATUS,
+			A.INVE_DETAIL,
+			A.INVE_GWA,
+			A.INVE_RESEARCHER,
+			A.REMARK,
+			A.WORK_GBN,
+         A.BOYU_QTY,
+         A.SILSA_GTY,
+			A.WORKER,
+			A.IPADDR,
+			A.WORK_DATE,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE,
+			B.ITEM_NAME,
+			C.NATION_AMT,
+			C.USEFUL,
+         C.PURCHASE_AMT
+FROM		STDB.HST033H	A,
+			STDB.HST004M	B,
+			STDB.HST027M	C,
+			STDB.HST242M	D
+WHERE		C.ITEM_NO = B.ITEM_NO(+)
+AND		A.ID_NO		   =	C.ID_NO		 
+AND		A.ITEM_CLASS   =	C.ITEM_CLASS
+AND 	   A.ROOM_CODE	   =	D.ROOM_CODE(+)
+AND      A.ID_NO      LIKE :as_id_no
+AND      B.ITEM_NAME  LIKE :as_item_name
+AND      nvl(A.GWA,' ')        LIKE :as_gwa
+AND      A.INVE_DATE BETWEEN  :as_fr_date  AND :as_to_date
+" update="STDB.HST033H" updatewhere=0 updatekeyinplace=no arguments=(("as_id_no", string),("as_item_name", string),("as_gwa", string),("as_fr_date", string),("as_to_date", string))  sort="inve_date D " )
+text(band=header alignment="2" text="변경" border="0" color="0" x="201" y="8" height="56" width="224" html.valueishtml="0"  name=work_gbn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="등재 번호" border="0" color="0" x="434" y="8" height="56" width="379" html.valueishtml="0"  name=id_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="실사일자" border="0" color="0" x="823" y="4" height="56" width="421" html.valueishtml="0"  name=inve_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="품목번호" border="0" color="0" x="1253" y="8" height="56" width="430" html.valueishtml="0"  name=item_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="품목명" border="0" color="0" x="1691" y="8" height="56" width="855" html.valueishtml="0"  name=item_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="사용장소" border="0" color="0" x="3822" y="8" height="56" width="329" html.valueishtml="0"  name=room_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="보유수량" border="0" color="0" x="4160" y="8" height="56" width="288" html.valueishtml="0"  name=boyu_qty_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="금액" border="0" color="0" x="4457" y="8" height="56" width="498" html.valueishtml="0"  name=purchase_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="실사수량" border="0" color="0" x="4965" y="8" height="56" width="293" html.valueishtml="0"  name=silsa_gty_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="실사 결과" border="0" color="0" x="5266" y="8" height="56" width="389" html.valueishtml="0"  name=inve_detail_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="비 고" border="0" color="0" x="7232" y="8" height="56" width="786" html.valueishtml="0"  name=remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="사용부서" border="0" color="0" x="3067" y="8" height="56" width="745" html.valueishtml="0"  name=gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="자산상태" border="0" color="0" x="5664" y="8" height="56" width="503" html.valueishtml="0"  name=inve_status_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="재물조사 부서" border="0" color="0" x="6176" y="8" height="56" width="727" html.valueishtml="0"  name=inve_gwa_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="재물조사자" border="0" color="0" x="6912" y="8" height="56" width="311" html.valueishtml="0"  name=inve_researcher_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="순서" border="0" color="0" x="9" y="8" height="56" width="183" html.valueishtml="0"  name=compute_1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="품목구분" border="0" color="0" x="2555" y="8" height="56" width="503" html.valueishtml="0"  name=item_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="2" expression="getrow()"border="0" color="0" x="9" y="8" height="68" width="183" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="434" y="8" height="68" width="379" format="[general]" html.valueishtml="0"  name=id_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=30 border="0" color="0" x="3822" y="8" height="68" width="329" format="[general]" html.valueishtml="0"  name=room_code  tag="kor" pointer="HyperLink!" visible="1" dddw.name=dddw_room_code dddw.displaycolumn=name dddw.datacolumn=code dddw.percentwidth=200 dddw.lines=10 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="0" tabsequence=10 border="0" color="0" x="201" y="8" height="68" width="224" format="[general]" html.valueishtml="0"  name=work_gbn visible="1" checkbox.text="변경" checkbox.on="1" checkbox.off="0" checkbox.scale=yes checkbox.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="823" y="8" height="68" width="421" format="@@@@/@@/@@" html.valueishtml="0"  name=inve_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="1" tabsequence=32766 border="0" color="0" x="4160" y="8" height="68" width="288" format="#,##0" html.valueishtml="0"  name=boyu_qty visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="1" tabsequence=40 border="0" color="0" x="4965" y="8" height="68" width="293" format="#,##0" html.valueishtml="0"  name=silsa_gty visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="0" tabsequence=50 border="0" color="0" x="5266" y="8" height="68" width="389" format="[general]" html.valueishtml="0"  name=inve_detail visible="1" dddw.name=dddw_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=250 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="0" tabsequence=90 border="0" color="0" x="7232" y="8" height="68" width="786" format="[general]" html.valueishtml="0"  name=remark  tag="kor" visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.nilisnull=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="0" tabsequence=20 border="0" color="0" x="3067" y="8" height="68" width="745" format="[general]" html.valueishtml="0"  name=gwa pointer="HyperLink!" visible="1" dddw.name=dddw_dept_code_apply dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=150 dddw.lines=10 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="1253" y="8" height="68" width="430" format="[general]" html.valueishtml="0"  name=item_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=21 alignment="2" tabsequence=32766 border="0" color="0" x="1691" y="8" height="68" width="855" format="[general]" html.valueishtml="0"  name=item_name  tag="kor" visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="0" tabsequence=60 border="0" color="0" x="5664" y="8" height="68" width="503" format="[general]" html.valueishtml="0"  name=inve_status pointer="HyperLink!" visible="1" dddw.name=dddw_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="0" tabsequence=70 border="0" color="0" x="6176" y="8" height="68" width="727" format="[general]" html.valueishtml="0"  name=inve_gwa pointer="HyperLink!" visible="1" dddw.name=dddw_hakgwa_all dddw.displaycolumn=fname dddw.datacolumn=gwa dddw.percentwidth=150 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.hscrollbar=yes dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=24 alignment="1" tabsequence=32766 border="0" color="0" x="4457" y="8" height="68" width="498" format="#,##0" html.valueishtml="0"  name=purchase_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="0" tabsequence=80 border="0" color="0" x="6912" y="8" height="68" width="311" format="[general]" html.valueishtml="0"  name=inve_researcher visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="2555" y="8" height="68" width="503" format="[general]" html.valueishtml="0"  name=item_class visible="1" dddw.name=dddw_code dddw.displaycolumn=fname dddw.datacolumn=code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

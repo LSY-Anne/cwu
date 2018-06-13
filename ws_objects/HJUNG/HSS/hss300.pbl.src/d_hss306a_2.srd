@@ -1,0 +1,83 @@
+﻿$PBExportHeader$d_hss306a_2.srd
+$PBExportComments$전기설비점검관리
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 1 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 9 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=492 color="536870912" )
+summary(height=8 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=char(3) updatewhereclause=yes name=hst302h_buil_no dbname="hst302h.buil_no" )
+ column=(type=char(20) updatewhereclause=yes name=hst240m_buil_name dbname="hst302h.buil_name" )
+ column=(type=char(8) updatewhereclause=yes name=hst302h_inspec_date dbname="hst302h.inspec_date" )
+ column=(type=char(50) updatewhereclause=yes name=hst302h_equipment dbname="hst302h.equipment" )
+ column=(type=char(1) updatewhereclause=yes name=hst302h_equip_yn dbname="hst302h.equip_yn" values="점검	Y/비점검	N/" )
+ column=(type=char(100) updatewhereclause=yes name=hst302h_remark dbname="hst302h.remark" )
+ column=(type=char(5) updatewhereclause=yes name=hst302h_worker dbname="hst302h.worker" )
+ column=(type=char(20) updatewhereclause=yes name=hst302h_ipaddr dbname="hst302h.ipaddr" )
+ column=(type=datetime updatewhereclause=yes name=hst302h_work_date dbname="hst302h.work_date" )
+ column=(type=char(5) updatewhereclause=yes name=hst302h_job_uid dbname="hst302h.job_uid" )
+ column=(type=char(20) updatewhereclause=yes name=hst302h_job_add dbname="hst302h.job_add" )
+ column=(type=datetime updatewhereclause=yes name=hst302h_job_date dbname="hst302h.job_date" )
+ retrieve="select	a.buil_no,
+			b.buil_name,
+			a.inspec_date,
+			a.equipment,
+ 			a.equip_yn,
+			a.remark,
+			a.worker,
+         a.ipaddr,
+         a.work_date,
+         a.job_uid,
+         a.job_add,
+         a.job_date
+from	   stdb.hst302h a,
+         stdb.hst240m b
+where    a.buil_no = b.buil_no
+and	   a.inspec_date between :as_fr_date  and :as_to_date
+" arguments=(("as_fr_date", string),("as_to_date", string))  sort="hst302h_buil_no A hst302h_inspec_date A " )
+line(band=header x1="14" y1="376" x2="14" y2="624"  name=l_2 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="4347" y1="376" x2="4347" y2="624"  name=l_8 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=header x1="14" y1="376" x2="4343" y2="376"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="전기설비점검 리스트" border="0" color="0" x="14" y="8" height="132" width="4329" html.valueishtml="0"  name=t_2 visible="1"  font.face="굴림체" font.height="-22" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" font.underline="1" background.mode="1" background.color="536870912" )
+compute(band=header alignment="0" expression="page() + ' OF ' + pageCount()"border="0" color="0" x="3950" y="304" height="60" width="393" format="[general]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="PAGE : " border="0" color="0" x="3717" y="304" height="60" width="219" html.valueishtml="0"  name=t_14 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="TIME : " border="0" color="0" x="3717" y="232" height="60" width="219" html.valueishtml="0"  name=t_13 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="DATE : " border="0" color="0" x="3717" y="160" height="60" width="219" html.valueishtml="0"  name=t_12 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+compute(band=header alignment="0" expression="left(   as_fr_date   , 4) + '/' + mid(  as_fr_date , 5, 2) + '/' + right(  as_fr_date , 2) + ' ~~ ' + left(  as_to_date  , 4) + '/' + mid( as_to_date , 5, 2) + '/' + right( as_to_date , 2)"border="0" color="0" x="1824" y="152" height="60" width="718" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="(                       )" border="0" color="0" x="1783" y="152" height="60" width="800" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="14" y1="488" x2="4343" y2="488"  name=l_18 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="비고" border="0" color="0" x="3483" y="404" height="60" width="850" html.valueishtml="0"  name=hst302h_remark_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="3470" y1="376" x2="3470" y2="624"  name=l_14 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="점검여부" border="0" color="0" x="3209" y="404" height="60" width="251" html.valueishtml="0"  name=hst302h_equip_yn_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="3195" y1="376" x2="3195" y2="624"  name=l_7 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="건물명" border="0" color="0" x="27" y="404" height="60" width="293" html.valueishtml="0"  name=hst240m_buil_name_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="329" y1="376" x2="329" y2="624"  name=l_5 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="점검일자" border="0" color="0" x="343" y="404" height="60" width="384" html.valueishtml="0"  name=hst302h_inspec_date_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=header x1="736" y1="376" x2="736" y2="624"  name=l_6 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="저압설비" border="0" color="0" x="750" y="404" height="60" width="2437" html.valueishtml="0"  name=hst302h_equipment_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="14" y1="0" x2="14" y2="248"  name=l_12 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="14" y1="84" x2="4343" y2="84"  name=l_3 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="4347" y1="0" x2="4347" y2="248"  name=l_11 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="3483" y="12" height="60" width="850" format="[general]" html.valueishtml="0"  name=hst302h_remark visible="1" edit.limit=100 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="3470" y1="0" x2="3470" y2="248"  name=l_16 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="3209" y="12" height="60" width="251" format="[general]" html.valueishtml="0"  name=hst302h_equip_yn visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="3195" y1="0" x2="3195" y2="248"  name=l_15 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="27" y="12" height="60" width="293" format="[general]" html.valueishtml="0"  name=hst240m_buil_name visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="329" y1="0" x2="329" y2="248"  name=l_10 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="343" y="12" height="60" width="384" format="@@@@/@@/@@" html.valueishtml="0"  name=hst302h_inspec_date visible="1" edit.limit=8 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=detail x1="736" y1="0" x2="736" y2="248"  name=l_13 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="750" y="12" height="60" width="2437" format="[general]" html.valueishtml="0"  name=hst302h_equipment visible="1" edit.limit=50 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+line(band=summary x1="14" y1="0" x2="4343" y2="0"  name=l_17 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=header alignment="0" expression="string(f_sysdate(), 'yyyy/mm/dd')"border="0" color="0" x="3950" y="160" height="60" width="393" format="[GENERAL]" html.valueishtml="0"  name=compute_12 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+compute(band=header alignment="0" expression="string(f_sysdate(), 'hh:mm:ss')"border="0" color="0" x="3950" y="232" height="60" width="393" format="[GENERAL]" html.valueishtml="0"  name=compute_11 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

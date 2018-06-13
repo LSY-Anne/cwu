@@ -1,0 +1,112 @@
+﻿$PBExportHeader$d_hin203p_1.srd
+$PBExportComments$교직원조건별검색
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=76 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(5) updatewhereclause=yes key=yes name=hin001m_member_no dbname="hin001m.member_no" )
+ column=(type=char(20) updatewhereclause=yes name=hin001m_kname dbname="hin001m.kname" )
+ column=(type=char(13) updatewhereclause=yes name=hin001m_jumin_no dbname="hin001m.jumin_no" )
+ column=(type=char(4) updatewhereclause=yes name=dept_code dbname="hin001m.dept_code" )
+ column=(type=decimal(0) updatewhereclause=yes name=hin001m_jikwi_code dbname="hin001m.jikwi_code" )
+ column=(type=char(3) updatewhereclause=yes name=hin001m_duty_code dbname="hin001m.duty_code" )
+ column=(type=char(8) updatewhereclause=yes name=hin001m_firsthire_date dbname="hin001m.firsthire_date" )
+ column=(type=char(8) updatewhereclause=yes name=hin001m_hakwonhire_date dbname="hin001m.hakwonhire_date" )
+ column=(type=char(8) updatewhereclause=yes name=hin001m_sosok_date dbname="hin001m.sosok_date" )
+ column=(type=char(8) updatewhereclause=yes name=hin001m_jikjong_date dbname="hin001m.jikjong_date" )
+ column=(type=char(8) updatewhereclause=yes name=hin001m_duty_date dbname="hin001m.duty_date" )
+ column=(type=decimal(2) updatewhereclause=yes name=career_ym dbname="hin001m.career_ym" )
+ column=(type=char(8) updatewhereclause=yes name=schedule_date dbname="hin001m.schedule_date" )
+ column=(type=char(4000) updatewhereclause=yes name=com_dept_nm dbname="com_dept_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_bojik_nm dbname="com_bojik_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_jikjong_nm dbname="com_jikjong_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_jikwi_nm dbname="com_jikwi_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_duty_nm dbname="com_duty_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_jikmu_nm dbname="com_jikmu_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_jaejik_nm dbname="com_jaejik_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_ann_nm dbname="com_ann_nm" )
+ column=(type=char(3) updatewhereclause=yes name=sal_class dbname="hin001m.sal_class" )
+ retrieve="SELECT	A.MEMBER_NO,
+			A.NAME		KNAME,
+			A.JUMIN_NO,
+			A.GWA			DEPT_CODE,
+			A.JIKWI_CODE,
+			A.DUTY_CODE,
+			A.FIRSTHIRE_DATE,
+			A.HAKWONHIRE_DATE,
+			A.SOSOK_DATE,
+			A.JIKJONG_DATE,
+			A.DUTY_DATE,
+			A.CAREER_YM,
+			A.SCHEDULE_DATE,
+			FU_DEPT_NM(A.GWA,'K')														COM_DEPT_NM,
+			FU_BOJIK_NM(A.BOJIK_CODE1,'K')											COM_BOJIK_NM,
+			FU_CODE_NM('HAENG','JIKJONG_CODE',SUBSTR(A.DUTY_CODE,1,1),'K')	COM_JIKJONG_NM,
+			FU_CODE_NM('HAENG','JIKWI_CODE',A.JIKWI_CODE,'K')					COM_JIKWI_NM,
+			FU_DUTY_NM(A.DUTY_CODE,'K')												COM_DUTY_NM,
+			FU_CODE_NM('HAENG','JIKMU_CODE',A.JIKMU_CODE,'K')					COM_JIKMU_NM,
+			FU_CODE_NM('HAENG','JAEJIK_OPT',A.JAEJIK_OPT,'K')					COM_JAEJIK_NM,
+			FU_CODE_NM('HAENG','ANN_OPT',A.ANN_OPT,'K')							COM_ANN_NM,
+			A.SAL_CLASS
+FROM		INDB.HIN001M A
+WHERE		(A.NAME                  LIKE :as_KName||'%'	)
+AND		(A.GWA                   LIKE :as_DeptCode||'%'	)
+AND		(NVL(TRIM(A.BOJIK_CODE1),'%') LIKE :as_BojikCode||'%'	)
+AND		(A.DUTY_CODE             BETWEEN DECODE(:as_JikjongGb,'1','000','2','400','000') 
+											 AND     DECODE(:as_JikjongGb,'1','399','2','899','999')	)
+AND		(SUBSTR(A.DUTY_CODE,1,1) LIKE :as_JikJongCode||'%'	)
+AND		(A.JIKWI_CODE            LIKE :as_JikWiCode||'%'	)
+AND		(A.DUTY_CODE             LIKE :as_DutyCode||'%'	)
+AND		(NVL(A.CHANGE_OPT,0)     LIKE :as_ChangeOpt||'%'	)
+AND		(A.JAEJIK_OPT            LIKE :as_JaeJikOpt||'%'	)
+AND		A.HAKWONHIRE_DATE        BETWEEN :as_FrDate AND :as_ToDate
+ORDER	BY	A.GWA,
+			A.MEMBER_NO
+" update="INDB.HIN001M" updatewhere=0 updatekeyinplace=no arguments=(("as_KName", string),("as_DeptCode", string),("as_BojikCode", string),("as_JikjongGb", string),("as_JikJongCode", string),("as_JikWiCode", string),("as_DutyCode", string),("as_FrDate", string),("as_ToDate", string),("as_ChangeOpt", string),("as_JaeJikOpt", string)) )
+text(band=header alignment="2" text="개인번호" border="0" color="0" x="9" y="8" height="56" width="288" html.valueishtml="0"  name=hin001m_member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="성명" border="0" color="0" x="306" y="8" height="56" width="352" html.valueishtml="0"  name=hin001m_kname_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="소속명" border="0" color="0" x="672" y="8" height="56" width="466" html.valueishtml="0"  name=com_dept_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="보직명" border="0" color="0" x="1147" y="8" height="56" width="462" html.valueishtml="0"  name=com_bojik_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직종명" border="0" color="0" x="1618" y="8" height="56" width="279" html.valueishtml="0"  name=com_jikjong_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직급명" border="0" color="0" x="2958" y="8" height="56" width="398" html.valueishtml="0"  name=com_duty_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="연봉구분" border="0" color="0" x="3365" y="8" height="56" width="334" html.valueishtml="0"  name=com_ann_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="호봉" border="0" color="0" x="3707" y="8" height="56" width="165" html.valueishtml="0"  name=sal_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="경력년수" border="0" color="0" x="3881" y="8" height="56" width="302" html.valueishtml="0"  name=career_ym_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="최초임용일" border="0" color="0" x="4192" y="8" height="56" width="389" html.valueishtml="0"  name=hin001m_firsthire_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="학원임용일" border="0" color="0" x="4590" y="8" height="56" width="379" html.valueishtml="0"  name=hin001m_hakwonhire_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="소속변동일자" border="0" color="0" x="4969" y="8" height="56" width="411" html.valueishtml="0"  name=hin001m_sosok_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직급변동일자" border="0" color="0" x="5381" y="8" height="56" width="462" html.valueishtml="0"  name=hin001m_duty_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="재직구분" border="0" color="0" x="5851" y="8" height="56" width="288" html.valueishtml="0"  name=com_jaejik_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="퇴직예정일자" border="0" color="0" x="6149" y="8" height="56" width="411" html.valueishtml="0"  name=schedule_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직위명" border="0" color="0" x="1906" y="8" height="56" width="489" html.valueishtml="0"  name=com_jikwi_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직무명" border="0" color="0" x="2405" y="8" height="56" width="544" html.valueishtml="0"  name=com_jikmu_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="76" width="288" format="[general]" html.valueishtml="0"  name=hin001m_member_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="306" y="4" height="76" width="352" format="[general]" html.valueishtml="0"  name=hin001m_kname visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="0" x="1618" y="4" height="76" width="279" format="[general]" html.valueishtml="0"  name=com_jikjong_nm visible="1" edit.limit=4000 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="4192" y="4" height="76" width="389" format="@@@@/@@/@@" html.valueishtml="0"  name=hin001m_firsthire_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="4590" y="4" height="76" width="379" format="@@@@/@@/@@" html.valueishtml="0"  name=hin001m_hakwonhire_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="0" x="4978" y="4" height="76" width="393" format="@@@@/@@/@@" html.valueishtml="0"  name=hin001m_sosok_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="672" y="4" height="76" width="466" format="[general]" html.valueishtml="0"  name=com_dept_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="1147" y="4" height="76" width="462" format="[general]" html.valueishtml="0"  name=com_bojik_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=22 alignment="2" tabsequence=32766 border="0" color="0" x="3707" y="4" height="76" width="165" format="[general]" html.valueishtml="0"  name=sal_class visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=11 alignment="2" tabsequence=32766 border="0" color="0" x="5381" y="4" height="76" width="462" format="@@@@/@@/@@" html.valueishtml="0"  name=hin001m_duty_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="0" color="0" x="2958" y="4" height="76" width="398" format="[general]" html.valueishtml="0"  name=com_duty_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=20 alignment="2" tabsequence=32766 border="0" color="0" x="5851" y="4" height="76" width="288" format="[general]" html.valueishtml="0"  name=com_jaejik_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="2" tabsequence=32766 border="0" color="0" x="3881" y="4" height="76" width="302" format="##0.00" html.valueishtml="0"  name=career_ym visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=21 alignment="0" tabsequence=32766 border="0" color="0" x="3365" y="4" height="76" width="334" format="[general]" html.valueishtml="0"  name=com_ann_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="0" x="6149" y="4" height="76" width="389" format="[general]" html.valueishtml="0"  name=schedule_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="0" x="1906" y="4" height="76" width="489" format="[general]" html.valueishtml="0"  name=com_jikwi_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=19 alignment="0" tabsequence=32766 border="0" color="0" x="2405" y="4" height="76" width="544" format="[general]" html.valueishtml="0"  name=com_jikmu_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

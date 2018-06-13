@@ -1,0 +1,52 @@
+﻿$PBExportHeader$d_hpa502a_1.srd
+$PBExportComments$책임시수 관리 - 구분이 보직일경우
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(5) update=yes updatewhereclause=yes key=yes name=respons_code dbname="hpa201m.respons_code" dbalias=".respons_code" )
+ column=(type=number update=yes updatewhereclause=yes name=respons_time dbname="hpa201m.respons_time" dbalias=".respons_time" )
+ column=(type=char(1) update=yes updatewhereclause=yes key=yes name=respons_gb dbname="hpa201m.respons_gb" dbalias=".respons_gb" values="보직	1/직급	2/" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hpa201m.worker" dbalias=".worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hpa201m.ipaddr" dbalias=".ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hpa201m.work_date" dbalias=".work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hpa201m.job_uid" dbalias=".job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hpa201m.job_add" dbalias=".job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hpa201m.job_date" dbalias=".job_date" )
+ column=(type=number update=yes updatewhereclause=yes name=limit_time dbname="hpa201m.limit_time" dbalias=".limit_time" )
+ retrieve="  SELECT PADB.HPA201M.RESPONS_CODE,   
+         PADB.HPA201M.RESPONS_TIME,   
+         PADB.HPA201M.RESPONS_GB,   
+         PADB.HPA201M.WORKER,   
+         PADB.HPA201M.IPADDR,   
+         PADB.HPA201M.WORK_DATE,   
+         PADB.HPA201M.JOB_UID,   
+         PADB.HPA201M.JOB_ADD,   
+         PADB.HPA201M.JOB_DATE,   
+         PADB.HPA201M.LIMIT_TIME  
+    FROM PADB.HPA201M  
+   WHERE PADB.HPA201M.RESPONS_GB = :as_respons_gb   
+ORDER BY PADB.HPA201M.RESPONS_GB ASC,   
+         PADB.HPA201M.RESPONS_CODE ASC   
+" update="PADB.HPA201M" updatewhere=0 updatekeyinplace=yes arguments=(("as_respons_gb", string))  sort="respons_gb A respons_code A " )
+text(band=header alignment="2" text="한계시수" border="0" color="25058105" x="1819" y="4" height="68" width="425" html.valueishtml="0"  name=limit_time_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="선택구분" border="0" color="25058105" x="9" y="4" height="68" width="421" html.valueishtml="0"  name=respons_gb_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="보  직  명" border="0" color="25058105" x="439" y="4" height="68" width="942" html.valueishtml="0"  name=respons_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+text(band=header alignment="2" text="책임시수" border="0" color="25058105" x="1390" y="4" height="68" width="421" html.valueishtml="0"  name=respons_time_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="29802942" )
+column(band=detail id=2 alignment="2" tabsequence=20 border="0" color="0" x="1390" y="4" height="72" width="421" format="#0" html.valueishtml="0"  name=respons_time visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif ( currentrow() = getrow(), rgb ( 255, 255, 255 ), 78682240 )" )
+column(band=detail id=10 alignment="2" tabsequence=30 border="0" color="0" x="1819" y="4" height="72" width="425" format="#0" html.valueishtml="0"  name=limit_time visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif ( currentrow() = getrow(), rgb ( 255, 255, 255 ), 78682240 )" )
+column(band=detail id=3 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="421" format="[general]" html.valueishtml="0"  name=respons_gb visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="0" background.color="553648127~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+column(band=detail id=1 alignment="0" tabsequence=10 border="0" color="0" x="439" y="4" height="72" width="942" format="[general]" html.valueishtml="0"  name=respons_code visible="1" dddw.name=dddw_bojik_code dddw.displaycolumn=appoint_name dddw.datacolumn=appoint_code dddw.percentwidth=100 dddw.lines=10 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any dddw.vscrollbar=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="553648127~tif( getrow() = currentrow(),rgb(248,231,237),if( mod( getrow(),  2) =  0,  rgb(243,244,249), rgb(255,255,255) ))" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

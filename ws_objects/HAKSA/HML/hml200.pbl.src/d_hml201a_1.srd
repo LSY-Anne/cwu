@@ -1,0 +1,69 @@
+﻿$PBExportHeader$d_hml201a_1.srd
+$PBExportComments$부처별학생마일리지신청 - 부서별마일리지
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(4) update=yes updatewhereclause=yes name=budget_year dbname="point_gwa_budget.budget_year" )
+ column=(type=char(50) updatewhereclause=yes name=gwa_nm dbname="gwa_nm" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=gwa dbname="point_gwa_budget.gwa" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=point_item dbname="point_gwa_budget.point_item" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=budget_point dbname="point_gwa_budget.budget_point" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=assign_point dbname="point_gwa_budget.assign_point" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=supply_point dbname="point_gwa_budget.supply_point" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=fix_yn dbname="point_gwa_budget.fix_yn" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=request_point dbname="point_gwa_budget.request_point" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=approval_point dbname="point_gwa_budget.approval_point" )
+ column=(type=decimal(0) updatewhereclause=yes name=std_point dbname="point_rule.std_point" )
+ column=(type=decimal(0) updatewhereclause=yes name=point_cnt dbname="point_gwa_budget.point_cnt" )
+ column=(type=number updatewhereclause=yes name=remain_point dbname="remain_point" )
+ retrieve="  SELECT A.BUDGET_YEAR,   
+			(SELECT FNAME FROM CDDB.KCH003M WHERE TRIM(GWA) = TRIM(A.GWA) ) AS GWA_nm,   
+			a.GWA,
+			A.POINT_ITEM,   
+			A.BUDGET_POINT,   
+			A.ASSIGN_POINT,   
+			A.SUPPLY_POINT,   
+			A.FIX_YN,   
+			A.REQUEST_POINT,   
+			A.APPROVAL_POINT,
+			B.STD_POINT,
+			A.POINT_CNT,
+			(A.ASSIGN_POINT + A.SUPPLY_POINT - A.REQUEST_POINT) AS REMAIN_POINT
+    FROM HAKSA.POINT_GWA_BUDGET   A,
+			HAKSA.POINT_RULE B
+WHERE 	A.POINT_ITEM = B.POINT_ITEM
+AND		A.BUDGET_YEAR = :as_year
+AND 		(:as_gwa = '%' OR A.GWA  = :as_gwa)
+" arguments=(("as_year", string),("as_gwa", string)) )
+text(band=header alignment="2" text="항목" border="0" color="33554432" x="786" y="8" height="56" width="681" html.valueishtml="0"  name=point_item_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="배정마일리지" border="0" color="33554432" x="2254" y="8" height="56" width="393" html.valueishtml="0"  name=assign_point_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="추경마일리지" border="0" color="33554432" x="2656" y="8" height="56" width="393" html.valueishtml="0"  name=supply_point_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="신청마일리지" border="0" color="33554432" x="3058" y="8" height="56" width="411" html.valueishtml="0"  name=request_point_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="학과/부서" border="0" color="0" x="9" y="8" height="56" width="768" html.valueishtml="0"  name=gwa_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="승인마일리지" border="0" color="33554432" x="3479" y="8" height="56" width="407" html.valueishtml="0"  name=approval_point_t visible="1"  font.face="tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="사용횟수" border="0" color="0" x="1979" y="8" height="56" width="265" html.valueishtml="0"  name=point_cnt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="잔여마일리지" border="0" color="0" x="3895" y="8" height="56" width="402" html.valueishtml="0"  name=remain_point_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="1회사용마일리지" border="0" color="0" x="1477" y="8" height="56" width="494" html.valueishtml="0"  name=std_point_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="786" y="8" height="68" width="681" format="[general]" html.valueishtml="0"  name=point_item visible="1" dddw.name=d_dddw_point_item dddw.displaycolumn=point_item_nm dddw.datacolumn=point_item dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="9" y="8" height="68" width="768" format="[general]" html.valueishtml="0"  name=gwa_nm  tag="KOR" visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="1" tabsequence=32766 border="0" color="33554432" x="1979" y="8" height="68" width="265" format="[general]" html.valueishtml="0"  name=point_cnt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="1" tabsequence=32766 border="0" color="33554432" x="1481" y="8" height="68" width="489" html.valueishtml="0"  name=std_point visible="1" editmask.mask="##,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="33554432" x="2258" y="8" height="68" width="389" html.valueishtml="0"  name=assign_point visible="1" editmask.mask="##,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="33554432" x="2661" y="8" height="68" width="389" html.valueishtml="0"  name=supply_point visible="1" editmask.mask="##,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="33554432" x="3063" y="8" height="68" width="407" html.valueishtml="0"  name=request_point visible="1" editmask.mask="##,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=32766 border="0" color="33554432" x="3483" y="8" height="68" width="402" html.valueishtml="0"  name=approval_point visible="1" editmask.mask="##,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="1" tabsequence=32766 border="0" color="33554432" x="3899" y="8" height="68" width="398" html.valueishtml="0"  name=remain_point visible="1" editmask.mask="##,###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

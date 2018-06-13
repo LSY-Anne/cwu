@@ -1,0 +1,73 @@
+﻿$PBExportHeader$f_zerotospace.srf
+$PBExportComments$0을  공백의 문자로 바꾼다
+global type f_zerotospace from function_object
+end type
+
+forward prototypes
+global function string f_zerotospace (integer flag, string datestring)
+end prototypes
+
+global function string f_zerotospace (integer flag, string datestring);//////////////////////////////////////////////////////////////////
+// 	작성목적 : 날짜를 셋팅한다.
+//    적 성 인 : 이현수
+//		작성일자 : 2002.10
+//    변 경 인 :
+//    변경일자 :
+//    변경사유 :
+//////////////////////////////////////////////////////////////////
+
+String Buffer,Temp
+Integer Str_Len
+If  flag = 1 then  // yyyymmdd
+	 Buffer = Left(DateString,4)
+	 Temp   = Mid (DateString,5,1)
+	 If Temp = '0' then Temp = ' '
+	 Buffer = Buffer + temp + Mid (DateString,6,1)
+	 Temp   = Mid (DateString,7,1)
+	 If Temp = '0' then Temp = ' '
+	 Buffer = Buffer + temp + Mid (DateString,8,1)	 
+elseif Flag = 2 then // mm-DD-yy
+	 Temp   = Mid (DateString,5,1)
+    If Temp = '0' then Temp = ' '	
+	 Temp   = TEMP + Mid (DateString,6,1)
+	 Buffer = Temp 	 
+	 Temp   = Mid (DateString,7,1)
+    If Temp = '0' then Temp = ' '
+	 Buffer = bUFFER + temp + Mid (DateString,8,1)
+	 Buffer = Buffer + Left(DateString,4)	 
+elseif Flag = 3 then // mm-DD-yy영어
+	 Temp   = Mid (DateString,5,2)
+	 Buffer = f_dal(Temp ) 
+	 Temp    = Mid (DateString,7,1)
+    If Temp = '0' then Temp = ' '
+	 BUFFER  = BUFFER + ' ' + TEMP
+	 Buffer  = BUFFER + Mid (DateString,8,1) + ', '	 	
+	 Buffer  = Buffer + Left(DateString,4)	 
+elseIf  flag = 4 then  // yyyy년 mm월 dd일
+	 Buffer = Left(DateString,4) + '년 '
+	 Temp   = Mid (DateString,5,1)
+	 If Temp = '0' then Temp = ' '
+	 Buffer = Buffer + temp + Mid (DateString,6,1) + '월 '
+	 Temp   = Mid (DateString,7,1)
+	 If Temp = '0' then Temp = ' '
+	 Buffer = Buffer + temp + Mid (DateString,8,1) + '일'	   
+elseIf  flag = 5 then  // yyyy년mm월dd일
+	 Buffer = Left(DateString,4) + '년'
+	 Temp   = Mid (DateString,5,1)
+	 If Temp = '0' then Temp = ' '
+	 Buffer = Buffer + temp + Mid (DateString,6,1) + '월'
+	 Temp   = Mid (DateString,7,1)
+	 If Temp = '0' then Temp = ' '
+	 Buffer = Buffer + temp + Mid (DateString,8,1) + '일'	   
+elseIf  flag = 6 then  // yyyy/mm/dd
+	 Buffer = Left(DateString,4)
+	 Buffer = Buffer + '/' +  Mid (DateString,5,2)
+	 Buffer = Buffer + '/' +  Mid (DateString,7,2)	 	 
+elseIf  flag = 7 then  // yyyy.mm.dd
+	 Buffer = Left(DateString,4)
+	 Buffer = Buffer + '.' +  Mid (DateString,5,2)
+	 Buffer = Buffer + '.' +  Mid (DateString,7,2)	 	 	 
+end if	
+Return Buffer
+end function
+

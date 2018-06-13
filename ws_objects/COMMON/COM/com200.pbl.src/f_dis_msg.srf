@@ -1,0 +1,83 @@
+﻿$PBExportHeader$f_dis_msg.srf
+$PBExportComments$메세지처리 ( ai_msggb, as_msg, as_type )
+global type f_dis_msg from function_object
+end type
+
+forward prototypes
+global function integer f_dis_msg (integer ai_msggb, string as_msg, string as_type)
+end prototypes
+
+global function integer f_dis_msg (integer ai_msggb, string as_msg, string as_type);////////////////////////////////////////////////////////////////////////////////////////////
+//// 기    능 : ab_MsgGB값에 따라 MessageBox를 보여주고 상태바에 메세지를 뿌린다.
+//// 작 성 자 : 이현수
+//// 작 성 일 : 2002.10
+//// 함수원형 : f_dis_msg(integer ai_MsgGB, String as_Msg, String as_Type) return integer
+//// 인    수 : ai_MsgGB - MessageBox 처리여부
+////						1 = 상태바에만 메세지처리
+////						2 = MESSAGEBOX만 처리
+////						3 = 상태바, MESSAGEBOX처리
+////				  as_Msg   - Message Text
+////				  as_Type  - Message Type
+////						IO  ( Information / 확인 )
+////						IC1 ( Information / 확인,취소        / DEFAULT 확인인 경우 )
+////						IY2 ( Information / 예,아니오        / DEFAULT 아니오인 경우 )
+////						IN3 ( Information / 예,아니오,취소   / DEFAULT 취소인 경우 )
+////						IR2 ( Information / 재시도,취소      / DEFAULT 취소인 경우 )
+////						IA3 ( Information / 취소,재시도,무시 / DEFAULT 무시인 경우 )
+////						QO  ( Question    / 확인 ) ..
+////						SO  ( StopSign    / 확인 ) ..
+////						EO  ( Exclamation / 확인 ) ..
+////						NO  ( None        / 확인 ) ..
+//// 되 돌 림 : 0 - ab_MsgGB값이 FALSE일 경우
+////				  1 - MessageBox에서 '예'    를 선택했을경우
+////				  2 - MessageBox에서 '아니오'를 선택했을경우
+////				  3 - MessageBox에서 '취소'  를 선택했을경우
+////	주의사항 : 
+////////////////////////////////////////////////////////////////////////////////////////////
+//// 1. 상태바에도 메세지 보여준다.
+//////////////////////////////////////////////////////////////////////////////////
+//IF ai_MsgGb = 1 THEN
+////	w_statusbar.sle_msg.Text = '☞ ' + as_Msg
+//	RETURN 0
+//END IF
+//
+//IF ai_MsgGb = 3 THEN
+////	w_statusbar.sle_msg.Text = '☞ ' + as_Msg
+//END IF
+//
+//////////////////////////////////////////////////////////////////////////////////
+//// 2. MESSAGEBOX 처리
+//////////////////////////////////////////////////////////////////////////////////
+//Integer	li_icon
+//Icon		licon_icon[] = {Information!,Question!,StopSign!,Exclamation!,None!}
+//CHOOSE CASE MID(as_Type,1,1)
+//	CASE 'I'		; li_icon = 1		//Information
+//	CASE 'Q'		; li_icon = 2		//Question
+//	CASE 'S'		; li_icon = 3		//StopSign
+//	CASE 'E'		; li_icon = 4		//Exclamation
+//	CASE 'N'		; li_icon = 5		//None
+//	CASE ELSE	; li_icon = 1		//Information
+//END CHOOSE
+//
+//Integer	li_Button
+//Button	lbt_Button[] = {OK!,OKCancel!,YesNo!,YesNoCancel!,RetryCancel!,AbortRetryIgnore!}
+//CHOOSE CASE MID(as_Type,2,1)
+//	CASE 'O'		; li_Button = 1	//OK
+//	CASE 'C'		; li_Button = 2	//OKCancel
+//	CASE 'Y'		; li_Button = 3	//YesNO
+//	CASE 'N'		; li_Button = 4	//YesNoCancel
+//	CASE 'R'		; li_Button = 5	//RetryCancel
+//	CASE 'A'		; li_Button = 6	//AbortRetryIgnore
+//	CASE ELSE	; li_Button = 1	//OK
+//END CHOOSE
+//
+//Integer	li_Default
+//li_Default = Integer(MID(as_Type,3,1))
+//
+//BEEP(1)
+//RETURN MessageBox('확인',as_Msg,licon_icon[li_icon],&
+//									lbt_Button[li_Button],li_Default)
+
+Return 1
+end function
+

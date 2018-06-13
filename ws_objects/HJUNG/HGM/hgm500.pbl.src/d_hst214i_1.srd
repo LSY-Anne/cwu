@@ -1,0 +1,101 @@
+﻿$PBExportHeader$d_hst214i_1.srd
+$PBExportComments$비품수리입고 - 리스트
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 grid.columnmove=no selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(10) update=yes updatewhereclause=yes name=ord_no dbname="hst032h.ord_no" )
+ column=(type=char(11) updatewhereclause=yes name=id_no dbname="hst032h.id_no" )
+ column=(type=char(7) updatewhereclause=yes name=hst027m_item_no dbname="hst032h.item_no" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=dept_code dbname="hst032h.dept_code" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=acct_code dbname="hst032h.acct_code" )
+ column=(type=decimal(0) updatewhereclause=yes name=sheet_price dbname="hst032h.sheet_price" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=ord_day dbname="hst032h.ord_day" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=ord_date dbname="hst032h.ord_date" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=pay_date dbname="hst032h.pay_date" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=devilery_dt dbname="hst032h.devilery_dt" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=sign_condition dbname="hst032h.sign_condition" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=audit_person dbname="hst032h.audit_person" )
+ column=(type=char(30) update=yes updatewhereclause=yes name=audit_position dbname="hst032h.audit_position" )
+ column=(type=char(100) update=yes updatewhereclause=yes name=remark dbname="hst032h.remark" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=ord_class dbname="hst032h.ord_class" values="발주	6/입고	7/" )
+ column=(type=char(10) updatewhereclause=yes name=req_no dbname="hst032h.req_no" )
+ column=(type=number updatewhereclause=yes name=item_seq dbname="hst032h.item_seq" )
+ column=(type=char(11) updatewhereclause=yes name=hst030h_id_no dbname="hst032h.id_no" )
+ column=(type=decimal(0) updatewhereclause=yes name=item_class dbname="hst032h.item_class" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=worker dbname="hst032h.worker" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=ipaddr dbname="hst032h.ipaddr" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="hst032h.work_date" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=job_uid dbname="hst032h.job_uid" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=job_add dbname="hst032h.job_add" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="hst032h.job_date" )
+ retrieve=" SELECT  	  A.ORD_NO, 
+				  C.ID_NO,
+              d.item_no,
+				  A.DEPT_CODE, 
+				  c.ACCT_CODE, 
+				  B.SHEET_PRICE,	
+				  A.ORD_DAY, 
+				  A.ORD_DATE, 
+				  A.PAY_DATE, 
+				  A.DEVILERY_DT, 
+				  A.SIGN_CONDITION, 
+				  A.AUDIT_PERSON, 
+				  A.AUDIT_POSITION, 
+				  A.REMARK, 
+				  A.ORD_CLASS, 
+				  B.REQ_NO,
+				  B.ITEM_SEQ,
+				  C.ID_NO, 
+				  C.ITEM_CLASS, 
+				  A.WORKER, 
+				  A.IPADDR, 
+				  A.WORK_DATE, 
+				  A.JOB_UID, 
+				  A.JOB_ADD, 
+				  A.JOB_DATE
+			FROM
+				  STDB.HST032H A, 
+              STDB.HST031H B,
+              STDB.HST030H C,
+              stdb.hst027m d						  	  
+			WHERE TRIM(A.ORD_NO)        LIKE :as_ord_no||'%'			
+			  AND TO_CHAR(C.ITEM_CLASS) LIKE :ai_item_class||'%'		  
+			  AND A.CUST_NO             like :as_cust_no||'%'
+           and d.item_no             like :as_item_no||'%'		  
+           and A.ORD_CLASS in (6,7)			  		  
+			  AND TRIM(A.ORD_NO)		=	 TRIM(B.ORD_NO)		   			  
+			  AND TRIM(B.REQ_NO)		=	 TRIM(C.REQ_NO)				  		  
+  			  AND TRIM(B.ITEM_SEQ)	=	 TRIM(C.ITEM_SEQ)
+           and c.id_no  = d.id_no
+           and d.item_no = d.item_no
+			  " arguments=(("as_ord_no", string),("ai_item_class", string),("as_cust_no", string),("as_item_no", string)) )
+text(band=header alignment="2" text="주문번호" border="0" color="0" x="9" y="8" height="56" width="357" html.valueishtml="0"  name=ord_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="견적단가" border="0" color="0" x="379" y="8" height="56" width="800" html.valueishtml="0"  name=sheet_price_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="조직" border="0" color="0" x="1189" y="8" height="56" width="439" html.valueishtml="0"  name=dept_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="발의일자" border="0" color="0" x="1637" y="8" height="56" width="603" html.valueishtml="0"  name=ord_day_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="주문일자" border="0" color="0" x="2249" y="8" height="56" width="603" html.valueishtml="0"  name=ord_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="지출일자" border="0" color="0" x="2862" y="8" height="56" width="603" html.valueishtml="0"  name=pay_date_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="예정일자" border="0" color="0" x="3474" y="8" height="56" width="603" html.valueishtml="0"  name=devilery_dt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="물품상태" border="0" color="0" x="4087" y="8" height="56" width="329" html.valueishtml="0"  name=ord_class_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="357" format="[general]" html.valueishtml="0"  name=ord_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="1" tabsequence=32766 border="0" color="0" x="4087" y="4" height="72" width="329" format="[general]" html.valueishtml="0"  name=ord_class visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1189" y="4" height="72" width="439" format="[general]" html.valueishtml="0"  name=dept_code visible="1" dddw.name=dddw_sosok501 dddw.displaycolumn=dept_name dddw.datacolumn=dept_code dddw.percentwidth=0 dddw.lines=0 dddw.limit=0 dddw.allowedit=no dddw.useasborder=no dddw.case=any  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="1637" y="4" height="72" width="603" format="yyyy/mm/dd" html.valueishtml="0"  name=ord_day visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="2249" y="4" height="72" width="603" format="yyyy/mm/dd" html.valueishtml="0"  name=ord_date visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="2" tabsequence=32766 border="0" color="0" x="2862" y="4" height="72" width="603" format="yyyy/mm/dd" html.valueishtml="0"  name=pay_date visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="2" tabsequence=32766 border="0" color="0" x="3474" y="4" height="72" width="603" format="yyyy/mm/dd" html.valueishtml="0"  name=devilery_dt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="379" y="4" height="72" width="800" format="#,###,##0" html.valueishtml="0"  name=sheet_price visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="1" font.pitch="1" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

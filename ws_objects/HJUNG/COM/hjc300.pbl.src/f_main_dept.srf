@@ -1,0 +1,34 @@
+﻿$PBExportHeader$f_main_dept.srf
+$PBExportComments$예산부서 구하기(group11_code = 1)
+global type f_main_dept from function_object
+end type
+
+forward prototypes
+global function string f_main_dept ()
+end prototypes
+
+global function string f_main_dept ();// ------------------------------------------------------------------------------------------
+// Function Name	:	f_main_dept
+//	Function 설명	:	예산부서 구하기
+// Argument			:
+// Return			:	String : 예산부서
+// ------------------------------------------------------------------------------------------
+
+string	ls_dept_code
+integer	li_cnt
+
+select	rtrim(nvl(gwa, ''))
+into		:ls_dept_code
+from		cddb.kch003m
+where		group9_code	=	1	
+and		gwa_gubun		=	'9'	;
+
+if sqlca.sqlcode <> 0 then
+	f_messagebox('3', '예산부서를 찾을 수 없습니다~n~n전산실에 문의하세요.!')
+	return	''
+end if
+
+return	trim(ls_dept_code)
+
+end function
+

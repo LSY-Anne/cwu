@@ -1,0 +1,179 @@
+﻿$PBExportHeader$f_getfamilycnt.srf
+$PBExportComments$가족수를 구한다(A:member_no, age,R:familycnt)
+global type f_getfamilycnt from function_object
+end type
+
+forward prototypes
+global function integer f_getfamilycnt (string as_member_no, integer ai_age)
+end prototypes
+
+global function integer f_getfamilycnt (string as_member_no, integer ai_age);// ==========================================================================================
+// 기    능 : 	가족수를 구한다.
+// 작 성 인 : 	안금옥
+// 작성일자 : 	2002.04
+// 함수원형 : 	f_getfamilycnt(string as_member_no, integer ai_age)	return	integer
+// 인    수 :	as_member_no	-	개인번호
+//					ai_age			-	계산나이 또는 구분
+// 되 돌 림 :	가족수
+// 주의사항 :
+// 수정사항 :
+// ==========================================================================================
+
+integer	li_cnt = 0, li_cnt2, li_max, li_cnt3
+string	ls_curryear, ls_curryymm
+
+if isnull(as_member_no) or trim(as_member_no) = '' then	return	0
+
+ls_curryear	=	left(f_today(), 4)
+ls_curryymm	=	left(f_today(), 6)
+
+if ai_age = 1 or ai_age = 19 then
+	// 가족사항에서 19세이하인 사람만 해당된다.(본인과 배우자는 제외)(자식만 가능)
+	// 배우자포함 수가 4명을 넘을 수 없다.(배우자가 있으면 3명, 배우자가 없으면 4명까지 가능)
+	select	count(*)
+	into		:li_cnt2
+	from		indb.hin019h
+	where		member_no	=	:as_member_no
+	and		relation		in	(2, 3)	
+	and		sudang_yn	=	'1'	;			// 배우자체크
+
+	select	count(*)
+	into		:li_cnt
+	from		(	select	member_no, nvl(handicap_opt, 0) as handicap_opt,
+								(floor(round(months_between(:ls_curryymm || '01', 
+									decode(substr(jumin_no, 7, 1), '1', '19', '2', '19', '3', '20', '4', '20', '19') || substr(jumin_no, 1, 4) || '01'), 0) / 12) +
+								mod(round(months_between(:ls_curryymm || '01', 
+									decode(substr(jumin_no, 7, 1), '1', '19', '2', '19', '3', '20', '4', '20', '19') || substr(jumin_no, 1, 4) || '01'), 0), 12) * 0.01)
+								as exp
+					from		indb.hin019h
+					where		relation		=	13	) sub
+	where		member_no	=	:as_member_no
+	and		decode(sub.handicap_opt, 0, sub.exp, 0)	<	20	)	;
+	
+	select	count(*)
+	into		:li_cnt3
+	from		padb.hpa019h
+	where		member_no	=	a.member_no
+	and		relation		in	(11, 12, 15, 16, 17, 18)
+	and		sudang_yn	=	'1'	;
+	
+	li_cnt	+=	li_cnt3
+								
+//	select	count(*)
+//	into		:li_cnt
+//	from		indb.hin019h
+//	where		member_no	=	:as_member_no
+//	and		relation		not in (1, 2, 3)
+//	and		sudang_yn	=	'1'	;
+
+	if li_cnt2 = 0 then
+		li_max = 4
+	else
+		li_max = 3
+	end if
+	
+	if li_cnt > li_max then	li_cnt = li_max
+
+elseif ai_age = 2 or ai_age = 20 then
+	// 부양자20세를 구한다.(부양자 20세이하)
+	select	count(*)
+	into		:li_cnt
+	from		(	select	member_no, (floor(round(months_between(:ls_curryymm || '01', 
+									decode(substr(jumin_no, 7, 1), '1', '19', '2', '19', '3', '20', '4', '20', '19') || substr(jumin_no, 1, 4) || '01'), 0) / 12) +
+								mod(round(months_between(:ls_curryymm || '01', 
+									decode(substr(jumin_no, 7, 1), '1', '19', '2', '19', '3', '20', '4', '20', '19') || substr(jumin_no, 1, 4) || '01'), 0), 12) * 0.01) 
+								as exp
+					from		indb.hin019h
+					where		relation		not in (1, 2, 3)	) sub
+	where		member_no	=	:as_member_no
+	and		sub.exp	<	21	;
+
+//	select	count(*)
+//	into		:li_cnt
+//	from		indb.hin019h
+//	where		member_no	=	:as_member_no
+//	and		relation		<>	1
+//	and		relation		<>	2	
+//	and		to_number(:ls_curryear) - 
+//				to_number(decode(substr(jumin_no, 7, 1), '1', '19', '2', '19', '3', '20', '4', '20', '') || substr(jumin_no, 1, 2))
+//				<= 20	;
+
+elseif ai_age = 3 or ai_age = 60 then
+	// 부양자60세를 구한다.(남자:60세이상 여자:55세이상)
+	select	count(*)
+	into		:li_cnt
+	from		(	select	member_no, jumin_no,
+								(floor(round(months_between(:ls_curryymm || '01', 
+									decode(substr(jumin_no, 7, 1), '1', '19', '2', '19', '3', '20', '4', '20', '19') || substr(jumin_no, 1, 4) || '01'), 0) / 12) +
+								mod(round(months_between(:ls_curryymm || '01', 
+									decode(substr(jumin_no, 7, 1), '1', '19', '2', '19', '3', '20', '4', '20', '19') || substr(jumin_no, 1, 4) || '01'), 0), 12) * 0.01)
+								as exp
+					from		indb.hin019h
+					where		relation		not in (1, 2, 3)	) sub
+	where		member_no	=	:as_member_no
+	and		sub.exp	> decode(substr(sub.jumin_no, 7, 1), '1', 59, '3', 59, 54 )	;
+
+//	select	count(*)
+//	into		:li_cnt
+//	from		indb.hin019h
+//	where		member_no	=	:as_member_no
+//	and		relation		<>	1
+//	and		relation		<>	2	
+//	and		to_number(:ls_curryear) - 
+//				to_number(decode(substr(jumin_no, 7, 1), '1', '19', '2', '19', '3', '20', '4', '20', '') || substr(jumin_no, 1, 2))
+//				>= decode(substr(jumin_no, 7, 1), '1', 60, '3', 60, 55)	;
+
+elseif ai_age = 4 or ai_age = 65 then
+	// 경로우대자(65세이상)를 구한다.(65세이상)
+	select	count(*)
+	into		:li_cnt
+	from		(	select	member_no, (floor(round(months_between(:ls_curryymm || '01', 
+									decode(substr(jumin_no, 7, 1), '1', '19', '2', '19', '3', '20', '4', '20', '19') || substr(jumin_no, 1, 4) || '01'), 0) / 12) +
+								mod(round(months_between(:ls_curryymm || '01', 
+									decode(substr(jumin_no, 7, 1), '1', '19', '2', '19', '3', '20', '4', '20', '19') || substr(jumin_no, 1, 4) || '01'), 0), 12) * 0.01)
+								as exp
+					from		indb.hin019h
+					where		relation		not in (1, 2, 3)	) sub
+	where		member_no	=	:as_member_no
+	and		sub.exp	> 64	;
+
+
+//	select	count(*)
+//	into		:li_cnt
+//	from		indb.hin019h
+//	where		member_no	=	:as_member_no
+//	and		relation		<>	1
+//	and		relation		<>	2	
+//	and		to_number(:ls_curryear) - 
+//				to_number(decode(substr(jumin_no, 7, 1), '1', '19', '2', '19', '3', '20', '4', '20', '') || substr(jumin_no, 1, 2))
+//				>= 65	;
+
+elseif ai_age = 5 or ai_age = 6 then
+	// 6세이하
+	select	count(*)
+	into		:li_cnt
+	from		(	select	member_no, (floor(round(months_between(:ls_curryymm || '01', 
+									decode(substr(jumin_no, 7, 1), '1', '19', '2', '19', '3', '20', '4', '20', '19') || substr(jumin_no, 1, 4) || '01'), 0) / 12) +
+								mod(round(months_between(:ls_curryymm || '01', 
+									decode(substr(jumin_no, 7, 1), '1', '19', '2', '19', '3', '20', '4', '20', '19') || substr(jumin_no, 1, 4) || '01'), 0), 12) * 0.01)
+								as exp
+					from		indb.hin019h
+					where		relation		=	13	) sub
+	where		member_no	=	:as_member_no
+	and		sub.exp	< 7	;
+
+//	select	count(*)
+//	into		:li_cnt
+//	from		indb.hin019h
+//	where		member_no	=	:as_member_no
+//	and		relation		<>	1
+//	and		relation		<>	2	
+//	and		to_number(:ls_curryear) - 
+//				to_number(decode(substr(jumin_no, 7, 1), '1', '19', '2', '19', '3', '20', '4', '20', '') || substr(jumin_no, 1, 2))
+//				<= 6	;
+
+end if
+
+return	li_cnt
+end function
+

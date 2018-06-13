@@ -1,0 +1,145 @@
+﻿$PBExportHeader$gf_message.srf
+$PBExportComments$공통 메세지
+global type gf_message from function_object
+end type
+
+forward prototypes
+global function integer gf_message (window aw_win, integer ai_gbn, string as_code, string as_title, string as_message)
+end prototypes
+
+global function integer gf_message (window aw_win, integer ai_gbn, string as_code, string as_title, string as_message);// aw_win parentwin , ai_gbn 1 : 윈도우 하단메세지 bar , 2 : Messagebox , 3 메세지와 하단메세지 같이 보여줌
+LONG				ll_rv, row
+STRING			ls_rmsg
+String				ls_query, ls_message, ls_msg_head
+STRING			ls_msg_cont, ls_icon_type, ls_btn_type
+INT				ll_dflt_rtn
+
+	Datastore lds
+	IF not isValid(lds) THEN lds = CREATE Datastore
+	lds.dataobject = "d_message"
+	row = lds.Find("msg_id='"+as_code+"'",1,lds.rowcount())	
+	IF row > 0 THEN
+		ls_msg_cont = lds.object.msg_cont[row]
+		ls_icon_type 	= lds.object.icon_type[row]
+		ls_btn_type 	= lds.object.btn_type[row]
+		ll_dflt_rtn 	= Integer(lds.object.dftl_rtn[row])
+	ELSE
+		Messagebox( '확인',"Invalid Message Code: "+as_code)
+		return -1
+	END IF
+	
+	IF isValid(lds) THEN  DESTROY(lds)
+	
+	If Isnull(as_title) or as_title = '' or as_title = 'none' Then 
+		IF ls_btn_type = "1" THEN
+			ls_msg_head = "알림"
+		ELSE
+			ls_msg_head = "확인"
+		END IF
+	else
+		ls_msg_head = as_title
+	End if
+	
+	If isnull(ls_msg_cont) Then
+		ls_msg_cont = '' 
+	End if
+	
+	If isnull(as_message) or as_message = '' Then 
+	Else
+		ls_msg_cont = as_message + ls_msg_cont 
+	End if
+		
+
+// 윈도우 하단 메세지 bar에 보여줌 
+If ai_gbn <> 2 Then 
+	f_set_message(ls_msg_cont, '', aw_win )
+End if
+
+// Messagebox로 보여줌 
+If ai_gbn = 2 or ai_gbn = 3 Then 	
+	CHOOSE CASE ls_icon_type
+		CASE "I"
+			CHOOSE CASE ls_btn_type
+				CASE "1"
+					MessageBox(ls_msg_head, ls_msg_cont, Information!)
+				CASE "2"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, Information!, YesNo!, ll_dflt_rtn)
+				CASE "3"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, Information!, YesNoCancel!, ll_dflt_rtn)
+				CASE "4"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, Information!, OkCancel!, ll_dflt_rtn)
+				CASE "5"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, Information!, RetryCancel!, ll_dflt_rtn)
+				CASE "6"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, Information!, AbortRetryIgnore!, ll_dflt_rtn)
+			END CHOOSE
+		CASE "E"
+			CHOOSE CASE ls_btn_type
+				CASE "1"
+					MessageBox(ls_msg_head, ls_msg_cont, Information!)
+				CASE "2"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, Exclamation!, YesNo!, ll_dflt_rtn)
+				CASE "3"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, Exclamation!, YesNoCancel!, ll_dflt_rtn)
+				CASE "4"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, Exclamation!, OkCancel!, ll_dflt_rtn)
+				CASE "5"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, Exclamation!, RetryCancel!, ll_dflt_rtn)
+				CASE "6"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, Exclamation!, AbortRetryIgnore!, ll_dflt_rtn)
+			END CHOOSE
+		CASE "Q"
+			CHOOSE CASE ls_btn_type
+				CASE "1"
+					MessageBox(ls_msg_head, ls_msg_cont, Information!)
+				CASE "2"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, Question!, YesNo!, ll_dflt_rtn)
+				CASE "3"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, Question!, YesNoCancel!, ll_dflt_rtn)
+				CASE "4"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, Question!, OkCancel!, ll_dflt_rtn)
+				CASE "5"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, Question!, RetryCancel!, ll_dflt_rtn)
+				CASE "6"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, Question!, AbortRetryIgnore!, ll_dflt_rtn)
+			END CHOOSE
+		CASE "S"
+			CHOOSE CASE ls_btn_type
+				CASE "1"
+					MessageBox(ls_msg_head, ls_msg_cont, Information!)
+				CASE "2"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, StopSign!, YesNo!, ll_dflt_rtn)
+				CASE "3"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, StopSign!, YesNoCancel!, ll_dflt_rtn)
+				CASE "4"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, StopSign!, OkCancel!, ll_dflt_rtn)
+				CASE "5"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, StopSign!, RetryCancel!, ll_dflt_rtn)
+				CASE "6"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, StopSign!, AbortRetryIgnore!, ll_dflt_rtn)
+			END CHOOSE			
+		CASE "N"
+			CHOOSE CASE ls_btn_type
+				CASE "1"
+					MessageBox(ls_msg_head, ls_msg_cont, Information!)
+				CASE "2"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, None!, YesNo!, ll_dflt_rtn)
+				CASE "3"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, None!, YesNoCancel!, ll_dflt_rtn)
+				CASE "4"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, None!, OkCancel!, ll_dflt_rtn)
+				CASE "5"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, None!, RetryCancel!, ll_dflt_rtn)
+				CASE "6"
+					ll_rv = MessageBox(ls_msg_head, ls_msg_cont, None!, AbortRetryIgnore!, ll_dflt_rtn)
+			END CHOOSE
+	END CHOOSE
+	
+	Return ll_rv
+End If
+
+
+return 1
+
+end function
+

@@ -1,0 +1,79 @@
+﻿$PBExportHeader$d_hin502a_13.srd
+$PBExportComments$재직증명서(nested report)
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=92 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=72 color="536870912" )
+table(column=(type=char(4) updatewhereclause=yes name=dept dbname="dept" )
+ column=(type=char(7) updatewhereclause=yes name=gwamok dbname="gwamok" )
+ column=(type=char(50) updatewhereclause=yes name=gwamok_h dbname="gwamok_h" )
+ column=(type=number updatewhereclause=yes name=sisu dbname="sisu" )
+ column=(type=char(0) updatewhereclause=yes name=term dbname="term" )
+ retrieve="
+SELECT		MAX(AA.GWA_ID)	 			DEPT,
+				MAX(AA.GWAMOK_ID)			GWAMOK,
+				MAX(AA.GWAMOK_HNAME)		GWAMOK_H,			
+				SUM(AA.SISU)				SISU ,
+				''								TERM
+FROM  		(		 
+			SELECT	A.YEAR, 
+					A.HAKGI, 
+					A.GWAJUNG_ID,
+					B.GWAMOK_HNAME, 
+					A.MEMBER_NO,
+					A.GWA_ID,
+					A.GWAMOK_ID,
+					A.SISU					
+			FROM  	HAKSA.D_GAESUL_GWAMOK A, HAKSA.D_GWAMOK_CODE B
+			WHERE	A.MEMBER_NO			  =	 :as_member_no	
+			AND		A.GWAMOK_ID			  =	 B.GWAMOK_ID
+			)AA
+GROUP BY	AA.YEAR, AA.HAKGI, AA.GWAJUNG_ID, AA.GWA_ID, AA.GWAMOK_ID
+UNION
+SELECT	MAX(A.GWA)				DEPT,
+			MAX(A.GWAMOK_ID)		GWAMOK,
+			MAX(B.GWAMOK_HNAME)	GWAMOK_H,
+			COUNT(A.GWAMOK_ID)	SISU,
+			''								TERM								  
+FROM  	HAKSA.SIGANPYO A, 
+		(		SELECT		   A.GWAMOK_ID, A.GWAMOK_HNAME
+				FROM		  		HAKSA.GWAMOK_CODE A
+				WHERE		   	A.GWAMOK_SEQ =  (		
+							   				    SELECT		   MAX(B.GWAMOK_SEQ)
+						   			 		 	 FROM		   HAKSA.GWAMOK_CODE B
+													 WHERE		   A.GWAMOK_ID = B.GWAMOK_ID
+												)
+		)B													  
+WHERE		A.MEMBER_NO			  =	 :as_member_no	
+AND		A.GWAMOK_ID			  =	 B.GWAMOK_ID 
+GROUP BY A.GWA,
+	  		A.GWAMOK_ID,
+			B.GWAMOK_HNAME				  
+
+
+
+
+" arguments=(("as_member_no", string)) )
+line(band=header x1="14" y1="4" x2="2949" y2="4"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="부서" border="0" color="0" x="9" y="20" height="60" width="512" html.valueishtml="0"  name=t_1 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="과 목 명" border="0" color="0" x="530" y="20" height="60" width="805" html.valueishtml="0"  name=t_3 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="주당시간" border="0" color="0" x="1344" y="20" height="60" width="571" html.valueishtml="0"  name=t_4 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="기간" border="0" color="0" x="1925" y="20" height="60" width="1010" html.valueishtml="0"  name=t_5 visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+line(band=header x1="14" y1="88" x2="2949" y2="88"  name=l_1 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="2" tabsequence=32766 border="0" color="0" x="1344" y="0" height="64" width="571" format="[general]" html.valueishtml="0"  name=sisu visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="2" tabsequence=32766 border="0" color="0" x="1925" y="0" height="60" width="1010" format="[general]" html.valueishtml="0"  name=term visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="0" height="64" width="512" format="[general]" html.valueishtml="0"  name=dept visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="530" y="0" height="64" width="805" format="[general]" html.valueishtml="0"  name=gwamok_h visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

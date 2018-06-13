@@ -1,0 +1,48 @@
+﻿$PBExportHeader$f_resizecontrol.srf
+$PBExportComments$윈도우의 콘트롤의 크기를 재설정한다
+global type f_resizecontrol from function_object
+end type
+
+forward prototypes
+global function integer f_resizecontrol (window aw_window)
+end prototypes
+
+global function integer f_resizecontrol (window aw_window);//////////////////////////////////////////////////////////////////
+// 	작성목적 : 콘트롤의 크기를 재설정한다.
+//    적 성 인 : 이현수
+//		작성일자 : 2002.10
+//    변 경 인 :
+//    변경일자 :
+//    변경사유 :
+//////////////////////////////////////////////////////////////////
+
+environment env
+double size_X, size_Y, size
+DragObject wo
+Integer li_controls, i
+StaTicText     obj_st
+PictureButton  obj_pb
+	
+// 먼저 윈도우의 환경을 알아낸다.
+If GetEnvironment(env) <> 1 Then return 0
+
+size_X =  env.screenwidth / 1024
+size_Y =  env.screenheight / 768
+size   =  Min(size_X, size_Y)
+
+aw_window.Width  *= size_X
+aw_window.Height *= size_Y
+// 윈도우의 크기 변경
+li_controls = UpperBound(aw_window.Control) 
+		
+FOR i = 1 TO li_controls
+	 wo         = aw_window.control[i]			
+	 wo.X      *= size_X
+	 wo.Y      *= size_X
+	 wo.Width  *= size_X
+	 wo.Height *= size_Y
+NEXT
+		
+return 0
+end function
+

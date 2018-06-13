@@ -1,0 +1,149 @@
+﻿$PBExportHeader$d_hjj204p_1_test.srd
+$PBExportComments$[청운대]학위증
+release 10.5;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=4184 color="536870912" )
+table(column=(type=char(9) updatewhereclause=yes name=jaehak_hakjuk_hakbun dbname="hakbun" )
+ column=(type=char(50) updatewhereclause=yes name=fname dbname="fname" )
+ column=(type=char(40) updatewhereclause=yes name=hakwi dbname="hakwi" )
+ column=(type=char(50) updatewhereclause=yes name=bu_name dbname="bu_name" )
+ column=(type=char(40) updatewhereclause=yes name=bu_hakwi dbname="bu_hakwi" )
+ column=(type=char(20) updatewhereclause=yes name=jaehak_hakjuk_hname dbname="hname" )
+ column=(type=char(12) updatewhereclause=yes name=birth dbname="birth" )
+ column=(type=char(8) updatewhereclause=yes name=jolup_sajung_jolup_date dbname="jolup_date" )
+ column=(type=char(3) updatewhereclause=yes name=jolup_sajung_hakwi_no dbname="hakwi_no" )
+ column=(type=char(30) updatewhereclause=yes name=jolup_sajung_hakwi_name dbname="hakwi_name" )
+ column=(type=char(5) updatewhereclause=yes name=jolup_sajung_jolup_jung_no dbname="jolup_jung_no" )
+ retrieve="SELECT  	C.HAKBUN ,
+			B.FNAME,
+			B.HAKWI,
+			A.BU_NAME,
+			A.BU_HAKWI,
+			A.HNAME ,
+			A.BIRTH ,
+			C.JOLUP_DATE ,
+			C.HAKWI_NO ,
+			C.HAKWI_NAME ,
+			C.JOLUP_JUNG_NO     
+FROM 		(	SELECT 	JAEHAK_HAKJUK.GWA,
+							JAEHAK_HAKJUK.HAKBUN,
+							JAEHAK_HAKJUK.HNAME,
+							SUBSTR(JAEHAK_HAKJUK.JUMIN_NO,1,6) BIRTH,
+							JAEHAK_HAKJUK.BUJUNGONG_ID,
+							Z.FNAME BU_NAME,
+							Z.BU_HAKWI
+				FROM		HAKSA.JAEHAK_HAKJUK,
+							(	SELECT 	X.GWA,
+											X.FNAME,
+											Y.FNAME BU_HAKWI
+								FROM		HAKSA.GWA_SYM X,
+											CDDB.KCH001M Y
+								WHERE		X.HAKWI_CODE = Y.CODE
+								AND		Y.TYPE	= 'hakwi_code'
+							)Z
+				WHERE		JAEHAK_HAKJUK.BUJUNGONG_ID = Z.GWA(+)
+			) A,
+			(	SELECT 	D.GWA,
+							D.FNAME,
+							E.FNAME HAKWI
+				FROM		HAKSA.GWA_SYM D,
+							CDDB.KCH001M E
+				WHERE		D.HAKWI_CODE = E.CODE
+				AND		E.TYPE	= 'hakwi_code'
+			)B,
+			HAKSA.JOLUP_SAJUNG C     
+WHERE 	( C.GWA				= B.GWA				)	
+AND		( C.HAKBUN 			= A.HAKBUN			) 
+AND      (	(	C.YEAR 		= :as_year 			) 
+	AND      (	C.JUNHUGI 	= :as_junhugi 		) 
+	AND      (	C.GWA 		like :as_gwa 		) 
+	AND      (	C.HAKBUN 	like :as_hakbun 	) 
+			)  
+ 
+UNION    
+
+SELECT 	C.HAKBUN ,
+			B.FNAME,
+			B.HAKWI,
+			A.BU_NAME,
+			A.BU_HAKWI,
+			A.HNAME ,
+			A.BIRTH ,
+			C.JOLUP_DATE ,
+			C.HAKWI_NO ,
+			C.HAKWI_NAME ,
+			C.JOLUP_JUNG_NO       
+FROM 		(	SELECT 	JOLUP_HAKJUK.GWA,
+							JOLUP_HAKJUK.HAKBUN,
+							JOLUP_HAKJUK.HNAME,
+							SUBSTR(JOLUP_HAKJUK.JUMIN_NO,1,6) BIRTH,
+							JOLUP_HAKJUK.BUJUNGONG_ID,
+							Z.FNAME BU_NAME,
+							Z.BU_HAKWI
+				FROM		HAKSA.JOLUP_HAKJUK,
+							(	SELECT 	X.GWA,
+											X.FNAME,
+											Y.FNAME BU_HAKWI
+								FROM		HAKSA.GWA_SYM X,
+											CDDB.KCH001M Y
+								WHERE		X.HAKWI_CODE = Y.CODE
+								AND		Y.TYPE	= 'hakwi_code'
+							)Z
+				WHERE		JOLUP_HAKJUK.BUJUNGONG_ID = Z.GWA(+)
+			) A,
+			(	SELECT 	D.GWA,
+							D.FNAME,
+							E.FNAME HAKWI
+				FROM		HAKSA.GWA_SYM D,
+							CDDB.KCH001M E
+				WHERE		D.HAKWI_CODE = E.CODE
+				AND		E.TYPE	= 'hakwi_code'
+			)B,
+			HAKSA.JOLUP_SAJUNG C    
+WHERE 	(	C.GWA				= B.GWA					)
+AND		( 	C.HAKBUN			= A.HAKBUN 				) 
+AND      (	(	C.YEAR 		= :as_year 				) 
+	AND      ( 	C.JUNHUGI 	= :as_junhugi 			) 
+	AND     	( 	C.GWA 		like :as_gwa 			) 
+	AND      ( 	C.HAKBUN 	like :as_hakbun 		) 
+			) 
+ORDER BY 2         ASC,
+			1         ASC  
+
+
+" arguments=(("as_year", string),("as_junhugi", string),("as_gwa", string),("as_hakbun", string)) )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="1033" y="3004" height="164" width="1307" format="@@@@년 @@월 @@일" html.valueishtml="0"  name=jolup_sajung_jolup_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕체" font.height="-18" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="3506" y="492" height="76" width="96" format="[general]" html.valueishtml="0"  name=jolup_sajung_hakwi_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="3493" y="600" height="76" width="960" format="[general]" html.valueishtml="0"  name=jolup_sajung_hakwi_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="3493" y="752" height="76" width="809" format="[general]" html.valueishtml="0"  name=jolup_sajung_jolup_jung_no visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=detail x1="119" y1="140" x2="119" y2="4172"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression=" jolup_sajung_hakwi_name + ' - ' +  jolup_sajung_hakwi_no "border="0" color="0" x="379" y="3936" height="108" width="1266" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="궁서" font.height="-16" font.weight="700"  font.family="1" font.pitch="2" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="3483" y="60" height="76" width="320" format="[general]" html.valueishtml="0"  name=jaehak_hakjuk_hakbun visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=detail x1="3259" y1="144" x2="3259" y2="4172"  name=l_4 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="119" y1="4172" x2="3259" y2="4176"  name=l_5 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+line(band=detail x1="114" y1="144" x2="3259" y2="144"  name=l_2 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=detail alignment="0" text="제" border="0" color="0" x="251" y="316" height="60" width="64" html.valueishtml="0"  name=t_1 visible="1"  font.face="바탕체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="0" text="호" border="0" color="0" x="750" y="316" height="60" width="64" html.valueishtml="0"  name=t_2 visible="1"  font.face="바탕체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=detail alignment="2" text="학   위   증" border="0" color="0" x="823" y="600" height="184" width="1691" html.valueishtml="0"  name=t_3 visible="1"  font.face="바탕체" font.height="-30" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+text(band=detail alignment="2" text="청운대학교  총장  경제학박사 김 희 중" border="0" color="0" x="238" y="3604" height="132" width="2907" html.valueishtml="0"  name=t_9 visible="1"  font.face="바탕체" font.height="-22" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="3461" y="168" height="76" width="910" format="[general]" html.valueishtml="0"  name=fname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="3451" y="264" height="76" width="1600" format="[general]" html.valueishtml="0"  name=bu_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression="'  위 사람은 본 대학 ' +if(bu_name = '', fname,fname + '학과와'+ bu_name ) + '학과의 전 교육과정을 이수하여 '  +  if(bu_hakwi= '', hakwi,hakwi+ '와'+ bu_hakwi) + '의 자격을 같추었기에 이 학위를 수여함.'"border="0" color="0" x="370" y="1548" height="1044" width="2647" format="[GENERAL]" html.valueishtml="0"  name=compute_3 visible="1"  font.face="바탕체" font.height="-22" font.weight="700"  font.family="1" font.pitch="1" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="3424" y="360" height="112" width="2359" format="[general]" html.valueishtml="0"  name=hakwi visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕체" font.height="-18" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="3424" y="876" height="112" width="2359" format="[general]" html.valueishtml="0"  name=bu_hakwi visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕체" font.height="-18" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="1929" y="1156" height="76" width="855" format="19@@년 @@월 @@일생" html.valueishtml="0"  name=birth visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕체" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="1929" y="1036" height="76" width="855" format="성명   @@  @@  @@ @@" html.valueishtml="0"  name=jaehak_hakjuk_hname visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="바탕체" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="129" background.mode="2" background.color="16777215" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

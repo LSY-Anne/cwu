@@ -1,0 +1,190 @@
+﻿$PBExportHeader$f_setfindwindow.srf
+global type f_setfindwindow from function_object
+end type
+
+forward prototypes
+global function boolean f_setfindwindow (string winname, window winparent, ref vector avc_data, ref datawindow adw_data, long al_row)
+end prototypes
+
+global function boolean f_setfindwindow (string winname, window winparent, ref vector avc_data, ref datawindow adw_data, long al_row);//key = find										찾을 문자열
+//key = where									Select문에 whare절을 추가 해준다.
+//key = title										Title를 지정해 준다.
+//key = dataobject							Datawindow Dataobject를 Setting한다.
+//key = fcol1, fcol2.....  						Retun할 Datawindow의 Full ColumnName
+//key = arg1, arg2 ....						Retrieve조건에 들어갈 아규먼트 
+//key = setcolumn1, setcolumn2....  	datawindow에 SetColumn을 해주는 Column
+//key = and										바로 찾기 할때 사용할 and절 
+
+Boolean	lb_rtn
+Long  	ll_cnt, i, ll_argcnt, j
+String	ls_oldsql, ls_newsql, ls_temp
+any		la_arg[]
+String	ls_type, ls_val
+Vector	lvc_data
+
+lb_rtn = true
+IF IsValid(avc_data) THEN 
+	DataStore	lds_data
+	lds_data = Create DataStore
+	lds_data.DataObject = avc_data.getProperty('dataobject')
+	IF Len(lds_data.DataObject) > 0 THEN
+		lds_data.setTransObject(sqlca)
+//=================================================================
+		ll_cnt = avc_data.getfindkeycount('arg')
+		
+		ls_temp = lds_data.Object.Datawindow.Table.Arguments
+		IF ls_temp <> '?' THEN
+			replaceall(ls_temp, "~n", "&")
+			replaceall(ls_temp, "~t", "=")
+			
+			lvc_data = getconvertcommandparm(ls_temp)
+			
+			ll_cnt = lvc_data.getKeycount()
+			FOR i = ll_cnt to 1 step -1
+				la_arg[i] = avc_data.getProperty('arg' + String(i))
+			NEXT
+		END IF
+		
+		ls_oldsql = lds_data.getSqlSelect()
+		ls_newsql = ls_oldsql
+		IF avc_data.getProperty("where") <> "" THEN
+			ls_newsql += "~r~n" + avc_data.getProperty("where") 
+			lds_data.Object.Datawindow.Table.Select = ls_newsql
+		END IF
+		
+		IF avc_data.getProperty("and") <> "" THEN
+			ls_newsql += "~r~n" + avc_data.getProperty("and")
+		END IF
+		
+		lds_data.Object.Datawindow.Table.Select = ls_newsql
+		
+		IF ll_cnt = 0 THEN
+			lds_data.retrieve()
+		ELSE
+			choose case ll_cnt
+				case 1
+					lds_data.retrieve(la_arg[1])
+				case 2
+					lds_data.retrieve(la_arg[1], la_arg[2])
+				case 3
+					lds_data.retrieve(la_arg[1], la_arg[2], la_arg[3])
+				case 4
+					lds_data.retrieve(la_arg[1], la_arg[2], la_arg[3], la_arg[4])
+				case 5
+					lds_data.retrieve(la_arg[1], la_arg[2], la_arg[3], la_arg[4], la_arg[5])
+				case 6
+					lds_data.retrieve(la_arg[1], la_arg[2], la_arg[3], la_arg[4], la_arg[5], + &
+										la_arg[6])
+				case 7
+					lds_data.retrieve(la_arg[1], la_arg[2], la_arg[3], la_arg[4], la_arg[5], + &
+										la_arg[6], la_arg[7])
+				case 8
+					lds_data.retrieve(la_arg[1], la_arg[2], la_arg[3], la_arg[4], la_arg[5], + &
+										la_arg[6], la_arg[7], la_arg[8])
+				case 9
+					lds_data.retrieve(la_arg[1], la_arg[2], la_arg[3], la_arg[4], la_arg[5], + &
+										la_arg[6], la_arg[7], la_arg[8], la_arg[9])
+				case 10
+					lds_data.retrieve(la_arg[1], la_arg[2], la_arg[3], la_arg[4], la_arg[5], + &
+										la_arg[6], la_arg[7], la_arg[8], la_arg[9], la_arg[10])
+				case 11
+					lds_data.retrieve(la_arg[1], la_arg[2], la_arg[3], la_arg[4], la_arg[5], + &
+										la_arg[6], la_arg[7], la_arg[8], la_arg[9], la_arg[10] + &
+										la_arg[11])
+				case 12
+					lds_data.retrieve(la_arg[1], la_arg[2], la_arg[3], la_arg[4], la_arg[5], + &
+										la_arg[6], la_arg[7], la_arg[8], la_arg[9], la_arg[10] + &
+										la_arg[11], la_arg[12])
+				case 13
+					lds_data.retrieve(la_arg[1], la_arg[2], la_arg[3], la_arg[4], la_arg[5], + &
+										la_arg[6], la_arg[7], la_arg[8], la_arg[9], la_arg[10] + &
+										la_arg[11], la_arg[12], la_arg[13])
+				case 14
+					lds_data.retrieve(la_arg[1], la_arg[2], la_arg[3], la_arg[4], la_arg[5], + &
+										la_arg[6], la_arg[7], la_arg[8], la_arg[9], la_arg[10] + &
+										la_arg[11], la_arg[12], la_arg[13], la_arg[14])
+				case 15
+					lds_data.retrieve(la_arg[1], la_arg[2], la_arg[3], la_arg[4], la_arg[5], + &
+										la_arg[6], la_arg[7], la_arg[8], la_arg[9], la_arg[10] + &
+										la_arg[11], la_arg[12], la_arg[13], la_arg[14], la_arg[15])
+				case 16
+					lds_data.retrieve(la_arg[1], la_arg[2], la_arg[3], la_arg[4], la_arg[5], + &
+										la_arg[6], la_arg[7], la_arg[8], la_arg[9], la_arg[10], + &
+										la_arg[11], la_arg[12], la_arg[13], la_arg[14], la_arg[15], + &
+										la_arg[16])
+				case 17
+					lds_data.retrieve(la_arg[1], la_arg[2], la_arg[3], la_arg[4], la_arg[5], + &
+										la_arg[6], la_arg[7], la_arg[8], la_arg[9], la_arg[10], + &
+										la_arg[11], la_arg[12], la_arg[13], la_arg[14], la_arg[15], + &
+										la_arg[16], la_arg[17])
+				case 18
+					lds_data.retrieve(la_arg[1], la_arg[2], la_arg[3], la_arg[4], la_arg[5], + &
+										la_arg[6], la_arg[7], la_arg[8], la_arg[9], la_arg[10], + &
+										la_arg[11], la_arg[12], la_arg[13], la_arg[14], la_arg[15], + &
+										la_arg[16], la_arg[17], la_arg[18])
+				case 19
+					lds_data.retrieve(la_arg[1], la_arg[2], la_arg[3], la_arg[4], la_arg[5], + &
+										la_arg[6], la_arg[7], la_arg[8], la_arg[9], la_arg[10], + &
+										la_arg[11], la_arg[12], la_arg[13], la_arg[14], la_arg[15], + &
+										la_arg[16], la_arg[17], la_arg[18], la_arg[19])
+				case 20
+					lds_data.retrieve(la_arg[1], la_arg[2], la_arg[3], la_arg[4], la_arg[5], + &
+										la_arg[6], la_arg[7], la_arg[8], la_arg[9], la_arg[10], + &
+										la_arg[11], la_arg[12], la_arg[13], la_arg[14], la_arg[15], + &
+										la_arg[16], la_arg[17], la_arg[18], la_arg[19], la_arg[20])
+			end choose
+		END IF
+		
+		lds_data.Object.Datawindow.Table.Select = ls_oldsql
+		
+		ll_cnt = avc_data.getfindkeycount('setcolumn')
+		
+		IF lds_data.RowCount() <> 1 THEN
+			w_commonfind		lw_data
+			
+			OpenWithParm(lw_data, avc_data, winname, winparent)
+			
+			lvc_data = Message.PowerObjectParm
+			IF IsValid(lvc_data) THEN
+				FOR i = ll_Cnt TO 1 Step -1
+					ls_val = avc_data.getProperty('setcolumn' + String(i))
+					adw_data.setItem(al_row, ls_val , lvc_data.getProperty(avc_data.getProperty('fcol' + String(i))))
+				NEXT
+			ELSE
+				lb_rtn = false
+			END IF
+		ELSE
+			FOR i = ll_cnt TO 1 Step -1
+//=============================================================================
+				ls_val = avc_data.getProperty('fcol' + String(i))
+				ls_type = lds_data.Describe(ls_val + ".ColType")
+				CHOOSE CASE TRUE
+					CASE Pos(Upper(ls_type), 'CHAR', 1) > 0
+						adw_data.setItem(al_row, avc_data.getProperty('setcolumn' + String(i)) , lds_data.GetItemString(1, ls_val))
+					CASE Pos(Upper(ls_type), 'ULONG', 1) > 0 OR Pos(Upper(ls_type), 'INT', 1) > 0 OR Pos(Upper(ls_type), 'LONG', 1) > 0 OR Pos(Upper(ls_type), 'REAL', 1) > 0  OR Pos(Upper(ls_type), 'NUMB', 1) > 0 
+						adw_data.setItem(al_row, avc_data.getProperty('setcolumn' + String(i)) , lds_data.GetItemNumber(1, ls_val))
+					CASE Pos(Upper(ls_type), 'DATETIME', 1) = 0 AND Pos(Upper(ls_type), 'DATE', 1) > 0
+						adw_data.setItem(al_row, avc_data.getProperty('setcolumn' + String(i)) , lds_data.GetItemDate(1, ls_val))
+					CASE Pos(Upper(ls_type), 'DATETIME', 1) > 0 
+						adw_data.setItem(al_row, avc_data.getProperty('setcolumn' + String(i)) , lds_data.GetItemDateTime(1, ls_val))
+					CASE Pos(Upper(ls_type), 'DECIMAL', 1) > 0
+						adw_data.setItem(al_row, avc_data.getProperty('setcolumn' + String(i)) , lds_data.GetItemDecimal(1, ls_val))
+					CASE Pos(Upper(ls_type), 'TIME', 1) > 0 OR Pos(Upper(ls_type), 'TIMESTAMP', 1) > 0 
+						adw_data.setItem(al_row, avc_data.getProperty('setcolumn' + String(i)) , lds_data.GetItemTime(1, ls_val))
+					CASE ELSE
+				END CHOOSE
+//=============================================================================
+			NEXT
+		END IF
+		avc_data = lvc_data
+	ELSE
+		lb_rtn = false
+	END IF
+//=================================================================
+ELSE
+	lb_rtn = false
+END IF
+
+Return lb_rtn
+end function
+

@@ -1,0 +1,87 @@
+﻿$PBExportHeader$d_hin203i_01.srd
+$PBExportComments$인사기본정보관리-인사정보조회용
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no )
+header(height=76 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(5) updatewhereclause=yes name=hin001m_member_no dbname="hin001m.member_no" )
+ column=(type=char(20) updatewhereclause=yes name=hin001m_name dbname="hin001m.name" )
+ column=(type=char(13) updatewhereclause=yes name=hin001m_jumin_no dbname="hin001m.jumin_no" )
+ column=(type=char(0) updatewhereclause=yes name=folder_name dbname="folder_name" )
+ column=(type=decimal(0) updatewhereclause=yes name=hin001m_jikwi_code dbname="hin001m.jikwi_code" )
+ column=(type=char(3) updatewhereclause=yes name=hin001m_duty_code dbname="hin001m.duty_code" )
+ column=(type=char(8) updatewhereclause=yes name=hin001m_firsthire_date dbname="hin001m.firsthire_date" )
+ column=(type=char(8) updatewhereclause=yes name=hin001m_hakwonhire_date dbname="hin001m.hakwonhire_date" )
+ column=(type=char(8) updatewhereclause=yes name=hin001m_sosok_date dbname="hin001m.sosok_date" )
+ column=(type=char(8) updatewhereclause=yes name=hin001m_jikjong_date dbname="hin001m.jikjong_date" )
+ column=(type=char(8) updatewhereclause=yes name=hin001m_duty_date dbname="hin001m.duty_date" )
+ column=(type=char(4000) updatewhereclause=yes name=com_dept_nm dbname="com_dept_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_bojik_nm dbname="com_bojik_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_jikjong_nm dbname="com_jikjong_nm" )
+ column=(type=char(4000) updatewhereclause=yes name=com_jikwi_nm dbname="com_jikwi_nm" )
+ column=(type=char(20) updatewhereclause=yes name=duty_name dbname="hin001m.duty_name" )
+ column=(type=char(4) updatewhereclause=yes name=hin001m_sal_year dbname="hin001m.sal_year" )
+ column=(type=char(3) updatewhereclause=yes name=sal_class dbname="hin001m.sal_class" )
+ column=(type=number updatewhereclause=yes name=com_image_yn dbname="com_image_yn" values="	1/	0" )
+ retrieve="SELECT	A.MEMBER_NO,
+			A.NAME,
+			A.JUMIN_NO,
+			'' FOLDER_NAME,
+			A.JIKWI_CODE,
+			A.DUTY_CODE,
+			A.FIRSTHIRE_DATE,
+			A.HAKWONHIRE_DATE,
+			A.SOSOK_DATE,
+			A.JIKJONG_DATE,
+			A.DUTY_DATE,
+			FU_DEPT_NM(A.GWA,'K')												COM_DEPT_NM,
+			FU_BOJIK_NM(A.BOJIK_CODE1,'K')									COM_BOJIK_NM,
+			FU_CODE_NM('HAENG','JIKJONG_CODE',B.JIKJONG_CODE,'K')		COM_JIKJONG_NM,
+			FU_CODE_NM('HAENG','JIKWI_CODE',A.JIKWI_CODE,'K')			COM_JIKWI_NM,
+			B.DUTY_NAME,
+			A.SAL_YEAR,
+			A.SAL_CLASS,
+			DECODE(NVL(C.MEMBER_NO,'0'),'0',0,1)							COM_IMAGE_YN
+FROM		INDB.HIN001M A,
+			INDB.HIN003M B,
+			INDB.HIN026M C
+WHERE		A.DUTY_CODE  = B.DUTY_CODE(+)
+AND		A.MEMBER_NO  = C.MEMBER_NO(+)
+AND		A.GWA        LIKE :as_DeptCode||'%'
+AND		A.NAME       LIKE :as_KName||'%'
+AND		A.DUTY_CODE  LIKE :as_DutyCode||'%'
+AND		A.JAEJIK_OPT LIKE :as_JaejikOpt||'%'
+AND		A.DUTY_CODE  BETWEEN DECODE(:as_JikjongCode,'1','000','2','100','000') 
+							 AND     DECODE(:as_JikjongCode,'1','199','2','999','999')
+ORDER	BY	A.MEMBER_NO
+" arguments=(("as_DeptCode", string),("as_DutyCode", string),("as_KName", string),("as_JaejikOpt", string),("as_JikjongCode", string)) )
+compute(band=detail alignment="0" expression="0"border="0" color="0" x="2130" y="4" height="76" width="105" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+button(band=detail text="" filename="..\img\icon\ib_search.gif" enabled=yes action="0" border="0" color="0" x="2130" y="0" height="92" width="105" vtextalign="0" htextalign="0"  name=b_file visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="이미지" border="0" color="0" x="5" y="8" height="56" width="206" html.valueishtml="0"  name=com_image_yn_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="개인번호" border="0" color="0" x="206" y="8" height="56" width="274" html.valueishtml="0"  name=hin001m_member_no_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="성명" border="0" color="0" x="485" y="8" height="56" width="302" html.valueishtml="0"  name=hin001m_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="소속명" border="0" color="0" x="800" y="8" height="56" width="466" html.valueishtml="0"  name=com_dept_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직위명" border="0" color="0" x="1275" y="8" height="56" width="416" html.valueishtml="0"  name=com_jikwi_nm_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="직급명" border="0" color="0" x="1701" y="8" height="56" width="421" html.valueishtml="0"  name=duty_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="파일명" border="0" color="0" x="2245" y="8" height="56" width="1019" html.valueishtml="0"  name=folder_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="0" text="" border="0" color="0" x="2130" y="8" height="56" width="105" html.valueishtml="0"  name=compute_1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=19 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="76" width="197" format="[general]" html.valueishtml="0"  name=com_image_yn visible="1" checkbox.text="" checkbox.on="1" checkbox.off="0" checkbox.scale=yes checkbox.threed=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0" color="0" x="215" y="4" height="76" width="261" format="[general]" html.valueishtml="0"  name=hin001m_member_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="1275" y="4" height="76" width="416" format="[general]" html.valueishtml="0"  name=com_jikwi_nm visible="1" edit.limit=4000 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="800" y="4" height="76" width="466" format="[general]" html.valueishtml="0"  name=com_dept_nm visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="0" x="1701" y="4" height="76" width="421" format="[general]" html.valueishtml="0"  name=duty_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="485" y="4" height="76" width="302" format="[general]" html.valueishtml="0"  name=hin001m_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="2245" y="4" height="76" width="1019" format="[general]" html.valueishtml="0"  name=folder_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

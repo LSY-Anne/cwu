@@ -1,0 +1,148 @@
+﻿$PBExportHeader$d_hpa611b_5.srd
+$PBExportComments$연말정산 지급조서 자료생성//부양가족공제자생성
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=char(10) update=yes updatewhereclause=yes name=member_no dbname="hpa024m.member_no" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=year dbname="hpa024m.year" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=name dbname="hpa024m.name" )
+ column=(type=char(13) update=yes updatewhereclause=yes name=jumin_no dbname="hpa024m.jumin_no" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=foreigner_gbn dbname="hpa024m.foreigner_gbn" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=gwangae_code dbname="hpa024m.gwangae_code" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=basic_opt dbname="hpa024m.basic_opt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=handicap_opt dbname="hpa024m.handicap_opt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=child_opt dbname="hpa024m.child_opt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=insure_opt dbname="hpa024m.insure_opt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=medical_opt dbname="hpa024m.medical_opt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=education_opt dbname="hpa024m.education_opt" )
+ column=(type=decimal(0) update=yes updatewhereclause=yes name=card_opt dbname="hpa024m.card_opt" )
+ column=(type=decimal(0) updatewhereclause=yes name=woman_opt dbname="hpa024m.woman_opt" )
+ column=(type=decimal(0) updatewhereclause=yes name=old_opt dbname="hpa024m.old_opt" )
+ column=(type=decimal(0) updatewhereclause=yes name=add_child_opt dbname="hpa024m.add_child_opt" )
+ column=(type=decimal(0) updatewhereclause=yes name=birth_opt dbname="hpa024m.birth_opt" )
+ column=(type=char(13) updatewhereclause=yes name=hin001m_jumin_no dbname="hpa024m.jumin_no" )
+ column=(type=decimal(0) updatewhereclause=yes name=insure_amt dbname="hpa024m.insure_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=medical_amt dbname="hpa024m.medical_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=education_amt dbname="hpa024m.education_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=card_amt dbname="hpa024m.card_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=cash_amt dbname="hpa024m.cash_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=gibo_amt dbname="hpa024m.gibo_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=a_insure_amt dbname="hpa024m.a_insure_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=a_medical_amt dbname="hpa024m.a_medical_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=a_education_amt dbname="hpa024m.a_education_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=a_card_amt dbname="hpa024m.a_card_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=a_cash_amt dbname="hpa024m.a_cash_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=a_gibo_amt dbname="hpa024m.a_gibo_amt" )
+ retrieve="SELECT A.MEMBER_NO,   
+		A.YEAR,   
+		A.NAME,   
+		A.JUMIN_NO,   
+		A.FOREIGNER_GBN,   
+		A.GWANGAE_CODE,   
+		A.BASIC_OPT,   
+		A.HANDICAP_OPT,   
+		A.CHILD_OPT,   
+		A.INSURE_OPT,   
+		A.MEDICAL_OPT,   
+		A.EDUCATION_OPT,   
+		A.CARD_OPT,
+		A.WOMAN_OPT,
+		A.OLD_OPT,
+		A.ADD_CHILD_OPT,
+		A.BIRTH_OPT,
+		B.JUMIN_NO,
+		A.INSURE_AMT,   
+		A.MEDICAL_AMT,   
+		A.EDUCATION_AMT,   
+		A.CARD_AMT,
+		A.CASH_AMT,
+		A.GIBO_AMT,
+		A.A_INSURE_AMT,   
+		A.A_MEDICAL_AMT,   
+		A.A_EDUCATION_AMT,   
+		A.A_CARD_AMT,
+		A.A_CASH_AMT,
+		A.A_GIBO_AMT
+  
+FROM 	PADB.HPA024M   A,
+		INDB.HIN001M B,
+	 	PADB.HPA019H C    
+WHERE	A.MEMBER_NO = B.MEMBER_NO  
+and   A.MEMBER_NO = C.MEMBER_NO  
+and   A.YEAR 	   = C.YEAR
+and	A.YEAR		=  :AS_YEAR
+and	A.MEMBER_NO like :AS_MEMBER_NO||'%'
+ORDER	BY	A.GWANGAE_CODE
+" arguments=(("AS_YEAR", string),("AS_MEMBER_NO", string)) )
+text(band=header alignment="2" text="Member No" border="0" color="33554432" x="9" y="8" height="60" width="352" html.valueishtml="0"  name=member_no_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Year" border="0" color="33554432" x="370" y="8" height="60" width="160" html.valueishtml="0"  name=year_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Name" border="0" color="33554432" x="539" y="8" height="60" width="247" html.valueishtml="0"  name=name_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Jumin No" border="0" color="33554432" x="795" y="8" height="60" width="439" html.valueishtml="0"  name=jumin_no_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Foreigner Gbn" border="0" color="33554432" x="1243" y="8" height="60" width="434" html.valueishtml="0"  name=foreigner_gbn_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Gwangae Code" border="0" color="33554432" x="1687" y="8" height="60" width="384" html.valueishtml="0"  name=gwangae_code_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Basic Opt" border="0" color="33554432" x="2080" y="8" height="60" width="384" html.valueishtml="0"  name=basic_opt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Handicap Opt" border="0" color="33554432" x="2473" y="8" height="60" width="384" html.valueishtml="0"  name=handicap_opt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Child Opt" border="0" color="33554432" x="2866" y="8" height="60" width="384" html.valueishtml="0"  name=child_opt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Insure Opt" border="0" color="33554432" x="3259" y="8" height="60" width="384" html.valueishtml="0"  name=insure_opt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Medical Opt" border="0" color="33554432" x="3653" y="8" height="60" width="384" html.valueishtml="0"  name=medical_opt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Education Opt" border="0" color="33554432" x="4046" y="8" height="60" width="416" html.valueishtml="0"  name=education_opt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Card Opt" border="0" color="33554432" x="4471" y="8" height="60" width="384" html.valueishtml="0"  name=card_opt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Hpa024m Insure Amt" border="0" color="0" x="4864" y="8" height="60" width="576" html.valueishtml="0"  name=hpa024m_insure_amt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa024m Medical Amt" border="0" color="0" x="5449" y="8" height="60" width="745" html.valueishtml="0"  name=hpa024m_medical_amt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa024m Education Amt" border="0" color="0" x="6203" y="8" height="60" width="818" html.valueishtml="0"  name=hpa024m_education_amt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa024m Card Amt" border="0" color="0" x="7031" y="8" height="60" width="654" html.valueishtml="0"  name=hpa024m_card_amt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa024m Cash Amt" border="0" color="0" x="7694" y="8" height="60" width="677" html.valueishtml="0"  name=hpa024m_cash_amt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa024m Gibo Amt" border="0" color="0" x="8379" y="8" height="60" width="640" html.valueishtml="0"  name=hpa024m_gibo_amt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa024m A Insure Amt" border="0" color="0" x="9029" y="8" height="60" width="741" html.valueishtml="0"  name=hpa024m_a_insure_amt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa024m A Medical Amt" border="0" color="0" x="9778" y="8" height="60" width="823" html.valueishtml="0"  name=hpa024m_a_medical_amt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa024m A Education Amt" border="0" color="0" x="10610" y="8" height="60" width="745" html.valueishtml="0"  name=hpa024m_a_education_amt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa024m A Card Amt" border="0" color="0" x="11365" y="8" height="60" width="571" html.valueishtml="0"  name=hpa024m_a_card_amt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa024m A Cash Amt" border="0" color="0" x="11945" y="8" height="60" width="581" html.valueishtml="0"  name=hpa024m_a_cash_amt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa024m A Gibo Amt" border="0" color="0" x="12535" y="8" height="60" width="576" html.valueishtml="0"  name=hpa024m_a_gibo_amt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa024m Woman Opt" border="0" color="0" x="13120" y="8" height="60" width="562" html.valueishtml="0"  name=hpa024m_woman_opt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa024m Old Opt" border="0" color="0" x="13691" y="8" height="60" width="498" html.valueishtml="0"  name=hpa024m_old_opt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa024m Add Child Opt" border="0" color="0" x="14199" y="8" height="60" width="695" html.valueishtml="0"  name=hpa024m_add_child_opt_t visible="1"  font.face="굴림체" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Hpa024m Birth Opt" border="0" color="0" x="14903" y="4" height="76" width="530" html.valueishtml="0"  name=hpa024m_birth_opt_t visible="1"  font.face="굴림" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=10 border="0" color="33554432" x="9" y="8" height="72" width="352" format="[general]" html.valueishtml="0"  name=member_no visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=20 border="0" color="33554432" x="370" y="8" height="72" width="160" format="[general]" html.valueishtml="0"  name=year visible="1" edit.limit=4 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=30 border="0" color="33554432" x="539" y="8" height="72" width="247" format="[general]" html.valueishtml="0"  name=name visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=40 border="0" color="33554432" x="795" y="8" height="72" width="439" format="[general]" html.valueishtml="0"  name=jumin_no visible="1" edit.limit=13 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=50 border="0" color="33554432" x="1243" y="8" height="72" width="434" format="[general]" html.valueishtml="0"  name=foreigner_gbn visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=60 border="0" color="33554432" x="1687" y="8" height="72" width="384" format="[general]" html.valueishtml="0"  name=gwangae_code visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=70 border="0" color="33554432" x="2080" y="8" height="72" width="384" format="[general]" html.valueishtml="0"  name=basic_opt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="1" tabsequence=80 border="0" color="33554432" x="2473" y="8" height="72" width="384" format="[general]" html.valueishtml="0"  name=handicap_opt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=90 border="0" color="33554432" x="2866" y="8" height="72" width="384" format="[general]" html.valueishtml="0"  name=child_opt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=100 border="0" color="33554432" x="3259" y="8" height="72" width="384" format="[general]" html.valueishtml="0"  name=insure_opt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="1" tabsequence=110 border="0" color="33554432" x="3653" y="8" height="72" width="384" format="[general]" html.valueishtml="0"  name=medical_opt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="1" tabsequence=120 border="0" color="33554432" x="4046" y="8" height="72" width="416" format="[general]" html.valueishtml="0"  name=education_opt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="1" tabsequence=130 border="0" color="33554432" x="4471" y="8" height="72" width="384" format="[general]" html.valueishtml="0"  name=card_opt visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=19 alignment="0" tabsequence=32766 border="0" color="33554432" x="4864" y="8" height="72" width="576" format="[general]" html.valueishtml="0"  name=insure_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=20 alignment="0" tabsequence=32766 border="0" color="33554432" x="5449" y="8" height="72" width="745" format="[general]" html.valueishtml="0"  name=medical_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=21 alignment="0" tabsequence=32766 border="0" color="33554432" x="6203" y="8" height="72" width="818" format="[general]" html.valueishtml="0"  name=education_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=22 alignment="0" tabsequence=32766 border="0" color="33554432" x="7031" y="8" height="72" width="654" format="[general]" html.valueishtml="0"  name=card_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=23 alignment="0" tabsequence=32766 border="0" color="33554432" x="7694" y="8" height="72" width="677" format="[general]" html.valueishtml="0"  name=cash_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=24 alignment="0" tabsequence=32766 border="0" color="33554432" x="8379" y="8" height="72" width="640" format="[general]" html.valueishtml="0"  name=gibo_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=25 alignment="0" tabsequence=32766 border="0" color="33554432" x="9029" y="8" height="72" width="741" format="[general]" html.valueishtml="0"  name=a_insure_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=26 alignment="0" tabsequence=32766 border="0" color="33554432" x="9778" y="8" height="72" width="823" format="[general]" html.valueishtml="0"  name=a_medical_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=27 alignment="0" tabsequence=32766 border="0" color="33554432" x="10610" y="8" height="72" width="745" format="[general]" html.valueishtml="0"  name=a_education_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=28 alignment="0" tabsequence=32766 border="0" color="33554432" x="11365" y="8" height="72" width="571" format="[general]" html.valueishtml="0"  name=a_card_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=29 alignment="0" tabsequence=32766 border="0" color="33554432" x="11945" y="8" height="72" width="581" format="[general]" html.valueishtml="0"  name=a_cash_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=30 alignment="0" tabsequence=32766 border="0" color="33554432" x="12535" y="8" height="72" width="576" format="[general]" html.valueishtml="0"  name=a_gibo_amt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="33554432" x="13120" y="8" height="72" width="562" format="[general]" html.valueishtml="0"  name=woman_opt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="33554432" x="13691" y="8" height="72" width="498" format="[general]" html.valueishtml="0"  name=old_opt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="33554432" x="14199" y="8" height="72" width="695" format="[general]" html.valueishtml="0"  name=add_child_opt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="33554432" x="14903" y="8" height="72" width="530" format="[general]" html.valueishtml="0"  name=birth_opt visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="굴림체" font.height="-10" font.weight="400"  font.family="1" font.pitch="1" font.charset="129" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

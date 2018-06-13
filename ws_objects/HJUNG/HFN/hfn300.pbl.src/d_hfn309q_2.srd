@@ -1,0 +1,82 @@
+﻿$PBExportHeader$d_hfn309q_2.srd
+$PBExportComments$전표 조회 - 전표 Detail 조회
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=decimal(0) updatewhereclause=yes name=acct_class dbname="hfn201m.acct_class" )
+ column=(type=char(8) updatewhereclause=yes name=slip_date dbname="hfn201m.slip_date" )
+ column=(type=number updatewhereclause=yes name=slip_no dbname="hfn201m.slip_no" )
+ column=(type=char(4) updatewhereclause=yes name=slip_gwa dbname="hfn201m.slip_gwa" )
+ column=(type=char(5) updatewhereclause=yes name=worker dbname="hfn201m.worker" )
+ column=(type=decimal(0) updatewhereclause=yes name=slip_class dbname="hfn201m.slip_class" )
+ column=(type=number updatewhereclause=yes name=slip_seq dbname="hfn201m.slip_seq" )
+ column=(type=char(6) updatewhereclause=yes name=acct_code dbname="hfn201m.acct_code" )
+ column=(type=char(30) updatewhereclause=yes name=com_acct_name dbname="com_acct_name" )
+ column=(type=char(1) updatewhereclause=yes name=drcr_class dbname="hfn201m.drcr_class" )
+ column=(type=decimal(0) updatewhereclause=yes name=slip_amt dbname="hfn201m.slip_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=proof_gubun dbname="hfn201m.proof_gubun" )
+ column=(type=char(8) updatewhereclause=yes name=proof_date dbname="hfn201m.proof_date" )
+ column=(type=decimal(0) updatewhereclause=yes name=assn_used_amt dbname="hfn201m.assn_used_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=assn_temp_amt dbname="hfn201m.assn_temp_amt" )
+ column=(type=decimal(0) updatewhereclause=yes name=assn_real_amt dbname="hfn201m.assn_real_amt" )
+ column=(type=char(100) updatewhereclause=yes name=remark dbname="hfn201m.remark" )
+ column=(type=decimal(0) updatewhereclause=yes name=mana_code1 dbname="hfn201m.mana_code1" )
+ column=(type=char(20) updatewhereclause=yes name=mana_data1 dbname="hfn201m.mana_data1" )
+ column=(type=decimal(0) updatewhereclause=yes name=mana_code2 dbname="hfn201m.mana_code2" )
+ column=(type=char(20) updatewhereclause=yes name=mana_data2 dbname="hfn201m.mana_data2" )
+ retrieve="SELECT	A.ACCT_CLASS,
+			A.SLIP_DATE,
+			A.SLIP_NO,
+			A.SLIP_GWA,
+			A.WORKER,
+			A.SLIP_CLASS,
+			B.SLIP_SEQ,
+			B.ACCT_CODE,
+			DECODE(A.SLIP_CLASS,1,C.ACCT_INAME,2,C.ACCT_ONAME,C.ACCT_NAME)	COM_ACCT_NAME,
+			B.DRCR_CLASS,
+			B.SLIP_AMT,
+			B.PROOF_GUBUN,
+			B.PROOF_DATE,
+			B.ASSN_USED_AMT,
+			B.ASSN_TEMP_AMT,
+			B.ASSN_REAL_AMT,
+			B.REMARK,
+			B.MANA_CODE1,
+			B.MANA_DATA1,
+			B.MANA_CODE2,
+			B.MANA_DATA2
+FROM		FNDB.HFN201M A, FNDB.HFN202M B, ACDB.HAC001M C
+WHERE		A.ACCT_CLASS = B.ACCT_CLASS
+AND		A.SLIP_DATE  = B.SLIP_DATE
+AND		A.SLIP_NO    = B.SLIP_NO
+AND		B.ACCT_CODE  = C.ACCT_CODE (+)
+AND		A.ACCT_CLASS = :AI_ACCT_CLASS
+AND		A.SLIP_DATE  = :AS_SLIP_DATE
+AND		A.SLIP_NO    = :AI_SLIP_NO
+ORDER BY	A.SLIP_NO" arguments=(("ai_acct_class", number),("as_slip_date", string),("ai_slip_no", number)) )
+text(band=header alignment="2" text="대변금액" border="0" color="0" x="3698" y="12" height="56" width="553" html.valueishtml="0"  name=comp_cr_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="적     요" border="0" color="0" x="1495" y="12" height="56" width="1641" html.valueishtml="0"  name=remark_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="차변금액" border="0" color="0" x="3145" y="12" height="56" width="544" html.valueishtml="0"  name=comp_dr_amt_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계  정  명" border="0" color="0" x="745" y="12" height="56" width="741" html.valueishtml="0"  name=com_acct_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="계정코드" border="0" color="0" x="238" y="12" height="56" width="498" html.valueishtml="0"  name=acct_code_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="순번" border="0" color="0" x="9" y="12" height="56" width="219" html.valueishtml="0"  name=slip_seq_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="2" tabsequence=32766 border="0" color="0" x="9" y="4" height="64" width="219" format="[general]" html.valueishtml="0"  name=slip_seq visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="2" tabsequence=32766 border="0" color="0" x="238" y="4" height="64" width="498" format="@@@@-@@" html.valueishtml="0"  name=acct_code visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="745" y="4" height="64" width="741" format="[general]" html.valueishtml="0"  name=com_acct_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="0" x="1495" y="4" height="64" width="1641" format="[general]" html.valueishtml="0"  name=remark visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="1" expression="if ( drcr_class = 'D', slip_amt, 0 )"border="0" color="0" x="3145" y="4" height="64" width="544" format="#,###" html.valueishtml="0"  name=comp_dr_amt visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="1" expression="if ( drcr_class = 'C', slip_amt, 0 )"border="0" color="0" x="3698" y="4" height="64" width="553" format="#,###" html.valueishtml="0"  name=comp_cr_amt visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

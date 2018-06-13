@@ -1,0 +1,79 @@
+﻿$PBExportHeader$d_hac901i.srd
+$PBExportComments$dm발송 등록
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 selected.mouse=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(7) update=yes updatewhereclause=yes key=yes name=pno dbname="HAC901H.PNO" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=reci_name dbname="HAC901H.RECI_NAME" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=schl_name dbname="HAC901H.SCHL_NAME" )
+ column=(type=char(10) update=yes updatewhereclause=yes name=posit dbname="HAC901H.POSIT" )
+ column=(type=char(6) update=yes updatewhereclause=yes name=zip dbname="HAC901H.ZIP" )
+ column=(type=char(60) update=yes updatewhereclause=yes name=addr dbname="HAC901H.ADDR" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=addr1 dbname="HAC901H.ADDR1" )
+ column=(type=char(60) update=yes updatewhereclause=yes name=rmk dbname="HAC901H.RMK" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=dm_section dbname="HAC901H.DM_SECTION" values="4년제	1/2년제	2/고등학교	3/입시학원	4/관공서	5/기타	6/기획홍보처	7/산학	8/교무처	9/" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=dm_flag dbname="HAC901H.DM_FLAG" values="발송	Y/발송	N" )
+ column=(type=char(60) update=yes updatewhereclause=yes name=worker dbname="HAC901H.WORKER" )
+ column=(type=char(60) update=yes updatewhereclause=yes name=ipaddr dbname="HAC901H.IPADDR" )
+ column=(type=datetime update=yes updatewhereclause=yes name=work_date dbname="HAC901H.WORK_DATE" )
+ column=(type=char(60) update=yes updatewhereclause=yes name=job_uid dbname="HAC901H.JOB_UID" )
+ column=(type=char(60) update=yes updatewhereclause=yes name=job_add dbname="HAC901H.JOB_ADD" )
+ column=(type=datetime update=yes updatewhereclause=yes name=job_date dbname="HAC901H.JOB_DATE" )
+ retrieve="SELECT	A.PNO,
+			A.RECI_NAME,
+			A.SCHL_NAME,
+			A.POSIT,
+			A.ZIP,
+			A.ADDR,
+			A.ADDR1,
+			A.RMK,
+			A.DM_SECTION,
+			A.DM_FLAG,
+			A.WORKER,
+			A.IPADDR,
+			A.WORK_DATE,
+			A.JOB_UID,
+			A.JOB_ADD,
+			A.JOB_DATE
+FROM		ACDB.HAC901H A
+WHERE		A.ZIP	LIKE :A_ZIP
+AND		A.DM_SECTION LIKE :A_SECTION
+AND		A.RECI_NAME LIKE :A_NAME
+" update="ACDB.HAC901H" updatewhere=0 updatekeyinplace=no arguments=(("a_zip", string),("a_section", string),("a_name", string))  sort="zip A reci_name A " )
+text(band=header alignment="2" text="번호" border="0" color="18751006" x="9" y="8" height="56" width="197" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="번호" border="0" color="18751006" x="9" y="8" height="56" width="197" html.valueishtml="0"  name=compute_1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="받는사람(부서)" border="0" color="18751006" x="229" y="8" height="56" width="466" html.valueishtml="0"  name=reci_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="귀하/귀중" border="0" color="18751006" x="704" y="8" height="56" width="347" html.valueishtml="0"  name=posit_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="학교 및 기관명" border="0" color="18751006" x="1061" y="8" height="56" width="562" html.valueishtml="0"  name=schl_name_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="우편번호" border="0" color="18751006" x="1632" y="8" height="56" width="306" html.valueishtml="0"  name=zip_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="주      소" border="0" color="18751006" x="1947" y="8" height="56" width="1024" html.valueishtml="0"  name=addr_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="(통/반)번지" border="0" color="18751006" x="2981" y="8" height="56" width="1083" html.valueishtml="0"  name=addr1_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="구        분" border="0" color="18751006" x="4073" y="8" height="56" width="430" html.valueishtml="0"  name=dm_section_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="발송여부" border="0" color="18751006" x="4512" y="8" height="56" width="279" html.valueishtml="0"  name=dm_flag_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="비      고" border="0" color="18751006" x="4800" y="8" height="56" width="827" html.valueishtml="0"  name=rmk_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+compute(band=detail alignment="0" expression="If (IsRowNew(), '입력', If (IsRowModified(), '수정', String(GetROw(),'####')))"border="0" color="18751006" x="9" y="8" height="68" width="197" format="[general]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="18751006" x="215" y="8" height="68" width="5" format="[general]" html.valueishtml="0"  name=pno visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=20 border="0" color="18751006" x="704" y="8" height="68" width="347" format="[general]" html.valueishtml="0"  name=posit pointer="IBeam!" visible="1" edit.limit=10 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=3 alignment="0" tabsequence=30 border="0" color="18751006" x="1061" y="8" height="68" width="562" format="[general]" html.valueishtml="0"  name=schl_name pointer="IBeam!" visible="1" edit.limit=40 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="18751006" x="1947" y="8" height="68" width="1024" format="[general]" html.valueishtml="0"  name=addr visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=7 alignment="0" tabsequence=50 border="0" color="18751006" x="2981" y="8" height="68" width="1083" format="[general]" html.valueishtml="0"  name=addr1 visible="1" edit.limit=40 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=10 alignment="2" tabsequence=70 border="0" color="18751006" x="4512" y="8" height="68" width="279" format="[general]" html.valueishtml="0"  name=dm_flag visible="1" checkbox.text="발송" checkbox.on="Y" checkbox.off="N" checkbox.scale=no checkbox.threed=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=8 alignment="0" tabsequence=80 border="0" color="18751006" x="4800" y="8" height="68" width="827" format="[general]" html.valueishtml="0"  name=rmk visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=2 alignment="0" tabsequence=10 border="0" color="18751006" x="229" y="8" height="68" width="466" format="[general]" html.valueishtml="0"  name=reci_name pointer="IBeam!" visible="1" edit.limit=20 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=5 alignment="2" tabsequence=40 border="0" color="18751006" x="1637" y="8" height="68" width="302" format="[general]" html.valueishtml="0"  name=zip visible="1" editmask.mask="###-###" editmask.focusrectangle=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=9 alignment="0" tabsequence=60 border="0" color="18751006" x="4073" y="8" height="68" width="430" format="[general]" html.valueishtml="0"  name=dm_section visible="1" ddlb.limit=0 ddlb.allowedit=no ddlb.case=any ddlb.vscrollbar=yes ddlb.useasborder=yes  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+text(band=header alignment="2" text="text" border="0" color="18751006" x="215" y="8" height="56" width="5" html.valueishtml="0"  name=pno_t visible="1"  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

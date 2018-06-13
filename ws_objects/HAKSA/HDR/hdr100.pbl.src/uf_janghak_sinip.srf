@@ -1,0 +1,115 @@
+﻿$PBExportHeader$uf_janghak_sinip.srf
+$PBExportComments$[청운대]매학년도 신입생 장학처리
+global type uf_janghak_sinip from function_object
+end type
+
+forward prototypes
+global function integer uf_janghak_sinip (string as_year, string as_hakgi, string as_hakyun, string as_hakbun, string as_gwa, string as_janghak)
+end prototypes
+
+global function integer uf_janghak_sinip (string as_year, string as_hakgi, string as_hakyun, string as_hakbun, string as_gwa, string as_janghak);//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//신입생 장학금 처리
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+string	ls_gwajung, ls_hakgwa, 	ls_jungong, ls_janghak, ls_dung_gubun
+string	ls_chuga, ls_hwan, 		ls_sunbal_date
+long		ll_iphak, ll_bdr, ll_iphak_m, ll_dungrok_m 
+long		ll_dungrok, ll_janghak, ll_dungrok_before, ll_janghak_before, ll_dungrok_all
+long		ll_hakjum, ll_hakjum_before, ll_hakjum_sugang, ll_chasu, ll_bhakjum
+long		ll_base, ll_a, ll_dr_gum, ll_jh_gum, ll_realdungrok, ll_ihakjum, ll_dungrok_sugang
+
+//1. 기존수강신청에 따른 학점/등록금및 장학금 가져오기
+SELECT	SUM(A.HAKJUM),
+			SUM(A.DUNGROK),
+			DECODE(B.JANGHAK_ID, 'I01', trunc(nvl(SUM(A.DUNGROK),0), -2), 
+										'I02', trunc(nvl((SUM(A.DUNGROK) / 3) * 2,0), -2),
+										'I03', trunc(nvl((SUM(A.DUNGROK) / 3) * 1,0), -2),
+										'I04', 800000, 0) JANGHAK,
+			B.SUNBAL_DATE
+INTO		:ll_hakjum_before,
+			:ll_dungrok_before,
+			:ll_janghak_before,
+			:ls_sunbal_date	
+FROM		HAKSA.DUNGROK_GWANRI A,
+			HAKSA.JANGHAK_GWANRI	B
+WHERE		A.YEAR		=	B.YEAR
+AND		A.HAKGI		=	B.HAKGI
+AND		A.HAKBUN		=	B.HAKBUN 
+AND		A.HAKBUN		=	:as_hakbun
+AND		A.YEAR		=	:as_year
+AND		A.HAKGI		=	:as_hakgi
+GROUP BY B.JANGHAK_ID,
+			A.HAKBUN,
+			B.SUNBAL_DATE
+USING SQLCA ;
+
+
+SELECT	nvl(MAX(CHASU),0) + 1
+INTO		:ll_chasu
+FROM		HAKSA.DUNGROK_GWANRI
+WHERE		YEAR		=	:as_year
+AND		HAKGI		=	:as_hakgi
+AND		HAKBUN	=	:as_hakbun	
+USING SQLCA ;
+
+//등록구분 체크
+SELECT	HJMOD_ID
+INTO	:ls_dung_gubun
+FROM	HAKSA.HAKJUKBYENDONG
+WHERE	YEAR		=	:as_year
+AND	HAKGI		=	:as_hakgi
+AND	HAKBUN	=	:as_hakbun	
+AND	HJMOD_SIJUM	=	(	SELECT MAX(HJMOD_SIJUM)
+								FROM	HAKSA.HAKJUKBYENDONG
+								WHERE	YEAR		=	:as_year
+								AND	HAKGI		=	:as_hakgi
+								AND	HAKBUN	=	:as_hakbun
+							)	USING SQLCA ;
+							
+if sqlca.sqlcode = 0 then
+	if ls_dung_gubun = 'C' then
+		ls_dung_gubun = '4'
+		
+	elseif ls_dung_gubun = 'I' then
+		ls_dung_gubun = '5'
+		
+	else
+		ls_dung_gubun = '1'
+		
+	end if
+	
+elseif sqlca.sqlcode = 100 then
+	ls_dung_gubun = '1'
+	
+else 
+	messagebox("확인","등록구분 체크중 오류발생~r~n" + sqlca.sqlerrtext)
+	return 2
+	
+end if
+
+//Table Insert
+INSERT INTO	HAKSA.DUNGROK_GWANRI
+		(	HAKBUN,				YEAR,						HAKGI,						SU_HAKYUN,				CHASU,		
+			HAKJUM,				IPHAK,					DUNGROK,						HAKSENGWHE,				GYOJAE,
+			MEMORIAL,			ALBUM,					DONGCHANGWHE,				D_JANGHAK,				JANGHAK_ID,	
+			NAPBU_DATE,			DUNGROK_N,				WAN_YN,						DUNG_YN,					BUN_YN,
+			CHU_YN,				HWAN_YN,					DUNGROK_GUBUN,				WORKER,					IPADDR
+		)
+VALUES
+		(	:as_hakbun,			:as_year,				:as_hakgi,					:as_hakyun,				:ll_chasu,	
+			0,						0,							0,								0,							0,				
+			0,						0,							0,								:ll_janghak_before,	:as_janghak, 
+			:ls_sunbal_date,	-:ll_janghak_before,	'Y',							'N',						'N',
+			'Y',					'N',						:ls_dung_gubun,			:gs_empcode,  :gs_ip
+		)	
+USING SQLCA ;
+			
+if sqlca.sqlcode = 0 then
+	return 0
+else
+	messagebox("오류", as_hakbun + "신입생 장학금 처리 생성중 오류발생~r~n" + sqlca.sqlerrtext)
+	return 2
+end if
+
+
+end function
+
