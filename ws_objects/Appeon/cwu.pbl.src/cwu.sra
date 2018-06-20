@@ -190,7 +190,7 @@ End Choose
 end event
 
 event close;Disconnect Using SQLCA;
-//a
+//df
 end event
 
 on cwu.create
